@@ -6,7 +6,6 @@ website:
   title: "Karim's Blog"
   navbar: false
   sidebar: false
-  page-footer: ""
   search: false
 
 format:
