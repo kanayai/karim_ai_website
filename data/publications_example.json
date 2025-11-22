@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Example Publication Title",
+    "authors": "Smith, J., Doe, A., & Johnson, B.",
+    "year": 2024,
+    "journal": "Journal of Data Science",
+    "volume": "15",
+    "issue": "3",
+    "pages": "123-145",
+    "doi": "10.1234/example.2024.001"
+  },
+  {
+    "title": "Another Research Paper",
+    "authors": "Doe, A., & Smith, J.",
+    "year": 2023,
+    "journal": "Machine Learning Review",
+    "volume": "10",
+    "issue": "2",
+    "pages": "45-67",
+    "doi": "10.1234/example.2023.002"
+  }
+]
