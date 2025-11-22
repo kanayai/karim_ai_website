@@ -10,6 +10,7 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile }) => {
         if (filename.endsWith('.ipynb')) return <FaPython color="#3776ab" />;
         if (filename.endsWith('.js')) return <FaJs color="#f7df1e" />;
         if (filename.endsWith('.css')) return <FaReact color="#61dafb" />;
+        if (filename.endsWith('.html')) return <span style={{ color: '#e34c26', fontWeight: 'bold', fontSize: '10px' }}>HTML</span>;
         return null;
     };
 
@@ -26,6 +27,23 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile }) => {
 
         if (activeFile.endsWith('.ipynb')) {
             return <NotebookViewer />;
+        }
+
+        if (activeFile.endsWith('.html')) {
+            // Construct path for blog posts
+            // If the file is in the 'Blog' folder in Sidebar, we need to know its full path.
+            // For simplicity, we'll map the filename to the expected public path.
+            let src = '';
+            if (activeFile === 'index.html') src = '/blog/index.html';
+            else if (activeFile === 'first-post.html') src = '/blog/posts/first-post.html';
+
+            return (
+                <iframe
+                    src={src}
+                    style={{ width: '100%', height: '100%', border: 'none', backgroundColor: '#ffffff' }}
+                    title="Blog Post"
+                />
+            );
         }
 
         // Default Markdown/Text content

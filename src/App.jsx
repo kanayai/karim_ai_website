@@ -7,6 +7,13 @@ function App() {
   const [openFiles, setOpenFiles] = useState(['about_me.md']);
   const [activeFile, setActiveFile] = useState('about_me.md');
   const [theme, setTheme] = useState('dark');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
+    // Initialize based on window width
+    if (typeof window !== 'undefined') {
+      return window.innerWidth > 768;
+    }
+    return true;
+  });
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -16,11 +23,19 @@ function App() {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(prev => !prev);
+  };
+
   const handleOpenFile = (fileName) => {
     if (!openFiles.includes(fileName)) {
       setOpenFiles(prev => [...prev, fileName]);
     }
     setActiveFile(fileName);
+    // On mobile, close sidebar after selecting a file
+    if (window.innerWidth <= 768) {
+      setIsSidebarOpen(false);
+    }
   };
 
   const handleCloseFile = (e, fileName) => {
@@ -43,6 +58,8 @@ function App() {
       setActiveFile={handleOpenFile}
       theme={theme}
       toggleTheme={toggleTheme}
+      isSidebarOpen={isSidebarOpen}
+      toggleSidebar={toggleSidebar}
     >
       <Editor
         activeFile={activeFile}

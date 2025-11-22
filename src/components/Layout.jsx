@@ -4,7 +4,7 @@ import Statusbar from './Statusbar';
 import CommandPalette from './CommandPalette';
 import TitleBar from './TitleBar';
 
-const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme }) => {
+const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, isSidebarOpen, toggleSidebar }) => {
     const [isPaletteOpen, setIsPaletteOpen] = useState(false);
 
     useEffect(() => {
@@ -26,9 +26,21 @@ const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme }) => 
                 onClose={() => setIsPaletteOpen(false)}
                 onNavigate={setActiveFile}
             />
-            <TitleBar onSearchClick={() => setIsPaletteOpen(true)} />
-            <div className="main-container">
-                <Sidebar activeFile={activeFile} setActiveFile={setActiveFile} theme={theme} toggleTheme={toggleTheme} />
+            <TitleBar
+                onSearchClick={() => setIsPaletteOpen(true)}
+                toggleSidebar={toggleSidebar}
+            />
+            <div className="main-container" style={{ position: 'relative' }}>
+                <div className={`sidebar-container ${isSidebarOpen ? 'open' : 'closed'}`}>
+                    <Sidebar activeFile={activeFile} setActiveFile={setActiveFile} theme={theme} toggleTheme={toggleTheme} />
+                </div>
+                {/* Overlay for mobile when sidebar is open */}
+                {isSidebarOpen && (
+                    <div
+                        className="sidebar-overlay d-md-none"
+                        onClick={toggleSidebar}
+                    />
+                )}
                 {children}
             </div>
             <Statusbar />

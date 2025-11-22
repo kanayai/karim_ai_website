@@ -1,0 +1,10 @@
+---
+title: "Blog"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+---
+
+Welcome to my research blog. Here I share my thoughts on AI, Data Science, and more.

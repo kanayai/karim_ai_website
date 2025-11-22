@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Welcome to my research blog. Here I share my thoughts on AI, Data Science, and more.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome to My Blog\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nNov 22, 2025\n\n\nKarim\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/first-post.html",
+    "href": "posts/first-post.html",
+    "title": "Welcome to My Blog",
+    "section": "",
+    "text": "This is my first blog post using Quarto integrated into my VS Code-themed portfolio!\n\n\nHere is some Python code:\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 10, 100)\ny = np.sin(x)\n\nplt.plot(x, y)\nplt.show()\n\n\n\nHere is a math equation:\n\\[\nE = mc^2\n\\]"
+  },
+  {
+    "objectID": "posts/first-post.html#code-example",
+    "href": "posts/first-post.html#code-example",
+    "title": "Welcome to My Blog",
+    "section": "",
+    "text": "Here is some Python code:\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 10, 100)\ny = np.sin(x)\n\nplt.plot(x, y)\nplt.show()"
+  },
+  {
+    "objectID": "posts/first-post.html#math-equation",
+    "href": "posts/first-post.html#math-equation",
+    "title": "Welcome to My Blog",
+    "section": "",
+    "text": "Here is a math equation:\n\\[\nE = mc^2\n\\]"
+  }
+]

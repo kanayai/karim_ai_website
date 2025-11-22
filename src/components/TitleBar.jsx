@@ -1,7 +1,7 @@
 import React from 'react';
-import { VscArrowLeft, VscArrowRight, VscSearch, VscLayoutSidebarLeft, VscLayoutSidebarRight, VscLayoutPanel } from 'react-icons/vsc';
+import { VscArrowLeft, VscArrowRight, VscSearch, VscLayoutSidebarLeft, VscLayoutSidebarRight, VscLayoutPanel, VscMenu } from 'react-icons/vsc';
 
-const TitleBar = ({ onSearchClick }) => {
+const TitleBar = ({ onSearchClick, toggleSidebar }) => {
     return (
         <div className="d-flex align-items-center justify-content-between px-2"
             style={{
@@ -13,7 +13,14 @@ const TitleBar = ({ onSearchClick }) => {
 
             {/* Left: Navigation Controls & Search */}
             <div className="d-flex align-items-center gap-3">
-                <div className="d-flex gap-2">
+                <div className="d-flex gap-2 align-items-center">
+                    <VscMenu
+                        className="d-md-none me-2"
+                        size={18}
+                        color="var(--vscode-text)"
+                        style={{ cursor: 'pointer' }}
+                        onClick={toggleSidebar}
+                    />
                     <VscArrowLeft className="nav-icon" size={16} color="var(--vscode-text)" style={{ opacity: 0.6, cursor: 'not-allowed' }} />
                     <VscArrowRight className="nav-icon" size={16} color="var(--vscode-text)" style={{ opacity: 0.6, cursor: 'not-allowed' }} />
                 </div>

@@ -1,0 +1,27 @@
+/* Minimal CSS to blend with VS Code theme */
+body {
+    background-color: #1e1e1e;
+    /* Match VS Code dark bg */
+    color: #cccccc;
+    font-family: 'JetBrains Mono', sans-serif;
+}
+
+a {
+    color: #3794ff;
+}
+
+h1,
+h2,
+h3 {
+    color: #ffffff;
+}
+
+code {
+    background-color: #2d2d2d;
+    color: #ce9178;
+}
+
+pre {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+}
