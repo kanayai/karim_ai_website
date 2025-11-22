@@ -37,6 +37,7 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile }) => {
             let src = '';
             if (activeFile === 'index.html') src = '/blog/index.html';
             else if (activeFile === 'first-post.html') src = '/blog/posts/first-post.html';
+            else if (activeFile === 'publications.html') src = '/publications.html';
 
             return (
                 <iframe

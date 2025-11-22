@@ -21,7 +21,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
             name: 'Research',
             type: 'folder',
             children: [
-                { name: 'publications.R', icon: <FaPython color="#3776ab" />, type: 'r' },
+                { name: 'publications.html', icon: <span>HTML</span>, type: 'html', path: '/publications.html' },
                 { name: 'publications.md', icon: <FaMarkdown color="#519aba" />, type: 'markdown' },
                 { name: 'projects.md', icon: <FaMarkdown color="#519aba" />, type: 'markdown' },
             ]
