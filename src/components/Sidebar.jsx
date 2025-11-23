@@ -108,7 +108,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
 
             {/* Explorer */}
             <div className="d-flex flex-column" style={{ width: '250px', backgroundColor: 'var(--vscode-sidebar-bg)', borderRight: '1px solid var(--vscode-border)' }}>
-                <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--vscode-text)' }}>Explorer</div>
+                <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>Explorer</div>
 
                 <div className="d-flex flex-column">
                     <div className="px-2 py-1 d-flex align-items-center" style={{ fontWeight: 'bold', cursor: 'pointer', color: 'var(--vscode-text)' }}>
