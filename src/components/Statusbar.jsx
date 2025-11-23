@@ -3,7 +3,7 @@ import { VscSourceControl, VscBell, VscCheck, VscFeedback } from 'react-icons/vs
 
 const Statusbar = () => {
     return (
-        <div className="d-flex justify-content-between align-items-center px-2"
+        <div className="d-flex justify-content-between align-items-center px-2 flex-shrink-0"
             style={{
                 backgroundColor: 'var(--vscode-status-bar-bg)',
                 color: '#ffffff',

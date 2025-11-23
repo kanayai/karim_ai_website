@@ -20,6 +20,17 @@ const TitleBar = ({ onSearchClick, toggleSidebar }) => {
                     style={{ cursor: 'pointer' }}
                     onClick={toggleSidebar}
                 />
+                <span
+                    className="d-md-none ms-2"
+                    style={{
+                        fontSize: '12px',
+                        color: 'var(--vscode-text)',
+                        cursor: 'pointer'
+                    }}
+                    onClick={toggleSidebar}
+                >
+                    Menu
+                </span>
             </div>
 
             {/* Center: Navigation Controls & Search */}
