@@ -78,7 +78,7 @@ const NotebookViewer = ({ fileName }) => {
                     <div key={index} className="cell mb-3">
                         {cell.type === 'code' ? (
                             <div className="d-flex flex-column" style={{
-                                border: '1px solid var(--vscode-widget-border)',
+                                border: '1px solid rgba(128, 128, 128, 0.35)',
                                 borderRadius: '4px',
                                 padding: '8px'
                             }}>
