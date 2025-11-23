@@ -77,7 +77,11 @@ const NotebookViewer = ({ fileName }) => {
                 {content.map((cell, index) => (
                     <div key={index} className="cell mb-3">
                         {cell.type === 'code' ? (
-                            <div className="d-flex flex-column">
+                            <div className="d-flex flex-column" style={{
+                                border: '1px solid var(--vscode-widget-border)',
+                                borderRadius: '4px',
+                                padding: '8px'
+                            }}>
                                 {/* Input Area */}
                                 <div className="d-flex gap-2">
                                     {/* Gutter with Play Button */}
