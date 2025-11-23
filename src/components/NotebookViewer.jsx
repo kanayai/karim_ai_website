@@ -1,4 +1,5 @@
 import React from 'react';
+import { VscPlay, VscEllipsis } from 'react-icons/vsc';
 
 const NotebookViewer = ({ fileName }) => {
     const notebooks = {
@@ -74,63 +75,116 @@ const NotebookViewer = ({ fileName }) => {
         <div className="p-4" style={{ backgroundColor: 'var(--vscode-editor-bg)', color: 'var(--vscode-text)', height: '100%', overflowY: 'auto' }}>
             <div className="notebook-container">
                 {content.map((cell, index) => (
-                    <div key={index} className="cell mb-4">
+                    <div key={index} className="cell mb-3">
                         {cell.type === 'code' ? (
-                            <>
-                                <div className="input-area d-flex gap-2 mb-2">
-                                    <div style={{ color: '#306998', fontFamily: 'monospace', width: '50px', textAlign: 'right', flexShrink: 0 }}>In [{cell.executionCount}]:</div>
-                                    <div className="code-cell flex-grow-1 d-flex" style={{ backgroundColor: '#f5f5f5', border: '1px solid #e0e0e0', borderRadius: '2px', fontFamily: 'monospace', color: '#333', overflow: 'hidden' }}>
-                                        {/* Line Numbers Gutter */}
-                                        <div className="line-numbers p-2 text-end" style={{ backgroundColor: '#eee', borderRight: '1px solid #e0e0e0', color: '#999', userSelect: 'none', minWidth: '30px' }}>
-                                            {cell.input.map((_, i) => (
-                                                <div key={i} style={{ lineHeight: '1.5' }}>{i + 1}</div>
-                                            ))}
+                            <div className="d-flex flex-column">
+                                {/* Input Area */}
+                                <div className="d-flex gap-2">
+                                    {/* Gutter with Play Button */}
+                                    <div className="d-flex flex-column align-items-center pt-1" style={{ width: '25px', flexShrink: 0 }}>
+                                        <div
+                                            className="d-flex align-items-center justify-content-center rounded-circle"
+                                            style={{
+                                                width: '20px',
+                                                height: '20px',
+                                                backgroundColor: 'var(--vscode-button-bg)',
+                                                cursor: 'pointer',
+                                                color: 'var(--vscode-button-fg)'
+                                            }}
+                                        >
+                                            <VscPlay size={10} />
                                         </div>
-                                        {/* Code Content */}
-                                        <div className="code-content p-2 flex-grow-1" style={{ overflowX: 'auto' }}>
-                                            {cell.input.map((line, i) => (
-                                                <div key={i} style={{ lineHeight: '1.5', whiteSpace: 'pre' }}>
-                                                    {line.type === 'comment' ? (
-                                                        <span style={{ color: '#008000' }}>{line.text}</span>
-                                                    ) : (
-                                                        // Simple syntax highlighting simulation
-                                                        <span dangerouslySetInnerHTML={{
-                                                            __html: line.text
-                                                                .replace('import', '<span style="color: #a71d5d">import</span>')
-                                                                .replace('as', '<span style="color: #a71d5d">as</span>')
-                                                                .replace(/'([^']*)'/g, '<span style="color: #df5000">\'$1\'</span>')
-                                                                .replace(/"([^"]*)"/g, '<span style="color: #df5000">"$1"</span>')
-                                                        }} />
-                                                    )}
-                                                </div>
-                                            ))}
+                                    </div>
+
+                                    {/* Code Editor Box */}
+                                    <div className="flex-grow-1 rounded" style={{
+                                        backgroundColor: 'var(--vscode-editor-bg)',
+                                        border: '1px solid var(--vscode-widget-border)',
+                                        position: 'relative',
+                                        overflow: 'hidden'
+                                    }}>
+                                        <div className="d-flex">
+                                            {/* Line Numbers */}
+                                            <div className="py-2 text-end pe-3" style={{
+                                                color: '#858585',
+                                                minWidth: '40px',
+                                                userSelect: 'none',
+                                                fontSize: '12px',
+                                                fontFamily: 'monospace'
+                                            }}>
+                                                {cell.input.map((_, i) => (
+                                                    <div key={i} style={{ lineHeight: '1.5' }}>{i + 1}</div>
+                                                ))}
+                                            </div>
+
+                                            {/* Code Content */}
+                                            <div className="py-2 flex-grow-1" style={{ fontFamily: 'monospace', fontSize: '13px', overflowX: 'auto' }}>
+                                                {cell.input.map((line, i) => (
+                                                    <div key={i} style={{ lineHeight: '1.5', whiteSpace: 'pre' }}>
+                                                        {line.type === 'comment' ? (
+                                                            <span style={{ color: '#6A9955' }}>{line.text}</span>
+                                                        ) : (
+                                                            <span dangerouslySetInnerHTML={{
+                                                                __html: line.text
+                                                                    .replace('import', '<span style="color: #C586C0">import</span>')
+                                                                    .replace('as', '<span style="color: #C586C0">as</span>')
+                                                                    .replace(/'([^']*)'/g, '<span style="color: #CE9178">\'$1\'</span>')
+                                                                    .replace(/"([^"]*)"/g, '<span style="color: #CE9178">"$1"</span>')
+                                                            }} />
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Language Indicator */}
+                                        <div className="position-absolute bottom-0 end-0 px-2 py-1" style={{
+                                            fontSize: '10px',
+                                            color: 'var(--vscode-descriptionForeground)',
+                                            opacity: 0.8,
+                                            pointerEvents: 'none'
+                                        }}>
+                                            Python
                                         </div>
                                     </div>
                                 </div>
+
+                                {/* Output Area */}
                                 {cell.output && (
-                                    <div className="output-area d-flex gap-2">
-                                        <div style={{ color: '#d14', fontFamily: 'monospace', width: '50px', textAlign: 'right' }}>Out[{cell.executionCount}]:</div>
-                                        <div className="output-content flex-grow-1 p-2" style={{ overflowX: 'auto' }}>
-                                            {cell.output.type === 'table' && (
-                                                <table className="table table-bordered table-sm" style={{ fontSize: '12px', color: 'var(--vscode-text)' }}>
-                                                    <thead>
-                                                        <tr>
-                                                            {cell.output.headers.map((h, i) => <th key={i}>{h}</th>)}
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {cell.output.rows.map((row, i) => (
-                                                            <tr key={i}>
-                                                                {row.map((cell, j) => <td key={j}>{cell}</td>)}
+                                    <div className="d-flex gap-2 mt-2">
+                                        <div style={{ width: '25px', flexShrink: 0 }}></div> {/* Spacer for alignment */}
+                                        <div className="flex-grow-1 position-relative ps-3" style={{ borderLeft: '1px solid var(--vscode-widget-border)' }}>
+                                            {/* Output Actions */}
+                                            <div className="position-absolute top-0 start-0 ms-1 mt-1" style={{ cursor: 'pointer', opacity: 0.6 }}>
+                                                <VscEllipsis size={14} />
+                                            </div>
+
+                                            <div className="output-content pt-1 ps-4" style={{ overflowX: 'auto' }}>
+                                                {cell.output.type === 'table' && (
+                                                    <table className="table table-bordered table-sm mb-0" style={{
+                                                        fontSize: '12px',
+                                                        color: 'var(--vscode-text)',
+                                                        borderColor: 'var(--vscode-widget-border)'
+                                                    }}>
+                                                        <thead>
+                                                            <tr>
+                                                                {cell.output.headers.map((h, i) => <th key={i} style={{ backgroundColor: 'var(--vscode-editor-bg)', borderColor: 'var(--vscode-widget-border)' }}>{h}</th>)}
                                                             </tr>
-                                                        ))}
-                                                    </tbody>
-                                                </table>
-                                            )}
+                                                        </thead>
+                                                        <tbody>
+                                                            {cell.output.rows.map((row, i) => (
+                                                                <tr key={i}>
+                                                                    {row.map((cell, j) => <td key={j} style={{ borderColor: 'var(--vscode-widget-border)' }}>{cell}</td>)}
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </table>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                 )}
-                            </>
+                            </div>
                         ) : (
                             <div className="markdown-cell p-3" style={{ fontFamily: 'sans-serif' }} dangerouslySetInnerHTML={{ __html: cell.content }} />
                         )}
