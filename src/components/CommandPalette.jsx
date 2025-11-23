@@ -14,6 +14,7 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
         { name: 'previous_courses.ipynb', path: 'previous_courses.ipynb' },
         { name: 'contact.css', path: 'contact.css' },
         { name: 'first-post.html', path: 'first-post.html' },
+        { name: 'anscombe_quartet.html', path: 'anscombe_quartet.html' },
     ];
 
     const filteredFiles = files.filter(file =>

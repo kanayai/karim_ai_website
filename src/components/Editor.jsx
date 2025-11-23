@@ -106,6 +106,7 @@ button:hover {
             let src = '';
             if (activeFile === 'index.html') src = '/blog/index.html';
             else if (activeFile === 'first-post.html') src = '/blog/posts/first-post.html';
+            else if (activeFile === 'anscombe_quartet.html') src = '/blog/posts/anscombe_quartet.html';
             else if (activeFile === 'publications.html') src = '/publications.html';
 
             return (
