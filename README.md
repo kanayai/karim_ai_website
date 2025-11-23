@@ -1,16 +1,70 @@
-# React + Vite
+# Karim AI Portfolio Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A VS Code-themed portfolio website built with React, Vite, and Quarto for blogging.
 
-Currently, two official plugins are available:
+## Development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Start the development server:
+```bash
+npm run dev
+```
 
-## React Compiler
+## Adding a New Blog Post
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The blog is built using **Quarto**. Follow these steps to add a new post:
 
-## Expanding the ESLint configuration
+### 1. Create a New Post File
+Navigate to the blog posts directory and create a new `.qmd` file:
+```bash
+cd blog/posts
+# Create a new file, e.g., my-new-post.qmd
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 2. Write Your Post
+Create a Quarto markdown file with YAML frontmatter:
+```yaml
+---
+title: "Your Post Title"
+author: "Your Name"
+date: "2025-11-23"
+categories: [category1, category2]
+---
+
+Your content here...
+```
+
+### 3. Render the Blog
+From the blog directory, run Quarto to generate the HTML:
+```bash
+cd blog
+quarto render
+```
+
+This will:
+- Generate HTML files in `public/blog/`
+- Update the blog index
+- Create the post at `public/blog/posts/your-post-name.html`
+
+### 4. Add to Command Palette (Optional)
+To make the new post searchable in the site's command palette, edit `src/components/CommandPalette.jsx` and add an entry to the `files` array:
+```javascript
+{ name: 'my-new-post.html', path: 'my-new-post.html' }
+```
+
+### 5. Update Editor Routing (Optional)
+If needed, update `src/components/Editor.jsx` to map the filename to the correct path in the iframe source.
+
+## Project Structure
+
+- `src/` - React application source code
+- `blog/` - Quarto blog source files
+- `public/blog/` - Generated blog HTML files
+- `data/` - Data files (e.g., publications.json)
+
+## Tech Stack
+
+- **React** - UI framework
+- **Vite** - Build tool
+- **Quarto** - Blog generation
+- **Bootstrap** - Styling
+- **React Icons** - VS Code icons

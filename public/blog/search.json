@@ -4,7 +4,14 @@
     "href": "index.html",
     "title": "Blog",
     "section": "",
-    "text": "Welcome to my research blog. Here I share my thoughts on AI, Data Science, and more.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome to My Blog\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nNov 22, 2025\n\n\nKarim\n\n\n\n\n\nNo matching items"
+    "text": "Welcome to my research blog. Here I share my thoughts on AI, Data Science, and more.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome to My Blog\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nNov 22, 2025\n\n\nKarim\n\n\n\n\n\n\n\n\n\n\n\n\nAnscombe’s quartet\n\n\n\ntutorial\n\npython\n\n\n\nThis is a short summary of the post that will appear in the blog list and on the card.\n\n\n\n\n\nNov 15, 2025\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/anscombe_quartet.html",
+    "href": "posts/anscombe_quartet.html",
+    "title": "Anscombe’s quartet",
+    "section": "",
+    "text": "So, I am learning how to use ggplot. Here is one my first attempts and at the same time I discover that you need to use the gridExtra package to layout multiople ggplots. I am using one of my favourite datasets: the Anscombe quartet\n\nlibrary(ggplot2)\nlibrary(grid)\nlibrary(gridExtra)\n\ndata(anscombe)\n\nThe quartet comprises four datasets that have nearly identical simple descriptive statistics, yet appear very different when graphed.\n\np1&lt;-ggplot(anscombe,aes(x1,y1))+geom_point()+geom_smooth(method=\"lm\",se=FALSE,color=\"red\")+xlim(3,16)\np2&lt;-ggplot(anscombe,aes(x2,y2))+geom_point()+geom_smooth(method=\"lm\",se=FALSE,color=\"red\")+xlim(3,16)\np3&lt;-ggplot(anscombe,aes(x3,y3))+geom_point()+geom_smooth(method=\"lm\",se=FALSE,color=\"red\")+xlim(3,16)\np4&lt;-ggplot(anscombe,aes(x4,y4))+geom_point()+geom_smooth(method=\"lm\",se=FALSE,color=\"red\")+xlim(7,20)\n\ngrid.arrange(p1,p2,p3,p4,ncol=2)\n\n`geom_smooth()` using formula = 'y ~ x'\n`geom_smooth()` using formula = 'y ~ x'\n`geom_smooth()` using formula = 'y ~ x'\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nWe can see that the fitted lines are actually almost identical since the summary statistics are almost identical as well.\n\ncoefficients(lm(y1~x1,anscombe))\n\n(Intercept)          x1 \n  3.0000909   0.5000909 \n\ncoefficients(lm(y2~x2,anscombe))\n\n(Intercept)          x2 \n   3.000909    0.500000 \n\ncoefficients(lm(y3~x3,anscombe))\n\n(Intercept)          x3 \n  3.0024545   0.4997273 \n\ncoefficients(lm(y4~x4,anscombe))\n\n(Intercept)          x4 \n  3.0017273   0.4999091"
   },
   {
     "objectID": "posts/first-post.html",

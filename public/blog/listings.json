@@ -2,7 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/first-post.html"
+      "/posts/first-post.html",
+      "/posts/anscombe_quartet.html"
     ]
   }
 ]

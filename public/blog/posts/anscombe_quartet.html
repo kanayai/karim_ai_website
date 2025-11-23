@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2025-11-15">
+<meta name="description" content="This is a short summary of the post that will appear in the blog list and on the card.">
 
-<title>Blog – Karim’s Blog</title>
+<title>Anscombe’s quartet – Karim's Blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,24 +22,57 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -53,67 +88,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="quarto-light">
@@ -123,22 +100,37 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="bmV3cw==">news <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHl0aG9u">python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dHV0b3JpYWw=">tutorial <span class="quarto-category-count">(1)</span></div></div></div>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Blog</h1>
-</div>
+<h1 class="title">Anscombe’s quartet</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">tutorial</div>
+    <div class="quarto-category">python</div>
+  </div>
+  </div>
 
+<div>
+  <div class="description">
+    This is a short summary of the post that will appear in the blog list and on the card.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 15, 2025</p>
+    </div>
+  </div>
   
     
   </div>
@@ -148,75 +140,63 @@ window.Quarto = {
 </header>
 
 
-<p>Welcome to my research blog. Here I share my thoughts on AI, Data Science, and more.</p>
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="bmV3cw==" data-listing-date-sort="1763769600000" data-listing-file-modified-sort="1763837409687" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="41">
-<div class="thumbnail"><a href="./posts/first-post.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/first-post.html" class="no-external">Welcome to My Blog</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bmV3cw=='); return false;">news</div>
-
+<p>So, I am learning how to use <a href="https://ggplot2.tidyverse.org/reference/">ggplot</a>. Here is one my first attempts and at the same time I discover that you need to use the <a href="https://www.rdocumentation.org/packages/gridExtra/versions/2.3">gridExtra</a> package to layout multiople ggplots. I am using one of my favourite datasets: the <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe quartet</a></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(grid)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(anscombe)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="delink listing-description"><a href="./posts/first-post.html" class="no-external">
-This is my first blog post using <strong>Quarto</strong> integrated into my VS Code-themed portfolio!
-</a></div>
+<p>The quartet comprises four datasets that have nearly identical simple descriptive statistics, yet appear very different when graphed.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>p1<span class="ot">&lt;-</span><span class="fu">ggplot</span>(anscombe,<span class="fu">aes</span>(x1,y1))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>,<span class="at">se=</span><span class="cn">FALSE</span>,<span class="at">color=</span><span class="st">"red"</span>)<span class="sc">+</span><span class="fu">xlim</span>(<span class="dv">3</span>,<span class="dv">16</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>p2<span class="ot">&lt;-</span><span class="fu">ggplot</span>(anscombe,<span class="fu">aes</span>(x2,y2))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>,<span class="at">se=</span><span class="cn">FALSE</span>,<span class="at">color=</span><span class="st">"red"</span>)<span class="sc">+</span><span class="fu">xlim</span>(<span class="dv">3</span>,<span class="dv">16</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>p3<span class="ot">&lt;-</span><span class="fu">ggplot</span>(anscombe,<span class="fu">aes</span>(x3,y3))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>,<span class="at">se=</span><span class="cn">FALSE</span>,<span class="at">color=</span><span class="st">"red"</span>)<span class="sc">+</span><span class="fu">xlim</span>(<span class="dv">3</span>,<span class="dv">16</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>p4<span class="ot">&lt;-</span><span class="fu">ggplot</span>(anscombe,<span class="fu">aes</span>(x4,y4))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>,<span class="at">se=</span><span class="cn">FALSE</span>,<span class="at">color=</span><span class="st">"red"</span>)<span class="sc">+</span><span class="fu">xlim</span>(<span class="dv">7</span>,<span class="dv">20</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1,p2,p3,p4,<span class="at">ncol=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
-<div class="metadata">
-<a href="./posts/first-post.html" class="no-external">
-<div class="listing-date">
-Nov 22, 2025
-</div>
-<div class="listing-author">
-Karim
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="dHV0b3JpYWwlMkNweXRob24=" data-listing-date-sort="1763164800000" data-listing-file-modified-sort="1763736124263" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="80">
-<div class="thumbnail"><a href="./posts/anscombe_quartet.html" class="no-external">
-
-<p class="card-img-top"><img src="posts/anscombe_quartet_files/figure-html/unnamed-chunk-2-1.png"  class="thumbnail-image card-img"/></p>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/anscombe_quartet.html" class="no-external">Anscombe’s quartet</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('dHV0b3JpYWw='); return false;">tutorial</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('cHl0aG9u'); return false;">python</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/anscombe_quartet.html" class="no-external">
-<p>This is a short summary of the post that will appear in the blog list and on the card.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/anscombe_quartet.html" class="no-external">
-<div class="listing-date">
-Nov 15, 2025
-</div>
-</a>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="anscombe_quartet_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
 </div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+<p>We can see that the fitted lines are actually almost identical since the summary statistics are almost identical as well.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coefficients</span>(<span class="fu">lm</span>(y1<span class="sc">~</span>x1,anscombe))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)          x1 
+  3.0000909   0.5000909 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coefficients</span>(<span class="fu">lm</span>(y2<span class="sc">~</span>x2,anscombe))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)          x2 
+   3.000909    0.500000 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coefficients</span>(<span class="fu">lm</span>(y3<span class="sc">~</span>x3,anscombe))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)          x3 
+  3.0024545   0.4997273 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coefficients</span>(<span class="fu">lm</span>(y4<span class="sc">~</span>x4,anscombe))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)          x4 
+  3.0017273   0.4999091 </code></pre>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

@@ -1,0 +1,41 @@
+---
+title: "Anscombe's quartet"
+date: "2025-11-15"
+description: "This is a short summary of the post that will appear in the blog list and on the card."
+categories: ["tutorial", "python"] # Use categories for better filtering
+---
+
+
+So, I am learning how to use [ggplot](https://ggplot2.tidyverse.org/reference/). Here is one my first attempts and at the same time I discover that you need to use the [gridExtra](https://www.rdocumentation.org/packages/gridExtra/versions/2.3) package to layout multiople ggplots. I am using one of my favourite datasets: the [Anscombe quartet](https://en.wikipedia.org/wiki/Anscombe%27s_quartet)
+
+```{r}
+library(ggplot2)
+library(grid)
+library(gridExtra)
+
+data(anscombe)
+
+```
+
+
+The quartet comprises four datasets that have nearly identical simple descriptive statistics, yet appear very different when graphed.
+
+
+```{r}
+
+p1<-ggplot(anscombe,aes(x1,y1))+geom_point()+geom_smooth(method="lm",se=FALSE,color="red")+xlim(3,16)
+p2<-ggplot(anscombe,aes(x2,y2))+geom_point()+geom_smooth(method="lm",se=FALSE,color="red")+xlim(3,16)
+p3<-ggplot(anscombe,aes(x3,y3))+geom_point()+geom_smooth(method="lm",se=FALSE,color="red")+xlim(3,16)
+p4<-ggplot(anscombe,aes(x4,y4))+geom_point()+geom_smooth(method="lm",se=FALSE,color="red")+xlim(7,20)
+
+grid.arrange(p1,p2,p3,p4,ncol=2)
+```
+
+We can see that the fitted lines are actually almost identical since the summary statistics are almost identical as well.
+
+```{r}
+coefficients(lm(y1~x1,anscombe))
+coefficients(lm(y2~x2,anscombe))
+coefficients(lm(y3~x3,anscombe))
+coefficients(lm(y4~x4,anscombe))
+```
