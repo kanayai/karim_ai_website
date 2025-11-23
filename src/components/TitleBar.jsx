@@ -11,16 +11,20 @@ const TitleBar = ({ onSearchClick, toggleSidebar }) => {
                 userSelect: 'none'
             }}>
 
-            {/* Left: Navigation Controls & Search */}
-            <div className="d-flex align-items-center gap-3">
+            {/* Left: Menu (Mobile only) */}
+            <div className="d-flex align-items-center">
+                <VscMenu
+                    className="d-md-none"
+                    size={18}
+                    color="var(--vscode-text)"
+                    style={{ cursor: 'pointer' }}
+                    onClick={toggleSidebar}
+                />
+            </div>
+
+            {/* Center: Navigation Controls & Search */}
+            <div className="position-absolute start-50 translate-middle-x d-flex align-items-center gap-3">
                 <div className="d-flex gap-2 align-items-center">
-                    <VscMenu
-                        className="d-md-none me-2"
-                        size={18}
-                        color="var(--vscode-text)"
-                        style={{ cursor: 'pointer' }}
-                        onClick={toggleSidebar}
-                    />
                     <VscArrowLeft className="nav-icon" size={16} color="var(--vscode-text)" style={{ opacity: 0.6, cursor: 'not-allowed' }} />
                     <VscArrowRight className="nav-icon" size={16} color="var(--vscode-text)" style={{ opacity: 0.6, cursor: 'not-allowed' }} />
                 </div>
@@ -40,7 +44,7 @@ const TitleBar = ({ onSearchClick, toggleSidebar }) => {
                     onClick={onSearchClick}
                 >
                     <VscSearch size={14} className="me-2" />
-                    <span style={{ fontSize: '12px' }}>karim_ai_website</span>
+                    <span style={{ fontSize: '12px' }}>search site</span>
                 </div>
             </div>
 
