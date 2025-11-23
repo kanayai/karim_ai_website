@@ -72,7 +72,7 @@ const NotebookViewer = ({ fileName }) => {
 
     return (
         <div className="p-4" style={{ backgroundColor: 'var(--vscode-editor-bg)', color: 'var(--vscode-text)', height: '100%', overflowY: 'auto' }}>
-            <div className="notebook-container" style={{ maxWidth: '900px', margin: '0 auto' }}>
+            <div className="notebook-container">
                 {content.map((cell, index) => (
                     <div key={index} className="cell mb-4">
                         {cell.type === 'code' ? (
