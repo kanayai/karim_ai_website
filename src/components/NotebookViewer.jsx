@@ -78,24 +78,33 @@ const NotebookViewer = ({ fileName }) => {
                         {cell.type === 'code' ? (
                             <>
                                 <div className="input-area d-flex gap-2 mb-2">
-                                    <div style={{ color: '#306998', fontFamily: 'monospace', width: '50px', textAlign: 'right' }}>In [{cell.executionCount}]:</div>
-                                    <div className="code-cell flex-grow-1 p-2" style={{ backgroundColor: '#f5f5f5', border: '1px solid #e0e0e0', borderRadius: '2px', fontFamily: 'monospace', color: '#333' }}>
-                                        {cell.input.map((line, i) => (
-                                            <div key={i}>
-                                                {line.type === 'comment' ? (
-                                                    <span style={{ color: '#008000' }}>{line.text}</span>
-                                                ) : (
-                                                    // Simple syntax highlighting simulation
-                                                    <span dangerouslySetInnerHTML={{
-                                                        __html: line.text
-                                                            .replace('import', '<span style="color: #a71d5d">import</span>')
-                                                            .replace('as', '<span style="color: #a71d5d">as</span>')
-                                                            .replace(/'([^']*)'/g, '<span style="color: #df5000">\'$1\'</span>')
-                                                            .replace(/"([^"]*)"/g, '<span style="color: #df5000">"$1"</span>')
-                                                    }} />
-                                                )}
-                                            </div>
-                                        ))}
+                                    <div style={{ color: '#306998', fontFamily: 'monospace', width: '50px', textAlign: 'right', flexShrink: 0 }}>In [{cell.executionCount}]:</div>
+                                    <div className="code-cell flex-grow-1 d-flex" style={{ backgroundColor: '#f5f5f5', border: '1px solid #e0e0e0', borderRadius: '2px', fontFamily: 'monospace', color: '#333', overflow: 'hidden' }}>
+                                        {/* Line Numbers Gutter */}
+                                        <div className="line-numbers p-2 text-end" style={{ backgroundColor: '#eee', borderRight: '1px solid #e0e0e0', color: '#999', userSelect: 'none', minWidth: '30px' }}>
+                                            {cell.input.map((_, i) => (
+                                                <div key={i} style={{ lineHeight: '1.5' }}>{i + 1}</div>
+                                            ))}
+                                        </div>
+                                        {/* Code Content */}
+                                        <div className="code-content p-2 flex-grow-1" style={{ overflowX: 'auto' }}>
+                                            {cell.input.map((line, i) => (
+                                                <div key={i} style={{ lineHeight: '1.5', whiteSpace: 'pre' }}>
+                                                    {line.type === 'comment' ? (
+                                                        <span style={{ color: '#008000' }}>{line.text}</span>
+                                                    ) : (
+                                                        // Simple syntax highlighting simulation
+                                                        <span dangerouslySetInnerHTML={{
+                                                            __html: line.text
+                                                                .replace('import', '<span style="color: #a71d5d">import</span>')
+                                                                .replace('as', '<span style="color: #a71d5d">as</span>')
+                                                                .replace(/'([^']*)'/g, '<span style="color: #df5000">\'$1\'</span>')
+                                                                .replace(/"([^"]*)"/g, '<span style="color: #df5000">"$1"</span>')
+                                                        }} />
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                                 {cell.output && (
