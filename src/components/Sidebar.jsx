@@ -31,7 +31,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
             type: 'folder',
             children: [
                 { name: 'current_courses.ipynb', icon: <FaPython color="#3776ab" />, type: 'notebook' },
-                { name: 'previous_courses.md', icon: <FaMarkdown color="#519aba" />, type: 'markdown' },
+                { name: 'previous_courses.ipynb', icon: <FaPython color="#3776ab" />, type: 'notebook' },
             ]
         },
         {
@@ -112,7 +112,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
 
                 <div className="d-flex flex-column">
                     <div className="px-2 py-1 d-flex align-items-center" style={{ fontWeight: 'bold', cursor: 'pointer', color: 'var(--vscode-text)' }}>
-                        <VscChevronDown className="me-1" /> PORTFOLIO
+                        <VscChevronDown className="me-1" /> KARIM AI SITE
                     </div>
 
                     {structure.map(item => renderItem(item))}

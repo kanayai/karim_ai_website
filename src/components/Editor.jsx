@@ -27,7 +27,7 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile }) => {
         }
 
         if (activeFile.endsWith('.ipynb')) {
-            return <NotebookViewer />;
+            return <NotebookViewer fileName={activeFile} />;
         }
 
         if (activeFile.endsWith('.html')) {

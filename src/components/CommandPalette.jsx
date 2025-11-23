@@ -11,7 +11,7 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
         { name: 'publications.md', path: 'publications.md' },
         { name: 'projects.md', path: 'projects.md' },
         { name: 'current_courses.ipynb', path: 'current_courses.ipynb' },
-        { name: 'previous_courses.md', path: 'previous_courses.md' },
+        { name: 'previous_courses.ipynb', path: 'previous_courses.ipynb' },
         { name: 'contact.css', path: 'contact.css' },
     ];
 
@@ -70,7 +70,7 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
                             ref={inputRef}
                             type="text"
                             className="form-control bg-transparent border-0 text-white shadow-none"
-                            placeholder="Search files..."
+                            placeholder="Search site"
                             value={query}
                             onChange={e => setQuery(e.target.value)}
                             onKeyDown={handleKeyDown}
