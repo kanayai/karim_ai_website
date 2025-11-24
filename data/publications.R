@@ -327,21 +327,8 @@ html_content <- paste0('
             </div>
         </div>
 
-        <!-- Controls -->
-        <div class="controls-section">
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Search title, authors, or journal...">
-                <i class="fas fa-search"></i>
-            </div>
-            <div class="filter-chips" id="yearFilters">
-                <button class="chip active" data-year="all">All Years</button>
-                ', paste0(sapply(unique(pubs_df$year), function(y) paste0('<button class="chip" data-year="', y, '">', y, "</button>")), collapse = ""), '
-            </div>
-        </div>
-
         <!-- Grid -->
         <div class="publications-grid" id="pubGrid">
-            <div class="no-results">No publications found matching your search.</div>
 ')
 
 # Add cards
@@ -357,7 +344,7 @@ for (i in seq_len(nrow(pubs_df))) {
     }
 
     html_content <- paste0(html_content, '
-            <div class="pub-card" data-year="', pub$year, '" data-search="', tolower(paste(pub$title, pub$authors, pub$journal)), '">
+            <div class="pub-card">
                 <div class="pub-header">
                     <span class="pub-year">', pub$year, '</span>
                     <i class="', icon_class, ' pub-type"></i>
@@ -376,55 +363,12 @@ for (i in seq_len(nrow(pubs_df))) {
   ')
 }
 
-html_content <- paste0(html_content, '
+html_content <- paste0(html_content, "
         </div>
     </div>
-
-    <script>
-        const searchInput = document.getElementById("searchInput");
-        const yearFilters = document.getElementById("yearFilters");
-        const cards = document.querySelectorAll(".pub-card");
-        const noResults = document.querySelector(".no-results");
-        let activeYear = "all";
-
-        // Search functionality
-        searchInput.addEventListener("input", (e) => {
-            filterPublications(e.target.value.toLowerCase(), activeYear);
-        });
-
-        // Year filter functionality
-        yearFilters.addEventListener("click", (e) => {
-            if (e.target.classList.contains("chip")) {
-                // Update active state
-                document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
-                e.target.classList.add("active");
-
-                activeYear = e.target.dataset.year;
-                filterPublications(searchInput.value.toLowerCase(), activeYear);
-            }
-        });
-
-        function filterPublications(searchTerm, year) {
-            let visibleCount = 0;
-
-            cards.forEach(card => {
-                const matchesSearch = card.dataset.search.includes(searchTerm);
-                const matchesYear = year === "all" || card.dataset.year === year;
-
-                if (matchesSearch && matchesYear) {
-                    card.style.display = "flex";
-                    visibleCount++;
-                } else {
-                    card.style.display = "none";
-                }
-            });
-
-            noResults.style.display = visibleCount === 0 ? "block" : "none";
-        }
-    </script>
 </body>
 </html>
-')
+")
 
 # Write to public directory
 writeLines(html_content, "public/publications.html")

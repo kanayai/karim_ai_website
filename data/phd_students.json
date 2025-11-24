@@ -1,0 +1,43 @@
+[
+    {
+        "name": "Alice Davis",
+        "thesis": "Modelling techniques for time-to-event data analysis",
+        "department": "Mathematical Sciences",
+        "supervisors": "Karim Anaya-Izquierdo",
+        "link": "https://researchportal.bath.ac.uk/en/studentTheses/modelling-techniques-for-time-to-event-data-analysis",
+        "year": "2024",
+        "tags": [
+            "Time-to-Event",
+            "Survival Analysis",
+            "Statistics"
+        ]
+    },
+    {
+        "name": "Thomas Pennington",
+        "thesis": "Geometric Markov Chain Monte Carlo",
+        "department": "Mathematical Sciences (SAMBa)",
+        "supervisors": "Karim Anaya-Izquierdo",
+        "link": "https://researchportal.bath.ac.uk/en/studentTheses/geometric-markov-chain-monte-carlo",
+        "year": "2023",
+        "tags": [
+            "MCMC",
+            "Geometry",
+            "SAMBa",
+            "Statistics"
+        ]
+    },
+    {
+        "name": "James Evans",
+        "thesis": "Impact Damage Modelling of Composite Laminates Using Statistical Methods to Assess Strength Reduction for Rapid Design",
+        "department": "Mechanical Engineering (SAMBa)",
+        "supervisors": "Andrew Rhead, Karim Anaya-Izquierdo",
+        "link": "https://researchportal.bath.ac.uk/en/studentTheses/impact-damage-modelling-of-composite-laminates-using-statistical-",
+        "year": "2023",
+        "tags": [
+            "Composites",
+            "Impact Damage",
+            "Statistical Modelling",
+            "SAMBa"
+        ]
+    }
+]
