@@ -64,7 +64,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
                         style={{
                             cursor: 'pointer',
                             color: 'var(--vscode-text)',
-                            paddingLeft: `${depth * 12 + 10}px`,
+                            paddingLeft: `${depth * 20 + 10}px`,
                             fontWeight: 'bold'
                         }}
                         onClick={() => toggleFolder(item.name)}
@@ -85,7 +85,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
                     cursor: 'pointer',
                     backgroundColor: activeFile === item.name ? 'var(--vscode-hover-bg)' : 'transparent',
                     color: 'var(--vscode-text)',
-                    paddingLeft: `${depth * 12 + 24}px` // Indent based on depth + icon space
+                    paddingLeft: `${depth * 20 + 24}px` // Indent based on depth + icon space
                 }}
                 onClick={() => setActiveFile(item.name)}
             >
