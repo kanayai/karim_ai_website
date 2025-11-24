@@ -23,6 +23,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
             type: 'folder',
             children: [
                 { name: 'publications.html', icon: <span>HTML</span>, type: 'html', path: '/publications.html' },
+                { name: 'publications_alt.ipynb', icon: <FaPython color="#3776ab" />, type: 'notebook' },
                 { name: 'projects.html', icon: <span>HTML</span>, type: 'html', path: '/projects.html' },
                 { name: 'phd_students.html', icon: <span>HTML</span>, type: 'html', path: '/phd_students.html' },
             ]

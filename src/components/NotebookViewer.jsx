@@ -1,8 +1,34 @@
 import React from 'react';
 import { VscPlay, VscEllipsis } from 'react-icons/vsc';
+import publicationsData from '../../data/publications.json';
 
 const NotebookViewer = ({ fileName }) => {
+    const publicationsNotebook = publicationsData.map((pub, index) => ({
+        type: 'code',
+        input: [
+            { type: 'comment', text: `# ${pub.year}` },
+            { type: 'code', text: `publication = {` },
+            { type: 'code', text: `    "title": "${pub.title.replace(/"/g, '\\"')}",` },
+            { type: 'code', text: `    "authors": "${pub.authors.replace(/"/g, '\\"')}",` },
+            { type: 'code', text: `    "journal": "${pub.journal.replace(/"/g, '\\"')}"` },
+            { type: 'code', text: `}` },
+            { type: 'code', text: `display(publication)` }
+        ],
+        output: {
+            type: 'table',
+            headers: ['Field', 'Details'],
+            rows: [
+                ['Title', pub.title],
+                ['Authors', pub.authors],
+                ['Journal', pub.journal],
+                ['Link', pub.link ? <a href={pub.link} target="_blank" rel="noreferrer" style={{ color: '#3794ff' }}>{pub.link}</a> : 'N/A']
+            ]
+        },
+        executionCount: index + 1
+    }));
+
     const notebooks = {
+        'publications_alt.ipynb': publicationsNotebook,
         'current_courses.ipynb': [
             {
                 type: 'code',
