@@ -15,7 +15,8 @@ publications_df`;
             title: pub.title.length > 60 ? pub.title.substring(0, 60) + '...' : pub.title,
             authors: pub.authors.length > 40 ? pub.authors.substring(0, 40) + '...' : pub.authors,
             journal: pub.journal.length > 35 ? pub.journal.substring(0, 35) + '...' : pub.journal,
-            link: pub.link ? 'Yes' : 'No'
+            link: pub.link ? 'Yes' : 'No',
+            url: pub.link || ''
         }));
         return tibbleData;
     };
@@ -72,8 +73,6 @@ publications_df`;
                                         .replace(/^(library)/g, '<span style="color: #C586C0">$1</span>')
                                         .replace(/(fromJSON|as_tibble)/g, '<span style="color: #DCDCAA">$1</span>')
                                         .replace(/"([^"]*)"/g, '<span style="color: #CE9178">"$1"</span>')
-                                        .replace(/(&lt;-)/g, '<span style="color: #D4D4D4">←</span>')
-                                        .replace(/<-/g, '<span style="color: #D4D4D4">←</span>')
                                 }} />
                             </div>
                         ))}
@@ -83,7 +82,7 @@ publications_df`;
 
             {/* Bottom Terminal/Console Area - Tibble Output */}
             <div className="d-flex flex-column" style={{
-                height: '50%',
+                height: '60%',
                 backgroundColor: 'var(--vscode-bg)',
                 color: 'var(--vscode-text)'
             }}>
@@ -210,9 +209,25 @@ publications_df`;
                             </thead>
                             <tbody>
                                 {tibbleData.map((row, idx) => (
-                                    <tr key={idx} style={{
-                                        backgroundColor: idx % 2 === 0 ? 'transparent' : 'rgba(128, 128, 128, 0.05)'
-                                    }}>
+                                    <tr
+                                        key={idx}
+                                        onClick={() => row.url && window.open(row.url, '_blank')}
+                                        style={{
+                                            backgroundColor: idx % 2 === 0 ? 'transparent' : 'rgba(128, 128, 128, 0.05)',
+                                            cursor: row.url ? 'pointer' : 'default',
+                                            transition: 'background-color 0.2s'
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            if (row.url) {
+                                                e.currentTarget.style.backgroundColor = 'rgba(79, 201, 176, 0.15)';
+                                            }
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            if (row.url) {
+                                                e.currentTarget.style.backgroundColor = idx % 2 === 0 ? 'transparent' : 'rgba(128, 128, 128, 0.05)';
+                                            }
+                                        }}
+                                    >
                                         <td style={{
                                             padding: '6px 12px',
                                             color: '#858585',
