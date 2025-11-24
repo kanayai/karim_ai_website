@@ -40,7 +40,6 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
             type: 'folder',
             children: [
                 { name: 'index.html', icon: <span>HTML</span>, type: 'html', path: '/blog/index.html' },
-                { name: 'first-post.html', icon: <span>HTML</span>, type: 'html', path: '/blog/posts/first-post.html' },
             ]
         },
         { name: 'about_me.md', icon: <FaMarkdown color="#519aba" />, type: 'markdown' },
