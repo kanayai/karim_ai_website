@@ -91,6 +91,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
         { name: 'GitHub', url: 'https://github.com/kanayai' },
         { name: 'Google Scholar', url: 'https://scholar.google.com/citations?user=SrcprVQAAAAJ&hl=en' },
         { name: 'ORCID', url: 'https://orcid.org/0000-0001-9718-5256' },
+        { name: 'Web of Science', url: 'https://www.webofscience.com/wos/author/record/E-9369-2013' },
         { name: 'Bath University', url: 'https://researchportal.bath.ac.uk/en/persons/karim-anaya-izquierdo/' }
     ];
 
