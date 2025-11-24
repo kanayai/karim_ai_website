@@ -18,6 +18,12 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile }) => {
 
     // Mock content for files that don't exist on disk
     const fileContent = {
+        'welcome.md': `# Welcome
+
+![Blackboard](/images/blackboard.png)
+
+Welcome to my academic portfolio.
+`,
         'about_me.md': `# About Me
 
 My name is **Karim Anaya‑Izquierdo**. It is pronounced *is‑key‑air‑dow*.
