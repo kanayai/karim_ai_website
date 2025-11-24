@@ -23,7 +23,6 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
             type: 'folder',
             children: [
                 { name: 'publications.html', icon: <span>HTML</span>, type: 'html', path: '/publications.html' },
-                { name: 'publications.md', icon: <FaMarkdown color="#519aba" />, type: 'markdown' },
                 { name: 'projects.md', icon: <FaMarkdown color="#519aba" />, type: 'markdown' },
             ]
         },
