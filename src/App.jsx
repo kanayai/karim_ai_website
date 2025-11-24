@@ -4,8 +4,8 @@ import Editor from './components/Editor';
 import './App.css';
 
 function App() {
-  const [openFiles, setOpenFiles] = useState(['about_me.md']);
-  const [activeFile, setActiveFile] = useState('about_me.md');
+  const [openFiles, setOpenFiles] = useState(['welcome.md']);
+  const [activeFile, setActiveFile] = useState('welcome.md');
   const [theme, setTheme] = useState('dark');
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
     // Initialize based on window width
