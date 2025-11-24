@@ -8,6 +8,8 @@ This is a VS Code-themed portfolio website for Karim Anaya-Izquierdo, Senior Lec
 - **Styling**: Bootstrap + Custom CSS (VS Code theme)
 - **Icons**: React Icons (VS Code icons)
 - **Blog**: Quarto for static blog generation
+- **Data Processing**: R (tidyverse, jsonlite) for generating HTML pages
+- **API Integration**: ORCID Public API for publications
 - **Deployment**: Netlify
 
 ## Website Structure
@@ -29,55 +31,48 @@ The website uses a VS Code-inspired interface with:
   - Career history (LSHTM, Open University, University of Bath)
 
 #### 2. Research
-The Research folder contains:
+The Research folder contains three dynamically generated HTML pages with a modern Magazine/Grid layout:
 
 ##### publications.html
-- Dynamic HTML page generated from R script
-- Displays publications grouped by year
-- Includes DOI links for each publication
-- Data source: `data/publications.json`
+- **Auto-generated** from ORCID public API (`0000-0001-9718-5256`)
+- **Update Command**: `npm run update-publications` (fetches latest from ORCID and regenerates HTML)
+- **Features**:
+  - Responsive grid layout with hover effects
+  - Full author lists (not "et al.")
+  - Publication cards with year badges and type icons
+  - Direct links to DOI/publication sources
+  - VS Code dark theme styling
+- **Data Flow**:
+  1. `scripts/fetch_orcid_publications.js` → fetches from ORCID API
+  2. `data/publications.json` → stores publication data
+  3. `data/publications.R` → generates HTML with tidyverse
+  4. `public/publications.html` → final output
 
-##### projects.md
-Two main research projects:
+##### projects.html
+- **Auto-generated** from `data/projects.json` using R
+- **Update Command**: `Rscript data/projects.R`
+- **Features**:
+  - Magazine-style grid layout
+  - Project cards with role badges
+  - Tags for quick categorization
+  - Links to project websites
+- **Current Projects**:
+  - **GKN Prosperity Partnership**: Aerospace sustainability research (EPSRC funded)
+  - **CerTest**: Composite structures certification methodology (Programme Grant EP/S017038/1)
 
-**CerTest – Certification for Design: Reshaping the Testing Pyramid**
-- Multi-university collaboration (Bristol, Bath, Southampton, Exeter)
-- EPSRC Programme Grant (EP/S017038/1)
-- Focus: Lighter, more cost and fuel-efficient composite aero-structures
-- Four research challenges:
-  1. Multi-scale Performance Modelling
-  2. Features and Damage Characterisation
-  3. Data-Rich High Fidelity Structural Characterisation
-  4. Integration & Methodology Validation
-- Website: [composites-certest.com](https://www.composites-certest.com)
-
-**GKN Prosperity Partnership**
-- Collaboration between University of Bath and GKN Aerospace
-- EPSRC funded
-- Focus areas:
-  - Hydrogen Storage for zero-emission aircraft
-  - Composite Structures (tank boundaries, monocoque structures)
-  - Propulsion Systems
-  - Material Science (functional and structural composite materials)
-- Cross-departmental: Mechanical Engineering, Chemical Engineering, Chemistry, Mathematical Sciences
-
-##### phd_students.md
-Three PhD students supervised:
-
-1. **Alice Davis**
-   - Thesis: Modelling techniques for time-to-event data analysis
-   - Department: Mathematical Sciences
-
-2. **Thomas Pennington**
-   - Thesis: Geometric Markov Chain Monte Carlo
-   - Department: Mathematical Sciences
-   - Programme: SAMBa (EPSRC Centre for Doctoral Training in Statistical Applied Mathematics)
-
-3. **James Evans**
-   - Thesis: Impact Damage Modelling of Composite Laminates Using Statistical Methods
-   - Department: Mechanical Engineering
-   - Programme: SAMBa
-   - Co-supervisor: Andrew Rhead
+##### phd_students.html
+- **Auto-generated** from `data/phd_students.json` using R
+- **Update Command**: `Rscript data/phd_students.R`
+- **Features**:
+  - Grid layout with student cards
+  - Full thesis abstracts (text-clamped to 4 lines)
+  - Department and supervisor information
+  - Tags for research areas
+  - Links to thesis pages on Bath Research Portal
+- **Current Students**:
+  1. **Alice Davis**: Time-to-event data analysis
+  2. **Thomas Pennington**: Geometric MCMC (SAMBa)
+  3. **James Evans**: Composite laminates impact damage (SAMBa, co-supervised with Andrew Rhead)
 
 #### 3. Teaching
 - **current_courses.ipynb**: Jupyter notebook with current teaching assignments
@@ -139,6 +134,7 @@ Located in the activity bar, clicking the Accounts icon reveals a dropdown menu 
 - **Jupyter Notebooks (.ipynb)**: Custom notebook viewer component
 - **CSS (.css)**: Displayed as plain text with syntax highlighting
 - **R (.R)**: Special handling with instructions for running scripts
+- **JSON (.json)**: Displayed as plain text with syntax highlighting
 
 ## Design Philosophy
 - **VS Code Aesthetic**: Mimics the familiar Visual Studio Code interface
@@ -146,19 +142,43 @@ Located in the activity bar, clicking the Accounts icon reveals a dropdown menu 
 - **Responsive**: Mobile-friendly with collapsible sidebar
 - **Interactive**: File-based navigation creates an engaging user experience
 - **Content-Rich**: Comprehensive information about research, teaching, and publications
+- **Automated**: ORCID integration keeps publications up-to-date automatically
 
 ## Technical Notes
 - Content for `.md` and `.css` files is hardcoded in `Editor.jsx` for display
 - Physical files exist on disk for version control and consistency
 - Blog posts are generated via Quarto and served as static HTML
-- Publications are managed via JSON and processed with R script
+- **Publications are auto-fetched from ORCID** using Node.js script
+- **Projects and PhD students pages are generated from JSON** using R (tidyverse)
+- All research pages use a consistent Magazine/Grid layout with VS Code theme colors
 - Bootstrap provides responsive grid and utility classes
 - Custom CSS variables enable easy theme switching
+
+## Data Management Workflows
+
+### Updating Publications
+```bash
+# Automatically fetch from ORCID and regenerate HTML
+npm run update-publications
+
+# This runs:
+# 1. node scripts/fetch_orcid_publications.js  (fetches from ORCID)
+# 2. Rscript data/publications.R                (generates HTML)
+```
+
+### Updating Projects
+1. Edit `data/projects.json` to add/modify projects
+2. Run `Rscript data/projects.R` to regenerate `public/projects.html`
+
+### Updating PhD Students
+1. Edit `data/phd_students.json` to add/modify students
+2. Run `Rscript data/phd_students.R` to regenerate `public/phd_students.html`
 
 ## Future Enhancements
 The modular structure allows for easy additions:
 - Additional blog posts via Quarto
-- New research projects in `projects.md`
-- Updated publications in `data/publications.json`
-- New course materials as Jupyter notebooks
-- Additional markdown pages for other content
+- Automatic fetching of project details from research portal APIs
+- Enhanced search/filter functionality for publications
+- Timeline visualization for career history
+- Integration with other academic profile services
+
