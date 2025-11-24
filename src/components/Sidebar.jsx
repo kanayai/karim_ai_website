@@ -3,7 +3,7 @@ import { VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscA
 import { FaReact, FaJs, FaMarkdown, FaPython } from 'react-icons/fa';
 
 const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
-    const [expandedFolders, setExpandedFolders] = useState({ 'Research': true, 'Teaching': true });
+    const [expandedFolders, setExpandedFolders] = useState({});
     const [showAccountsMenu, setShowAccountsMenu] = useState(false);
 
     const toggleFolder = (folderName) => {
