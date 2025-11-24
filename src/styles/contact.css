@@ -1,0 +1,16 @@
+/* Contact Details */
+.contact-info {
+    /* Name */
+    --contact-name: "Prof. Karim AI (Anaya-Izquierdo)";
+    --contact-department: "Mathematical Sciences";
+    --contact-university: "University of Bath, United Kingdom";
+    --contact-email: "kai21@bath.ac.uk";
+    --contact-office: "4West 4.13";
+    --contact-address: "Claverton Down, BA2 7AY, Bath, United Kingdom";
+}
+
+/* Display contact info using pseudo-element */
+.contact-info::before {
+    content: var(--contact-name) " | " var(--contact-department) " | " var(--contact-university) " | " var(--contact-email) " | " var(--contact-office) " | " var(--contact-address);
+    white-space: pre-wrap;
+}
