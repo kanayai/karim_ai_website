@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import publicationsData from '../../data/publications.json';
 
 const RCodeViewer = ({ fileName }) => {
+    const [consoleHeight, setConsoleHeight] = useState(60); // percentage
+    const [isDragging, setIsDragging] = useState(false);
+
     // The R code to display in the editor
     const rCode = `library(jsonlite)
 publications <- fromJSON("data/publications.json")
@@ -15,7 +18,6 @@ publications_df`;
             title: pub.title.length > 60 ? pub.title.substring(0, 60) + '...' : pub.title,
             authors: pub.authors.length > 40 ? pub.authors.substring(0, 40) + '...' : pub.authors,
             journal: pub.journal.length > 35 ? pub.journal.substring(0, 35) + '...' : pub.journal,
-            link: pub.link ? 'Yes' : 'No',
             url: pub.link || ''
         }));
         return tibbleData;
@@ -24,8 +26,35 @@ publications_df`;
     const tibbleData = createTibble();
     const numRows = tibbleData.length;
 
+    const handleMouseDown = () => {
+        setIsDragging(true);
+    };
+
+    const handleMouseMove = (e) => {
+        if (!isDragging) return;
+
+        const container = e.currentTarget;
+        const rect = container.getBoundingClientRect();
+        const newConsoleHeight = ((rect.bottom - e.clientY) / rect.height) * 100;
+
+        // Limit between 20% and 80%
+        if (newConsoleHeight >= 20 && newConsoleHeight <= 80) {
+            setConsoleHeight(newConsoleHeight);
+        }
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+    };
+
     return (
-        <div className="d-flex flex-column h-100" style={{ backgroundColor: 'var(--vscode-editor-bg)' }}>
+        <div
+            className="d-flex flex-column h-100"
+            style={{ backgroundColor: 'var(--vscode-editor-bg)', cursor: isDragging ? 'ns-resize' : 'default' }}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+        >
             {/* Top Editor Area - R Code */}
             <div className="flex-grow-1 d-flex flex-column" style={{
                 borderBottom: '1px solid var(--vscode-border)',
@@ -80,9 +109,24 @@ publications_df`;
                 </div>
             </div>
 
+            {/* Resize Handle */}
+            <div
+                onMouseDown={handleMouseDown}
+                style={{
+                    height: '4px',
+                    backgroundColor: 'var(--vscode-border)',
+                    cursor: 'ns-resize',
+                    position: 'relative',
+                    zIndex: 10,
+                    transition: isDragging ? 'none' : 'background-color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#3794ff'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--vscode-border)'}
+            />
+
             {/* Bottom Terminal/Console Area - Tibble Output */}
             <div className="d-flex flex-column" style={{
-                height: '60%',
+                height: `${consoleHeight}%`,
                 backgroundColor: 'var(--vscode-bg)',
                 color: 'var(--vscode-text)'
             }}>
@@ -106,7 +150,7 @@ publications_df`;
                 }}>
                     {/* Tibble header */}
                     <div style={{ color: '#6A9955', marginBottom: '10px' }}>
-                        # A tibble: {numRows} × 5
+                        # A tibble: {numRows} × 4
                     </div>
 
                     {/* Tibble table */}
@@ -149,12 +193,6 @@ publications_df`;
                                         fontWeight: 'bold',
                                         color: '#4EC9B0'
                                     }}>journal</th>
-                                    <th style={{
-                                        textAlign: 'left',
-                                        padding: '8px 12px',
-                                        fontWeight: 'bold',
-                                        color: '#4EC9B0'
-                                    }}>link</th>
                                 </tr>
                                 <tr style={{ borderBottom: '1px solid var(--vscode-border)' }}>
                                     <th style={{
@@ -165,14 +203,6 @@ publications_df`;
                                         fontStyle: 'italic',
                                         fontSize: '11px'
                                     }}></th>
-                                    <th style={{
-                                        textAlign: 'left',
-                                        padding: '4px 12px',
-                                        fontWeight: 'normal',
-                                        color: '#858585',
-                                        fontStyle: 'italic',
-                                        fontSize: '11px'
-                                    }}>&lt;chr&gt;</th>
                                     <th style={{
                                         textAlign: 'left',
                                         padding: '4px 12px',
@@ -262,10 +292,6 @@ publications_df`;
                                             textOverflow: 'ellipsis',
                                             whiteSpace: 'nowrap'
                                         }}>{row.journal}</td>
-                                        <td style={{
-                                            padding: '6px 12px',
-                                            color: '#CE9178'
-                                        }}>{row.link}</td>
                                     </tr>
                                 ))}
                             </tbody>
