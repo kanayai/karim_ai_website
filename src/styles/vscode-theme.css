@@ -1,3 +1,5 @@
+@import "./contact.css";
+
 :root {
   /* Dark Theme (Default) */
   --vscode-bg: #1e1e1e;

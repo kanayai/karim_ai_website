@@ -20,19 +20,20 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile }) => {
     const fileContent = {
         'about_me.md': `# About Me
 
-Hi, I'm Karim! I am a passionate researcher and educator in the field of Artificial Intelligence.
+My name is **Karim Anaya‑Izquierdo**. It is pronounced *is‑key‑air‑dow*.
 
-## Research Interests
-- Natural Language Processing
-- Computer Vision
-- AI Ethics
+I am a Senior Lecturer (Associate Professor) in Statistics in the Department of Mathematical Sciences at the University of Bath. I was a research fellow at the Department of Statistics in the Open University in Milton Keynes and then Lecturer in Medical Statistics within the Tropical Epidemiology Group based at the London School of Hygiene and Tropical Medicine before coming to the University of Bath in September 2013.
 
 ## Education
-- Ph.D. in Computer Science, University of Bath
-- M.Sc. in Artificial Intelligence
-- B.Sc. in Computer Science
 
-Contact me at: karim@example.com
+- **PhD in Statistics**, 2006 – National University of Mexico
+- **MSc in Statistics**, 2001 – National University of Mexico
+- **BSc in Actuarial Sciences**, 2000 – ITAM Mexico
+
+## Experience
+
+- **LSHTM** – Lecturer in Medical Statistics (2011‑2013)
+- **Open University** – Postdoctoral Research Fellow (2005‑2011)
 `,
         'projects.md': `# Projects
 
@@ -45,41 +46,21 @@ Building an intelligent coding assistant to help developers write better code fa
 ## Smart Campus
 Using IoT and AI to optimize energy consumption on university campuses.
 `,
-        'contact.css': `.contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    max-width: 500px;
-    margin: 0 auto;
+        'contact.css': `/* Contact Details */
+.contact-info {
+  /* Name */
+  --contact-name: "Prof. Karim AI (Anaya-Izquierdo)";
+  --contact-department: "Mathematical Sciences";
+  --contact-university: "University of Bath, United Kingdom";
+  --contact-email: "kai21@bath.ac.uk";
+  --contact-office: "4West 4.13";
+  --contact-address: "Claverton Down, BA2 7AY, Bath, United Kingdom";
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
-
-label {
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-}
-
-input, textarea {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
-    background-color: #007acc;
-    color: white;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #005fa3;
+/* Display contact info using pseudo-element */
+.contact-info::before {
+  content: var(--contact-name) " | " var(--contact-department) " | " var(--contact-university) " | " var(--contact-email) " | " var(--contact-office) " | " var(--contact-address);
+  white-space: pre-wrap;
 }
 `
     };
