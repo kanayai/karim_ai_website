@@ -7,7 +7,7 @@ const RCodeViewer = ({ fileName }) => {
 
     // The R code to display in the editor
     const rCode = `library(jsonlite)
-publications <- fromJSON("data/publications.json")
+publications    <- fromJSON("data/publications.json")
 publications_df <- as_tibble(publications)
 publications_df`;
 
@@ -88,7 +88,7 @@ publications_df`;
                         ))}
                     </div>
 
-                    {/* Code content with syntax highlighting */}
+                    {/* Code content without syntax highlighting */}
                     <div className="py-3 px-3 flex-grow-1" style={{
                         color: 'var(--vscode-text)',
                         fontFamily: 'Menlo, Monaco, "Courier New", monospace',
@@ -97,12 +97,7 @@ publications_df`;
                     }}>
                         {rCode.split('\n').map((line, i) => (
                             <div key={i} style={{ lineHeight: '1.5', whiteSpace: 'pre' }}>
-                                <span dangerouslySetInnerHTML={{
-                                    __html: line
-                                        .replace(/^(library)/g, '<span style="color: #C586C0">$1</span>')
-                                        .replace(/(fromJSON|as_tibble)/g, '<span style="color: #DCDCAA">$1</span>')
-                                        .replace(/"([^"]*)"/g, '<span style="color: #CE9178">"$1"</span>')
-                                }} />
+                                {line}
                             </div>
                         ))}
                     </div>
