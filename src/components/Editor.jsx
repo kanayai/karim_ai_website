@@ -154,8 +154,8 @@ The partnership brings together expertise from the Departments of Mechanical Eng
         }
 
         if (activeFile.endsWith('.R')) {
-            // Use RCodeViewer for publications_3.R
-            if (activeFile === 'publications_3.R') {
+            // Use RCodeViewer for publications.R
+            if (activeFile === 'publications.R') {
                 return <RCodeViewer fileName={activeFile} />;
             }
 

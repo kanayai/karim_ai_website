@@ -23,7 +23,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
             type: 'folder',
             children: [
                 { name: 'publications.html', icon: <span>HTML</span>, type: 'html', path: '/publications.html' },
-                { name: 'publications_3.R', icon: <span style={{ color: '#276dc3', fontWeight: 'bold', fontSize: '10px' }}>R</span>, type: 'r' },
+                { name: 'publications.R', icon: <span style={{ color: '#276dc3', fontWeight: 'bold', fontSize: '10px' }}>R</span>, type: 'r' },
                 { name: 'projects.html', icon: <span>HTML</span>, type: 'html', path: '/projects.html' },
                 { name: 'phd_students.html', icon: <span>HTML</span>, type: 'html', path: '/phd_students.html' },
             ]
