@@ -1,7 +1,7 @@
 [
   {
-    "date": "August 05, 2025",
-    "authors": "Anaya-Izquierdo, K. et al.",
+    "date": "August 2025",
+    "authors": "Nicole Augustin, Axel Albrecht, Karim Anaya-Izquierdo, Alice Davis, Stefan Meining, Heike Puhlmann, Simon Wood",
     "year": "2025",
     "title": "Modeling Tree Survival for Investigating Climate Change Effects",
     "journal": "Journal of the American Statistical Association",
@@ -9,22 +9,22 @@
   },
   {
     "date": "May 2021",
-    "authors": "Anaya-Izquierdo, K. et al.",
+    "authors": "Karim Anaya-Izquierdo, M.C. Jones, Alice Davis",
     "year": "2021",
     "title": "A family of cumulative hazard functions and their frailty connections",
     "journal": "Statistics & Probability Letters",
     "link": "https://doi.org/10.1016/j.spl.2021.109059"
   },
   {
-    "date": "September 03, 2020",
-    "authors": "Anaya-Izquierdo, K. et al.",
+    "date": "September 2020",
+    "authors": "Neal Alexander, Audrey Lenhart, Karim Anaya-Izquierdo",
     "year": "2020",
     "title": "Spatial spillover analysis of a cluster-randomized trial against dengue vectors in Trujillo, Venezuela",
     "journal": "PLOS Neglected Tropical Diseases",
     "link": "https://doi.org/10.1371/journal.pntd.0008576"
   },
   {
-    "date": "July 02, 2020",
+    "date": "July 2020",
     "authors": "Anaya-Izquierdo, K. et al.",
     "year": "2020",
     "title": "Spatial regression and spillover effects in cluster randomized trials with count outcomes",
@@ -32,8 +32,8 @@
     "link": "https://doi.org/10.1111/biom.13316"
   },
   {
-    "date": "December 31, 2019",
-    "authors": "Anaya-Izquierdo, K. et al.",
+    "date": "December 2019",
+    "authors": "Sergey Dolgov, Karim Anaya-Izquierdo, Colin Fox, Robert Scheichl",
     "year": "2019",
     "title": "Approximation and sampling of multivariate probability distributions in the tensor train decomposition",
     "journal": "Statistics and Computing",
@@ -41,7 +41,7 @@
   },
   {
     "date": "2017",
-    "authors": "Anaya-Izquierdo, K. et al.",
+    "authors": "Karim Anaya-Izquierdo, Paul Marriott, Paul Vos, Frank Critchley",
     "year": "2017",
     "title": "On the geometric interplay between goodness-of-fit and estimation: Illustrative examples",
     "journal": "Computational Information Geometry ",
@@ -49,15 +49,15 @@
   },
   {
     "date": "2017",
-    "authors": "Anaya-Izquierdo, K. et al.",
+    "authors": "Karim Anaya-Izquierdo, Frank Critchley, Paul Marriott, Paul Vos",
     "year": "2017",
     "title": "Towards the geometry of model sensitivity",
     "journal": "Computational Information Geometry ",
     "link": "https://doi.org/10.1007/978-3-319-47058-0_2"
   },
   {
-    "date": "July 18, 2014",
-    "authors": "Anaya-Izquierdo, K. et al.",
+    "date": "July 2014",
+    "authors": "Paul Vos, K A Anaya Izquierdo",
     "year": "2014",
     "title": "Using Geometry to Select One Dimensional Exponential Families That Are Monotone Likelihood Ratio in the Sample Space, Are Weakly Unimodal and Can Be Parametrized by a Measure of Central Tendency",
     "journal": "Entropy",
@@ -97,7 +97,7 @@
   },
   {
     "date": "2013",
-    "authors": "Anaya-Izquierdo, K. et al.",
+    "authors": "Karim Anaya-Izquierdo, Frank Critchley, Paul Marriott, Paul Vos",
     "year": "2013",
     "title": "Computational information geometry in statistics",
     "journal": "Geometric Science of Information",
@@ -105,7 +105,7 @@
   },
   {
     "date": "2013",
-    "authors": "Anaya-Izquierdo, K. et al.",
+    "authors": "Karim Anaya-Izquierdo, Frank Critchley, Paul Marriott, Paul Vos",
     "year": "2013",
     "title": "Computational information geometry in statistics",
     "journal": "Geometric Science of Information",

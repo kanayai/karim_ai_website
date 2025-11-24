@@ -1,0 +1,228 @@
+# Projects Display Script
+# Generates an HTML file with formatted projects (Magazine/Grid Layout)
+
+library(tidyverse)
+library(jsonlite)
+
+# Read the projects JSON file
+projects <- fromJSON("data/projects.json")
+
+# Convert to tibble
+projects_df <- projects %>%
+    as_tibble()
+
+# Generate HTML content
+html_content <- paste0('
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #1e1e1e;
+            --card-bg: #252526;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --accent-blue: #007acc;
+            --accent-teal: #4ec9b0;
+            --accent-orange: #ce9178;
+            --border-color: #3e3e42;
+            --hover-bg: #2d2d30;
+        }
+
+        body {
+            font-family: "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-secondary);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--text-primary);
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            font-weight: 300;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h1 i { color: var(--accent-blue); }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .project-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent-blue), var(--accent-teal));
+            opacity: 0.8;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-color: var(--border-color);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .project-role {
+            background: rgba(78, 201, 176, 0.15);
+            color: var(--accent-teal);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .project-icon {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .project-desc {
+            margin-bottom: 25px;
+            font-size: 1rem;
+            flex-grow: 1;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .tag {
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .project-footer {
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        .btn-view {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--accent-blue);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .btn-view:hover {
+            background-color: #0062a3;
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            body { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-flask"></i> Research Projects</h1>
+
+        <div class="projects-grid">
+')
+
+# Add cards
+for (i in seq_len(nrow(projects_df))) {
+    proj <- projects_df[i, ]
+
+    # Generate tags HTML
+    tags_html <- ""
+    for (tag in unlist(proj$tags)) {
+        tags_html <- paste0(tags_html, '<span class="tag">', tag, "</span>")
+    }
+
+    html_content <- paste0(html_content, '
+            <div class="project-card">
+                <div class="project-header">
+                    <span class="project-role">', proj$role, '</span>
+                    <i class="fas fa-project-diagram project-icon"></i>
+                </div>
+                <div class="project-title">', proj$title, '</div>
+                <div class="project-desc">', proj$description, '</div>
+                <div class="tags">
+                    ', tags_html, '
+                </div>
+                <div class="project-footer">
+                    <a href="', proj$link, '" target="_blank" class="btn-view">
+                        Visit Project Website <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+  ')
+}
+
+html_content <- paste0(html_content, "
+        </div>
+    </div>
+</body>
+</html>
+")
+
+# Write to public directory
+writeLines(html_content, "public/projects.html")
+
+cat("✅ Projects HTML generated at public/projects.html\n")

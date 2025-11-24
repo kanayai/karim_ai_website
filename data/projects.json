@@ -1,0 +1,28 @@
+[
+    {
+        "title": "GKN Prosperity Partnership",
+        "description": "A major collaborative research partnership between the University of Bath and GKN Aerospace, funded by the EPSRC. The project, often referred to as 'Fingerprint', focuses on advancing sustainable aerospace technologies including Hydrogen Storage, Composite Structures, and Propulsion Systems.",
+        "link": "https://researchportal.bath.ac.uk/en/projects/gkn-prosperity-partnership/",
+        "role": "Co-Investigator",
+        "year": "Current",
+        "tags": [
+            "Aerospace",
+            "Composites",
+            "Sustainability",
+            "EPSRC"
+        ]
+    },
+    {
+        "title": "CerTest – Certification for Design",
+        "description": "Developing new approaches to enable lighter, more cost and fuel-efficient composite aero-structures. CerTest addresses the challenges hindering step-changes in future engineering design by reshaping the testing pyramid to reduce empiricism and enable a new integrated approach.",
+        "link": "https://www.composites-certest.com",
+        "role": "Co-Investigator",
+        "year": "Current",
+        "tags": [
+            "Composites",
+            "Testing Pyramid",
+            "Aero-structures",
+            "EPSRC"
+        ]
+    }
+]

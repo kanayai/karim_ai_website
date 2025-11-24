@@ -247,9 +247,12 @@ html_content <- paste0('
         .pub-authors {
             color: var(--accent-teal);
             margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            line-height: 1.4;
+        }
+
+        .pub-authors i {
+            margin-right: 8px;
+            color: var(--accent-blue);
         }
 
         .pub-journal {
