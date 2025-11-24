@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "update-publications": "node scripts/fetch_orcid_publications.js && Rscript data/publications.R"
   },
   "dependencies": {
     "bootstrap": "^5.3.8",
