@@ -52,6 +52,8 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
         },
         { name: 'about_me.md', icon: <FaMarkdown color="#519aba" />, type: 'markdown' },
         { name: 'contact.css', icon: <FaReact color="#61dafb" />, type: 'css' },
+        { name: '.gitignore', icon: <span style={{ color: '#858585', fontSize: '10px' }}>GIT</span>, type: 'dummy' },
+        { name: 'README.md', icon: <FaMarkdown color="#519aba" />, type: 'dummy' },
     ];
 
     const renderItem = (item, depth = 0) => {
@@ -77,22 +79,25 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
             );
         }
 
-        return (
-            <div
-                key={item.name}
-                className={`py-1 d-flex align-items-center gap-2 ${activeFile === item.name ? 'active-file' : ''}`}
-                style={{
-                    cursor: 'pointer',
-                    backgroundColor: activeFile === item.name ? 'var(--vscode-hover-bg)' : 'transparent',
-                    color: 'var(--vscode-text)',
-                    paddingLeft: `${depth * 20 + 24}px` // Indent based on depth + icon space
-                }}
-                onClick={() => setActiveFile(item.name)}
-            >
-                {item.icon}
-                <span style={{ fontSize: '13px' }}>{item.name}</span>
-            </div>
-        );
+        if (item.type === 'dummy') {
+            // Render dummy files (e.g., .gitignore, README.md) as non‑interactive entries
+            return (
+                <div
+                    key={item.name}
+                    style={{
+                        cursor: 'default',
+                        backgroundColor: 'transparent',
+                        color: 'var(--vscode-disabledForeground)',
+                        paddingLeft: `${depth * 20 + 24}px`,
+                        fontStyle: 'italic'
+                    }}
+                >
+                    {item.icon}
+                    <span style={{ fontSize: '13px' }}>{item.name}</span>
+                </div>
+            );
+        }
+
     };
 
     const socialLinks = [
