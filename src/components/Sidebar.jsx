@@ -24,15 +24,15 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
             children: [
                 { name: 'publications.html', icon: <span>HTML</span>, type: 'html', path: '/publications.html' },
                 { name: 'publications.R', icon: <span style={{ color: '#276dc3', fontWeight: 'bold', fontSize: '10px' }}>R</span>, type: 'r' },
+                {
+                    name: 'Projects',
+                    type: 'folder',
+                    children: [
+                        { name: 'certest.html', icon: <span>HTML</span>, type: 'html', path: '/projects.html#certest' },
+                        { name: 'gkn_prosperity.html', icon: <span>HTML</span>, type: 'html', path: '/projects.html#gkn' },
+                    ]
+                },
                 { name: 'phd_students.html', icon: <span>HTML</span>, type: 'html', path: '/phd_students.html' },
-            ]
-        },
-        {
-            name: 'Projects',
-            type: 'folder',
-            children: [
-                { name: 'certest.html', icon: <span>HTML</span>, type: 'html', path: '/projects.html' },
-                { name: 'gkn_prosperity.html', icon: <span>HTML</span>, type: 'html', path: '/projects.html' },
             ]
         },
         {
