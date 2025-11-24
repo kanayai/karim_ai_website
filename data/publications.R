@@ -1,5 +1,5 @@
 # Publications Display Script
-# Generates an HTML file with formatted publications
+# Generates an HTML file with formatted publications (Option 3: Magazine/Grid Layout)
 
 library(tidyverse)
 library(jsonlite)
@@ -11,6 +11,13 @@ publications <- fromJSON("data/publications.json")
 pubs_df <- publications %>%
     as_tibble() %>%
     arrange(desc(as.numeric(year)))
+
+# Calculate stats
+total_pubs <- nrow(pubs_df)
+years <- as.numeric(pubs_df$year)
+year_range <- paste0(min(years), "-", max(years))
+journals <- unique(pubs_df$journal)
+journal_count <- length(journals)
 
 # Generate HTML content
 html_content <- paste0('
@@ -29,9 +36,9 @@ html_content <- paste0('
             --accent-blue: #007acc;
             --accent-teal: #4ec9b0;
             --accent-orange: #ce9178;
-            --accent-yellow: #dcdcaa;
             --border-color: #3e3e42;
             --hover-bg: #2d2d30;
+            --input-bg: #3c3c3c;
         }
 
         body {
@@ -44,226 +51,379 @@ html_content <- paste0('
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
+        }
+
+        /* Header & Stats */
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
         h1 {
             color: var(--text-primary);
             font-size: 2.5rem;
-            margin-bottom: 40px;
+            margin: 0;
             font-weight: 300;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        h1 i {
-            color: var(--accent-blue);
-        }
+        h1 i { color: var(--accent-blue); }
 
-        .year-section {
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-        .year-header {
-            color: var(--accent-teal);
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            font-weight: 600;
+        .stats-bar {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            gap: 20px;
         }
 
-        .year-header::after {
-            content: "";
-            flex-grow: 1;
-            height: 1px;
-            background: linear-gradient(to right, var(--border-color), transparent);
-            margin-left: 15px;
-        }
-
-        .publication-card {
-            background-color: var(--card-bg);
+        .stat-item {
+            text-align: center;
+            background: rgba(255,255,255,0.05);
+            padding: 10px 20px;
             border-radius: 8px;
-            padding: 25px;
-            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-teal);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Controls */
+        .controls-section {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex-grow: 1;
             position: relative;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .filter-chips {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .chip {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .chip:hover, .chip.active {
+            background: var(--accent-blue);
+            color: white;
+            border-color: var(--accent-blue);
+        }
+
+        /* Grid Layout */
+        .publications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .pub-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
             border: 1px solid transparent;
-            border-left: 4px solid var(--accent-blue);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
             overflow: hidden;
         }
 
-        .publication-card:hover {
+        .pub-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-teal));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .pub-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            background-color: var(--hover-bg);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             border-color: var(--border-color);
         }
 
-        .pub-type-icon {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 1.2rem;
-            color: var(--border-color);
-            transition: color 0.3s;
+        .pub-card:hover::before {
+            opacity: 1;
         }
 
-        .publication-card:hover .pub-type-icon {
+        .pub-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .pub-year {
+            background: rgba(0, 122, 204, 0.15);
             color: var(--accent-blue);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: bold;
         }
 
-        .title {
-            font-size: 1.25rem;
+        .pub-type {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        .pub-title {
+            font-size: 1.2rem;
             font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 10px;
-            padding-right: 30px;
+            margin-bottom: 15px;
             line-height: 1.4;
+            flex-grow: 1;
         }
 
-        .authors {
-            color: var(--accent-blue);
-            margin-bottom: 8px;
-            font-size: 0.95rem;
+        .pub-meta {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .pub-authors {
+            color: var(--accent-teal);
+            margin-bottom: 5px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .journal {
+        .pub-journal {
             color: var(--accent-orange);
             font-style: italic;
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        .meta-tags {
+        .pub-footer {
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
             display: flex;
-            gap: 10px;
-            margin-top: 15px;
+            justify-content: flex-end;
         }
 
-        .tag {
-            font-size: 0.8rem;
-            padding: 4px 10px;
-            border-radius: 12px;
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .btn-doi {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background-color: rgba(0, 122, 204, 0.1);
-            color: var(--accent-blue);
-            padding: 8px 16px;
-            border-radius: 4px;
+        .btn-view {
+            color: var(--text-primary);
             text-decoration: none;
             font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.2s;
-            margin-top: 10px;
-            border: 1px solid rgba(0, 122, 204, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
         }
 
-        .btn-doi:hover {
-            background-color: var(--accent-blue);
-            color: white;
-            text-decoration: none;
+        .btn-view:hover {
+            color: var(--accent-blue);
         }
 
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-color);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #424242;
-            border-radius: 5px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #4f4f4f;
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            display: none;
         }
 
         @media (max-width: 768px) {
-            body { padding: 20px; }
-            h1 { font-size: 2rem; }
-            .publication-card { padding: 20px; }
+            .publications-grid {
+                grid-template-columns: 1fr;
+            }
+            .header-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .stats-bar {
+                width: 100%;
+                justify-content: space-between;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1><i class="fas fa-book-open"></i> Research Publications</h1>
+        <!-- Header -->
+        <div class="header-section">
+            <h1><i class="fas fa-layer-group"></i> Publications</h1>
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-value">', total_pubs, '</span>
+                    <span class="stat-label">Total</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">', year_range, '</span>
+                    <span class="stat-label">Years</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">', journal_count, '</span>
+                    <span class="stat-label">Journals</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search title, authors, or journal...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="filter-chips" id="yearFilters">
+                <button class="chip active" data-year="all">All Years</button>
+                ', paste0(sapply(unique(pubs_df$year), function(y) paste0('<button class="chip" data-year="', y, '">', y, "</button>")), collapse = ""), '
+            </div>
+        </div>
+
+        <!-- Grid -->
+        <div class="publications-grid" id="pubGrid">
+            <div class="no-results">No publications found matching your search.</div>
 ')
 
-# Group by year and add to HTML
-for (yr in unique(pubs_df$year)) {
-    year_pubs <- pubs_df %>% filter(year == yr)
+# Add cards
+for (i in seq_len(nrow(pubs_df))) {
+    pub <- pubs_df[i, ]
 
-    html_content <- paste0(html_content, "
-    <div class='year-section'>
-        <div class='year-header'>", yr, "</div>
-  ")
-
-    for (i in seq_len(nrow(year_pubs))) {
-        pub <- year_pubs[i, ]
-
-        # Determine icon based on journal name (simple heuristic)
-        icon_class <- "fas fa-file-alt" # Default
-        if (grepl("Conference|Proceedings", pub$journal, ignore.case = TRUE)) {
-            icon_class <- "fas fa-users"
-        } else if (grepl("Thesis", pub$journal, ignore.case = TRUE)) {
-            icon_class <- "fas fa-graduation-cap"
-        }
-
-        html_content <- paste0(html_content, '
-        <div class="publication-card">
-            <i class="', icon_class, ' pub-type-icon"></i>
-            <div class="title">', pub$title, '</div>
-            <div class="authors"><i class="fas fa-user-friends"></i> ', pub$authors, '</div>
-            <div class="journal"><i class="fas fa-book"></i> ', pub$journal, '</div>
-
-            <div class="meta-tags">
-                <span class="tag"><i class="far fa-calendar-alt"></i> ', pub$year, '</span>
-            </div>
-
-            <a href="', pub$link, '" target="_blank" class="btn-doi">
-                <i class="fas fa-external-link-alt"></i> View Publication
-            </a>
-        </div>
-    ')
+    # Icon logic
+    icon_class <- "fas fa-file-alt"
+    if (grepl("Conference|Proceedings", pub$journal, ignore.case = TRUE)) {
+        icon_class <- "fas fa-users"
+    } else if (grepl("Thesis", pub$journal, ignore.case = TRUE)) {
+        icon_class <- "fas fa-graduation-cap"
     }
 
-    html_content <- paste0(html_content, "
-    </div>
-  ")
+    html_content <- paste0(html_content, '
+            <div class="pub-card" data-year="', pub$year, '" data-search="', tolower(paste(pub$title, pub$authors, pub$journal)), '">
+                <div class="pub-header">
+                    <span class="pub-year">', pub$year, '</span>
+                    <i class="', icon_class, ' pub-type"></i>
+                </div>
+                <div class="pub-title">', pub$title, '</div>
+                <div class="pub-meta">
+                    <div class="pub-authors"><i class="fas fa-user-circle"></i> ', pub$authors, '</div>
+                    <div class="pub-journal">', pub$journal, '</div>
+                </div>
+                <div class="pub-footer">
+                    <a href="', pub$link, '" target="_blank" class="btn-view">
+                        Read Paper <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+  ')
 }
 
-html_content <- paste0(html_content, "
+html_content <- paste0(html_content, '
+        </div>
     </div>
+
+    <script>
+        const searchInput = document.getElementById("searchInput");
+        const yearFilters = document.getElementById("yearFilters");
+        const cards = document.querySelectorAll(".pub-card");
+        const noResults = document.querySelector(".no-results");
+        let activeYear = "all";
+
+        // Search functionality
+        searchInput.addEventListener("input", (e) => {
+            filterPublications(e.target.value.toLowerCase(), activeYear);
+        });
+
+        // Year filter functionality
+        yearFilters.addEventListener("click", (e) => {
+            if (e.target.classList.contains("chip")) {
+                // Update active state
+                document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+                e.target.classList.add("active");
+
+                activeYear = e.target.dataset.year;
+                filterPublications(searchInput.value.toLowerCase(), activeYear);
+            }
+        });
+
+        function filterPublications(searchTerm, year) {
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const matchesSearch = card.dataset.search.includes(searchTerm);
+                const matchesYear = year === "all" || card.dataset.year === year;
+
+                if (matchesSearch && matchesYear) {
+                    card.style.display = "flex";
+                    visibleCount++;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            noResults.style.display = visibleCount === 0 ? "block" : "none";
+        }
+    </script>
 </body>
 </html>
-")
+')
 
 # Write to public directory
 writeLines(html_content, "public/publications.html")
 
-cat("✅ Publications HTML generated at public/publications.html\n")
+cat("✅ Publications HTML generated (Option 3) at public/publications.html\n")
