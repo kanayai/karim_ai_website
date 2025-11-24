@@ -28,8 +28,8 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
                     name: 'Projects',
                     type: 'folder',
                     children: [
-                        { name: 'certest.html', icon: <span>HTML</span>, type: 'html', path: '/projects.html#certest' },
-                        { name: 'gkn_prosperity.html', icon: <span>HTML</span>, type: 'html', path: '/projects.html#gkn' },
+                        { name: 'certest.html', icon: <span>HTML</span>, type: 'html', path: '/certest.html' },
+                        { name: 'gkn_prosperity.html', icon: <span>HTML</span>, type: 'html', path: '/gkn_prosperity.html' },
                     ]
                 },
                 { name: 'phd_students.html', icon: <span>HTML</span>, type: 'html', path: '/phd_students.html' },

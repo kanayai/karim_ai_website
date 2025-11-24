@@ -142,8 +142,8 @@ The partnership brings together expertise from the Departments of Mechanical Eng
             else if (activeFile === 'anscombe_quartet.html') src = '/blog/posts/anscombe_quartet.html';
             else if (activeFile === 'publications.html') src = '/publications.html';
             else if (activeFile === 'projects.html') src = '/projects.html';
-            else if (activeFile === 'certest.html') src = '/projects.html#certest';
-            else if (activeFile === 'gkn_prosperity.html') src = '/projects.html#gkn';
+            else if (activeFile === 'certest.html') src = '/certest.html';
+            else if (activeFile === 'gkn_prosperity.html') src = '/gkn_prosperity.html';
             else if (activeFile === 'phd_students.html') src = '/phd_students.html';
 
             return (
