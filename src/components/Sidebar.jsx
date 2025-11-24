@@ -4,6 +4,7 @@ import { FaReact, FaJs, FaMarkdown, FaPython } from 'react-icons/fa';
 
 const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
     const [expandedFolders, setExpandedFolders] = useState({ 'Research': true, 'Teaching': true });
+    const [showAccountsMenu, setShowAccountsMenu] = useState(false);
 
     const toggleFolder = (folderName) => {
         setExpandedFolders(prev => ({ ...prev, [folderName]: !prev[folderName] }));
@@ -87,6 +88,13 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
         );
     };
 
+    const socialLinks = [
+        { name: 'GitHub', url: 'https://github.com/kanayai' },
+        { name: 'Google Scholar', url: 'https://scholar.google.com/citations?user=SrcprVQAAAAJ&hl=en' },
+        { name: 'ORCID', url: 'https://orcid.org/0000-0001-9718-5256' },
+        { name: 'Bath University', url: 'https://researchportal.bath.ac.uk/en/persons/karim-anaya-izquierdo/' }
+    ];
+
     return (
         <div className="d-flex" style={{ height: '100%' }}>
             {/* Activity Bar */}
@@ -99,9 +107,52 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
                     <VscDebugAlt size={24} style={{ cursor: 'pointer' }} />
                     <VscExtensions size={24} style={{ cursor: 'pointer' }} />
                 </div>
-                <div className="d-flex flex-column gap-4">
+                <div className="d-flex flex-column gap-4 align-items-center">
                     <VscColorMode size={24} onClick={toggleTheme} style={{ cursor: 'pointer' }} title="Toggle Theme" />
-                    <VscAccount size={24} style={{ cursor: 'pointer' }} />
+
+                    <div style={{ position: 'relative' }}>
+                        <VscAccount
+                            size={24}
+                            style={{ cursor: 'pointer', color: showAccountsMenu ? 'var(--vscode-text)' : 'inherit' }}
+                            onClick={() => setShowAccountsMenu(!showAccountsMenu)}
+                            title="Accounts"
+                        />
+                        {showAccountsMenu && (
+                            <div style={{
+                                position: 'absolute',
+                                bottom: '0',
+                                left: '35px',
+                                backgroundColor: 'var(--vscode-sidebar-bg)',
+                                border: '1px solid var(--vscode-border)',
+                                boxShadow: '0 4px 10px rgba(0,0,0,0.4)',
+                                zIndex: 1000,
+                                minWidth: '180px',
+                                padding: '5px 0',
+                                borderRadius: '5px',
+                                color: 'var(--vscode-text)'
+                            }}>
+                                <div className="px-3 py-2" style={{ borderBottom: '1px solid var(--vscode-border)', fontWeight: 'bold', fontSize: '12px', opacity: 0.8 }}>
+                                    ACCOUNTS
+                                </div>
+                                {socialLinks.map(link => (
+                                    <a
+                                        key={link.name}
+                                        href={link.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="d-block px-3 py-2 text-decoration-none"
+                                        style={{ color: 'var(--vscode-text)', fontSize: '13px', transition: 'background 0.2s' }}
+                                        onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--vscode-hover-bg)'}
+                                        onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                                        onClick={() => setShowAccountsMenu(false)}
+                                    >
+                                        {link.name}
+                                    </a>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
                     <VscGear size={24} style={{ cursor: 'pointer' }} />
                 </div>
             </div>
