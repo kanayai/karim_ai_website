@@ -132,6 +132,17 @@ html_content <- paste0('
             font-style: italic;
         }
 
+        .description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         .details {
             margin-bottom: 20px;
             font-size: 0.95rem;
@@ -222,6 +233,8 @@ for (i in seq_len(nrow(students_df))) {
                 </div>
                 <div class="name">', student$name, '</div>
                 <div class="thesis">"', student$thesis, '"</div>
+
+                <div class="description">', student$description, '</div>
 
                 <div class="details">
                     <div class="detail-row">

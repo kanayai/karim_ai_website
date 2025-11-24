@@ -10,7 +10,8 @@
             "Time-to-Event",
             "Survival Analysis",
             "Statistics"
-        ]
+        ],
+        "description": "This thesis focusses on the cumulative hazard function as a tool for modelling time-to-event data, as opposed to the more common hazard or survival functions. By focussing on and providing a detailed discussion of the properties of these functions a new framework is explored for building complex models from, the relatively simple, cumulative hazards. Parametric families are thoroughly explored in this thesis by detailing types of parameters for time-to-event models. The discussion leads to the proposal of combination parametric families, which aim to provide flexible behaviour of the cumulative hazard function. A common issue in the analysis of time-to-event data is the presence of informative censoring. This thesis explores new models which are useful for dealing with this issue."
     },
     {
         "name": "Thomas Pennington",
@@ -24,7 +25,8 @@
             "Geometry",
             "SAMBa",
             "Statistics"
-        ]
+        ],
+        "description": "This thesis discusses Markov Chain Monte Carlo (MCMC) sampling algorithms which make use of differential geometry to improve performance. In particular, new sampling algorithms are introduced which exploit the dual geometry of statistical models developed by Amari, Chentsov and other authors in the field of Information Geometry. Two novel sampling algorithms are introduced, called Orthogonal Gibbs and Orthogonal Gradient, which make use of dually-flat geometry."
     },
     {
         "name": "James Evans",
@@ -38,6 +40,7 @@
             "Impact Damage",
             "Statistical Modelling",
             "SAMBa"
-        ]
+        ],
+        "description": "Owing to a combination of the difficulty in detection and disproportionately large component strength reduction, barely visible impact damage (BVID) induced by low energy impacts is a major concern to composite component manufacturers in the aerospace industry. The aim of this study is to present simple statistical damage models built from empirical observations that can aid the component design process by replacing initial impact testing. Data-driven generalised additive models (GAMs) are selected to model the database due to their predictive capabilities."
     }
 ]
