@@ -1,6 +1,7 @@
 import React from 'react';
 import NotebookViewer from './NotebookViewer';
 import CodeViewer from './CodeViewer';
+import RCodeViewer from './RCodeViewer';
 import { VscClose } from 'react-icons/vsc';
 import { FaMarkdown, FaPython, FaJs, FaReact } from 'react-icons/fa';
 
@@ -153,7 +154,12 @@ The partnership brings together expertise from the Departments of Mechanical Eng
         }
 
         if (activeFile.endsWith('.R')) {
-            // Display R code with syntax highlighting
+            // Use RCodeViewer for publications_3.R
+            if (activeFile === 'publications_3.R') {
+                return <RCodeViewer fileName={activeFile} />;
+            }
+
+            // Display R code with syntax highlighting for other R files
             return (
                 <div className="p-4" style={{ color: 'var(--vscode-text)', maxWidth: '1200px', overflowY: 'auto', height: '100%' }}>
                     <h2 style={{ marginBottom: '20px' }}>📊 Publications</h2>
