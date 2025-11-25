@@ -3,7 +3,7 @@ import NotebookViewer from './NotebookViewer';
 import CodeViewer from './CodeViewer';
 import RCodeViewer from './RCodeViewer';
 import WelcomePage from './WelcomePage';
-import { VscClose, VscCloseAll } from 'react-icons/vsc';
+import { VscClose, VscCloseAll, VscChevronRight } from 'react-icons/vsc';
 import { FaMarkdown, FaPython, FaJs, FaReact } from 'react-icons/fa';
 
 const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles }) => {
@@ -254,6 +254,41 @@ The partnership brings together expertise from the Departments of Mechanical Eng
                     </div>
                 )}
             </div>
+
+            {/* Breadcrumbs */}
+            {activeFile && (
+                <div className="d-flex align-items-center px-3" style={{
+                    height: '22px',
+                    backgroundColor: 'var(--vscode-editor-bg)',
+                    borderBottom: '1px solid var(--vscode-border)', // Optional: subtle separator
+                    fontSize: '13px',
+                    color: '#858585', // Dimmed text color
+                    userSelect: 'none'
+                }}>
+                    <span style={{ cursor: 'pointer' }}>karim_ai_website</span>
+                    <VscChevronRight className="mx-1" size={14} />
+                    {(() => {
+                        let path = [];
+                        if (activeFile === 'Welcome') path = [];
+                        else if (activeFile.includes('blog')) path = ['blog']; // Simplified logic
+                        else if (activeFile.endsWith('.R') || activeFile.endsWith('.json')) path = ['data'];
+                        else if (activeFile.endsWith('.html')) path = ['public'];
+                        else if (activeFile.endsWith('.ipynb')) path = ['notebooks'];
+
+                        return (
+                            <>
+                                {path.map((folder, i) => (
+                                    <React.Fragment key={folder}>
+                                        <span style={{ cursor: 'pointer' }}>{folder}</span>
+                                        <VscChevronRight className="mx-1" size={14} />
+                                    </React.Fragment>
+                                ))}
+                                <span style={{ color: 'var(--vscode-text)', cursor: 'pointer' }}>{activeFile}</span>
+                            </>
+                        );
+                    })()}
+                </div>
+            )}
 
             {/* Content Area */}
             <div className="flex-grow-1" style={{ overflow: 'hidden' }}>
