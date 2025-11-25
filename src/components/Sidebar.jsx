@@ -149,7 +149,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                                 color: 'var(--vscode-text)'
                             }}>
                                 <div className="px-3 py-2" style={{ borderBottom: '1px solid var(--vscode-border)', fontWeight: 'bold', fontSize: '12px', opacity: 0.8 }}>
-                                    ACCOUNTS
+                                    Find me on:
                                 </div>
                                 {socialLinks.map(link => (
                                     <a
