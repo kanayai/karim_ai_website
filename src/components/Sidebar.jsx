@@ -3,9 +3,9 @@ import { VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscA
 import { FaReact, FaJs, FaMarkdown, FaPython } from 'react-icons/fa';
 
 const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick }) => {
+    const [activeView, setActiveView] = useState('explorer');
     const [expandedFolders, setExpandedFolders] = useState({});
     const [showAccountsMenu, setShowAccountsMenu] = useState(false);
-    const [showExtensionsMenu, setShowExtensionsMenu] = useState(false);
 
     const toggleFolder = (folderName) => {
         setExpandedFolders(prev => ({ ...prev, [folderName]: !prev[folderName] }));
@@ -120,76 +120,23 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
             <div className="d-flex flex-column justify-content-between align-items-center py-2"
                 style={{ width: '48px', backgroundColor: 'var(--vscode-activity-bar-bg)', color: '#858585' }}>
                 <div className="d-flex flex-column gap-4">
-                    <VscFiles size={24} color="var(--vscode-text)" style={{ cursor: 'pointer' }} />
+                    <VscFiles
+                        size={24}
+                        color={activeView === 'explorer' ? "var(--vscode-text)" : "#858585"}
+                        style={{ cursor: 'pointer', borderLeft: activeView === 'explorer' ? '2px solid var(--vscode-text)' : '2px solid transparent', paddingLeft: '2px' }}
+                        onClick={() => setActiveView('explorer')}
+                        title="Explorer"
+                    />
                     <VscSearch size={24} style={{ cursor: 'pointer' }} onClick={onSearchClick} />
                     <VscSourceControl size={24} style={{ cursor: 'pointer' }} />
                     <VscDebugAlt size={24} style={{ cursor: 'pointer' }} />
-                    <div style={{ position: 'relative' }}>
-                        <VscExtensions
-                            size={24}
-                            style={{ cursor: 'pointer', color: showExtensionsMenu ? 'var(--vscode-text)' : 'inherit' }}
-                            onClick={() => setShowExtensionsMenu(!showExtensionsMenu)}
-                            title="Extensions"
-                        />
-                        {showExtensionsMenu && (
-                            <div style={{
-                                position: 'absolute',
-                                bottom: '0',
-                                left: '35px',
-                                backgroundColor: 'var(--vscode-sidebar-bg)',
-                                border: '1px solid var(--vscode-border)',
-                                boxShadow: '0 4px 10px rgba(0,0,0,0.4)',
-                                zIndex: 1000,
-                                minWidth: '220px',
-                                padding: '5px 0',
-                                borderRadius: '5px',
-                                color: 'var(--vscode-text)'
-                            }}>
-                                <div className="px-3 py-2" style={{ borderBottom: '1px solid var(--vscode-border)', fontWeight: 'bold', fontSize: '12px', opacity: 0.8 }}>
-                                    Extensions
-                                </div>
-                                <div
-                                    className="d-block px-3 py-2 text-decoration-none"
-                                    style={{ color: 'var(--vscode-text)', fontSize: '13px', cursor: 'pointer', transition: 'background 0.2s' }}
-                                    onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--vscode-hover-bg)'}
-                                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                                    onClick={() => {
-                                        setActiveFile('retro_game.exe');
-                                        setShowExtensionsMenu(false);
-                                    }}
-                                >
-                                    👾 Play Retro Game
-                                </div>
-                                <div className="px-3 py-2" style={{ borderTop: '1px solid var(--vscode-border)', fontWeight: 'bold', fontSize: '11px', opacity: 0.6, marginTop: '5px' }}>
-                                    COLLABORATORS
-                                </div>
-                                <a
-                                    href="https://www.lshtm.ac.uk/aboutus/people/alexander.neal"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="d-block px-3 py-2 text-decoration-none"
-                                    style={{ color: 'var(--vscode-text)', fontSize: '13px', transition: 'background 0.2s' }}
-                                    onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--vscode-hover-bg)'}
-                                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                                    onClick={() => setShowExtensionsMenu(false)}
-                                >
-                                    Alexander Neal
-                                </a>
-                                <a
-                                    href="https://www.otago.ac.nz/physics/staff/colinfox"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="d-block px-3 py-2 text-decoration-none"
-                                    style={{ color: 'var(--vscode-text)', fontSize: '13px', transition: 'background 0.2s' }}
-                                    onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--vscode-hover-bg)'}
-                                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                                    onClick={() => setShowExtensionsMenu(false)}
-                                >
-                                    Colin Fox
-                                </a>
-                            </div>
-                        )}
-                    </div>
+                    <VscExtensions
+                        size={24}
+                        color={activeView === 'extensions' ? "var(--vscode-text)" : "#858585"}
+                        style={{ cursor: 'pointer', borderLeft: activeView === 'extensions' ? '2px solid var(--vscode-text)' : '2px solid transparent', paddingLeft: '2px' }}
+                        onClick={() => setActiveView('extensions')}
+                        title="Extensions"
+                    />
                 </div>
                 <div className="d-flex flex-column gap-4 align-items-center">
                     <VscColorMode size={24} onClick={toggleTheme} style={{ cursor: 'pointer' }} title="Toggle Theme" />
@@ -241,18 +188,43 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                 </div>
             </div>
 
-            {/* Explorer */}
+            {/* Sidebar Content */}
             <div className="d-flex flex-column" style={{ width: '250px', backgroundColor: 'var(--vscode-sidebar-bg)', borderRight: '1px solid var(--vscode-border)' }}>
-                <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>Explorer</div>
-
-                <div className="d-flex flex-column">
-                    <div className="px-2 py-1 d-flex align-items-center" style={{ fontWeight: 'bold', cursor: 'pointer', color: 'var(--vscode-text)' }}>
-                        <VscChevronDown className="me-1" /> KARIM AI SITE
-                        <VscEllipsis className="ms-auto" />
-                    </div>
-
-                    {structure.map(item => renderItem(item))}
-                </div>
+                {activeView === 'explorer' ? (
+                    <>
+                        <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>Explorer</div>
+                        <div className="d-flex flex-column">
+                            <div className="px-2 py-1 d-flex align-items-center" style={{ fontWeight: 'bold', cursor: 'pointer', color: 'var(--vscode-text)' }}>
+                                <VscChevronDown className="me-1" /> KARIM AI SITE
+                                <VscEllipsis className="ms-auto" />
+                            </div>
+                            {structure.map(item => renderItem(item))}
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>Extensions</div>
+                        <div className="d-flex flex-column p-2">
+                            <div
+                                className="d-flex p-2 gap-2"
+                                style={{
+                                    cursor: 'pointer',
+                                    backgroundColor: 'var(--vscode-list-hover-bg)',
+                                    borderRadius: '4px',
+                                    border: '1px solid var(--vscode-border)'
+                                }}
+                                onClick={() => setActiveFile('retro_game.exe')}
+                            >
+                                <div style={{ fontSize: '24px' }}>👾</div>
+                                <div className="d-flex flex-column">
+                                    <div style={{ fontWeight: 'bold', fontSize: '13px', color: 'var(--vscode-text)' }}>Retro Snake Game</div>
+                                    <div style={{ fontSize: '11px', color: '#858585' }}>A classic 8-bit style snake game.</div>
+                                    <div style={{ fontSize: '10px', color: '#0e639c', marginTop: '4px' }}>Karim AI • Installed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );
