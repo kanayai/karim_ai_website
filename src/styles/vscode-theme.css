@@ -13,6 +13,7 @@
   --vscode-tab-active-bg: #1e1e1e;
   --vscode-tab-inactive-bg: #2d2d2d;
   --vscode-hover-bg: #2a2d2e;
+  --vscode-tree-indentGuidesStroke: #585858;
 }
 
 [data-theme="light"] {
@@ -28,6 +29,7 @@
   --vscode-tab-active-bg: #ffffff;
   --vscode-tab-inactive-bg: #ececec;
   --vscode-hover-bg: #e8e8e8;
+  --vscode-tree-indentGuidesStroke: #e5e5e5;
 }
 
 body {

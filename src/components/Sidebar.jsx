@@ -54,7 +54,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
         { name: 'contact.css', icon: <FaReact color="#61dafb" />, type: 'css' },
     ];
 
-    const renderItem = (item, depth = 0) => {
+    const renderItem = (item) => {
         if (item.type === 'folder') {
             const isExpanded = expandedFolders[item.name];
             return (
@@ -64,7 +64,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
                         style={{
                             cursor: 'pointer',
                             color: 'var(--vscode-text)',
-                            paddingLeft: `${depth * 20 + 10}px`,
+                            paddingLeft: '10px',
                             fontWeight: 'bold'
                         }}
                         onClick={() => toggleFolder(item.name)}
@@ -72,7 +72,14 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
                         {isExpanded ? <VscChevronDown /> : <VscChevronRight />}
                         <span style={{ fontSize: '13px' }}>{item.name}</span>
                     </div>
-                    {isExpanded && item.children.map(child => renderItem(child, depth + 1))}
+                    {isExpanded && (
+                        <div style={{
+                            marginLeft: '14px',
+                            borderLeft: '1px solid var(--vscode-tree-indentGuidesStroke)'
+                        }}>
+                            {item.children.map(child => renderItem(child))}
+                        </div>
+                    )}
                 </div>
             );
         }
@@ -85,7 +92,8 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
                     cursor: 'pointer',
                     backgroundColor: activeFile === item.name ? 'var(--vscode-hover-bg)' : 'transparent',
                     color: 'var(--vscode-text)',
-                    paddingLeft: `${depth * 20 + 24}px` // Indent based on depth + icon space
+                    paddingLeft: '10px',
+                    marginLeft: '4px'
                 }}
                 onClick={() => setActiveFile(item.name)}
             >
