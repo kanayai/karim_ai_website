@@ -3,7 +3,7 @@ import NotebookViewer from './NotebookViewer';
 import CodeViewer from './CodeViewer';
 import RCodeViewer from './RCodeViewer';
 import WelcomePage from './WelcomePage';
-import { VscClose, VscCloseAll, VscChevronRight } from 'react-icons/vsc';
+import { VscClose, VscCloseAll, VscChevronRight, VscLaw } from 'react-icons/vsc';
 import { FaMarkdown, FaPython, FaJs, FaReact } from 'react-icons/fa';
 
 const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme }) => {
@@ -17,6 +17,7 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
         if (filename.endsWith('.html')) return <span style={{ color: '#e34c26', fontWeight: 'bold', fontSize: '12px' }}>&lt;&gt;</span>;
 
         if (filename.endsWith('.R')) return <span style={{ color: '#276dc3', fontWeight: 'bold', fontSize: '10px' }}>R</span>;
+        if (filename.endsWith('.txt')) return <VscLaw color="#d4d4d4" />;
         return null;
     };
 
@@ -79,6 +80,27 @@ The partnership brings together expertise from the Departments of Mechanical Eng
 **Link:** [View Thesis](https://researchportal.bath.ac.uk/en/studentTheses/impact-damage-modelling-of-composite-laminates-using-statistical-)
 `,
 
+        'LICENSE.txt': `MIT License
+
+Copyright (c) 2025 Karim Anaya-Izquierdo
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.`,
     };
 
     const renderContent = () => {
@@ -160,12 +182,13 @@ The partnership brings together expertise from the Departments of Mechanical Eng
             );
         }
 
-        // Use CodeViewer for MD, CSS, and JSON
-        if (activeFile.endsWith('.md') || activeFile.endsWith('.css') || activeFile.endsWith('.json')) {
+        // Use CodeViewer for MD, CSS, JSON, and TXT
+        if (activeFile.endsWith('.md') || activeFile.endsWith('.css') || activeFile.endsWith('.json') || activeFile.endsWith('.txt')) {
             const content = fileContent[activeFile] || `Content for ${activeFile} not found.`;
             let language = 'markdown';
             if (activeFile.endsWith('.css')) language = 'css';
             if (activeFile.endsWith('.json')) language = 'json';
+            if (activeFile.endsWith('.txt')) language = 'plaintext';
 
             return <CodeViewer content={content} language={language} />;
         }

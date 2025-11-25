@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscAccount, VscGear, VscColorMode, VscChevronRight, VscChevronDown } from 'react-icons/vsc';
+import { VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscAccount, VscGear, VscColorMode, VscChevronRight, VscChevronDown, VscLaw } from 'react-icons/vsc';
 import { FaReact, FaJs, FaMarkdown, FaPython } from 'react-icons/fa';
 
 const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick }) => {
@@ -52,6 +52,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
         { name: 'about_me.html', icon: <span style={{ color: '#e34c26', fontWeight: 'bold', fontSize: '12px' }}>&lt;&gt;</span>, type: 'html' },
         { name: 'contact.html', icon: <span style={{ color: '#e34c26', fontWeight: 'bold', fontSize: '12px' }}>&lt;&gt;</span>, type: 'html' },
         { name: '.gitignore', icon: <VscSourceControl color="#858585" />, type: 'git' },
+        { name: 'LICENSE.txt', icon: <VscLaw color="#d4d4d4" />, type: 'text' },
         { name: 'README.md', icon: <FaMarkdown color="#519aba" />, type: 'markdown' },
     ];
 
