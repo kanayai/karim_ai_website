@@ -109,7 +109,7 @@ If you need to recreate the frontend logic, here is how the core components inte
     - **Help Section**: Links to GitHub (including "Report Issue") and Research Portal.
 
 ### 6. `Statusbar.jsx` & `Terminal.jsx`
-- **Status Bar**: Dynamically displays the language of the active file (e.g., "Markdown", "JavaScript React"). Includes a button to toggle the Terminal.
+- **Status Bar**: Dynamically displays the language of the active file (e.g., "Markdown", "JavaScript React"). Includes a button to toggle the Terminal and a "Powered by Gemini" acknowledgement.
 - **Terminal**: A collapsible panel at the bottom of the screen that mimics a terminal interface. Can be toggled via the Status Bar or `Ctrl + Backtick`.
 
 ---
