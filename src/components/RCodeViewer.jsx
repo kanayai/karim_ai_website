@@ -99,16 +99,7 @@ publications_df`;
                 borderBottom: '1px solid var(--vscode-border)',
                 minHeight: '0'
             }}>
-                {/* File tab */}
-                <div className="px-3 py-1 d-flex align-items-center gap-2" style={{
-                    backgroundColor: 'var(--vscode-bg)',
-                    borderBottom: '1px solid var(--vscode-border)',
-                    fontSize: '13px',
-                    color: 'var(--vscode-text)'
-                }}>
-                    <span style={{ color: '#276dc3', fontWeight: 'bold', fontSize: '10px' }}>R</span>
-                    <span>{fileName}</span>
-                </div>
+
 
                 {/* Code editor area */}
                 <div className="flex-grow-1 d-flex" style={{ overflowY: 'auto' }}>
