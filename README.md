@@ -1,122 +1,144 @@
 # Karim AI Portfolio Website
 
-A VS Code-themed portfolio website built with React, Vite, and Quarto for blogging.
+A personal academic portfolio website designed to mimic the Visual Studio Code interface. It features a React-based frontend, R-generated content for research data, and a Quarto-powered blog.
 
-## Development
+## 🚀 Quick Start
 
-Start the development server:
-```bash
-npm run dev
-```
+### Prerequisites
+- Node.js & npm
+- R (with `tidyverse` and `jsonlite` packages)
+- Quarto CLI
 
-## Managing Publications
+### Installation
+1.  Clone the repository.
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+3.  Start the development server:
+    ```bash
+    npm run dev
+    ```
 
-Publications are **automatically fetched from ORCID** and converted to HTML:
-
-### Update Publications from ORCID
-```bash
-npm run update-publications
-```
-
-This command:
-1. Fetches latest publications from ORCID public API (`0000-0001-9718-5256`)
-2. Updates `data/publications.json` with full author lists
-3. Regenerates `public/publications.html` using R (tidyverse)
-
-The generated page features:
-- Magazine/Grid layout with VS Code dark theme
-- Full author lists (not "et al.")
-- Publication cards with year badges and type icons
-- Direct links to DOI/publication sources
-
-### Manual Updates
-If you need to manually edit publications:
-1. Edit `data/publications.json`
-2. Run `Rscript data/publications.R` to regenerate HTML
-
-## Managing Research Pages
-
-### Projects Page
-To update the projects page:
-1. Edit `data/projects.json` to add/modify projects
-2. Run `Rscript data/projects.R` to regenerate `public/projects.html`
-
-### PhD Students Page
-To update the PhD students page:
-1. Edit `data/phd_students.json` to add/modify students
-2. Run `Rscript data/phd_students.R` to regenerate `public/phd_students.html`
-
-All research pages use a consistent Magazine/Grid layout with:
-- Responsive card design
-- Hover effects and animations
-- VS Code dark theme colors
-- FontAwesome icons
-
-## Adding a New Blog Post
-
-The blog is built using **Quarto**. Follow these steps to add a new post:
-
-### 1. Create a New Post File
-Navigate to the blog posts directory and create a new `.qmd` file:
-```bash
-cd blog/posts
-# Create a new file, e.g., my-new-post.qmd
-```
-
-### 2. Write Your Post
-Create a Quarto markdown file with YAML frontmatter:
-```yaml
----
-title: "Your Post Title"
-author: "Your Name"
-date: "2025-11-23"
-categories: [category1, category2]
 ---
 
-Your content here...
+## 🏗️ Project Structure
+
+```
+karim_ai_website/
+├── public/                  # Static assets
+│   ├── blog/                # Generated Quarto blog HTML
+│   ├── images/              # Images (Bath_Crest.png, blackboard.png)
+│   ├── *.html               # Generated research pages (publications.html, etc.)
+│   └── welcome.md           # (Legacy) Welcome content
+├── src/
+│   ├── components/          # React Components
+│   │   ├── App.jsx          # Main application logic & state
+│   │   ├── Layout.jsx       # Main layout (Sidebar + Editor area)
+│   │   ├── Sidebar.jsx      # File explorer & activity bar
+│   │   ├── Editor.jsx       # Tab management & content rendering
+│   │   ├── WelcomePage.jsx  # VS Code-style "Get Started" page
+│   │   ├── CodeViewer.jsx   # Renders Markdown & CSS content
+│   │   ├── NotebookViewer.jsx # Renders Jupyter Notebook-style content
+│   │   ├── RCodeViewer.jsx  # Renders R code & output
+│   │   └── CommandPalette.jsx # Cmd+Shift+P search functionality
+│   ├── styles/
+│   │   └── vscode-theme.css # CSS variables for VS Code theming
+│   └── main.jsx             # Entry point
+├── data/                    # Data sources for R scripts
+│   ├── publications.json    # Auto-fetched from ORCID
+│   ├── projects.json        # Manual project entries
+│   ├── phd_students.json    # Manual PhD student entries
+│   └── *.R                  # R scripts to generate HTML from JSON
+├── blog/                    # Quarto blog source
+│   ├── posts/               # .qmd blog post files
+│   └── _quarto.yml          # Quarto configuration
+├── scripts/                 # Node.js automation scripts
+│   └── fetch_orcid_publications.js
+└── package.json             # Dependencies & scripts
 ```
 
-### 3. Render the Blog
-From the blog directory, run Quarto to generate the HTML:
-```bash
-cd blog
-quarto render
-```
+---
 
-This will:
-- Generate HTML files in `public/blog/`
-- Update the blog index
-- Create the post at `public/blog/posts/your-post-name.html`
+## 🧩 Key Components Guide
 
-### 4. Add to Command Palette (Optional)
-To make the new post searchable in the site's command palette, edit `src/components/CommandPalette.jsx` and add an entry to the `files` array:
-```javascript
-{ name: 'my-new-post.html', path: 'my-new-post.html' }
-```
+If you need to recreate the frontend logic, here is how the core components interact:
 
-### 5. Update Editor Routing (Optional)
-If needed, update `src/components/Editor.jsx` to map the filename to the correct path in the iframe source.
+### 1. `App.jsx` (State Manager)
+- **Role**: Holds the global state: `openFiles` (array of strings), `activeFile` (string), `theme` ('dark'/'light'), and `isSidebarOpen`.
+- **Logic**: Passes these states and their setters down to `Layout` and `Editor`. Handles file opening/closing logic.
 
-## Project Structure
+### 2. `Layout.jsx` (Container)
+- **Role**: Structure of the page. Contains the `Sidebar` (left) and `children` (Editor area).
+- **Logic**: Manages the `CommandPalette` visibility (Cmd+Shift+P).
 
-- `src/` - React application source code
-- `blog/` - Quarto blog source files
-- `public/blog/` - Generated blog HTML files
-- `data/` - Data files (JSON) and R scripts for generating HTML pages
-  - `publications.json` - Auto-generated from ORCID
-  - `projects.json` - Manually maintained
-  - `phd_students.json` - Manually maintained
-  - `*.R` - R scripts for generating HTML from JSON
-- `scripts/` - Node.js scripts for automation
-  - `fetch_orcid_publications.js` - ORCID API integration
+### 3. `Sidebar.jsx` (Navigation)
+- **Role**: Renders the "Explorer" tree and "Activity Bar" (icons on far left).
+- **Logic**:
+    - Uses a `structure` array to define folders and files.
+    - `renderItem` recursively renders folders.
+    - Clicking a file calls `setActiveFile`.
+    - "Welcome" item uses a custom icon (`Bath_Crest.png`).
 
-## Tech Stack
+### 4. `Editor.jsx` (Content Display)
+- **Role**: The main workspace. Renders tabs at the top and the active file's content below.
+- **Logic**:
+    - **Tabs**: Maps through `openFiles`.
+    - **Content Router**: `renderContent()` switches based on file extension:
+        - `'Welcome'`: Renders `<WelcomePage />`.
+        - `.md`, `.css`: Renders `<CodeViewer />`.
+        - `.ipynb`: Renders `<NotebookViewer />`.
+        - `.R`: Renders `<RCodeViewer />`.
+        - `.html`: Renders an `<iframe>` pointing to `public/`.
 
-- **React** - UI framework
-- **Vite** - Build tool
-- **Quarto** - Blog generation
-- **R** (tidyverse, jsonlite) - HTML page generation
-- **Bootstrap** - Styling
-- **React Icons** - VS Code icons
-- **ORCID Public API** - Publications data source
+### 5. `WelcomePage.jsx` (Home)
+- **Role**: The "Get Started" screen.
+- **Features**:
+    - **Header**: Image (`blackboard.png`) stacked above name "Karim AI".
+    - **Start Section**: Quick links to main sections.
+    - **Recent Section**: Links to specific files.
+    - **Help Section**: Links to GitHub and Research Portal.
 
+---
+
+## 🔄 Data & Automation Workflows
+
+### Publications (`npm run update-publications`)
+1.  **Fetch**: `scripts/fetch_orcid_publications.js` calls ORCID API (`0000-0001-9718-5256`).
+2.  **Save**: Writes raw data to `data/publications.json`.
+3.  **Generate**: Runs `Rscript data/publications.R`.
+4.  **Render**: R script reads JSON, formats it using `tidyverse`, and saves HTML to `public/publications.html`.
+
+### Research Pages (Projects, PhDs)
+- **Source**: Manually edit `data/projects.json` or `data/phd_students.json`.
+- **Generate**: Run `Rscript data/projects.R` or `Rscript data/phd_students.R`.
+- **Output**: Generates `public/projects.html` and `public/phd_students.html`.
+
+### Blog (Quarto)
+1.  **Write**: Create `.qmd` files in `blog/posts/`.
+2.  **Build**: Run `quarto render` inside `blog/`.
+3.  **Output**: HTML files are generated in `public/blog/`.
+4.  **Link**: Add the new file to `Sidebar.jsx` or `CommandPalette.jsx` if desired.
+
+---
+
+## 🎨 Theming (`vscode-theme.css`)
+The site uses CSS variables to handle theming.
+- **Colors**: Defined in `:root` (dark) and `[data-theme="light"]`.
+- **Key Variables**:
+    - `--vscode-editor-bg`: Main background.
+    - `--vscode-sidebar-bg`: Sidebar background.
+    - `--vscode-text`: Main text color.
+    - `--vscode-accent`: Blue accent color.
+
+---
+
+## 🛠️ Recreation Guide (If everything is lost)
+
+1.  **Scaffold React**: `npm create vite@latest . -- --template react`
+2.  **Install Deps**: `npm install react-icons bootstrap react-bootstrap`
+3.  **Setup CSS**: Copy `vscode-theme.css` to `src/styles/` and import in `main.jsx`.
+4.  **Create Components**: Rebuild the component tree as described in "Key Components Guide".
+5.  **Setup Data**: Create `data/` folder and add the R scripts.
+6.  **Setup Blog**: Initialize Quarto in `blog/` folder.
+7.  **Connect**: Ensure `Editor.jsx` correctly routes file extensions to their respective viewers/iframes.
