@@ -3,7 +3,8 @@ import NotebookViewer from './NotebookViewer';
 import CodeViewer from './CodeViewer';
 import RCodeViewer from './RCodeViewer';
 import WelcomePage from './WelcomePage';
-import { VscClose, VscCloseAll, VscChevronRight, VscLaw } from 'react-icons/vsc';
+import RetroGame from './RetroGame';
+import { VscClose, VscCloseAll, VscChevronRight, VscLaw, VscGame } from 'react-icons/vsc';
 import { FaMarkdown, FaPython, FaJs, FaReact } from 'react-icons/fa';
 
 const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme }) => {
@@ -18,6 +19,7 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
 
         if (filename.endsWith('.R')) return <span style={{ color: '#276dc3', fontWeight: 'bold', fontSize: '10px' }}>R</span>;
         if (filename.endsWith('.txt')) return <VscLaw color="#d4d4d4" />;
+        if (filename.endsWith('.exe')) return <VscGame color="#ea8616" />;
         return null;
     };
 
@@ -153,6 +155,10 @@ dist
                     title="Blog Post"
                 />
             );
+        }
+
+        if (activeFile === 'retro_game.exe') {
+            return <RetroGame />;
         }
 
         if (activeFile.endsWith('.R')) {

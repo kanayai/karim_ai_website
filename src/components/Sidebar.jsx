@@ -5,6 +5,7 @@ import { FaReact, FaJs, FaMarkdown, FaPython } from 'react-icons/fa';
 const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick }) => {
     const [expandedFolders, setExpandedFolders] = useState({});
     const [showAccountsMenu, setShowAccountsMenu] = useState(false);
+    const [showExtensionsMenu, setShowExtensionsMenu] = useState(false);
 
     const toggleFolder = (folderName) => {
         setExpandedFolders(prev => ({ ...prev, [folderName]: !prev[folderName] }));
@@ -123,7 +124,72 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                     <VscSearch size={24} style={{ cursor: 'pointer' }} onClick={onSearchClick} />
                     <VscSourceControl size={24} style={{ cursor: 'pointer' }} />
                     <VscDebugAlt size={24} style={{ cursor: 'pointer' }} />
-                    <VscExtensions size={24} style={{ cursor: 'pointer' }} />
+                    <div style={{ position: 'relative' }}>
+                        <VscExtensions
+                            size={24}
+                            style={{ cursor: 'pointer', color: showExtensionsMenu ? 'var(--vscode-text)' : 'inherit' }}
+                            onClick={() => setShowExtensionsMenu(!showExtensionsMenu)}
+                            title="Extensions"
+                        />
+                        {showExtensionsMenu && (
+                            <div style={{
+                                position: 'absolute',
+                                bottom: '0',
+                                left: '35px',
+                                backgroundColor: 'var(--vscode-sidebar-bg)',
+                                border: '1px solid var(--vscode-border)',
+                                boxShadow: '0 4px 10px rgba(0,0,0,0.4)',
+                                zIndex: 1000,
+                                minWidth: '220px',
+                                padding: '5px 0',
+                                borderRadius: '5px',
+                                color: 'var(--vscode-text)'
+                            }}>
+                                <div className="px-3 py-2" style={{ borderBottom: '1px solid var(--vscode-border)', fontWeight: 'bold', fontSize: '12px', opacity: 0.8 }}>
+                                    Extensions
+                                </div>
+                                <div
+                                    className="d-block px-3 py-2 text-decoration-none"
+                                    style={{ color: 'var(--vscode-text)', fontSize: '13px', cursor: 'pointer', transition: 'background 0.2s' }}
+                                    onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--vscode-hover-bg)'}
+                                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                                    onClick={() => {
+                                        setActiveFile('retro_game.exe');
+                                        setShowExtensionsMenu(false);
+                                    }}
+                                >
+                                    👾 Play Retro Game
+                                </div>
+                                <div className="px-3 py-2" style={{ borderTop: '1px solid var(--vscode-border)', fontWeight: 'bold', fontSize: '11px', opacity: 0.6, marginTop: '5px' }}>
+                                    COLLABORATORS
+                                </div>
+                                <a
+                                    href="https://www.lshtm.ac.uk/aboutus/people/alexander.neal"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="d-block px-3 py-2 text-decoration-none"
+                                    style={{ color: 'var(--vscode-text)', fontSize: '13px', transition: 'background 0.2s' }}
+                                    onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--vscode-hover-bg)'}
+                                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                                    onClick={() => setShowExtensionsMenu(false)}
+                                >
+                                    Alexander Neal
+                                </a>
+                                <a
+                                    href="https://www.otago.ac.nz/physics/staff/colinfox"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="d-block px-3 py-2 text-decoration-none"
+                                    style={{ color: 'var(--vscode-text)', fontSize: '13px', transition: 'background 0.2s' }}
+                                    onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--vscode-hover-bg)'}
+                                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                                    onClick={() => setShowExtensionsMenu(false)}
+                                >
+                                    Colin Fox
+                                </a>
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <div className="d-flex flex-column gap-4 align-items-center">
                     <VscColorMode size={24} onClick={toggleTheme} style={{ cursor: 'pointer' }} title="Toggle Theme" />
