@@ -155,3 +155,9 @@ The site uses CSS variables to handle theming.
 5.  **Setup Data**: Create `data/` folder and add the R scripts.
 6.  **Setup Blog**: Initialize Quarto in `blog/` folder.
 7.  **Connect**: Ensure `Editor.jsx` correctly routes file extensions to their respective viewers/iframes.
+
+---
+
+## 🤖 Built With
+
+This website was built with the assistance of **Gemini Antigravity**, an advanced agentic AI coding assistant by Google Deepmind.
