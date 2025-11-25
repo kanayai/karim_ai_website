@@ -32,7 +32,13 @@ const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, isSid
             />
             <div className="main-container" style={{ position: 'relative' }}>
                 <div className={`sidebar-container ${isSidebarOpen ? 'open' : 'closed'}`}>
-                    <Sidebar activeFile={activeFile} setActiveFile={setActiveFile} theme={theme} toggleTheme={toggleTheme} />
+                    <Sidebar
+                        activeFile={activeFile}
+                        setActiveFile={setActiveFile}
+                        theme={theme}
+                        toggleTheme={toggleTheme}
+                        onSearchClick={() => setIsPaletteOpen(true)}
+                    />
                 </div>
                 {/* Overlay for mobile when sidebar is open */}
                 {isSidebarOpen && (

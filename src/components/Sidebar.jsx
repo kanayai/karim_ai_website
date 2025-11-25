@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscAccount, VscGear, VscColorMode, VscChevronRight, VscChevronDown } from 'react-icons/vsc';
 import { FaReact, FaJs, FaMarkdown, FaPython } from 'react-icons/fa';
 
-const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
+const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick }) => {
     const [expandedFolders, setExpandedFolders] = useState({});
     const [showAccountsMenu, setShowAccountsMenu] = useState(false);
 
@@ -119,7 +119,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
                 style={{ width: '48px', backgroundColor: 'var(--vscode-activity-bar-bg)', color: '#858585' }}>
                 <div className="d-flex flex-column gap-4">
                     <VscFiles size={24} color="var(--vscode-text)" style={{ cursor: 'pointer' }} />
-                    <VscSearch size={24} style={{ cursor: 'pointer' }} />
+                    <VscSearch size={24} style={{ cursor: 'pointer' }} onClick={onSearchClick} />
                     <VscSourceControl size={24} style={{ cursor: 'pointer' }} />
                     <VscDebugAlt size={24} style={{ cursor: 'pointer' }} />
                     <VscExtensions size={24} style={{ cursor: 'pointer' }} />
