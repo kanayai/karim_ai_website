@@ -12,7 +12,7 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile }) => {
         if (filename.endsWith('.ipynb')) return <FaPython color="#3776ab" />;
         if (filename.endsWith('.js')) return <FaJs color="#f7df1e" />;
         if (filename.endsWith('.css')) return <FaReact color="#61dafb" />;
-        if (filename.endsWith('.html')) return <span style={{ color: '#e34c26', fontWeight: 'bold', fontSize: '10px' }}>HTML</span>;
+        if (filename.endsWith('.html')) return <span style={{ color: '#e34c26', fontWeight: 'bold', fontSize: '12px' }}>&lt;&gt;</span>;
         if (filename.endsWith('.R')) return <span style={{ color: '#276dc3', fontWeight: 'bold', fontSize: '10px' }}>R</span>;
         return null;
     };
@@ -140,7 +140,6 @@ The partnership brings together expertise from the Departments of Mechanical Eng
             let src = '';
             if (activeFile === 'index.html') src = '/blog/index.html';
             else if (activeFile === 'anscombe_quartet.html') src = '/blog/posts/anscombe_quartet.html';
-            else if (activeFile === 'publications.html') src = '/publications.html';
             else if (activeFile === 'projects.html') src = '/projects.html';
             else if (activeFile === 'certest.html') src = '/certest.html';
             else if (activeFile === 'gkn_prosperity.html') src = '/gkn_prosperity.html';

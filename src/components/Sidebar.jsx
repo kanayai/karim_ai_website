@@ -22,17 +22,16 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
             name: 'Research',
             type: 'folder',
             children: [
-                { name: 'publications.html', icon: <span>HTML</span>, type: 'html', path: '/publications.html' },
-                { name: 'publications.R', icon: <span style={{ color: '#276dc3', fontWeight: 'bold', fontSize: '10px' }}>R</span>, type: 'r' },
                 {
                     name: 'Projects',
                     type: 'folder',
                     children: [
-                        { name: 'certest.html', icon: <span>HTML</span>, type: 'html', path: '/certest.html' },
-                        { name: 'gkn_prosperity.html', icon: <span>HTML</span>, type: 'html', path: '/gkn_prosperity.html' },
+                        { name: 'certest.html', icon: <span style={{ color: '#e44d26', fontWeight: 'bold', fontSize: '12px' }}>&lt;&gt;</span>, type: 'html', path: '/certest.html' },
+                        { name: 'gkn_prosperity.html', icon: <span style={{ color: '#e44d26', fontWeight: 'bold', fontSize: '12px' }}>&lt;&gt;</span>, type: 'html', path: '/gkn_prosperity.html' },
                     ]
                 },
-                { name: 'phd_students.html', icon: <span>HTML</span>, type: 'html', path: '/phd_students.html' },
+                { name: 'phd_students.html', icon: <span style={{ color: '#e44d26', fontWeight: 'bold', fontSize: '12px' }}>&lt;&gt;</span>, type: 'html', path: '/phd_students.html' },
+                { name: 'publications.R', icon: <span style={{ color: '#276dc3', fontWeight: 'bold', fontSize: '10px' }}>R</span>, type: 'r' },
             ]
         },
         {
@@ -47,7 +46,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
             name: 'Blog',
             type: 'folder',
             children: [
-                { name: 'index.html', icon: <span>HTML</span>, type: 'html', path: '/blog/index.html' },
+                { name: 'index.html', icon: <span style={{ color: '#e44d26', fontWeight: 'bold', fontSize: '12px' }}>&lt;&gt;</span>, type: 'html', path: '/blog/index.html' },
             ]
         },
         { name: 'about_me.md', icon: <FaMarkdown color="#519aba" />, type: 'markdown' },

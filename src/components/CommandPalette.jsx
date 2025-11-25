@@ -8,7 +8,6 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
 
     const files = [
         { name: 'about_me.md', path: 'about_me.md' },
-        { name: 'publications.html', path: 'publications.html' },
         { name: 'projects.md', path: 'projects.md' },
         { name: 'current_courses.ipynb', path: 'current_courses.ipynb' },
         { name: 'previous_courses.ipynb', path: 'previous_courses.ipynb' },
