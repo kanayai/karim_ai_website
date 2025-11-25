@@ -6,10 +6,40 @@ const RCodeViewer = ({ fileName }) => {
     const [isDragging, setIsDragging] = useState(false);
 
     // The R code to display in the editor
-    const rCode = `library(jsonlite)
-publications    <- fromJSON("data/publications.json")
-publications_df <- as_tibble(publications)
+    // The R code to display in the editor
+    const rCode = `library(tidyverse)
+library(jsonlite)
+publications_df <- fromJSON("data/publications.json")
+publications_df <- publications_df %>%
+  select(year, title, authors, journal) %>%
+  arrange(desc(year)) %>%
+  as_tibble()
 publications_df`;
+
+    // Simple R syntax highlighter
+    const highlightRCode = (code) => {
+        const lines = code.split('\n');
+        return lines.map((line, i) => {
+            // Very basic tokenization
+            let formattedLine = line;
+
+            // Strings
+            formattedLine = formattedLine.replace(/(".*?")/g, '<span style="color: #ce9178">$1</span>');
+
+            // Keywords
+            formattedLine = formattedLine.replace(/\b(library|if|else|for|while|return|function)\b/g, '<span style="color: #569cd6">$1</span>');
+
+            // Operators
+            formattedLine = formattedLine.replace(/(<-|%>%)/g, '<span style="color: #569cd6">$1</span>');
+
+            // Functions (heuristic: word followed by ()
+            formattedLine = formattedLine.replace(/\b([a-zA-Z0-9_.]+)(?=\()/g, '<span style="color: #dcdcaa">$1</span>');
+
+            return (
+                <div key={i} style={{ lineHeight: '1.5', whiteSpace: 'pre' }} dangerouslySetInnerHTML={{ __html: formattedLine }} />
+            );
+        });
+    };
 
     // Convert publications to tibble format
     const createTibble = () => {
@@ -88,18 +118,14 @@ publications_df`;
                         ))}
                     </div>
 
-                    {/* Code content without syntax highlighting */}
+                    {/* Code content with syntax highlighting */}
                     <div className="py-3 px-3 flex-grow-1" style={{
                         color: 'var(--vscode-text)',
                         fontFamily: 'Menlo, Monaco, "Courier New", monospace',
                         fontSize: '13px',
                         overflowX: 'auto'
                     }}>
-                        {rCode.split('\n').map((line, i) => (
-                            <div key={i} style={{ lineHeight: '1.5', whiteSpace: 'pre' }}>
-                                {line}
-                            </div>
-                        ))}
+                        {highlightRCode(rCode)}
                     </div>
                 </div>
             </div>
