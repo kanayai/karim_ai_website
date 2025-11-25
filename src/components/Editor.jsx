@@ -6,7 +6,7 @@ import WelcomePage from './WelcomePage';
 import { VscClose, VscCloseAll, VscChevronRight } from 'react-icons/vsc';
 import { FaMarkdown, FaPython, FaJs, FaReact } from 'react-icons/fa';
 
-const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles }) => {
+const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme }) => {
 
     const getIcon = (filename) => {
         if (filename === 'Welcome') return <img src="/images/Bath_Crest.png" alt="Welcome" style={{ width: '16px', height: '16px' }} />;
@@ -21,23 +21,7 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
 
     // Mock content for files that don't exist on disk
     const fileContent = {
-        'about_me.md': `# About Me
 
-My name is **Karim Anaya‑Izquierdo**. It is pronounced *is‑key‑air‑dow*.
-
-I am a Senior Lecturer (Associate Professor) in Statistics in the Department of Mathematical Sciences at the University of Bath. I was a research fellow at the Department of Statistics in the Open University in Milton Keynes and then Lecturer in Medical Statistics within the Tropical Epidemiology Group based at the London School of Hygiene and Tropical Medicine before coming to the University of Bath in September 2013.
-
-## Education
-
-- **PhD in Statistics**, 2006 – National University of Mexico
-- **MSc in Statistics**, 2001 – National University of Mexico
-- **BSc in Actuarial Sciences**, 2000 – ITAM Mexico
-
-## Experience
-
-- **LSHTM** – Lecturer in Medical Statistics (2011‑2013)
-- **Open University** – Postdoctoral Research Fellow (2005‑2011)
-`,
         'projects.md': `# Research Projects
 
 ## CerTest – Certification for Design: Reshaping the Testing Pyramid
@@ -142,6 +126,12 @@ The partnership brings together expertise from the Departments of Mechanical Eng
             else if (activeFile === 'certest.html') src = '/certest.html';
             else if (activeFile === 'gkn_prosperity.html') src = '/gkn_prosperity.html';
             else if (activeFile === 'phd_students.html') src = '/phd_students.html';
+            else if (activeFile === 'about_me.html') src = '/about_me.html';
+
+            // Append theme param
+            if (src) {
+                src += `?theme=${theme}`;
+            }
 
             return (
                 <iframe

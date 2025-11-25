@@ -72,6 +72,7 @@ function App() {
         setActiveFile={setActiveFile}
         onCloseFile={handleCloseFile}
         onCloseAllFiles={handleCloseAllFiles}
+        theme={theme}
       />
     </Layout>
   );
