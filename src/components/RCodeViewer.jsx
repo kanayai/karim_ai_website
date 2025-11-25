@@ -9,11 +9,14 @@ const RCodeViewer = ({ fileName }) => {
     // The R code to display in the editor
     const rCode = `library(tidyverse)
 library(jsonlite)
+
 publications_df <- fromJSON("data/publications.json")
+
 publications_df <- publications_df %>%
   select(year, title, authors, journal) %>%
   arrange(desc(year)) %>%
   as_tibble()
+
 publications_df`;
 
     // Simple R syntax highlighter
@@ -21,22 +24,28 @@ publications_df`;
         const lines = code.split('\n');
         return lines.map((line, i) => {
             // Very basic tokenization
+            // Very basic tokenization
             let formattedLine = line;
 
-            // Strings
-            formattedLine = formattedLine.replace(/(".*?")/g, '<span style="color: #ce9178">$1</span>');
+            // If line is empty, add a non-breaking space to ensure it renders height
+            if (formattedLine.trim() === '') {
+                formattedLine = '\u00A0';
+            } else {
+                // Strings
+                formattedLine = formattedLine.replace(/(".*?")/g, '<span style="color: #ce9178">$1</span>');
 
-            // Keywords
-            formattedLine = formattedLine.replace(/\b(library|if|else|for|while|return|function)\b/g, '<span style="color: #569cd6">$1</span>');
+                // Keywords
+                formattedLine = formattedLine.replace(/\b(library|if|else|for|while|return|function)\b/g, '<span style="color: #569cd6">$1</span>');
 
-            // Operators
-            formattedLine = formattedLine.replace(/(<-|%>%)/g, '<span style="color: #569cd6">$1</span>');
+                // Operators
+                formattedLine = formattedLine.replace(/(<-|%>%)/g, '<span style="color: #569cd6">$1</span>');
 
-            // Functions (heuristic: word followed by ()
-            formattedLine = formattedLine.replace(/\b([a-zA-Z0-9_.]+)(?=\()/g, '<span style="color: #dcdcaa">$1</span>');
+                // Functions (heuristic: word followed by ()
+                formattedLine = formattedLine.replace(/\b([a-zA-Z0-9_.]+)(?=\()/g, '<span style="color: #dcdcaa">$1</span>');
+            }
 
             return (
-                <div key={i} style={{ lineHeight: '1.5', whiteSpace: 'pre' }} dangerouslySetInnerHTML={{ __html: formattedLine }} />
+                <div key={i} style={{ lineHeight: '1.5', whiteSpace: 'pre', minHeight: '1.5em' }} dangerouslySetInnerHTML={{ __html: formattedLine }} />
             );
         });
     };

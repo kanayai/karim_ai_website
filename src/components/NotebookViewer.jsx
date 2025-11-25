@@ -103,31 +103,31 @@ const NotebookViewer = ({ fileName }) => {
                 {content.map((cell, index) => (
                     <div key={index} className="cell mb-3">
                         {cell.type === 'code' ? (
-                            <div className="d-flex flex-column" style={{
-                                border: '1px solid rgba(128, 128, 128, 0.35)',
-                                borderRadius: '4px',
-                                padding: '8px'
-                            }}>
-                                {/* Input Area */}
-                                <div className="d-flex gap-2">
-                                    {/* Gutter with Play Button */}
-                                    <div className="d-flex flex-column align-items-center pt-1" style={{ width: '25px', flexShrink: 0 }}>
-                                        <div
-                                            className="d-flex align-items-center justify-content-center rounded-circle"
-                                            style={{
-                                                width: '20px',
-                                                height: '20px',
-                                                backgroundColor: 'var(--vscode-button-bg)',
-                                                cursor: 'pointer',
-                                                color: 'var(--vscode-button-fg)'
-                                            }}
-                                        >
-                                            <VscPlay size={10} />
-                                        </div>
+                            <div className="d-flex gap-2">
+                                {/* Gutter with Play Button */}
+                                <div className="d-flex flex-column align-items-center pt-1" style={{ width: '25px', flexShrink: 0 }}>
+                                    <div
+                                        className="d-flex align-items-center justify-content-center rounded-circle"
+                                        style={{
+                                            width: '20px',
+                                            height: '20px',
+                                            backgroundColor: 'var(--vscode-button-bg)',
+                                            cursor: 'pointer',
+                                            color: 'var(--vscode-button-fg)'
+                                        }}
+                                    >
+                                        <VscPlay size={10} />
                                     </div>
+                                </div>
 
+                                {/* Content Container (Code + Output) */}
+                                <div className="flex-grow-1 d-flex flex-column" style={{
+                                    border: '1px solid rgba(128, 128, 128, 0.35)',
+                                    borderRadius: '4px',
+                                    padding: '8px'
+                                }}>
                                     {/* Code Editor Box */}
-                                    <div className="flex-grow-1 rounded" style={{
+                                    <div className="rounded mb-2" style={{
                                         backgroundColor: 'var(--vscode-editor-bg)',
                                         border: '1px solid var(--vscode-widget-border)',
                                         position: 'relative',
@@ -177,13 +177,10 @@ const NotebookViewer = ({ fileName }) => {
                                             Python
                                         </div>
                                     </div>
-                                </div>
 
-                                {/* Output Area */}
-                                {cell.output && (
-                                    <div className="d-flex gap-2 mt-2">
-                                        <div style={{ width: '25px', flexShrink: 0 }}></div> {/* Spacer for alignment */}
-                                        <div className="flex-grow-1 position-relative ps-3" style={{ borderLeft: '1px solid var(--vscode-widget-border)' }}>
+                                    {/* Output Area */}
+                                    {cell.output && (
+                                        <div className="position-relative ps-3" style={{ borderLeft: '1px solid var(--vscode-widget-border)' }}>
                                             {/* Output Actions */}
                                             <div className="position-absolute top-0 start-0 ms-1 mt-1" style={{ cursor: 'pointer', opacity: 0.6 }}>
                                                 <VscEllipsis size={14} />
@@ -212,8 +209,8 @@ const NotebookViewer = ({ fileName }) => {
                                                 )}
                                             </div>
                                         </div>
-                                    </div>
-                                )}
+                                    )}
+                                </div>
                             </div>
                         ) : (
                             <div className="markdown-cell p-3" style={{ fontFamily: 'sans-serif' }} dangerouslySetInnerHTML={{ __html: cell.content }} />

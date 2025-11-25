@@ -51,6 +51,8 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
         },
         { name: 'about_me.md', icon: <FaMarkdown color="#519aba" />, type: 'markdown' },
         { name: 'contact.css', icon: <FaReact color="#61dafb" />, type: 'css' },
+        { name: '.gitignore', icon: <VscSourceControl color="#858585" />, type: 'git' },
+        { name: 'README.md', icon: <FaMarkdown color="#519aba" />, type: 'markdown' },
     ];
 
     const renderItem = (item) => {
