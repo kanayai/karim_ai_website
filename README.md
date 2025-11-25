@@ -66,11 +66,16 @@ If you need to recreate the frontend logic, here is how the core components inte
 
 ### 1. `App.jsx` (State Manager)
 - **Role**: Holds the global state: `openFiles` (array of strings), `activeFile` (string), `theme` ('dark'/'light'), and `isSidebarOpen`.
-- **Logic**: Passes these states and their setters down to `Layout` and `Editor`. Handles file opening/closing logic.
+- **Logic**:
+    - Passes these states and their setters down to `Layout` and `Editor`.
+    - Handles file opening/closing logic.
+    - **Close All**: `handleCloseAllFiles` resets state to show only the Welcome page.
 
 ### 2. `Layout.jsx` (Container)
 - **Role**: Structure of the page. Contains the `Sidebar` (left) and `children` (Editor area).
-- **Logic**: Manages the `CommandPalette` visibility (Cmd+Shift+P).
+- **Logic**:
+    - Manages the `CommandPalette` visibility (Cmd+Shift+P).
+    - **Mobile**: Handles sidebar overlay and responsive transitions.
 
 ### 3. `Sidebar.jsx` (Navigation)
 - **Role**: Renders the "Explorer" tree and "Activity Bar" (icons on far left).
@@ -83,7 +88,7 @@ If you need to recreate the frontend logic, here is how the core components inte
 ### 4. `Editor.jsx` (Content Display)
 - **Role**: The main workspace. Renders tabs at the top and the active file's content below.
 - **Logic**:
-    - **Tabs**: Maps through `openFiles`.
+    - **Tabs**: Maps through `openFiles`. Includes a **"Close All"** button with a text label for mobile usability.
     - **Content Router**: `renderContent()` switches based on file extension:
         - `'Welcome'`: Renders `<WelcomePage />`.
         - `.md`, `.css`: Renders `<CodeViewer />`.
@@ -94,10 +99,10 @@ If you need to recreate the frontend logic, here is how the core components inte
 ### 5. `WelcomePage.jsx` (Home)
 - **Role**: The "Get Started" screen.
 - **Features**:
-    - **Header**: Image (`blackboard.png`) stacked above name "Karim AI".
+    - **Header**: Image (`blackboard.png`) stacked above name "Karim AI". Responsive image sizing and padding for mobile.
     - **Start Section**: Quick links to main sections.
     - **Recent Section**: Links to specific files.
-    - **Help Section**: Links to GitHub and Research Portal.
+    - **Help Section**: Links to GitHub (including "Report Issue") and Research Portal.
 
 ---
 
