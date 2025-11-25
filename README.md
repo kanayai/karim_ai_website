@@ -35,13 +35,15 @@ karim_ai_website/
 │   ├── components/          # React Components
 │   │   ├── App.jsx          # Main application logic & state
 │   │   ├── Layout.jsx       # Main layout (Sidebar + Editor area)
-│   │   ├── Sidebar.jsx      # File explorer & activity bar
+│   │   ├── Sidebar.jsx      # File explorer, Extensions view & activity bar
 │   │   ├── Editor.jsx       # Tab management & content rendering
 │   │   ├── WelcomePage.jsx  # VS Code-style "Get Started" page
 │   │   ├── CodeViewer.jsx   # Renders Markdown & CSS content
 │   │   ├── NotebookViewer.jsx # Renders Jupyter Notebook-style content
 │   │   ├── RCodeViewer.jsx  # Renders R code & output
+│   │   ├── RetroGame.jsx    # Snake game accessible via Extensions view
 │   │   ├── CommandPalette.jsx # Cmd+Shift+P search functionality
+│   │   ├── TitleBar.jsx     # Navigation controls & command palette trigger
 │   │   ├── Statusbar.jsx    # Dynamic status bar
 │   │   └── Terminal.jsx     # Collapsible terminal panel
 │   ├── styles/
@@ -81,11 +83,13 @@ If you need to recreate the frontend logic, here is how the core components inte
     - **Terminal**: Manages the visibility of the `Terminal` panel.
 
 ### 3. `Sidebar.jsx` (Navigation)
-- **Role**: Renders the "Explorer" tree and "Activity Bar" (icons on far left).
+- **Role**: Renders the "Explorer" tree, "Extensions" view, and "Activity Bar" (icons on far left).
 - **Logic**:
-    - Uses a `structure` array to define folders and files.
-    - `renderItem` recursively renders folders.
+    - **View Switching**: Uses `activeView` state to toggle between `'explorer'` and `'extensions'` views.
+    - **Explorer View**: Uses a `structure` array to define folders and files. `renderItem` recursively renders folders.
+    - **Extensions View**: Displays available extensions (e.g., Retro Snake Game) with install/launch capabilities.
     - Clicking a file calls `setActiveFile`.
+    - **Accounts Menu**: Dropdown menu with social/academic profile links (GitHub, ORCID, etc.).
     - "Welcome" item uses a custom icon (`Bath_Crest.png`).
 
 ### 4. `Editor.jsx` (Content Display)
@@ -95,10 +99,11 @@ If you need to recreate the frontend logic, here is how the core components inte
     - **Breadcrumbs**: Displays the file path below the tabs (e.g., `karim_ai_website > data > publications.R`).
     - **Content Router**: `renderContent()` switches based on file extension:
         - `'Welcome'`: Renders `<WelcomePage />`.
-        - `.md`, `.css`: Renders `<CodeViewer />`.
+        - `.md`, `.css`, `.json`, `.txt`, `.gitignore`: Renders `<CodeViewer />`.
         - `.ipynb`: Renders `<NotebookViewer />`.
         - `.R`: Renders `<RCodeViewer />`.
         - `.html`: Renders an `<iframe>` pointing to `public/`.
+        - `retro_game.exe`: Renders `<RetroGame />` - a playable Snake game.
 
 ### 5. `WelcomePage.jsx` (Home)
 - **Role**: The "Get Started" screen.
@@ -135,7 +140,9 @@ If you need to recreate the frontend logic, here is how the core components inte
 
 ---
 
-## 🎨 Theming (`vscode-theme.css`)
+## 🎨 Theming & Responsive Design
+
+### VS Code Theme (`vscode-theme.css`)
 The site uses CSS variables to handle theming.
 - **Colors**: Defined in `:root` (dark) and `[data-theme="light"]`.
 - **Key Variables**:
@@ -143,6 +150,13 @@ The site uses CSS variables to handle theming.
     - `--vscode-sidebar-bg`: Sidebar background.
     - `--vscode-text`: Main text color.
     - `--vscode-accent`: Blue accent color.
+
+### Responsive Design (`index.css`)
+- **Command Palette**: Responsive width using `.command-palette-trigger` class
+    - Mobile (< 768px): 280px
+    - Desktop (≥ 768px): 500px
+- **Sidebar**: Collapsible on mobile with hamburger menu
+- **Status Bar**: Adaptive layout with hidden elements on small screens
 
 ---
 
