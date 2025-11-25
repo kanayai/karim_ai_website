@@ -243,12 +243,14 @@ The partnership brings together expertise from the Departments of Mechanical Eng
                             cursor: 'pointer',
                             color: 'var(--vscode-text)',
                             borderLeft: '1px solid var(--vscode-border)',
-                            minWidth: '35px'
+                            minWidth: 'fit-content',
+                            paddingRight: '8px'
                         }}
                         onClick={onCloseAllFiles}
                         title="Close All Files"
                     >
                         <VscCloseAll size={18} />
+                        <span className="ms-1" style={{ fontSize: '12px', whiteSpace: 'nowrap' }}>Close All</span>
                     </div>
                 )}
             </div>

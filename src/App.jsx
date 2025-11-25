@@ -53,8 +53,8 @@ function App() {
   };
 
   const handleCloseAllFiles = () => {
-    setOpenFiles([]);
-    setActiveFile(null);
+    setOpenFiles(['Welcome']);
+    setActiveFile('Welcome');
   };
 
   return (
