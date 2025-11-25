@@ -44,7 +44,7 @@ const WelcomePage = ({ onNavigate }) => {
             <div style={{ maxWidth: '800px', margin: '0 auto' }}>
                 {/* Header */}
                 <div className="mb-5">
-                    <div className="d-flex align-items-center gap-3 mb-2">
+                    <div className="d-flex flex-column align-items-start gap-3 mb-2">
                         <img src="/images/blackboard.png" alt="Logo" style={{ width: '300px', height: '300px', objectFit: 'contain' }} />
                         <h1 style={{ fontSize: '36px', fontWeight: '300' }}>Karim AI</h1>
                     </div>
