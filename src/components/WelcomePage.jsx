@@ -36,7 +36,7 @@ const WelcomePage = ({ onNavigate }) => {
     ];
 
     return (
-        <div className="h-100 w-100 p-5" style={{
+        <div className="h-100 w-100 p-3 p-md-5" style={{
             backgroundColor: 'var(--vscode-editor-bg)',
             color: 'var(--vscode-text)',
             overflowY: 'auto'
@@ -45,7 +45,7 @@ const WelcomePage = ({ onNavigate }) => {
                 {/* Header */}
                 <div className="mb-5">
                     <div className="d-flex flex-column align-items-start gap-3 mb-2">
-                        <img src="/images/blackboard.png" alt="Logo" style={{ width: '300px', height: '300px', objectFit: 'contain' }} />
+                        <img src="/images/blackboard.png" alt="Logo" style={{ width: '100%', maxWidth: '300px', height: 'auto', objectFit: 'contain' }} />
                         <h1 style={{ fontSize: '36px', fontWeight: '300' }}>Karim AI</h1>
                     </div>
                     <p style={{ fontSize: '18px', opacity: 0.8, fontWeight: '300' }}>
@@ -112,6 +112,9 @@ const WelcomePage = ({ onNavigate }) => {
                                 </div>
                                 <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
                                     <a href="https://researchportal.bath.ac.uk/en/persons/karim-anaya-izquierdo/" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>Research Portal</a>
+                                </div>
+                                <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
+                                    <a href="https://github.com/kanayai/karim_ai_website/issues/new" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>Report Issue</a>
                                 </div>
                             </div>
                         </div>

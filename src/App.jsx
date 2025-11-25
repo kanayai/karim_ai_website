@@ -52,6 +52,11 @@ function App() {
     }
   };
 
+  const handleCloseAllFiles = () => {
+    setOpenFiles([]);
+    setActiveFile(null);
+  };
+
   return (
     <Layout
       activeFile={activeFile}
@@ -66,6 +71,7 @@ function App() {
         openFiles={openFiles}
         setActiveFile={setActiveFile}
         onCloseFile={handleCloseFile}
+        onCloseAllFiles={handleCloseAllFiles}
       />
     </Layout>
   );

@@ -3,10 +3,10 @@ import NotebookViewer from './NotebookViewer';
 import CodeViewer from './CodeViewer';
 import RCodeViewer from './RCodeViewer';
 import WelcomePage from './WelcomePage';
-import { VscClose } from 'react-icons/vsc';
+import { VscClose, VscCloseAll } from 'react-icons/vsc';
 import { FaMarkdown, FaPython, FaJs, FaReact } from 'react-icons/fa';
 
-const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile }) => {
+const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles }) => {
 
     const getIcon = (filename) => {
         if (filename === 'Welcome') return <img src="/images/Bath_Crest.png" alt="Welcome" style={{ width: '16px', height: '16px' }} />;
@@ -206,31 +206,51 @@ The partnership brings together expertise from the Departments of Mechanical Eng
     return (
         <div className="d-flex flex-column flex-grow-1" style={{ backgroundColor: 'var(--vscode-editor-bg)', overflow: 'hidden' }}>
             {/* Tabs */}
-            <div className="d-flex" style={{ backgroundColor: 'var(--vscode-bg)', overflowX: 'auto', height: '35px' }}>
-                {openFiles.map(file => (
+            <div className="d-flex align-items-center" style={{ backgroundColor: 'var(--vscode-bg)', overflowX: 'auto', height: '35px' }}>
+                <div className="d-flex" style={{ flexGrow: 1, overflowX: 'auto', height: '100%' }}>
+                    {openFiles.map(file => (
+                        <div
+                            key={file}
+                            className="d-flex align-items-center px-3 gap-2"
+                            style={{
+                                backgroundColor: activeFile === file ? 'var(--vscode-editor-bg)' : 'var(--vscode-tab-inactive-bg)',
+                                borderTop: activeFile === file ? '1px solid var(--vscode-accent)' : '1px solid transparent',
+                                borderRight: '1px solid var(--vscode-border)',
+                                color: activeFile === file ? 'var(--vscode-text)' : '#969696',
+                                cursor: 'pointer',
+                                minWidth: '120px',
+                                height: '100%'
+                            }}
+                            onClick={() => setActiveFile(file)}
+                        >
+                            {getIcon(file)}
+                            <span style={{ fontSize: '13px' }}>{file}</span>
+                            <div
+                                className="ms-auto d-flex align-items-center justify-content-center rounded hover-bg"
+                                style={{ width: '20px', height: '20px' }}
+                                onClick={(e) => onCloseFile(e, file)}
+                            >
+                                <VscClose size={16} />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                {/* Close All Button */}
+                {openFiles.length > 0 && (
                     <div
-                        key={file}
-                        className="d-flex align-items-center px-3 gap-2"
+                        className="d-flex align-items-center justify-content-center px-2 h-100"
                         style={{
-                            backgroundColor: activeFile === file ? 'var(--vscode-editor-bg)' : 'var(--vscode-tab-inactive-bg)',
-                            borderTop: activeFile === file ? '1px solid var(--vscode-accent)' : '1px solid transparent',
-                            borderRight: '1px solid var(--vscode-border)',
-                            color: activeFile === file ? 'var(--vscode-text)' : '#969696',
                             cursor: 'pointer',
-                            minWidth: '120px',
-                            height: '100%'
+                            color: 'var(--vscode-text)',
+                            borderLeft: '1px solid var(--vscode-border)',
+                            minWidth: '35px'
                         }}
-                        onClick={() => setActiveFile(file)}
+                        onClick={onCloseAllFiles}
+                        title="Close All Files"
                     >
-                        {getIcon(file)}
-                        <span style={{ fontSize: '13px' }}>{file}</span>
-                        <VscClose
-                            className="ms-auto close-icon"
-                            onClick={(e) => onCloseFile(e, file)}
-                            style={{ opacity: 0.7 }}
-                        />
+                        <VscCloseAll size={18} />
                     </div>
-                ))}
+                )}
             </div>
 
             {/* Content Area */}
