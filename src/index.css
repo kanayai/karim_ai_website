@@ -79,6 +79,6 @@ button:focus-visible {
 
 @media (min-width: 768px) {
   .command-palette-trigger {
-    width: 400px;
+    width: 500px;
   }
 }
