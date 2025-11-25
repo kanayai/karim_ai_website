@@ -41,7 +41,9 @@ karim_ai_website/
 │   │   ├── CodeViewer.jsx   # Renders Markdown & CSS content
 │   │   ├── NotebookViewer.jsx # Renders Jupyter Notebook-style content
 │   │   ├── RCodeViewer.jsx  # Renders R code & output
-│   │   └── CommandPalette.jsx # Cmd+Shift+P search functionality
+│   │   ├── CommandPalette.jsx # Cmd+Shift+P search functionality
+│   │   ├── Statusbar.jsx    # Dynamic status bar
+│   │   └── Terminal.jsx     # Collapsible terminal panel
 │   ├── styles/
 │   │   └── vscode-theme.css # CSS variables for VS Code theming
 │   └── main.jsx             # Entry point
@@ -76,6 +78,7 @@ If you need to recreate the frontend logic, here is how the core components inte
 - **Logic**:
     - Manages the `CommandPalette` visibility (Cmd+Shift+P).
     - **Mobile**: Handles sidebar overlay and responsive transitions.
+    - **Terminal**: Manages the visibility of the `Terminal` panel.
 
 ### 3. `Sidebar.jsx` (Navigation)
 - **Role**: Renders the "Explorer" tree and "Activity Bar" (icons on far left).
@@ -89,6 +92,7 @@ If you need to recreate the frontend logic, here is how the core components inte
 - **Role**: The main workspace. Renders tabs at the top and the active file's content below.
 - **Logic**:
     - **Tabs**: Maps through `openFiles`. Includes a **"Close All"** button with a text label for mobile usability.
+    - **Breadcrumbs**: Displays the file path below the tabs (e.g., `karim_ai_website > data > publications.R`).
     - **Content Router**: `renderContent()` switches based on file extension:
         - `'Welcome'`: Renders `<WelcomePage />`.
         - `.md`, `.css`: Renders `<CodeViewer />`.
@@ -103,6 +107,10 @@ If you need to recreate the frontend logic, here is how the core components inte
     - **Start Section**: Quick links to main sections.
     - **Recent Section**: Links to specific files.
     - **Help Section**: Links to GitHub (including "Report Issue") and Research Portal.
+
+### 6. `Statusbar.jsx` & `Terminal.jsx`
+- **Status Bar**: Dynamically displays the language of the active file (e.g., "Markdown", "JavaScript React"). Includes a button to toggle the Terminal.
+- **Terminal**: A collapsible panel at the bottom of the screen that mimics a terminal interface. Can be toggled via the Status Bar or `Ctrl + Backtick`.
 
 ---
 
