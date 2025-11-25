@@ -42,11 +42,10 @@ const TitleBar = ({ onSearchClick, toggleSidebar }) => {
 
                 {/* Search / Command Palette Trigger */}
                 <div
-                    className="d-flex align-items-center px-2 rounded"
+                    className="command-palette-trigger d-flex align-items-center px-2 rounded"
                     style={{
                         backgroundColor: 'var(--vscode-bg)',
                         border: '1px solid var(--vscode-border)',
-                        width: '400px',
                         height: '24px',
                         cursor: 'pointer',
                         color: 'var(--vscode-text)',
