@@ -50,7 +50,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
             ]
         },
         { name: 'about_me.html', icon: <span style={{ color: '#e34c26', fontWeight: 'bold', fontSize: '12px' }}>&lt;&gt;</span>, type: 'html' },
-        { name: 'contact.css', icon: <FaReact color="#61dafb" />, type: 'css' },
+        { name: 'contact.html', icon: <span style={{ color: '#e34c26', fontWeight: 'bold', fontSize: '12px' }}>&lt;&gt;</span>, type: 'html' },
         { name: '.gitignore', icon: <VscSourceControl color="#858585" />, type: 'git' },
         { name: 'README.md', icon: <FaMarkdown color="#519aba" />, type: 'markdown' },
     ];

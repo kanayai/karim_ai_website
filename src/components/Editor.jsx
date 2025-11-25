@@ -15,6 +15,7 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
         if (filename.endsWith('.js')) return <FaJs color="#f7df1e" />;
         if (filename.endsWith('.css')) return <FaReact color="#61dafb" />;
         if (filename.endsWith('.html')) return <span style={{ color: '#e34c26', fontWeight: 'bold', fontSize: '12px' }}>&lt;&gt;</span>;
+
         if (filename.endsWith('.R')) return <span style={{ color: '#276dc3', fontWeight: 'bold', fontSize: '10px' }}>R</span>;
         return null;
     };
@@ -77,23 +78,7 @@ The partnership brings together expertise from the Departments of Mechanical Eng
 **Supervisors:** Andrew Rhead, Karim Anaya-Izquierdo  
 **Link:** [View Thesis](https://researchportal.bath.ac.uk/en/studentTheses/impact-damage-modelling-of-composite-laminates-using-statistical-)
 `,
-        'contact.css': `/* Contact Details */
-.contact-info {
-  /* Name */
-  --contact-name: "Prof. Karim AI (Anaya-Izquierdo)";
-  --contact-department: "Mathematical Sciences";
-  --contact-university: "University of Bath, United Kingdom";
-  --contact-email: "kai21@bath.ac.uk";
-  --contact-office: "4West 4.13";
-  --contact-address: "Claverton Down, BA2 7AY, Bath, United Kingdom";
-}
 
-/* Display contact info using pseudo-element */
-.contact-info::before {
-  content: var(--contact-name) " | " var(--contact-department) " | " var(--contact-university) " | " var(--contact-email) " | " var(--contact-office) " | " var(--contact-address);
-  white-space: pre-wrap;
-}
-`
     };
 
     const renderContent = () => {
@@ -127,6 +112,7 @@ The partnership brings together expertise from the Departments of Mechanical Eng
             else if (activeFile === 'gkn_prosperity.html') src = '/gkn_prosperity.html';
             else if (activeFile === 'phd_students.html') src = '/phd_students.html';
             else if (activeFile === 'about_me.html') src = '/about_me.html';
+            else if (activeFile === 'contact.html') src = '/contact.html';
 
             // Append theme param
             if (src) {
@@ -174,10 +160,13 @@ The partnership brings together expertise from the Departments of Mechanical Eng
             );
         }
 
-        // Use CodeViewer for MD and CSS
-        if (activeFile.endsWith('.md') || activeFile.endsWith('.css')) {
+        // Use CodeViewer for MD, CSS, and JSON
+        if (activeFile.endsWith('.md') || activeFile.endsWith('.css') || activeFile.endsWith('.json')) {
             const content = fileContent[activeFile] || `Content for ${activeFile} not found.`;
-            const language = activeFile.endsWith('.css') ? 'css' : 'markdown';
+            let language = 'markdown';
+            if (activeFile.endsWith('.css')) language = 'css';
+            if (activeFile.endsWith('.json')) language = 'json';
+
             return <CodeViewer content={content} language={language} />;
         }
 
