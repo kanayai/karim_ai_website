@@ -101,6 +101,39 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.`,
+
+        '.gitignore': `# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Testing
+coverage
+
+# Production
+build
+dist
+
+# Misc
+.DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs
+*.njsproj
+*.sln
+*.sw?`,
     };
 
     const renderContent = () => {
@@ -182,13 +215,13 @@ SOFTWARE.`,
             );
         }
 
-        // Use CodeViewer for MD, CSS, JSON, and TXT
-        if (activeFile.endsWith('.md') || activeFile.endsWith('.css') || activeFile.endsWith('.json') || activeFile.endsWith('.txt')) {
+        // Use CodeViewer for MD, CSS, JSON, TXT, and .gitignore
+        if (activeFile.endsWith('.md') || activeFile.endsWith('.css') || activeFile.endsWith('.json') || activeFile.endsWith('.txt') || activeFile === '.gitignore') {
             const content = fileContent[activeFile] || `Content for ${activeFile} not found.`;
             let language = 'markdown';
             if (activeFile.endsWith('.css')) language = 'css';
             if (activeFile.endsWith('.json')) language = 'json';
-            if (activeFile.endsWith('.txt')) language = 'plaintext';
+            if (activeFile.endsWith('.txt') || activeFile === '.gitignore') language = 'plaintext';
 
             return <CodeViewer content={content} language={language} />;
         }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscAccount, VscGear, VscColorMode, VscChevronRight, VscChevronDown, VscLaw } from 'react-icons/vsc';
+import { VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscAccount, VscGear, VscColorMode, VscChevronRight, VscChevronDown, VscLaw, VscEllipsis } from 'react-icons/vsc';
 import { FaReact, FaJs, FaMarkdown, FaPython } from 'react-icons/fa';
 
 const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick }) => {
@@ -182,6 +182,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                 <div className="d-flex flex-column">
                     <div className="px-2 py-1 d-flex align-items-center" style={{ fontWeight: 'bold', cursor: 'pointer', color: 'var(--vscode-text)' }}>
                         <VscChevronDown className="me-1" /> KARIM AI SITE
+                        <VscEllipsis className="ms-auto" />
                     </div>
 
                     {structure.map(item => renderItem(item))}
