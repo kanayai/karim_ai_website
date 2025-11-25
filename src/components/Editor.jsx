@@ -9,6 +9,7 @@ import { FaMarkdown, FaPython, FaJs, FaReact } from 'react-icons/fa';
 const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile }) => {
 
     const getIcon = (filename) => {
+        if (filename === 'Welcome') return <img src="/images/Bath_Crest.png" alt="Welcome" style={{ width: '16px', height: '16px' }} />;
         if (filename.endsWith('.md')) return <FaMarkdown color="#519aba" />;
         if (filename.endsWith('.ipynb')) return <FaPython color="#3776ab" />;
         if (filename.endsWith('.js')) return <FaJs color="#f7df1e" />;
@@ -122,7 +123,7 @@ The partnership brings together expertise from the Departments of Mechanical Eng
             );
         }
 
-        if (activeFile === 'welcome.md') {
+        if (activeFile === 'Welcome') {
             return <WelcomePage onNavigate={setActiveFile} />;
         }
 

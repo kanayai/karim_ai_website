@@ -108,7 +108,7 @@ const WelcomePage = ({ onNavigate }) => {
                             <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px' }}>Help</h2>
                             <div className="d-flex flex-column gap-2">
                                 <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
-                                    <a href="https://github.com/kanayai" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>GitHub Repository</a>
+                                    <a href="https://github.com/kanayai/karim_ai_website" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>GitHub Repository</a>
                                 </div>
                                 <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
                                     <a href="https://researchportal.bath.ac.uk/en/persons/karim-anaya-izquierdo/" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>Research Portal</a>

@@ -15,7 +15,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
             name: 'Home',
             type: 'folder',
             children: [
-                { name: 'welcome.md', icon: <FaMarkdown color="#519aba" />, type: 'markdown' },
+                { name: 'Welcome', icon: <img src="/images/Bath_Crest.png" alt="Welcome" style={{ width: '16px', height: '16px' }} />, type: 'welcome' },
             ]
         },
         {
