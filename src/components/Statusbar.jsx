@@ -29,7 +29,7 @@ const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal }) => {
                     <VscSourceControl />
                     <span>main*</span>
                 </div>
-                <div className="d-flex align-items-center gap-1">
+                <div className="d-flex align-items-center gap-1 d-none d-md-flex">
                     <VscCheck />
                     <span>0 errors</span>
                 </div>
@@ -42,21 +42,21 @@ const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal }) => {
                     title="Toggle Terminal (Ctrl+`)"
                 >
                     <VscTerminal />
-                    <span>{isTerminalOpen ? 'Close Terminal' : 'Terminal'}</span>
+                    <span className="d-none d-md-inline">{isTerminalOpen ? 'Close Terminal' : 'Terminal'}</span>
                 </div>
-                <div className="d-flex align-items-center gap-1">
+                <div className="d-flex align-items-center gap-1 d-none d-md-flex">
                     <span>Ln 12, Col 45</span>
                 </div>
-                <div className="d-flex align-items-center gap-1">
+                <div className="d-flex align-items-center gap-1 d-none d-md-flex">
                     <span>UTF-8</span>
                 </div>
-                <div className="d-flex align-items-center gap-1">
+                <div className="d-flex align-items-center gap-1 d-none d-md-flex">
                     <span>{getLanguage(activeFile)}</span>
                 </div>
-                <div className="d-flex align-items-center gap-1">
+                <div className="d-flex align-items-center gap-1 d-none d-md-flex">
                     <VscFeedback />
                 </div>
-                <div className="d-flex align-items-center gap-1">
+                <div className="d-flex align-items-center gap-1 d-none d-md-flex">
                     <VscBell />
                 </div>
                 <div className="d-flex align-items-center gap-1" title="Powered by Gemini Antigravity">
