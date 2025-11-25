@@ -49,7 +49,7 @@ const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, isSid
                 )}
                 {children}
             </div>
-            <Statusbar />
+            <Statusbar activeFile={activeFile} />
         </div>
     );
 };
