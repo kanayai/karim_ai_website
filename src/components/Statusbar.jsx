@@ -1,7 +1,7 @@
 import React from 'react';
-import { VscSourceControl, VscBell, VscCheck, VscFeedback } from 'react-icons/vsc';
+import { VscSourceControl, VscBell, VscCheck, VscFeedback, VscTerminal } from 'react-icons/vsc';
 
-const Statusbar = ({ activeFile }) => {
+const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal }) => {
     const getLanguage = (filename) => {
         if (!filename) return 'Plain Text';
         if (filename === 'Welcome') return 'Markdown';
@@ -35,6 +35,15 @@ const Statusbar = ({ activeFile }) => {
                 </div>
             </div>
             <div className="d-flex align-items-center gap-3">
+                <div
+                    className="d-flex align-items-center gap-1 hover-bg px-1"
+                    style={{ cursor: 'pointer' }}
+                    onClick={toggleTerminal}
+                    title="Toggle Terminal (Ctrl+`)"
+                >
+                    <VscTerminal />
+                    <span>{isTerminalOpen ? 'Close Terminal' : 'Terminal'}</span>
+                </div>
                 <div className="d-flex align-items-center gap-1">
                     <span>Ln 12, Col 45</span>
                 </div>

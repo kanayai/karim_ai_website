@@ -3,15 +3,22 @@ import Sidebar from './Sidebar';
 import Statusbar from './Statusbar';
 import CommandPalette from './CommandPalette';
 import TitleBar from './TitleBar';
+import Terminal from './Terminal';
 
 const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, isSidebarOpen, toggleSidebar }) => {
     const [isPaletteOpen, setIsPaletteOpen] = useState(false);
+    const [isTerminalOpen, setIsTerminalOpen] = useState(true); // Default open for demo
 
     useEffect(() => {
         const handleKeyDown = (e) => {
             if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'p') {
                 e.preventDefault();
                 setIsPaletteOpen(true);
+            }
+            // Toggle terminal with Ctrl+`
+            if ((e.ctrlKey || e.metaKey) && e.key === '`') {
+                e.preventDefault();
+                setIsTerminalOpen(prev => !prev);
             }
         };
 
@@ -47,9 +54,17 @@ const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, isSid
                         onClick={toggleSidebar}
                     />
                 )}
-                {children}
+
+                <div className="d-flex flex-column flex-grow-1" style={{ overflow: 'hidden' }}>
+                    {children}
+                    {isTerminalOpen && <Terminal onClose={() => setIsTerminalOpen(false)} />}
+                </div>
             </div>
-            <Statusbar activeFile={activeFile} />
+            <Statusbar
+                activeFile={activeFile}
+                isTerminalOpen={isTerminalOpen}
+                toggleTerminal={() => setIsTerminalOpen(!isTerminalOpen)}
+            />
         </div>
     );
 };
