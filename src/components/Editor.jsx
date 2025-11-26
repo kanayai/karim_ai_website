@@ -15,7 +15,7 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
         if (filename.endsWith('.ipynb')) return <FaPython color="#3776ab" />;
         if (filename.endsWith('.js')) return <FaJs color="#f7df1e" />;
         if (filename.endsWith('.css')) return <FaReact color="#61dafb" />;
-        if (filename.endsWith('.html')) return <FaHtml5 color="#e34c26" />;
+        if (filename.endsWith('.html')) return <span style={{ color: '#e34c26', fontWeight: 'bold', fontSize: '12px' }}>&lt;&gt;</span>;
 
         if (filename.endsWith('.R')) return <span style={{ color: '#276dc3', fontWeight: 'bold', fontSize: '10px' }}>R</span>;
         if (filename.endsWith('.txt')) return <VscLaw color="#d4d4d4" />;
