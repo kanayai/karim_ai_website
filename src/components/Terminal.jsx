@@ -37,8 +37,7 @@ const Terminal = ({ onClose }) => {
 
             {/* Terminal Content */}
             <div className="flex-grow-1 p-3" style={{ overflowY: 'auto' }}>
-                <div style={{ marginBottom: '4px' }}>Welcome to Karim AI Website Terminal</div>
-                <div style={{ marginBottom: '4px' }}>Starting development server...</div>
+
                 <div style={{ marginBottom: '4px', color: '#4EC9B0' }}>Ready on http://localhost:5173</div>
                 <div style={{ marginTop: '10px' }}>
                     <span style={{ color: '#98C379' }}>➜</span> <span style={{ color: '#61AFEF' }}>~</span> <span style={{ opacity: 0.8 }}>npm run dev</span>
