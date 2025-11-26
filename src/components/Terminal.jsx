@@ -3,8 +3,7 @@ import { VscClose } from 'react-icons/vsc';
 
 const Terminal = ({ onClose }) => {
     return (
-        <div style={{
-            height: '200px',
+        <div className="terminal-panel" style={{
             backgroundColor: 'var(--vscode-editor-bg)',
             borderTop: '1px solid var(--vscode-border)',
             display: 'flex',
@@ -48,6 +47,14 @@ const Terminal = ({ onClose }) => {
             </div>
             <style>
                 {`
+                    .terminal-panel {
+                        height: 200px;
+                    }
+                    @media (max-width: 768px) {
+                        .terminal-panel {
+                            height: 120px;
+                        }
+                    }
                     .blinking-cursor {
                         animation: blink 1s step-end infinite;
                     }
