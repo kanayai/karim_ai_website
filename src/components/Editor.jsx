@@ -219,7 +219,7 @@ dist
     return (
         <div className="d-flex flex-column flex-grow-1" style={{ backgroundColor: 'var(--vscode-editor-bg)', overflow: 'hidden' }}>
             {/* Tabs */}
-            <div className="d-flex align-items-center" style={{ backgroundColor: 'var(--vscode-bg)', overflowX: 'auto', height: '35px' }}>
+            <div className="d-flex align-items-center" style={{ backgroundColor: 'var(--vscode-bg)', overflowX: 'auto', height: '35px', minHeight: '35px', flexShrink: 0 }}>
                 <div className="d-flex" style={{ flexGrow: 1, overflowX: 'auto', height: '100%' }}>
                     {openFiles.map(file => (
                         <div
@@ -272,6 +272,8 @@ dist
             {activeFile && (
                 <div className="d-flex align-items-center px-3" style={{
                     height: '22px',
+                    minHeight: '22px',
+                    flexShrink: 0,
                     backgroundColor: 'var(--vscode-editor-bg)',
                     borderBottom: '1px solid var(--vscode-border)', // Optional: subtle separator
                     fontSize: '13px',

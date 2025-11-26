@@ -6,6 +6,7 @@ const TitleBar = ({ onSearchClick, toggleSidebar }) => {
         <div className="d-flex align-items-center justify-content-between px-2"
             style={{
                 height: '35px',
+                flexShrink: 0,
                 backgroundColor: 'var(--vscode-activity-bar-bg)',
                 borderBottom: '1px solid var(--vscode-border)',
                 userSelect: 'none'
