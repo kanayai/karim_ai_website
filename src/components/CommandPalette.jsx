@@ -54,7 +54,7 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
             <div
                 className="rounded shadow-lg d-flex flex-column"
                 style={{
-                    width: '800px',
+                    width: '1000px',
                     maxWidth: '90%',
                     maxHeight: '400px',
                     backgroundColor: 'var(--vscode-sidebar-bg)',
