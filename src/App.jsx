@@ -41,13 +41,14 @@ function App() {
   const handleCloseFile = (e, fileName) => {
     e.stopPropagation(); // Prevent triggering tab click
     const newOpenFiles = openFiles.filter(f => f !== fileName);
-    setOpenFiles(newOpenFiles);
 
-    if (activeFile === fileName) {
-      if (newOpenFiles.length > 0) {
+    if (newOpenFiles.length === 0) {
+      setOpenFiles(['Welcome']);
+      setActiveFile('Welcome');
+    } else {
+      setOpenFiles(newOpenFiles);
+      if (activeFile === fileName) {
         setActiveFile(newOpenFiles[newOpenFiles.length - 1]);
-      } else {
-        setActiveFile(null); // No files open
       }
     }
   };
