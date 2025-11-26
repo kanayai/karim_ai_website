@@ -48,6 +48,8 @@ const TitleBar = ({ onSearchClick, toggleSidebar }) => {
                         backgroundColor: 'var(--vscode-bg)',
                         border: '1px solid var(--vscode-border)',
                         height: '24px',
+                        width: '400px',
+                        maxWidth: '50vw',
                         cursor: 'pointer',
                         color: 'var(--vscode-text)',
                         opacity: 0.8
