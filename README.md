@@ -61,6 +61,8 @@ karim_ai_website/
 │   └── _quarto.yml          # Quarto configuration
 ├── scripts/                 # Node.js automation scripts
 │   └── fetch_orcid_publications.js
+├── LICENSE.txt              # MIT License
+├── README.md                # Central documentation: structure, components, and workflows.
 └── package.json             # Dependencies & scripts
 ```
 
