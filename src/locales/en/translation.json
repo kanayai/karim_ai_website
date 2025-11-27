@@ -1,0 +1,59 @@
+{
+    "sidebar": {
+        "home": "Home",
+        "research": "Research",
+        "projects": "Projects",
+        "teaching": "Teaching",
+        "blog": "Blog",
+        "explorer": "Explorer",
+        "outline": "OUTLINE",
+        "timeline": "TIMELINE",
+        "extensions": "Extensions",
+        "variables": "VARIABLES",
+        "unit_tests": "UNIT TESTS (SKILLS)"
+    },
+    "statusbar": {
+        "main": "main*",
+        "errors": "0 errors",
+        "terminal": "Terminal",
+        "close_terminal": "Close Terminal",
+        "plain_text": "Plain Text",
+        "markdown": "Markdown",
+        "javascript": "JavaScript React",
+        "css": "CSS",
+        "html": "HTML",
+        "r": "R",
+        "jupyter": "Jupyter",
+        "json": "JSON"
+    },
+    "welcome": {
+        "title": "Karim AI",
+        "subtitle": "Senior Lecturer in Statistics at the University of Bath",
+        "start": "Start",
+        "recent": "Recent",
+        "help": "Help",
+        "view_publications": "View Publications",
+        "view_publications_desc": "Browse academic publications and citations",
+        "read_blog": "Read Blog",
+        "read_blog_desc": "Explore thoughts and articles",
+        "explore_projects": "Explore Projects",
+        "explore_projects_desc": "See current and past research projects",
+        "about_me": "About Me",
+        "about_me_desc": "Learn more about my background",
+        "github_repo": "GitHub Repository",
+        "research_portal": "Research Portal",
+        "report_issue": "Report Issue",
+        "show_welcome": "Show welcome page on startup"
+    },
+    "gitgraph": {
+        "title": "Git Graph: Career Timeline",
+        "bsc": "BSc in Actuarial Sciences, ITAM, Mexico",
+        "msc": "MSc in Statistics, IIMAS, UNAM, Mexico",
+        "phd": "PhD in Mathematics, IIMAS, UNAM, Mexico",
+        "postdoc": "Postdoc Open University, Milton Keynes",
+        "lecturer_lshtm": "Lecturer in Medical Statistics, LSHTM",
+        "lecturer_bath": "Lecturer in Statistics, University of Bath",
+        "fellow": "Fellow of the Higher Education Academy",
+        "senior_lecturer": "Senior Lecturer in Statistics, University of Bath"
+    }
+}

@@ -8,8 +8,10 @@ import GitGraph from './GitGraph';
 import MusicPlayer from './MusicPlayer';
 import { VscClose, VscCloseAll, VscChevronRight, VscLaw, VscGame, VscCode, VscGitMerge, VscRadioTower } from 'react-icons/vsc';
 import { FaMarkdown, FaPython, FaJs, FaReact, FaHtml5 } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme }) => {
+    const { i18n } = useTranslation();
 
     const getIcon = (filename) => {
         if (filename === 'Welcome') return <img src="/images/Bath_Crest.png" alt="Welcome" style={{ width: '16px', height: '16px' }} />;
@@ -138,14 +140,25 @@ dist
             // If the file is in the 'Blog' folder in Sidebar, we need to know its full path.
             // For simplicity, we'll map the filename to the expected public path.
             let src = '';
+            const lang = i18n.language;
+
+            // Helper to get localized path if it exists, otherwise fallback to default
+            const getLocalizedPath = (baseName) => {
+                const supportedLangs = ['es', 'fr', 'it', 'pt', 'de'];
+                if (supportedLangs.includes(lang) && (baseName === 'contact.html' || baseName === 'about_me.html')) {
+                    return `/${baseName.replace('.html', `.${lang}.html`)}`;
+                }
+                return `/${baseName}`;
+            };
+
             if (activeFile === 'index.html') src = '/blog/index.html';
             else if (activeFile === 'anscombe_quartet.html') src = '/blog/posts/anscombe_quartet.html';
             else if (activeFile === 'projects.html') src = '/projects.html';
             else if (activeFile === 'certest.html') src = '/certest.html';
             else if (activeFile === 'gkn_prosperity.html') src = '/gkn_prosperity.html';
             else if (activeFile === 'phd_students.html') src = '/phd_students.html';
-            else if (activeFile === 'about_me.html') src = '/about_me.html';
-            else if (activeFile === 'contact.html') src = '/contact.html';
+            else if (activeFile === 'about_me.html') src = getLocalizedPath('about_me.html');
+            else if (activeFile === 'contact.html') src = getLocalizedPath('contact.html');
 
             // Append theme param
             if (src) {

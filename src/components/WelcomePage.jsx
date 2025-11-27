@@ -1,30 +1,33 @@
 import React from 'react';
 import { VscBook, VscPreview, VscProject, VscAccount, VscRepo, VscNewFile, VscFolderOpened } from 'react-icons/vsc';
+import { useTranslation } from 'react-i18next';
 
 const WelcomePage = ({ onNavigate }) => {
+    const { t } = useTranslation();
+
     const startItems = [
         {
             icon: <VscBook size={20} color="#3794ff" />,
-            title: 'View Publications',
-            description: 'Browse academic publications and citations',
+            title: t('welcome.view_publications'),
+            description: t('welcome.view_publications_desc'),
             action: () => onNavigate('publications.R')
         },
         {
             icon: <VscPreview size={20} color="#e44d26" />,
-            title: 'Read Blog',
-            description: 'Explore thoughts and articles',
+            title: t('welcome.read_blog'),
+            description: t('welcome.read_blog_desc'),
             action: () => onNavigate('index.html')
         },
         {
             icon: <VscProject size={20} color="#519aba" />,
-            title: 'Explore Projects',
-            description: 'See current and past research projects',
+            title: t('welcome.explore_projects'),
+            description: t('welcome.explore_projects_desc'),
             action: () => onNavigate('projects.md')
         },
         {
             icon: <VscAccount size={20} color="#4ec9b0" />,
-            title: 'About Me',
-            description: 'Learn more about my background',
+            title: t('welcome.about_me'),
+            description: t('welcome.about_me_desc'),
             action: () => onNavigate('about_me.md')
         }
     ];
@@ -46,17 +49,17 @@ const WelcomePage = ({ onNavigate }) => {
                 <div className="mb-5">
                     <div className="d-flex flex-column align-items-start gap-3 mb-2">
                         <img src="/images/blackboard.png" alt="Logo" style={{ width: '100%', maxWidth: '300px', height: 'auto', objectFit: 'contain' }} />
-                        <h1 style={{ fontSize: '36px', fontWeight: '300' }}>Karim AI</h1>
+                        <h1 style={{ fontSize: '36px', fontWeight: '300' }}>{t('welcome.title')}</h1>
                     </div>
                     <p style={{ fontSize: '18px', opacity: 0.8, fontWeight: '300' }}>
-                        Senior Lecturer in Statistics at the University of Bath
+                        {t('welcome.subtitle')}
                     </p>
                 </div>
 
                 <div className="row">
                     {/* Start Section */}
                     <div className="col-md-7 mb-4">
-                        <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px' }}>Start</h2>
+                        <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px' }}>{t('welcome.start')}</h2>
                         <div className="d-flex flex-column gap-2">
                             {startItems.map((item, index) => (
                                 <div
@@ -79,7 +82,7 @@ const WelcomePage = ({ onNavigate }) => {
 
                     {/* Recent Section */}
                     <div className="col-md-5">
-                        <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px' }}>Recent</h2>
+                        <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px' }}>{t('welcome.recent')}</h2>
                         <div className="d-flex flex-column gap-1">
                             {recentItems.map((item, index) => (
                                 <div
@@ -105,16 +108,16 @@ const WelcomePage = ({ onNavigate }) => {
                         </div>
 
                         <div className="mt-5">
-                            <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px' }}>Help</h2>
+                            <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px' }}>{t('welcome.help')}</h2>
                             <div className="d-flex flex-column gap-2">
                                 <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
-                                    <a href="https://github.com/kanayai/karim_ai_website" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>GitHub Repository</a>
+                                    <a href="https://github.com/kanayai/karim_ai_website" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>{t('welcome.github_repo')}</a>
                                 </div>
                                 <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
-                                    <a href="https://researchportal.bath.ac.uk/en/persons/karim-anaya-izquierdo/" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>Research Portal</a>
+                                    <a href="https://researchportal.bath.ac.uk/en/persons/karim-anaya-izquierdo/" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>{t('welcome.research_portal')}</a>
                                 </div>
                                 <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
-                                    <a href="https://github.com/kanayai/karim_ai_website/issues/new" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>Report Issue</a>
+                                    <a href="https://github.com/kanayai/karim_ai_website/issues/new" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>{t('welcome.report_issue')}</a>
                                 </div>
                             </div>
                         </div>
@@ -124,7 +127,7 @@ const WelcomePage = ({ onNavigate }) => {
                 <div className="mt-5 pt-4" style={{ borderTop: '1px solid var(--vscode-border)' }}>
                     <div className="d-flex align-items-center gap-2">
                         <input type="checkbox" id="showWelcome" defaultChecked disabled />
-                        <label htmlFor="showWelcome" style={{ fontSize: '13px', opacity: 0.8 }}>Show welcome page on startup</label>
+                        <label htmlFor="showWelcome" style={{ fontSize: '13px', opacity: 0.8 }}>{t('welcome.show_welcome')}</label>
                     </div>
                 </div>
             </div>

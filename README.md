@@ -1,5 +1,7 @@
 # Karim AI Portfolio Website
 
+This README serves as the central documentation for the Karim AI Portfolio Website. It outlines the project's structure, key components, data workflows, and installation instructions. Use this guide to understand how the React frontend, R data processing, and Quarto blog integration work together to create this VS Code-themed portfolio.
+
 A personal academic portfolio website designed to mimic the Visual Studio Code interface. It features a React-based frontend, R-generated content for research data, and a Quarto-powered blog.
 
 ## 🚀 Quick Start
@@ -137,6 +139,42 @@ If you need to recreate the frontend logic, here is how the core components inte
 2.  **Build**: Run `quarto render` inside `blog/`.
 3.  **Output**: HTML files are generated in `public/blog/`.
 4.  **Link**: Add the new file to `Sidebar.jsx` or `CommandPalette.jsx` if desired.
+
+---
+
+## 🌐 Multilingual Support
+
+The website now supports multiple languages: **English (en)**, **Spanish (es)**, **French (fr)**, **Italian (it)**, **Portuguese (pt)**, and **German (de)**.
+
+### Features
+- **Language Switcher**: Located in the Status Bar (bottom right). Click the globe icon or the language code (e.g., "EN") to cycle through languages.
+- **Translated UI**: Sidebar items, status bar text, and welcome page content are fully translated.
+- **Localized Content**: Static pages like `contact.html` and `about_me.html` automatically load the localized version (e.g., `contact.es.html`) based on the selected language.
+
+### 📝 Translation Workflow for Future Content
+
+To ensure new features and content are translated, follow these steps:
+
+#### 1. React Components
+1.  **Add Keys**: Add new JSON keys to `src/locales/en/translation.json` and all other language files in `src/locales/[lang]/`.
+2.  **Use Hook**: In your component, import `useTranslation`:
+    ```javascript
+    import { useTranslation } from 'react-i18next';
+    // ...
+    const { t } = useTranslation();
+    // ...
+    <h1>{t('namespace.key')}</h1>
+    ```
+
+#### 2. Static HTML Pages
+For static content loaded via `iframe` (like `contact.html`):
+1.  **Create Files**: Create a copy of the HTML file for each language with the format `filename.[lang].html` (e.g., `new_page.es.html`).
+2.  **Update Editor**: The `Editor.jsx` component is already configured to look for these files. Ensure your file naming follows the convention.
+
+#### 3. Blog Posts & R Output
+Currently, blog posts (Quarto) and R-generated pages (Publications) are **not** automatically translated. To support this in the future, you would need to:
+-   **Quarto**: Configure Quarto profiles for different languages.
+-   **R Scripts**: Modify R scripts to generate separate HTML outputs for each language (e.g., `publications.es.html`).
 
 ---
 

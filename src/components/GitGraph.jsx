@@ -1,10 +1,13 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const GitGraph = () => {
+    const { t } = useTranslation();
+
     const commits = [
         {
             hash: '93a98b',
-            message: 'BSc in Actuarial Sciences, ITAM, Mexico',
+            message: t('gitgraph.bsc'),
             date: '1993-1998',
             author: 'Karim AI',
             tag: 'v1.0.0',
@@ -12,14 +15,14 @@ const GitGraph = () => {
         },
         {
             hash: '98a00b',
-            message: 'MSc in Statistics, IIMAS, UNAM, Mexico',
+            message: t('gitgraph.msc'),
             date: '1998-2000',
             author: 'Karim AI',
             url: 'https://www.iimas.unam.mx'
         },
         {
             hash: '00a05b',
-            message: 'PhD in Mathematics, IIMAS, UNAM, Mexico',
+            message: t('gitgraph.phd'),
             date: '2000-2005',
             author: 'Karim AI',
             tag: 'phd',
@@ -27,28 +30,28 @@ const GitGraph = () => {
         },
         {
             hash: '05a11b',
-            message: 'Postdoc Open University, Milton Keynes',
+            message: t('gitgraph.postdoc'),
             date: '2005-2011',
             author: 'Karim AI',
             url: 'https://university.open.ac.uk/stem/mathematics-and-statistics/'
         },
         {
             hash: '11a13b',
-            message: 'Lecturer in Medical Statistics, LSHTM',
+            message: t('gitgraph.lecturer_lshtm'),
             date: '2011-2013',
             author: 'Karim AI',
             url: 'https://www.lshtm.ac.uk'
         },
         {
             hash: '13a23b',
-            message: 'Lecturer in Statistics, University of Bath',
+            message: t('gitgraph.lecturer_bath'),
             date: '2013-2023',
             author: 'Karim AI',
             url: 'https://www.bath.ac.uk/departments/department-of-mathematical-sciences/'
         },
         {
             hash: '16a00b',
-            message: 'Fellow of the Higher Education Academy',
+            message: t('gitgraph.fellow'),
             date: '2016',
             author: 'Karim AI',
             tag: 'fellow',
@@ -56,7 +59,7 @@ const GitGraph = () => {
         },
         {
             hash: 'HEAD',
-            message: 'Senior Lecturer in Statistics, University of Bath',
+            message: t('gitgraph.senior_lecturer'),
             date: 'Since 2023',
             author: 'Karim AI',
             tag: 'main',
@@ -66,7 +69,7 @@ const GitGraph = () => {
 
     return (
         <div className="p-4" style={{ color: 'var(--vscode-text)', height: '100%', overflowY: 'auto' }}>
-            <h2 className="mb-4">Git Graph: Career Timeline</h2>
+            <h2 className="mb-4">{t('gitgraph.title')}</h2>
 
             <div style={{ fontFamily: 'Menlo, Monaco, "Courier New", monospace', fontSize: '13px' }}>
                 {commits.map((commit, index) => (

@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscAccount, VscGear, VscColorMode, VscChevronRight, VscChevronDown, VscLaw, VscEllipsis, VscCode, VscGitMerge, VscRadioTower, VscSparkle, VscGithub } from 'react-icons/vsc';
 import { FaReact, FaJs, FaMarkdown, FaPython, FaHtml5 } from 'react-icons/fa';
 import CopilotChat from './CopilotChat';
+import { useTranslation } from 'react-i18next';
 
 const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick }) => {
     const [activeView, setActiveView] = useState('explorer');
     const [expandedFolders, setExpandedFolders] = useState({});
     const [showAccountsMenu, setShowAccountsMenu] = useState(false);
+    const { t } = useTranslation();
 
     const toggleFolder = (folderName) => {
         setExpandedFolders(prev => ({ ...prev, [folderName]: !prev[folderName] }));
@@ -14,18 +16,18 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
 
     const structure = [
         {
-            name: 'Home',
+            name: t('sidebar.home'),
             type: 'folder',
             children: [
                 { name: 'Welcome', icon: <img src="/images/Bath_Crest.png" alt="Welcome" style={{ width: '16px', height: '16px' }} />, type: 'welcome' },
             ]
         },
         {
-            name: 'Research',
+            name: t('sidebar.research'),
             type: 'folder',
             children: [
                 {
-                    name: 'Projects',
+                    name: t('sidebar.projects'),
                     type: 'folder',
                     children: [
                         { name: 'certest.html', icon: <VscCode color="#e44d26" />, type: 'html', path: '/certest.html' },
@@ -37,7 +39,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
             ]
         },
         {
-            name: 'Teaching',
+            name: t('sidebar.teaching'),
             type: 'folder',
             children: [
                 { name: 'current_courses.ipynb', icon: <FaPython color="#3776ab" />, type: 'notebook' },
@@ -45,7 +47,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
             ]
         },
         {
-            name: 'Blog',
+            name: t('sidebar.blog'),
             type: 'folder',
             children: [
                 { name: 'index.html', icon: <VscCode color="#e44d26" />, type: 'html', path: '/blog/index.html' },
@@ -126,7 +128,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                         color={activeView === 'explorer' ? "var(--vscode-text)" : "#858585"}
                         style={{ cursor: 'pointer', borderLeft: activeView === 'explorer' ? '2px solid var(--vscode-text)' : '2px solid transparent', paddingLeft: '2px' }}
                         onClick={() => setActiveView('explorer')}
-                        title="Explorer"
+                        title={t('sidebar.explorer')}
                     />
                     <VscSearch size={24} style={{ cursor: 'pointer' }} onClick={onSearchClick} />
                     <VscSourceControl size={24} style={{ cursor: 'pointer' }} onClick={() => setActiveFile('git-graph')} title="Git Graph (Career Timeline)" />
@@ -144,7 +146,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                         color={activeView === 'extensions' ? "var(--vscode-text)" : "#858585"}
                         style={{ cursor: 'pointer', borderLeft: activeView === 'extensions' ? '2px solid var(--vscode-text)' : '2px solid transparent', paddingLeft: '2px' }}
                         onClick={() => setActiveView('extensions')}
-                        title="Extensions"
+                        title={t('sidebar.extensions')}
                     />
                     <VscGithub
                         size={24}
@@ -207,7 +209,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
             <div className="d-flex flex-column" style={{ width: '250px', backgroundColor: 'var(--vscode-sidebar-bg)', borderRight: '1px solid var(--vscode-border)' }}>
                 {activeView === 'explorer' ? (
                     <>
-                        <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>Explorer</div>
+                        <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>{t('sidebar.explorer')}</div>
                         <div className="d-flex flex-column">
                             <div className="px-2 py-1 d-flex align-items-center" style={{ fontWeight: 'bold', cursor: 'pointer', color: 'var(--vscode-text)' }}>
                                 <VscChevronDown className="me-1" /> KARIM AI SITE
@@ -220,7 +222,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                         <div className="mt-auto">
                             <div className="px-2 py-1 d-flex align-items-center gap-1" style={{ cursor: 'pointer', color: 'var(--vscode-text)', fontWeight: 'bold', borderTop: '1px solid var(--vscode-border)' }}>
                                 <VscChevronRight />
-                                <span style={{ fontSize: '11px' }}>OUTLINE</span>
+                                <span style={{ fontSize: '11px' }}>{t('sidebar.outline')}</span>
                             </div>
                         </div>
 
@@ -228,13 +230,13 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                         <div>
                             <div className="px-2 py-1 d-flex align-items-center gap-1" style={{ cursor: 'pointer', color: 'var(--vscode-text)', fontWeight: 'bold', borderTop: '1px solid var(--vscode-border)' }}>
                                 <VscChevronRight />
-                                <span style={{ fontSize: '11px' }}>TIMELINE</span>
+                                <span style={{ fontSize: '11px' }}>{t('sidebar.timeline')}</span>
                             </div>
                         </div>
                     </>
                 ) : activeView === 'extensions' ? (
                     <>
-                        <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>Extensions</div>
+                        <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>{t('sidebar.extensions')}</div>
                         <div className="d-flex flex-column p-2">
 
 
@@ -279,7 +281,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                 ) : activeView === 'debug' ? (
                     <>
                         <div className="px-3 py-2 text-uppercase d-flex align-items-center justify-content-between" style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--vscode-text)', backgroundColor: 'var(--vscode-sidebar-bg)', cursor: 'pointer' }}>
-                            <span><VscChevronDown className="me-1" /> VARIABLES</span>
+                            <span><VscChevronDown className="me-1" /> {t('sidebar.variables')}</span>
                             <div className="d-flex gap-2">
                                 {/* Mock icons */}
                             </div>
@@ -293,7 +295,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                         </div>
 
                         <div className="px-3 py-2 text-uppercase d-flex align-items-center" style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--vscode-text)', backgroundColor: 'var(--vscode-sidebar-bg)', cursor: 'pointer', marginTop: '10px' }}>
-                            <span><VscChevronDown className="me-1" /> UNIT TESTS (SKILLS)</span>
+                            <span><VscChevronDown className="me-1" /> {t('sidebar.unit_tests')}</span>
                         </div>
                         <div className="d-flex flex-column px-3 pb-2" style={{ fontSize: '13px', color: 'var(--vscode-text)', fontFamily: 'Menlo, Monaco, "Courier New", monospace' }}>
                             <div className="d-flex align-items-center gap-2 mb-1"><span style={{ color: '#4caf50' }}>✅</span> <span>test_statistical_modelling</span></div>

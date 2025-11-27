@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Karim Anaya-Izquierdo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #eaeaea;
+            padding-bottom: 10px;
+        }
+
+        .contact-card {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .contact-item {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-item i {
+            font-size: 1.2rem;
+            color: #6c757d;
+            width: 24px;
+            text-align: center;
+        }
+
+        .contact-label {
+            font-weight: 600;
+            margin-right: 5px;
+            min-width: 80px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* VS Code Dark Theme Support */
+        body.dark-theme {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+        }
+
+        body.dark-theme h1 {
+            color: #ffffff;
+            border-bottom-color: #3e3e3e;
+        }
+
+        body.dark-theme .contact-card {
+            background-color: #252526;
+            border-color: #3e3e3e;
+        }
+
+        body.dark-theme .contact-item i {
+            color: #858585;
+        }
+
+        body.dark-theme a {
+            color: #3794ff;
+        }
+
+        /* Fallback for system preference */
+        @media (prefers-color-scheme: dark) {
+            body:not(.light-theme) {
+                background-color: #1e1e1e;
+                color: #d4d4d4;
+            }
+
+            body:not(.light-theme) h1 {
+                color: #ffffff;
+                border-bottom-color: #3e3e3e;
+            }
+
+            body:not(.light-theme) .contact-card {
+                background-color: #252526;
+                border-color: #3e3e3e;
+            }
+
+            body:not(.light-theme) .contact-item i {
+                color: #858585;
+            }
+
+            body:not(.light-theme) a {
+                color: #3794ff;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="max-width: 800px;">
+        <h1>Detalles de Contacto</h1>
+
+        <div class="contact-card">
+            <div class="contact-item">
+                <i class="bi bi-person-fill"></i>
+                <div>
+                    <strong>Prof. Karim Anaya-Izquierdo</strong><br>
+                    <span style="opacity: 0.8;">Profesor Titular de Estadística</span>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <i class="bi bi-building-fill"></i>
+                <div>
+                    <span class="contact-label">Departamento:</span>
+                    Ciencias Matemáticas, Universidad de Bath
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <i class="bi bi-geo-alt-fill"></i>
+                <div>
+                    <span class="contact-label">Oficina:</span>
+                    4West 4.13
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <i class="bi bi-envelope-fill"></i>
+                <div>
+                    <span class="contact-label">Email:</span>
+                    <a href="mailto:kai21@bath.ac.uk">kai21@bath.ac.uk</a>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <i class="bi bi-map-fill"></i>
+                <div>
+                    <span class="contact-label">Dirección:</span>
+                    Claverton Down, BA2 7AY, Bath, Reino Unido
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        // Apply theme based on query parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const theme = urlParams.get('theme');
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+            document.body.classList.remove('light-theme');
+        } else if (theme === 'light') {
+            document.body.classList.add('light-theme');
+            document.body.classList.remove('dark-theme');
+        }
+    </script>
+</body>
+
+</html>

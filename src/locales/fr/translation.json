@@ -1,0 +1,59 @@
+{
+    "sidebar": {
+        "home": "Accueil",
+        "research": "Recherche",
+        "projects": "Projets",
+        "teaching": "Enseignement",
+        "blog": "Blog",
+        "explorer": "Explorateur",
+        "outline": "PLAN",
+        "timeline": "CHRONOLOGIE",
+        "extensions": "Extensions",
+        "variables": "VARIABLES",
+        "unit_tests": "TESTS UNITAIRES (COMPÉTENCES)"
+    },
+    "statusbar": {
+        "main": "main*",
+        "errors": "0 erreurs",
+        "terminal": "Terminal",
+        "close_terminal": "Fermer le Terminal",
+        "plain_text": "Texte Brut",
+        "markdown": "Markdown",
+        "javascript": "JavaScript React",
+        "css": "CSS",
+        "html": "HTML",
+        "r": "R",
+        "jupyter": "Jupyter",
+        "json": "JSON"
+    },
+    "welcome": {
+        "title": "Karim AI",
+        "subtitle": "Maître de Conférences en Statistiques à l'Université de Bath",
+        "start": "Démarrer",
+        "recent": "Récent",
+        "help": "Aide",
+        "view_publications": "Voir les Publications",
+        "view_publications_desc": "Parcourir les publications académiques et citations",
+        "read_blog": "Lire le Blog",
+        "read_blog_desc": "Explorer pensées et articles",
+        "explore_projects": "Explorer les Projets",
+        "explore_projects_desc": "Voir les projets de recherche actuels et passés",
+        "about_me": "À Propos de Moi",
+        "about_me_desc": "En savoir plus sur mon parcours",
+        "github_repo": "Dépôt GitHub",
+        "research_portal": "Portail de Recherche",
+        "report_issue": "Signaler un Problème",
+        "show_welcome": "Afficher la page d'accueil au démarrage"
+    },
+    "gitgraph": {
+        "title": "Git Graph: Chronologie de Carrière",
+        "bsc": "Licence en Sciences Actuarielles, ITAM, Mexique",
+        "msc": "Master en Statistiques, IIMAS, UNAM, Mexique",
+        "phd": "Doctorat en Mathématiques, IIMAS, UNAM, Mexique",
+        "postdoc": "Post-doctorat Open University, Milton Keynes",
+        "lecturer_lshtm": "Maître de Conférences en Statistiques Médicales, LSHTM",
+        "lecturer_bath": "Maître de Conférences en Statistiques, Université de Bath",
+        "fellow": "Membre de l'Académie de l'Enseignement Supérieur",
+        "senior_lecturer": "Maître de Conférences Senior en Statistiques, Université de Bath"
+    }
+}

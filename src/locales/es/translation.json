@@ -1,0 +1,59 @@
+{
+    "sidebar": {
+        "home": "Inicio",
+        "research": "Investigación",
+        "projects": "Proyectos",
+        "teaching": "Docencia",
+        "blog": "Blog",
+        "explorer": "Explorador",
+        "outline": "ESQUEMA",
+        "timeline": "LÍNEA DE TIEMPO",
+        "extensions": "Extensiones",
+        "variables": "VARIABLES",
+        "unit_tests": "PRUEBAS UNITARIAS (HABILIDADES)"
+    },
+    "statusbar": {
+        "main": "main*",
+        "errors": "0 errores",
+        "terminal": "Terminal",
+        "close_terminal": "Cerrar Terminal",
+        "plain_text": "Texto Plano",
+        "markdown": "Markdown",
+        "javascript": "JavaScript React",
+        "css": "CSS",
+        "html": "HTML",
+        "r": "R",
+        "jupyter": "Jupyter",
+        "json": "JSON"
+    },
+    "welcome": {
+        "title": "Karim AI",
+        "subtitle": "Profesor Titular de Estadística en la Universidad de Bath",
+        "start": "Inicio",
+        "recent": "Reciente",
+        "help": "Ayuda",
+        "view_publications": "Ver Publicaciones",
+        "view_publications_desc": "Explorar publicaciones académicas y citas",
+        "read_blog": "Leer Blog",
+        "read_blog_desc": "Explorar pensamientos y artículos",
+        "explore_projects": "Explorar Proyectos",
+        "explore_projects_desc": "Ver proyectos de investigación actuales y pasados",
+        "about_me": "Sobre Mí",
+        "about_me_desc": "Conoce más sobre mi trayectoria",
+        "github_repo": "Repositorio GitHub",
+        "research_portal": "Portal de Investigación",
+        "report_issue": "Reportar Problema",
+        "show_welcome": "Mostrar página de bienvenida al inicio"
+    },
+    "gitgraph": {
+        "title": "Git Graph: Línea de Tiempo Profesional",
+        "bsc": "Licenciatura en Actuaría, ITAM, México",
+        "msc": "Maestría en Estadística, IIMAS, UNAM, México",
+        "phd": "Doctorado en Matemáticas, IIMAS, UNAM, México",
+        "postdoc": "Postdoctorado Open University, Milton Keynes",
+        "lecturer_lshtm": "Profesor de Estadística Médica, LSHTM",
+        "lecturer_bath": "Profesor de Estadística, Universidad de Bath",
+        "fellow": "Miembro de la Academia de Educación Superior",
+        "senior_lecturer": "Profesor Titular de Estadística, Universidad de Bath"
+    }
+}

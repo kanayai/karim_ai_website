@@ -1,0 +1,59 @@
+{
+    "sidebar": {
+        "home": "Home",
+        "research": "Ricerca",
+        "projects": "Progetti",
+        "teaching": "Insegnamento",
+        "blog": "Blog",
+        "explorer": "Esplora",
+        "outline": "SCHEMA",
+        "timeline": "CRONOLOGIA",
+        "extensions": "Estensioni",
+        "variables": "VARIABILI",
+        "unit_tests": "TEST UNITARI (COMPETENZE)"
+    },
+    "statusbar": {
+        "main": "main*",
+        "errors": "0 errori",
+        "terminal": "Terminale",
+        "close_terminal": "Chiudi Terminale",
+        "plain_text": "Testo Semplice",
+        "markdown": "Markdown",
+        "javascript": "JavaScript React",
+        "css": "CSS",
+        "html": "HTML",
+        "r": "R",
+        "jupyter": "Jupyter",
+        "json": "JSON"
+    },
+    "welcome": {
+        "title": "Karim AI",
+        "subtitle": "Professore Associato di Statistica all'Università di Bath",
+        "start": "Inizio",
+        "recent": "Recente",
+        "help": "Aiuto",
+        "view_publications": "Vedi Pubblicazioni",
+        "view_publications_desc": "Sfoglia pubblicazioni accademiche e citazioni",
+        "read_blog": "Leggi Blog",
+        "read_blog_desc": "Esplora pensieri e articoli",
+        "explore_projects": "Esplora Progetti",
+        "explore_projects_desc": "Vedi progetti di ricerca attuali e passati",
+        "about_me": "Su di Me",
+        "about_me_desc": "Scopri di più sul mio background",
+        "github_repo": "Repository GitHub",
+        "research_portal": "Portale di Ricerca",
+        "report_issue": "Segnala Problema",
+        "show_welcome": "Mostra pagina di benvenuto all'avvio"
+    },
+    "gitgraph": {
+        "title": "Git Graph: Cronologia della Carriera",
+        "bsc": "Laurea in Scienze Attuariali, ITAM, Messico",
+        "msc": "Master in Statistica, IIMAS, UNAM, Messico",
+        "phd": "Dottorato in Matematica, IIMAS, UNAM, Messico",
+        "postdoc": "Post-dottorato Open University, Milton Keynes",
+        "lecturer_lshtm": "Professore di Statistica Medica, LSHTM",
+        "lecturer_bath": "Professore di Statistica, Università di Bath",
+        "fellow": "Membro dell'Accademia di Istruzione Superiore",
+        "senior_lecturer": "Professore Associato di Statistica, Università di Bath"
+    }
+}

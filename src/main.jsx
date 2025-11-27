@@ -4,6 +4,7 @@ import App from './App.jsx'
 import ErrorBoundary from './components/ErrorBoundary';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/vscode-theme.css';
+import './i18n';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
