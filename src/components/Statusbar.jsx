@@ -78,7 +78,12 @@ const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal }) => {
                 <div className="d-flex align-items-center gap-1 d-none d-md-flex">
                     <VscBell />
                 </div>
-                <div className="d-flex align-items-center gap-1" title="Powered by Gemini Antigravity">
+                <div
+                    className="d-flex align-items-center gap-1 hover-bg px-1"
+                    title="Powered by Gemini Antigravity"
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => window.open('https://gemini.google.com', '_blank')}
+                >
                     <span style={{ fontSize: '10px' }}>⚡ Gemini</span>
                 </div>
             </div>
