@@ -147,9 +147,15 @@ If you need to recreate the frontend logic, here is how the core components inte
 The website now supports multiple languages: **English (en)**, **Spanish (es)**, **French (fr)**, **Italian (it)**, **Portuguese (pt)**, and **German (de)**.
 
 ### Features
-- **Language Switcher**: Located in the Status Bar (bottom right). Click the globe icon or the language code (e.g., "EN") to cycle through languages.
+- **Language Switcher**: Located in the **Settings Menu** (Gear icon in the Activity Bar). Click the icon and select your preferred language from the dropdown.
 - **Translated UI**: Sidebar items, status bar text, and welcome page content are fully translated.
 - **Localized Content**: Static pages like `contact.html` and `about_me.html` automatically load the localized version (e.g., `contact.es.html`) based on the selected language.
+
+### ⚙️ Settings Menu
+Located at the bottom of the Activity Bar, the Gear icon opens a menu with quick access to:
+-   **Command Palette**: (`Shift+Cmd+P`)
+-   **Color Theme**: Toggle between Dark and Light modes.
+-   **Language**: Switch the website's language.
 
 ### 📝 Translation Workflow for Future Content
 

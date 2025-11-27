@@ -8,7 +8,8 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
     const [activeView, setActiveView] = useState('explorer');
     const [expandedFolders, setExpandedFolders] = useState({});
     const [showAccountsMenu, setShowAccountsMenu] = useState(false);
-    const { t } = useTranslation();
+    const [showSettingsMenu, setShowSettingsMenu] = useState(false);
+    const { t, i18n } = useTranslation();
 
     const toggleFolder = (folderName) => {
         setExpandedFolders(prev => ({ ...prev, [folderName]: !prev[folderName] }));
@@ -201,7 +202,77 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                         )}
                     </div>
 
-                    <VscGear size={24} style={{ cursor: 'pointer' }} />
+                    <div style={{ position: 'relative' }}>
+                        <VscGear
+                            size={24}
+                            style={{ cursor: 'pointer', color: showSettingsMenu ? 'var(--vscode-text)' : 'inherit' }}
+                            onClick={() => setShowSettingsMenu(!showSettingsMenu)}
+                            title="Settings"
+                        />
+                        {showSettingsMenu && (
+                            <div style={{
+                                position: 'absolute',
+                                bottom: '0',
+                                left: '35px',
+                                backgroundColor: 'var(--vscode-sidebar-bg)',
+                                border: '1px solid var(--vscode-border)',
+                                boxShadow: '0 4px 10px rgba(0,0,0,0.4)',
+                                zIndex: 1000,
+                                minWidth: '200px',
+                                padding: '5px 0',
+                                borderRadius: '5px',
+                                color: 'var(--vscode-text)'
+                            }}>
+                                <div
+                                    className="px-3 py-2 d-flex align-items-center justify-content-between"
+                                    style={{ cursor: 'pointer', fontSize: '13px', transition: 'background 0.2s' }}
+                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--vscode-hover-bg)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                                    onClick={() => {
+                                        onSearchClick();
+                                        setShowSettingsMenu(false);
+                                    }}
+                                >
+                                    <span>Command Palette...</span>
+                                    <span style={{ fontSize: '11px', opacity: 0.7 }}>⇧⌘P</span>
+                                </div>
+                                <div style={{ height: '1px', backgroundColor: 'var(--vscode-border)', margin: '4px 0' }}></div>
+                                <div
+                                    className="px-3 py-2 d-flex align-items-center justify-content-between"
+                                    style={{ cursor: 'pointer', fontSize: '13px', transition: 'background 0.2s' }}
+                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--vscode-hover-bg)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                                    onClick={() => {
+                                        toggleTheme();
+                                        setShowSettingsMenu(false);
+                                    }}
+                                >
+                                    <span>Color Theme</span>
+                                    <span style={{ fontSize: '11px', opacity: 0.7 }}>{theme === 'dark' ? 'Dark' : 'Light'}</span>
+                                </div>
+                                <div style={{ height: '1px', backgroundColor: 'var(--vscode-border)', margin: '4px 0' }}></div>
+                                <div className="px-3 py-2" style={{ fontWeight: 'bold', fontSize: '12px', opacity: 0.8 }}>
+                                    Language
+                                </div>
+                                {['en', 'es', 'fr', 'it', 'pt', 'de'].map(lang => (
+                                    <div
+                                        key={lang}
+                                        className="px-3 py-2 d-flex align-items-center justify-content-between"
+                                        style={{ cursor: 'pointer', fontSize: '13px', transition: 'background 0.2s' }}
+                                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--vscode-hover-bg)'}
+                                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                                        onClick={() => {
+                                            i18n.changeLanguage(lang);
+                                            setShowSettingsMenu(false);
+                                        }}
+                                    >
+                                        <span className="text-uppercase">{lang}</span>
+                                        {i18n.language === lang && <span>✓</span>}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 
