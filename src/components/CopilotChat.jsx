@@ -77,7 +77,7 @@ const CopilotChat = () => {
         <div className="d-flex flex-column h-100" style={{ backgroundColor: 'var(--vscode-sidebar-bg)', color: 'var(--vscode-foreground)' }}>
             {/* Header */}
             <div className="px-3 py-2 d-flex align-items-center gap-2" style={{ borderBottom: '1px solid var(--vscode-border)', fontWeight: 'bold', fontSize: '11px' }}>
-                <VscSparkle /> PORTFOLIO COPILOT
+                <VscSparkle /> COPILOT CHAT
             </div>
 
             {/* Messages Area */}
@@ -150,7 +150,50 @@ const CopilotChat = () => {
                         <VscSend />
                     </button>
                 </div>
-                <div style={{ fontSize: '10px', color: 'var(--vscode-descriptionForeground)', marginTop: '4px', textAlign: 'center' }}>
+
+                {/* Suggested Questions */}
+                <div className="mt-3">
+                    <div style={{ fontSize: '11px', fontWeight: 'bold', marginBottom: '6px', opacity: 0.8 }}>Suggested Questions:</div>
+                    <div className="d-flex flex-wrap gap-2">
+                        {[
+                            "Who is Karim?",
+                            "What are his publications?",
+                            "Tell me about the CerTest project",
+                            "What courses does he teach?",
+                            "How can I contact him?"
+                        ].map((q, i) => (
+                            <div
+                                key={i}
+                                onClick={() => {
+                                    setInput(q);
+                                    // Optional: Auto-send or just populate input
+                                }}
+                                style={{
+                                    fontSize: '11px',
+                                    backgroundColor: 'var(--vscode-badge-background)',
+                                    color: 'var(--vscode-badge-foreground)',
+                                    padding: '4px 8px',
+                                    borderRadius: '12px',
+                                    cursor: 'pointer',
+                                    border: '1px solid transparent',
+                                    transition: 'all 0.2s'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.backgroundColor = 'var(--vscode-button-hoverBackground)';
+                                    e.currentTarget.style.border = '1px solid var(--vscode-focusBorder)';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.backgroundColor = 'var(--vscode-badge-background)';
+                                    e.currentTarget.style.border = '1px solid transparent';
+                                }}
+                            >
+                                {q}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div style={{ fontSize: '10px', color: 'var(--vscode-descriptionForeground)', marginTop: '12px', textAlign: 'center' }}>
                     AI responses are simulated based on portfolio content.
                 </div>
             </div>
