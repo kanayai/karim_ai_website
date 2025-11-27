@@ -129,7 +129,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                     />
                     <VscSearch size={24} style={{ cursor: 'pointer' }} onClick={onSearchClick} />
                     <VscSourceControl size={24} style={{ cursor: 'pointer' }} onClick={() => setActiveFile('git-graph')} title="Git Graph (Career Timeline)" />
-                    <VscDebugAlt size={24} style={{ cursor: 'pointer' }} />
+                    <VscDebugAlt size={24} style={{ cursor: 'pointer', borderLeft: activeView === 'debug' ? '2px solid var(--vscode-text)' : '2px solid transparent', paddingLeft: '2px' }} onClick={() => setActiveView('debug')} title="Run and Debug (Skills & Stats)" />
                     <VscExtensions
                         size={24}
                         color={activeView === 'extensions' ? "var(--vscode-text)" : "#858585"}
@@ -217,7 +217,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                             </div>
                         </div>
                     </>
-                ) : (
+                ) : activeView === 'extensions' ? (
                     <>
                         <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>Extensions</div>
                         <div className="d-flex flex-column p-2">
@@ -261,6 +261,37 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                             </div>
                         </div>
                     </>
+                ) : activeView === 'debug' ? (
+                    <>
+                        <div className="px-3 py-2 text-uppercase d-flex align-items-center justify-content-between" style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--vscode-text)', backgroundColor: 'var(--vscode-sidebar-bg)', cursor: 'pointer' }}>
+                            <span><VscChevronDown className="me-1" /> VARIABLES</span>
+                            <div className="d-flex gap-2">
+                                {/* Mock icons */}
+                            </div>
+                        </div>
+                        <div className="d-flex flex-column px-3 pb-2" style={{ fontSize: '13px', color: 'var(--vscode-text)', fontFamily: 'Menlo, Monaco, "Courier New", monospace' }}>
+                            <div className="d-flex"><span style={{ color: '#9cdcfe' }}>currentRole</span>: <span style={{ color: '#ce9178' }}>"Senior Lecturer"</span></div>
+                            <div className="d-flex"><span style={{ color: '#9cdcfe' }}>location</span>: <span style={{ color: '#ce9178' }}>"Bath, UK"</span></div>
+                            <div className="d-flex"><span style={{ color: '#9cdcfe' }}>status</span>: <span style={{ color: '#ce9178' }}>"Open to collaborations"</span></div>
+                            <div className="d-flex"><span style={{ color: '#9cdcfe' }}>coffeeLevel</span>: <span style={{ color: '#ce9178' }}>"High" ☕</span></div>
+                            <div className="d-flex"><span style={{ color: '#9cdcfe' }}>publications</span>: <span style={{ color: '#b5cea8' }}>42+</span></div>
+                        </div>
+
+                        <div className="px-3 py-2 text-uppercase d-flex align-items-center" style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--vscode-text)', backgroundColor: 'var(--vscode-sidebar-bg)', cursor: 'pointer', marginTop: '10px' }}>
+                            <span><VscChevronDown className="me-1" /> UNIT TESTS (SKILLS)</span>
+                        </div>
+                        <div className="d-flex flex-column px-3 pb-2" style={{ fontSize: '13px', color: 'var(--vscode-text)', fontFamily: 'Menlo, Monaco, "Courier New", monospace' }}>
+                            <div className="d-flex align-items-center gap-2 mb-1"><span style={{ color: '#4caf50' }}>✅</span> <span>test_statistical_modelling</span></div>
+                            <div className="d-flex align-items-center gap-2 mb-1"><span style={{ color: '#4caf50' }}>✅</span> <span>test_r_programming</span></div>
+                            <div className="d-flex align-items-center gap-2 mb-1"><span style={{ color: '#4caf50' }}>✅</span> <span>test_python_development</span></div>
+                            <div className="d-flex align-items-center gap-2 mb-1"><span style={{ color: '#4caf50' }}>✅</span> <span>test_teaching_excellence</span></div>
+                            <div className="d-flex align-items-center gap-2 mb-1"><span style={{ color: '#4caf50' }}>✅</span> <span>test_machine_learning</span></div>
+                        </div>
+                    </>
+                ) : (
+                    <div className="p-3" style={{ color: 'var(--vscode-text)' }}>
+                        Select a view from the activity bar.
+                    </div>
                 )}
             </div>
         </div>
