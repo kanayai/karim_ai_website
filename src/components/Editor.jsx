@@ -150,7 +150,7 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
 
             // Helper to get localized path if it exists, otherwise fallback to default
             const getLocalizedPath = (baseName) => {
-                const supportedLangs = ['es', 'fr', 'it', 'pt', 'de'];
+                const supportedLangs = ['es', 'fr', 'pt'];
                 if (supportedLangs.includes(lang) && (baseName === 'contact.html' || baseName === 'about_me.html')) {
                     return `/${baseName.replace('.html', `.${lang}.html`)}`;
                 }

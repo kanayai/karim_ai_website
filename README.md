@@ -146,7 +146,7 @@ If you need to recreate the frontend logic, here is how the core components inte
 
 ## 🌐 Multilingual Support
 
-The website now supports multiple languages: **English (en)**, **Spanish (es)**, **French (fr)**, **Italian (it)**, **Portuguese (pt)**, and **German (de)**.
+The website now supports multiple languages: **English (en)**, **Spanish (es)**, **French (fr)**, and **Portuguese (pt)**.
 
 ### Features
 - **Language Switcher**: Located in the **Settings Menu** (Gear icon in the Activity Bar). Click the icon and select your preferred language from the dropdown.

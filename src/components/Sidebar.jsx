@@ -257,7 +257,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                                 <div className="px-3 py-2" style={{ fontWeight: 'bold', fontSize: '12px', opacity: 0.8 }}>
                                     Language
                                 </div>
-                                {['en', 'es', 'fr', 'it', 'pt', 'de'].map(lang => (
+                                {['en', 'es', 'fr', 'pt'].map(lang => (
                                     <div
                                         key={lang}
                                         className="px-3 py-2 d-flex align-items-center justify-content-between"
