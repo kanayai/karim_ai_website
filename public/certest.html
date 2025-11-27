@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,7 +44,9 @@
             gap: 15px;
         }
 
-        h1 i { color: var(--accent-blue); }
+        h1 i {
+            color: var(--accent-blue);
+        }
 
         .project-card {
             background-color: var(--card-bg);
@@ -141,11 +143,33 @@
         }
 
         @media (max-width: 768px) {
-            body { padding: 20px; }
-            .project-card { padding: 25px; }
+            body {
+                padding: 20px;
+            }
+
+            .project-card {
+                padding: 25px;
+            }
         }
     </style>
+    <script>
+        (function () {
+            const params = new URLSearchParams(window.location.search);
+            const theme = params.get("theme");
+            if (theme === "light") {
+                document.documentElement.style.setProperty("--bg-color", "#ffffff");
+                document.documentElement.style.setProperty("--card-bg", "#ffffff");
+                document.documentElement.style.setProperty("--text-primary", "#000000");
+                document.documentElement.style.setProperty("--text-secondary", "#555555");
+                document.documentElement.style.setProperty("--border-color", "#e4e4e4");
+                document.documentElement.style.setProperty("--hover-bg", "#f3f3f3");
+                document.documentElement.style.setProperty("--accent-blue", "#005a9e");
+                document.documentElement.style.setProperty("--accent-teal", "#007060");
+            }
+        })();
+    </script>
 </head>
+
 <body>
     <div class="container">
         <h1><i class="fas fa-flask"></i> CerTest – Certification for Design</h1>
@@ -156,9 +180,12 @@
                 <i class="fas fa-project-diagram project-icon"></i>
             </div>
             <div class="project-title">CerTest – Certification for Design</div>
-            <div class="project-desc">Developing new approaches to enable lighter, more cost and fuel-efficient composite aero-structures. CerTest addresses the challenges hindering step-changes in future engineering design by reshaping the testing pyramid to reduce empiricism and enable a new integrated approach.</div>
+            <div class="project-desc">Developing new approaches to enable lighter, more cost and fuel-efficient
+                composite aero-structures. CerTest addresses the challenges hindering step-changes in future engineering
+                design by reshaping the testing pyramid to reduce empiricism and enable a new integrated approach.</div>
             <div class="tags">
-                <span class="tag">Composites</span><span class="tag">Testing Pyramid</span><span class="tag">Aero-structures</span><span class="tag">EPSRC</span>
+                <span class="tag">Composites</span><span class="tag">Testing Pyramid</span><span
+                    class="tag">Aero-structures</span><span class="tag">EPSRC</span>
             </div>
             <div class="project-footer">
                 <a href="https://www.composites-certest.com" target="_blank" class="btn-view">
@@ -168,4 +195,5 @@
         </div>
     </div>
 </body>
+
 </html>
