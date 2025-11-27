@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscAccount, VscGear, VscColorMode, VscChevronRight, VscChevronDown, VscLaw, VscEllipsis, VscCode } from 'react-icons/vsc';
+import { VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscAccount, VscGear, VscColorMode, VscChevronRight, VscChevronDown, VscLaw, VscEllipsis, VscCode, VscGitMerge, VscRadioTower } from 'react-icons/vsc';
 import { FaReact, FaJs, FaMarkdown, FaPython, FaHtml5 } from 'react-icons/fa';
 
 const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick }) => {
@@ -128,7 +128,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                         title="Explorer"
                     />
                     <VscSearch size={24} style={{ cursor: 'pointer' }} onClick={onSearchClick} />
-                    <VscSourceControl size={24} style={{ cursor: 'pointer' }} />
+                    <VscSourceControl size={24} style={{ cursor: 'pointer' }} onClick={() => setActiveFile('git-graph')} title="Git Graph (Career Timeline)" />
                     <VscDebugAlt size={24} style={{ cursor: 'pointer' }} />
                     <VscExtensions
                         size={24}
@@ -221,6 +221,27 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                     <>
                         <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>Extensions</div>
                         <div className="d-flex flex-column p-2">
+
+
+                            <div
+                                className="d-flex p-2 gap-2"
+                                style={{
+                                    cursor: 'pointer',
+                                    backgroundColor: 'var(--vscode-list-hover-bg)',
+                                    borderRadius: '4px',
+                                    border: '1px solid var(--vscode-border)',
+                                    marginBottom: '8px'
+                                }}
+                                onClick={() => setActiveFile('lofi-radio')}
+                            >
+                                <div style={{ fontSize: '24px', display: 'flex', alignItems: 'center' }}><VscRadioTower color="#4caf50" /></div>
+                                <div className="d-flex flex-column">
+                                    <div style={{ fontWeight: 'bold', fontSize: '13px', color: 'var(--vscode-text)' }}>Lo-Fi Radio</div>
+                                    <div style={{ fontSize: '11px', color: '#858585' }}>Focus music player.</div>
+                                    <div style={{ fontSize: '10px', color: '#0e639c', marginTop: '4px' }}>Karim AI • Installed</div>
+                                </div>
+                            </div>
+
                             <div
                                 className="d-flex p-2 gap-2"
                                 style={{

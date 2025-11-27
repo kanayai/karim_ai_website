@@ -4,7 +4,9 @@ import CodeViewer from './CodeViewer';
 import RCodeViewer from './RCodeViewer';
 import WelcomePage from './WelcomePage';
 import RetroGame from './RetroGame';
-import { VscClose, VscCloseAll, VscChevronRight, VscLaw, VscGame, VscCode } from 'react-icons/vsc';
+import GitGraph from './GitGraph';
+import MusicPlayer from './MusicPlayer';
+import { VscClose, VscCloseAll, VscChevronRight, VscLaw, VscGame, VscCode, VscGitMerge, VscRadioTower } from 'react-icons/vsc';
 import { FaMarkdown, FaPython, FaJs, FaReact, FaHtml5 } from 'react-icons/fa';
 
 const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme }) => {
@@ -20,6 +22,8 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
         if (filename.endsWith('.R')) return <span style={{ color: '#276dc3', fontWeight: 'bold', fontSize: '10px' }}>R</span>;
         if (filename.endsWith('.txt')) return <VscLaw color="#d4d4d4" />;
         if (filename.endsWith('.exe')) return <VscGame color="#ea8616" />;
+        if (filename === 'git-graph') return <VscGitMerge color="#e91e63" />;
+        if (filename === 'lofi-radio') return <VscRadioTower color="#4caf50" />;
         return null;
     };
 
@@ -159,6 +163,14 @@ dist
 
         if (activeFile === 'retro_game.exe') {
             return <RetroGame />;
+        }
+
+        if (activeFile === 'git-graph') {
+            return <GitGraph />;
+        }
+
+        if (activeFile === 'lofi-radio') {
+            return <MusicPlayer />;
         }
 
         if (activeFile.endsWith('.R')) {
