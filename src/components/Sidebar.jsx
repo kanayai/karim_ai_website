@@ -206,7 +206,10 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                         <VscGear
                             size={24}
                             style={{ cursor: 'pointer', color: showSettingsMenu ? 'var(--vscode-text)' : 'inherit' }}
-                            onClick={() => setShowSettingsMenu(!showSettingsMenu)}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setShowSettingsMenu(prev => !prev);
+                            }}
                             title="Settings"
                         />
                         {showSettingsMenu && (
