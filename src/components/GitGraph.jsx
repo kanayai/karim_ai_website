@@ -7,52 +7,60 @@ const GitGraph = () => {
             message: 'BSc in Actuarial Sciences, ITAM, Mexico',
             date: '1993-1998',
             author: 'Karim AI',
-            tag: 'v1.0.0'
+            tag: 'v1.0.0',
+            url: 'https://www.itam.mx/en'
         },
         {
             hash: '98a00b',
             message: 'MSc in Statistics, IIMAS, UNAM, Mexico',
             date: '1998-2000',
             author: 'Karim AI',
+            url: 'https://www.iimas.unam.mx'
         },
         {
             hash: '00a05b',
             message: 'PhD in Mathematics, IIMAS, UNAM, Mexico',
             date: '2000-2005',
             author: 'Karim AI',
-            tag: 'phd'
+            tag: 'phd',
+            url: 'https://www.iimas.unam.mx'
         },
         {
             hash: '05a11b',
             message: 'Postdoc Open University, Milton Keynes',
             date: '2005-2011',
             author: 'Karim AI',
+            url: 'https://university.open.ac.uk/stem/mathematics-and-statistics/'
         },
         {
             hash: '11a13b',
             message: 'Lecturer in Medical Statistics, LSHTM',
             date: '2011-2013',
             author: 'Karim AI',
+            url: 'https://www.lshtm.ac.uk'
         },
         {
             hash: '13a23b',
             message: 'Lecturer in Statistics, University of Bath',
             date: '2013-2023',
             author: 'Karim AI',
+            url: 'https://www.bath.ac.uk/departments/department-of-mathematical-sciences/'
         },
         {
             hash: '16a00b',
             message: 'Fellow of the Higher Education Academy',
             date: '2016',
             author: 'Karim AI',
-            tag: 'fellow'
+            tag: 'fellow',
+            url: 'https://www.advance-he.ac.uk'
         },
         {
             hash: 'HEAD',
             message: 'Senior Lecturer in Statistics, University of Bath',
             date: 'Since 2023',
             author: 'Karim AI',
-            tag: 'main'
+            tag: 'main',
+            url: 'https://www.bath.ac.uk/departments/department-of-mathematical-sciences/'
         }
     ].reverse(); // Show newest first
 
@@ -90,7 +98,25 @@ const GitGraph = () => {
                                 <span style={{ color: 'var(--vscode-accent)', fontWeight: 'bold' }}>*</span>
                                 <span style={{ color: '#d4d4d4' }}>{commit.hash}</span>
                                 <span style={{ color: '#858585' }}>-</span>
-                                <span style={{ fontWeight: 'bold' }}>{commit.message}</span>
+                                {commit.url ? (
+                                    <a
+                                        href={commit.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style={{
+                                            fontWeight: 'bold',
+                                            color: 'inherit',
+                                            textDecoration: 'none',
+                                            cursor: 'pointer'
+                                        }}
+                                        onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
+                                        onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
+                                    >
+                                        {commit.message}
+                                    </a>
+                                ) : (
+                                    <span style={{ fontWeight: 'bold' }}>{commit.message}</span>
+                                )}
                                 {commit.tag && (
                                     <span style={{
                                         backgroundColor: 'rgba(0, 122, 204, 0.2)',
