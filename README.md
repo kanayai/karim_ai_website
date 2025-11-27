@@ -150,12 +150,15 @@ The site uses CSS variables to handle theming.
     - `--vscode-sidebar-bg`: Sidebar background.
     - `--vscode-text`: Main text color.
     - `--vscode-accent`: Blue accent color.
+- **Recent Updates**:
+    - **True Black/White**: Backgrounds are now pure black (`#000000`) in dark mode and pure white (`#ffffff`) in light mode for a sharper contrast.
+    - **UI Enhancements**: Added mock "Outline" and "Timeline" panels to the sidebar and a terminal selector to the terminal panel for increased realism.
 
 ### Responsive Design (`index.css`)
 - **Command Palette**: Responsive width using `.command-palette-trigger` class
     - Mobile (< 768px): 280px
     - Desktop (≥ 768px): 500px
-- **Sidebar**: Collapsible on mobile with hamburger menu
+- **Sidebar**: Collapsible on mobile with hamburger menu. Includes a dividing line between the activity bar and sidebar content.
 - **Status Bar**: Adaptive layout with hidden elements on small screens
 
 ---
