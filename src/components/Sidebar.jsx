@@ -118,7 +118,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
         <div className="d-flex" style={{ height: '100%' }}>
             {/* Activity Bar */}
             <div className="d-flex flex-column justify-content-between align-items-center py-2"
-                style={{ width: '48px', backgroundColor: 'var(--vscode-activity-bar-bg)', color: '#858585' }}>
+                style={{ width: '48px', backgroundColor: 'var(--vscode-activity-bar-bg)', color: '#858585', borderRight: '1px solid var(--vscode-border)' }}>
                 <div className="d-flex flex-column gap-4">
                     <VscFiles
                         size={24}
@@ -199,6 +199,22 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                                 <VscEllipsis className="ms-auto" />
                             </div>
                             {structure.map(item => renderItem(item))}
+                        </div>
+
+                        {/* Mock Outline Panel */}
+                        <div className="mt-auto">
+                            <div className="px-2 py-1 d-flex align-items-center gap-1" style={{ cursor: 'pointer', color: 'var(--vscode-text)', fontWeight: 'bold', borderTop: '1px solid var(--vscode-border)' }}>
+                                <VscChevronRight />
+                                <span style={{ fontSize: '11px' }}>OUTLINE</span>
+                            </div>
+                        </div>
+
+                        {/* Mock Timeline Panel */}
+                        <div>
+                            <div className="px-2 py-1 d-flex align-items-center gap-1" style={{ cursor: 'pointer', color: 'var(--vscode-text)', fontWeight: 'bold', borderTop: '1px solid var(--vscode-border)' }}>
+                                <VscChevronRight />
+                                <span style={{ fontSize: '11px' }}>TIMELINE</span>
+                            </div>
                         </div>
                     </>
                 ) : (
