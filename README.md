@@ -165,6 +165,7 @@ The site uses CSS variables to handle theming.
     - **PhD Students Page**: Redesigned to mimic the VS Code Extensions Marketplace.
     - **Run and Debug View**: Displays personal stats ("Variables") and skills ("Unit Tests").
     - **Git Graph**: Visualizes career timeline as a commit graph (Source Control icon).
+    - **GitHub Link**: Direct link to the repository via the GitHub icon in the Activity Bar.
     - **Lo-Fi Radio**: Embedded music player for focus.
 
 ---

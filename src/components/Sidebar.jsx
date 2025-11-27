@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscAccount, VscGear, VscColorMode, VscChevronRight, VscChevronDown, VscLaw, VscEllipsis, VscCode, VscGitMerge, VscRadioTower, VscSparkle } from 'react-icons/vsc';
+import { VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscAccount, VscGear, VscColorMode, VscChevronRight, VscChevronDown, VscLaw, VscEllipsis, VscCode, VscGitMerge, VscRadioTower, VscSparkle, VscGithub } from 'react-icons/vsc';
 import { FaReact, FaJs, FaMarkdown, FaPython, FaHtml5 } from 'react-icons/fa';
 import CopilotChat from './CopilotChat';
 
@@ -145,6 +145,12 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                         style={{ cursor: 'pointer', borderLeft: activeView === 'extensions' ? '2px solid var(--vscode-text)' : '2px solid transparent', paddingLeft: '2px' }}
                         onClick={() => setActiveView('extensions')}
                         title="Extensions"
+                    />
+                    <VscGithub
+                        size={24}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => window.open('https://github.com/kanayai/karim_ai_website', '_blank')}
+                        title="GitHub Repository"
                     />
                 </div>
                 <div className="d-flex flex-column gap-4 align-items-center">

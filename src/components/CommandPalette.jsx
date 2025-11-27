@@ -7,13 +7,22 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
     const inputRef = useRef(null);
 
     const files = [
-        { name: 'about_me.md', path: 'about_me.md' },
-        { name: 'projects.md', path: 'projects.md' },
+        { name: 'Welcome', path: 'Welcome' },
+        { name: 'about_me.html', path: 'about_me.html' },
+        { name: 'contact.html', path: 'contact.html' },
+        { name: 'projects.html', path: 'projects.html' },
+        { name: 'phd_students.html', path: 'phd_students.html' },
+        { name: 'publications.R', path: 'publications.R' },
         { name: 'current_courses.ipynb', path: 'current_courses.ipynb' },
         { name: 'previous_courses.ipynb', path: 'previous_courses.ipynb' },
-        { name: 'contact.css', path: 'contact.css' },
-        { name: 'first-post.html', path: 'first-post.html' },
+        { name: 'index.html (Blog)', path: 'index.html' },
+        { name: 'certest.html', path: 'certest.html' },
+        { name: 'gkn_prosperity.html', path: 'gkn_prosperity.html' },
+        { name: 'git-graph', path: 'git-graph' },
+        { name: 'lofi-radio', path: 'lofi-radio' },
+        { name: 'retro_game.exe', path: 'retro_game.exe' },
         { name: 'anscombe_quartet.html', path: 'anscombe_quartet.html' },
+        { name: 'LICENSE.txt', path: 'LICENSE.txt' },
     ];
 
     const filteredFiles = files.filter(file =>
