@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscAccount, VscGear, VscColorMode, VscChevronRight, VscChevronDown, VscLaw, VscEllipsis, VscCode, VscGitMerge, VscRadioTower } from 'react-icons/vsc';
+import { VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscAccount, VscGear, VscColorMode, VscChevronRight, VscChevronDown, VscLaw, VscEllipsis, VscCode, VscGitMerge, VscRadioTower, VscSparkle } from 'react-icons/vsc';
 import { FaReact, FaJs, FaMarkdown, FaPython, FaHtml5 } from 'react-icons/fa';
+import CopilotChat from './CopilotChat';
 
 const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick }) => {
     const [activeView, setActiveView] = useState('explorer');
@@ -129,6 +130,14 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                     />
                     <VscSearch size={24} style={{ cursor: 'pointer' }} onClick={onSearchClick} />
                     <VscSourceControl size={24} style={{ cursor: 'pointer' }} onClick={() => setActiveFile('git-graph')} title="Git Graph (Career Timeline)" />
+                    <div style={{ position: 'relative' }}>
+                        <VscSparkle
+                            size={24}
+                            style={{ cursor: 'pointer', borderLeft: activeView === 'chat' ? '2px solid var(--vscode-text)' : '2px solid transparent', paddingLeft: '2px' }}
+                            onClick={() => setActiveView('chat')}
+                            title="Portfolio Copilot"
+                        />
+                    </div>
                     <VscDebugAlt size={24} style={{ cursor: 'pointer', borderLeft: activeView === 'debug' ? '2px solid var(--vscode-text)' : '2px solid transparent', paddingLeft: '2px' }} onClick={() => setActiveView('debug')} title="Run and Debug (Skills & Stats)" />
                     <VscExtensions
                         size={24}
@@ -288,6 +297,8 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                             <div className="d-flex align-items-center gap-2 mb-1"><span style={{ color: '#4caf50' }}>✅</span> <span>test_machine_learning</span></div>
                         </div>
                     </>
+                ) : activeView === 'chat' ? (
+                    <CopilotChat />
                 ) : (
                     <div className="p-3" style={{ color: 'var(--vscode-text)' }}>
                         Select a view from the activity bar.

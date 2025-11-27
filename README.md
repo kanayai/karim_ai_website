@@ -160,6 +160,12 @@ The site uses CSS variables to handle theming.
     - Desktop (≥ 768px): 500px
 - **Sidebar**: Collapsible on mobile with hamburger menu. Includes a dividing line between the activity bar and sidebar content.
 - **Status Bar**: Adaptive layout with hidden elements on small screens
+- **New Features (v2.0)**:
+    - **Portfolio Copilot**: A simulated AI chat interface (Sparkle icon) that answers questions about the portfolio using real data from `data/`.
+    - **PhD Students Page**: Redesigned to mimic the VS Code Extensions Marketplace.
+    - **Run and Debug View**: Displays personal stats ("Variables") and skills ("Unit Tests").
+    - **Git Graph**: Visualizes career timeline as a commit graph (Source Control icon).
+    - **Lo-Fi Radio**: Embedded music player for focus.
 
 ---
 
