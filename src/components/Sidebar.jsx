@@ -291,7 +291,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                             <div className="d-flex"><span style={{ color: '#9cdcfe' }}>location</span>: <span style={{ color: '#ce9178' }}>"Bath, UK"</span></div>
                             <div className="d-flex"><span style={{ color: '#9cdcfe' }}>status</span>: <span style={{ color: '#ce9178' }}>"Open to collaborations"</span></div>
                             <div className="d-flex"><span style={{ color: '#9cdcfe' }}>coffeeLevel</span>: <span style={{ color: '#ce9178' }}>"High" ☕</span></div>
-                            <div className="d-flex"><span style={{ color: '#9cdcfe' }}>publications</span>: <span style={{ color: '#b5cea8' }}>42+</span></div>
+                            <div className="d-flex"><span style={{ color: '#9cdcfe' }}>publications</span>: <span style={{ color: '#b5cea8' }}>20+</span></div>
                         </div>
 
                         <div className="px-3 py-2 text-uppercase d-flex align-items-center" style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--vscode-text)', backgroundColor: 'var(--vscode-sidebar-bg)', cursor: 'pointer', marginTop: '10px' }}>
