@@ -51,7 +51,7 @@
 body {
   background-color: var(--vscode-bg);
   /* Fonts */
-  --vscode-font-family: 'JetBrains Mono', 'Segoe WPC', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --vscode-font-family: 'Consolas', 'Menlo', 'Monaco', 'Courier New', monospace;
   --vscode-font-size: 13px;
   padding: 0;
   overflow: hidden;
