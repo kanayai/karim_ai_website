@@ -10,7 +10,7 @@ import { VscClose, VscCloseAll, VscChevronRight, VscLaw, VscGame, VscCode, VscGi
 import { FaMarkdown, FaPython, FaJs, FaReact, FaHtml5 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
-const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme }) => {
+const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme, simpleMode, toggleSimpleMode }) => {
     const { i18n } = useTranslation();
 
     const getIcon = (filename) => {
@@ -134,7 +134,7 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
         }
 
         if (activeFile === 'Welcome') {
-            return <WelcomePage onNavigate={setActiveFile} />;
+            return <WelcomePage onNavigate={setActiveFile} simpleMode={simpleMode} toggleSimpleMode={toggleSimpleMode} />;
         }
 
         if (activeFile.endsWith('.ipynb')) {

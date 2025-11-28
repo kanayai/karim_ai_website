@@ -14,6 +14,8 @@ function App() {
     }
     return true;
   });
+  // Simple Mode state: Default to false
+  const [simpleMode, setSimpleMode] = useState(false);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -25,6 +27,14 @@ function App() {
 
   const toggleSidebar = () => {
     setIsSidebarOpen(prev => !prev);
+  };
+
+  const toggleSimpleMode = () => {
+    setSimpleMode(prev => !prev);
+    // If entering simple mode, ensure sidebar is closed on mobile to avoid clutter
+    if (!simpleMode && window.innerWidth <= 768) {
+      // Optional: logic to close sidebar if needed
+    }
   };
 
   const handleOpenFile = (fileName) => {
@@ -66,6 +76,8 @@ function App() {
       toggleTheme={toggleTheme}
       isSidebarOpen={isSidebarOpen}
       toggleSidebar={toggleSidebar}
+      simpleMode={simpleMode}
+      toggleSimpleMode={toggleSimpleMode}
     >
       <Editor
         activeFile={activeFile}
@@ -74,6 +86,8 @@ function App() {
         onCloseFile={handleCloseFile}
         onCloseAllFiles={handleCloseAllFiles}
         theme={theme}
+        simpleMode={simpleMode}
+        toggleSimpleMode={toggleSimpleMode}
       />
     </Layout>
   );

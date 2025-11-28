@@ -207,6 +207,8 @@ The site uses CSS variables to handle theming.
 - **Sidebar**: Collapsible on mobile with hamburger menu. Includes a dividing line between the activity bar and sidebar content.
 - **Status Bar**: Adaptive layout with hidden elements on small screens
 - **New Features (v2.0)**:
+    - **Simple Mode (Reader View)**: A toggle in the status bar to hide the sidebar and terminal, providing a distraction-free reading experience for non-technical users.
+    - **Enhanced VS Code Theme**: Updated CSS variables to match the official VS Code "Dark+" theme colors for pixel-perfect realism.
     - **Portfolio Copilot**: A simulated AI chat interface (Sparkle icon) that answers questions about the portfolio using real data from `data/`.
     - **PhD Students Page**: Redesigned to mimic the VS Code Extensions Marketplace.
     - **Run and Debug View**: Displays personal stats ("Variables") and skills ("Unit Tests").

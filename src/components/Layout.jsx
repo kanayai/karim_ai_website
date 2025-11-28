@@ -5,7 +5,7 @@ import CommandPalette from './CommandPalette';
 import TitleBar from './TitleBar';
 import Terminal from './Terminal';
 
-const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, isSidebarOpen, toggleSidebar }) => {
+const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, isSidebarOpen, toggleSidebar, simpleMode, toggleSimpleMode }) => {
     const [isPaletteOpen, setIsPaletteOpen] = useState(false);
     const [isTerminalOpen, setIsTerminalOpen] = useState(true); // Default open for demo
 
@@ -36,19 +36,25 @@ const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, isSid
             <TitleBar
                 onSearchClick={() => setIsPaletteOpen(true)}
                 toggleSidebar={toggleSidebar}
+                simpleMode={simpleMode}
+                toggleSimpleMode={toggleSimpleMode}
             />
             <div className="main-container" style={{ position: 'relative' }}>
-                <div className={`sidebar-container ${isSidebarOpen ? 'open' : 'closed'}`}>
-                    <Sidebar
-                        activeFile={activeFile}
-                        setActiveFile={setActiveFile}
-                        theme={theme}
-                        toggleTheme={toggleTheme}
-                        onSearchClick={() => setIsPaletteOpen(true)}
-                    />
-                </div>
-                {/* Overlay for mobile when sidebar is open */}
-                {isSidebarOpen && (
+                {/* Hide Sidebar in Simple Mode */}
+                {!simpleMode && (
+                    <div className={`sidebar-container ${isSidebarOpen ? 'open' : 'closed'}`}>
+                        <Sidebar
+                            activeFile={activeFile}
+                            setActiveFile={setActiveFile}
+                            theme={theme}
+                            toggleTheme={toggleTheme}
+                            onSearchClick={() => setIsPaletteOpen(true)}
+                        />
+                    </div>
+                )}
+
+                {/* Overlay for mobile when sidebar is open (only if not in simple mode) */}
+                {!simpleMode && isSidebarOpen && (
                     <div
                         className="sidebar-overlay d-md-none"
                         onClick={toggleSidebar}
@@ -57,13 +63,17 @@ const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, isSid
 
                 <div className="d-flex flex-column flex-grow-1" style={{ overflow: 'hidden' }}>
                     {children}
-                    {isTerminalOpen && <Terminal onClose={() => setIsTerminalOpen(false)} />}
+                    {/* Hide Terminal in Simple Mode */}
+                    {!simpleMode && isTerminalOpen && <Terminal onClose={() => setIsTerminalOpen(false)} />}
                 </div>
             </div>
+            {/* Statusbar - Always visible now, but simplified in Simple Mode */}
             <Statusbar
                 activeFile={activeFile}
                 isTerminalOpen={isTerminalOpen}
                 toggleTerminal={() => setIsTerminalOpen(!isTerminalOpen)}
+                simpleMode={simpleMode}
+                toggleSimpleMode={toggleSimpleMode}
             />
         </div>
     );

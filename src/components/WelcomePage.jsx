@@ -2,7 +2,7 @@ import React from 'react';
 import { VscBook, VscPreview, VscProject, VscAccount, VscRepo, VscNewFile, VscFolderOpened } from 'react-icons/vsc';
 import { useTranslation } from 'react-i18next';
 
-const WelcomePage = ({ onNavigate }) => {
+const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode }) => {
     const { t } = useTranslation();
 
     const startItems = [
@@ -54,6 +54,7 @@ const WelcomePage = ({ onNavigate }) => {
                     <p style={{ fontSize: '18px', opacity: 0.8, fontWeight: '300' }}>
                         {t('welcome.subtitle')}
                     </p>
+
                 </div>
 
                 <div className="row">

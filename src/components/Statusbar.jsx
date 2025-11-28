@@ -1,8 +1,8 @@
 import React from 'react';
-import { VscSourceControl, VscBell, VscCheck, VscFeedback, VscTerminal, VscGlobe } from 'react-icons/vsc';
+import { VscSourceControl, VscBell, VscCheck, VscFeedback, VscTerminal, VscGlobe, VscBook } from 'react-icons/vsc';
 import { useTranslation } from 'react-i18next';
 
-const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal }) => {
+const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal, simpleMode, toggleSimpleMode }) => {
     const { t, i18n } = useTranslation();
 
     const getLanguage = (filename) => {
@@ -39,30 +39,49 @@ const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal }) => {
                     <VscSourceControl />
                     <span>{t('statusbar.main')}</span>
                 </div>
-                <div className="d-flex align-items-center gap-1 d-none d-md-flex">
-                    <VscCheck />
-                    <span>{t('statusbar.errors')}</span>
-                </div>
+                {!simpleMode && (
+                    <div className="d-flex align-items-center gap-1 d-none d-md-flex">
+                        <VscCheck />
+                        <span>{t('statusbar.errors')}</span>
+                    </div>
+                )}
             </div>
             <div className="d-flex align-items-center gap-3">
+                {/* Simple Mode Toggle */}
                 <div
                     className="d-flex align-items-center gap-1 hover-bg px-1"
-                    style={{ cursor: 'pointer' }}
-                    onClick={toggleTerminal}
-                    title="Toggle Terminal (Ctrl+`)"
+                    style={{ cursor: 'pointer', backgroundColor: simpleMode ? 'rgba(255,255,255,0.2)' : 'transparent' }}
+                    onClick={toggleSimpleMode}
+                    title={simpleMode ? "Exit Reader Mode" : "Enter Reader Mode"}
                 >
-                    <VscTerminal />
-                    <span className="d-none d-md-inline">{isTerminalOpen ? t('statusbar.close_terminal') : t('statusbar.terminal')}</span>
+                    <VscBook />
+                    <span>{simpleMode ? "IDE Mode" : "Reader Mode"}</span>
                 </div>
-                <div className="d-flex align-items-center gap-1 d-none d-md-flex">
-                    <span>Ln 12, Col 45</span>
-                </div>
-                <div className="d-flex align-items-center gap-1 d-none d-md-flex">
-                    <span>UTF-8</span>
-                </div>
-                <div className="d-flex align-items-center gap-1 d-none d-md-flex">
-                    <span>{getLanguage(activeFile)}</span>
-                </div>
+
+                {!simpleMode && (
+                    <div
+                        className="d-flex align-items-center gap-1 hover-bg px-1"
+                        style={{ cursor: 'pointer' }}
+                        onClick={toggleTerminal}
+                        title="Toggle Terminal (Ctrl+`)"
+                    >
+                        <VscTerminal />
+                        <span className="d-none d-md-inline">{isTerminalOpen ? t('statusbar.close_terminal') : t('statusbar.terminal')}</span>
+                    </div>
+                )}
+                {!simpleMode && (
+                    <>
+                        <div className="d-flex align-items-center gap-1 d-none d-md-flex">
+                            <span>Ln 12, Col 45</span>
+                        </div>
+                        <div className="d-flex align-items-center gap-1 d-none d-md-flex">
+                            <span>UTF-8</span>
+                        </div>
+                        <div className="d-flex align-items-center gap-1 d-none d-md-flex">
+                            <span>{getLanguage(activeFile)}</span>
+                        </div>
+                    </>
+                )}
                 <div
                     className="d-flex align-items-center gap-1 hover-bg px-1"
                     style={{ cursor: 'pointer' }}
@@ -72,12 +91,16 @@ const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal }) => {
                     <VscGlobe />
                     <span className="text-uppercase">{i18n.language}</span>
                 </div>
-                <div className="d-flex align-items-center gap-1 d-none d-md-flex">
-                    <VscFeedback />
-                </div>
-                <div className="d-flex align-items-center gap-1 d-none d-md-flex">
-                    <VscBell />
-                </div>
+                {!simpleMode && (
+                    <>
+                        <div className="d-flex align-items-center gap-1 d-none d-md-flex">
+                            <VscFeedback />
+                        </div>
+                        <div className="d-flex align-items-center gap-1 d-none d-md-flex">
+                            <VscBell />
+                        </div>
+                    </>
+                )}
                 <div
                     className="d-flex align-items-center gap-1 hover-bg px-1"
                     title="Powered by Gemini Antigravity"

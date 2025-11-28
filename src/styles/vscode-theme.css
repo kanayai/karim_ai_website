@@ -1,16 +1,17 @@
 @import "./contact.css";
 
 :root {
-  /* Dark Theme (Default) */
-  --vscode-bg: #000000;
-  --vscode-sidebar-bg: #000000;
-  --vscode-activity-bar-bg: #000000;
+  /* Dark Theme (Default - VS Code Dark+) */
+  --vscode-bg: #1e1e1e;
+  --vscode-sidebar-bg: #252526;
+  --vscode-activity-bar-bg: #333333;
   --vscode-status-bar-bg: #007acc;
-  --vscode-text: #d4d4d4;
-  --vscode-border: #444444;
+  --vscode-text: #cccccc;
+  --vscode-border: #454545;
+  /* Splitter color */
   --vscode-accent: #007acc;
-  --vscode-editor-bg: #000000;
-  --vscode-tab-active-bg: #000000;
+  --vscode-editor-bg: #1e1e1e;
+  --vscode-tab-active-bg: #1e1e1e;
   --vscode-tab-inactive-bg: #2d2d2d;
   --vscode-hover-bg: #2a2d2e;
   --vscode-tree-indentGuidesStroke: #585858;
@@ -22,6 +23,9 @@
   --vscode-button-hoverBackground: #1177bb;
   --vscode-descriptionForeground: #858585;
   --vscode-list-hover-bg: #2a2d2e;
+  --vscode-activity-bar-active-border: #ffffff;
+  --vscode-activity-bar-inactive-foreground: #858585;
+  --vscode-activity-bar-foreground: #ffffff;
 }
 
 [data-theme="light"] {

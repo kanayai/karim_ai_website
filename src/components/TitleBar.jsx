@@ -1,7 +1,7 @@
 import React from 'react';
-import { VscArrowLeft, VscArrowRight, VscSearch, VscLayoutSidebarLeft, VscLayoutSidebarRight, VscLayoutPanel, VscMenu } from 'react-icons/vsc';
+import { VscArrowLeft, VscArrowRight, VscSearch, VscLayoutSidebarLeft, VscLayoutSidebarRight, VscLayoutPanel, VscMenu, VscBook } from 'react-icons/vsc';
 
-const TitleBar = ({ onSearchClick, toggleSidebar }) => {
+const TitleBar = ({ onSearchClick, toggleSidebar, simpleMode, toggleSimpleMode }) => {
     return (
         <div className="d-flex align-items-center justify-content-between px-2"
             style={{
@@ -12,26 +12,33 @@ const TitleBar = ({ onSearchClick, toggleSidebar }) => {
                 userSelect: 'none'
             }}>
 
-            {/* Left: Menu (Mobile only) */}
+            {/* Left: Menu (Mobile only) - Hide in Simple Mode if desired, or keep for basic nav */}
             <div className="d-flex align-items-center">
-                <VscMenu
-                    className="d-md-none"
-                    size={18}
-                    color="var(--vscode-text)"
-                    style={{ cursor: 'pointer' }}
-                    onClick={toggleSidebar}
-                />
-                <span
-                    className="d-md-none ms-2"
-                    style={{
-                        fontSize: '12px',
-                        color: 'var(--vscode-text)',
-                        cursor: 'pointer'
-                    }}
-                    onClick={toggleSidebar}
-                >
-                    Menu
-                </span>
+                {!simpleMode && (
+                    <>
+                        <VscMenu
+                            className="d-md-none"
+                            size={18}
+                            color="var(--vscode-text)"
+                            style={{ cursor: 'pointer' }}
+                            onClick={toggleSidebar}
+                        />
+                        <span
+                            className="d-md-none ms-2"
+                            style={{
+                                fontSize: '12px',
+                                color: 'var(--vscode-text)',
+                                cursor: 'pointer'
+                            }}
+                            onClick={toggleSidebar}
+                        >
+                            Menu
+                        </span>
+                    </>
+                )}
+                {simpleMode && (
+                    <span style={{ fontSize: '13px', fontWeight: 'bold', color: 'var(--vscode-text)' }}>Karim AI</span>
+                )}
             </div>
 
             {/* Center: Navigation Controls & Search */}
@@ -57,15 +64,19 @@ const TitleBar = ({ onSearchClick, toggleSidebar }) => {
                     onClick={onSearchClick}
                 >
                     <VscSearch size={14} className="me-2" />
-                    <span style={{ fontSize: '12px' }}>search site</span>
+                    <span style={{ fontSize: '12px' }}>{simpleMode ? 'search...' : 'search site'}</span>
                 </div>
             </div>
 
             {/* Right: Layout Controls */}
-            <div className="d-flex gap-3">
-                <VscLayoutSidebarLeft size={16} color="var(--vscode-text)" style={{ cursor: 'pointer' }} />
-                <VscLayoutPanel size={16} color="var(--vscode-text)" style={{ cursor: 'pointer' }} />
-                <VscLayoutSidebarRight size={16} color="var(--vscode-text)" style={{ cursor: 'pointer' }} />
+            <div className="d-flex gap-3 align-items-center">
+                {!simpleMode && (
+                    <>
+                        <VscLayoutSidebarLeft size={16} color="var(--vscode-text)" style={{ cursor: 'pointer' }} />
+                        <VscLayoutPanel size={16} color="var(--vscode-text)" style={{ cursor: 'pointer' }} />
+                        <VscLayoutSidebarRight size={16} color="var(--vscode-text)" style={{ cursor: 'pointer' }} />
+                    </>
+                )}
             </div>
         </div>
     );

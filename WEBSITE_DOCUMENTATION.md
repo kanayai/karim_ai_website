@@ -123,6 +123,11 @@ Located in the activity bar, clicking the Accounts icon reveals a dropdown menu 
 - Click to open files in the editor
 - Multiple files can be open simultaneously in tabs
 
+### Simple Mode (Reader View)
+- Toggle button located in the Status Bar (bottom right).
+- Hides the Sidebar and Terminal to provide a cleaner, document-focused reading experience.
+- Ideal for non-technical visitors who may find the full IDE interface overwhelming.
+
 ## Default Behavior
 - **Default Page**: `welcome.md` opens automatically on site load
 - **Folders**: All folders are collapsed by default

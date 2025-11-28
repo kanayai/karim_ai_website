@@ -122,55 +122,94 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
         <div className="d-flex" style={{ height: '100%' }}>
             {/* Activity Bar */}
             <div className="d-flex flex-column justify-content-between align-items-center py-2"
-                style={{ width: '48px', backgroundColor: 'var(--vscode-activity-bar-bg)', color: '#858585', borderRight: '1px solid var(--vscode-border)' }}>
-                <div className="d-flex flex-column gap-4">
-                    <VscFiles
-                        size={24}
-                        color={activeView === 'explorer' ? "var(--vscode-text)" : "#858585"}
-                        style={{ cursor: 'pointer', borderLeft: activeView === 'explorer' ? '2px solid var(--vscode-text)' : '2px solid transparent', paddingLeft: '2px' }}
-                        onClick={() => setActiveView('explorer')}
-                        title={t('sidebar.explorer')}
-                    />
-                    <VscSearch size={24} style={{ cursor: 'pointer' }} onClick={onSearchClick} />
-                    <VscSourceControl size={24} style={{ cursor: 'pointer' }} onClick={() => setActiveFile('git-graph')} title="Git Graph (Career Timeline)" />
-                    <div style={{ position: 'relative' }}>
+                style={{
+                    width: '48px',
+                    minWidth: '48px',
+                    backgroundColor: 'var(--vscode-activity-bar-bg)',
+                    borderRight: '1px solid var(--vscode-border)',
+                    zIndex: 10
+                }}>
+                <div className="d-flex flex-column gap-0">
+                    <div className="d-flex justify-content-center py-3" style={{ width: '100%', cursor: 'pointer', borderLeft: activeView === 'explorer' ? '2px solid var(--vscode-activity-bar-active-border)' : '2px solid transparent' }}>
+                        <VscFiles
+                            size={24}
+                            color={activeView === 'explorer' ? "var(--vscode-activity-bar-foreground)" : "var(--vscode-activity-bar-inactive-foreground)"}
+                            onClick={() => setActiveView('explorer')}
+                            title={t('sidebar.explorer')}
+                        />
+                    </div>
+                    <div className="d-flex justify-content-center py-3" style={{ width: '100%', cursor: 'pointer' }}>
+                        <VscSearch
+                            size={24}
+                            color="var(--vscode-activity-bar-inactive-foreground)"
+                            onClick={onSearchClick}
+                        />
+                    </div>
+                    <div className="d-flex justify-content-center py-3" style={{ width: '100%', cursor: 'pointer' }}>
+                        <VscSourceControl
+                            size={24}
+                            color="var(--vscode-activity-bar-inactive-foreground)"
+                            onClick={() => setActiveFile('git-graph')}
+                            title="Git Graph (Career Timeline)"
+                        />
+                    </div>
+                    <div className="d-flex justify-content-center py-3" style={{ width: '100%', cursor: 'pointer', borderLeft: activeView === 'chat' ? '2px solid var(--vscode-activity-bar-active-border)' : '2px solid transparent' }}>
                         <VscSparkle
                             size={24}
-                            style={{ cursor: 'pointer', borderLeft: activeView === 'chat' ? '2px solid var(--vscode-text)' : '2px solid transparent', paddingLeft: '2px' }}
+                            color={activeView === 'chat' ? "var(--vscode-activity-bar-foreground)" : "var(--vscode-activity-bar-inactive-foreground)"}
                             onClick={() => setActiveView('chat')}
                             title="Portfolio Copilot"
                         />
                     </div>
-                    <VscDebugAlt size={24} style={{ cursor: 'pointer', borderLeft: activeView === 'debug' ? '2px solid var(--vscode-text)' : '2px solid transparent', paddingLeft: '2px' }} onClick={() => setActiveView('debug')} title="Run and Debug (Skills & Stats)" />
-                    <VscExtensions
-                        size={24}
-                        color={activeView === 'extensions' ? "var(--vscode-text)" : "#858585"}
-                        style={{ cursor: 'pointer', borderLeft: activeView === 'extensions' ? '2px solid var(--vscode-text)' : '2px solid transparent', paddingLeft: '2px' }}
-                        onClick={() => setActiveView('extensions')}
-                        title={t('sidebar.extensions')}
-                    />
-                    <VscGithub
-                        size={24}
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => window.open('https://github.com/kanayai/karim_ai_website', '_blank')}
-                        title="GitHub Repository"
-                    />
-                </div>
-                <div className="d-flex flex-column gap-4 align-items-center">
-                    <VscColorMode size={24} onClick={toggleTheme} style={{ cursor: 'pointer' }} title="Toggle Theme" />
-
-                    <div style={{ position: 'relative' }}>
-                        <VscAccount
+                    <div className="d-flex justify-content-center py-3" style={{ width: '100%', cursor: 'pointer', borderLeft: activeView === 'debug' ? '2px solid var(--vscode-activity-bar-active-border)' : '2px solid transparent' }}>
+                        <VscDebugAlt
                             size={24}
-                            style={{ cursor: 'pointer', color: showAccountsMenu ? 'var(--vscode-text)' : 'inherit' }}
-                            onClick={() => setShowAccountsMenu(!showAccountsMenu)}
-                            title="Accounts"
+                            color={activeView === 'debug' ? "var(--vscode-activity-bar-foreground)" : "var(--vscode-activity-bar-inactive-foreground)"}
+                            onClick={() => setActiveView('debug')}
+                            title="Run and Debug (Skills & Stats)"
                         />
+                    </div>
+                    <div className="d-flex justify-content-center py-3" style={{ width: '100%', cursor: 'pointer', borderLeft: activeView === 'extensions' ? '2px solid var(--vscode-activity-bar-active-border)' : '2px solid transparent' }}>
+                        <VscExtensions
+                            size={24}
+                            color={activeView === 'extensions' ? "var(--vscode-activity-bar-foreground)" : "var(--vscode-activity-bar-inactive-foreground)"}
+                            onClick={() => setActiveView('extensions')}
+                            title={t('sidebar.extensions')}
+                        />
+                    </div>
+                    <div className="d-flex justify-content-center py-3" style={{ width: '100%', cursor: 'pointer' }}>
+                        <VscGithub
+                            size={24}
+                            color="var(--vscode-activity-bar-inactive-foreground)"
+                            onClick={() => window.open('https://github.com/kanayai/karim_ai_website', '_blank')}
+                            title="GitHub Repository"
+                        />
+                    </div>
+                </div>
+                <div className="d-flex flex-column gap-0 align-items-center">
+                    <div className="d-flex justify-content-center py-3" style={{ width: '100%', cursor: 'pointer' }}>
+                        <VscColorMode
+                            size={24}
+                            color="var(--vscode-activity-bar-inactive-foreground)"
+                            onClick={toggleTheme}
+                            title="Toggle Theme"
+                        />
+                    </div>
+
+                    <div style={{ position: 'relative', width: '100%' }}>
+                        <div className="d-flex justify-content-center py-3" style={{ width: '100%', cursor: 'pointer' }}>
+                            <VscAccount
+                                size={24}
+                                color={showAccountsMenu ? "var(--vscode-activity-bar-foreground)" : "var(--vscode-activity-bar-inactive-foreground)"}
+                                onClick={() => setShowAccountsMenu(!showAccountsMenu)}
+                                title="Accounts"
+                            />
+                        </div>
                         {showAccountsMenu && (
                             <div style={{
                                 position: 'absolute',
                                 bottom: '0',
-                                left: '35px',
+                                left: '48px',
                                 backgroundColor: 'var(--vscode-sidebar-bg)',
                                 border: '1px solid var(--vscode-border)',
                                 boxShadow: '0 4px 10px rgba(0,0,0,0.4)',
@@ -202,21 +241,23 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
                         )}
                     </div>
 
-                    <div style={{ position: 'relative' }}>
-                        <VscGear
-                            size={24}
-                            style={{ cursor: 'pointer', color: showSettingsMenu ? 'var(--vscode-text)' : 'inherit' }}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setShowSettingsMenu(prev => !prev);
-                            }}
-                            title="Settings"
-                        />
+                    <div style={{ position: 'relative', width: '100%' }}>
+                        <div className="d-flex justify-content-center py-3" style={{ width: '100%', cursor: 'pointer' }}>
+                            <VscGear
+                                size={24}
+                                color={showSettingsMenu ? "var(--vscode-activity-bar-foreground)" : "var(--vscode-activity-bar-inactive-foreground)"}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setShowSettingsMenu(prev => !prev);
+                                }}
+                                title="Settings"
+                            />
+                        </div>
                         {showSettingsMenu && (
                             <div style={{
                                 position: 'absolute',
                                 bottom: '0',
-                                left: '35px',
+                                left: '48px',
                                 backgroundColor: 'var(--vscode-sidebar-bg)',
                                 border: '1px solid var(--vscode-border)',
                                 boxShadow: '0 4px 10px rgba(0,0,0,0.4)',
