@@ -19,7 +19,7 @@ const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal, simpleMode, tog
     };
 
     const changeLanguage = () => {
-        const languages = ['en', 'es', 'fr', 'it', 'pt', 'de'];
+        const languages = ['en', 'es', 'fr', 'pt'];
         const currentLangIndex = languages.indexOf(i18n.language);
         const nextLangIndex = (currentLangIndex + 1) % languages.length;
         i18n.changeLanguage(languages[nextLangIndex]);
@@ -107,7 +107,20 @@ const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal, simpleMode, tog
                     style={{ cursor: 'pointer' }}
                     onClick={() => window.open('https://gemini.google.com', '_blank')}
                 >
-                    <span style={{ fontSize: '10px' }}>⚡ Gemini</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16.4553 11.835C19.7828 12.1645 22.5 14.9775 22.5 18.5C22.5 18.7761 22.2761 19 22 19H19C18.7239 19 18.5 18.7761 18.5 18.5C18.5 15.4624 16.0376 13 13 13C12.7239 13 12.5 12.7761 12.5 12.5C12.5 12.2239 12.7239 12 13 12C16.0376 12 18.5 9.53757 18.5 6.5C18.5 6.22386 18.7239 6 19 6H22C22.2761 6 22.5 6.22386 22.5 6.5C22.5 10.0225 19.7828 12.8355 16.4553 13.165C16.1789 13.1925 16.1789 11.8075 16.4553 11.835Z" fill="url(#paint0_linear)" />
+                        <path d="M7.54469 11.835C4.21721 12.1645 1.5 14.9775 1.5 18.5C1.5 18.7761 1.72386 19 2 19H5C5.27614 19 5.5 18.7761 5.5 18.5C5.5 15.4624 7.96243 13 11 13C11.2761 13 11.5 12.7761 11.5 12.5C11.5 12.2239 11.2761 12 11 12C7.96243 12 5.5 9.53757 5.5 6.5C5.5 6.22386 5.27614 6 5 6H2C1.72386 6 1.5 6.22386 1.5 6.5C1.5 10.0225 4.21721 12.8355 7.54469 13.165C7.82107 13.1925 7.82107 11.8075 7.54469 11.835Z" fill="url(#paint1_linear)" />
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="13" y1="12.5" x2="22.5" y2="12.5" gradientUnits="userSpaceOnUse">
+                                <stop stopColor="#4E86F6" />
+                                <stop offset="1" stopColor="#C1D3F8" />
+                            </linearGradient>
+                            <linearGradient id="paint1_linear" x1="1.5" y1="12.5" x2="11" y2="12.5" gradientUnits="userSpaceOnUse">
+                                <stop stopColor="#D96570" />
+                                <stop offset="1" stopColor="#F5C6CB" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
                 </div>
             </div>
         </div>
