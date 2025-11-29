@@ -1,0 +1,111 @@
+---
+title: "Git vs. OneDrive: The Data Scientist's Guide"
+date: "2025-11-29"
+description: "A guide on how to manage data science projects using both Git and OneDrive effectively."
+categories: ["git", "workflow", "data-science"]
+---
+
+<span class="read-time">Read Time: ~6 Minutes</span>
+
+As Data Scientists, we live in two worlds. We deal with massive, messy datasets (perfect for Cloud Storage) and intricate, version-dependent code (perfect for Git).
+
+Deciding where to store a project can be confusing. Make the wrong choice, and you end up with corrupted repositories or lost versions. This guide breaks down exactly where your files belong and how to fix your setup if you've already mixed them up.
+
+## 1. The Decision Matrix: What Goes Where?
+
+The fundamental difference is simple: **OneDrive syncs the "Now"** (making folders identical across devices), while **GitHub tracks the "History"** (how a file evolved line-by-line).
+
+::: callout-tip
+## 🧪 The "Notepad Test" (Rule of Thumb)
+Open your file in a basic text editor (Notepad/TextEdit).
+
+*   Can you read it? (Python script, Markdown, CSV) &rarr; **Use GitHub.**
+*   Does it look like alien gibberish? (PDF, Excel, .pkl, .exe) &rarr; **Use OneDrive.**
+:::
+
+| Feature | OneDrive / Dropbox | GitHub / GitLab |
+| :--- | :--- | :--- |
+| **Best For** | Final Results, Documents, Images | Source Code, Configs, Text |
+| **File Types** | Binary (.docx, .pdf, .jpg, .zip) | Plain Text (.py, .R, .md, .tex) |
+| **Data Size** | Great for Large Data (>100MB) | Poor for large files (Keep repo < 1GB) |
+| **Conflict Handling** | Creates "Conflicted Copy" files | Manual line-by-line merge |
+
+## 2. The "Hybrid" Workflow (Recommended)
+
+For research and data science, you shouldn't choose one or the other. **You need both, but they must remain separate.**
+
+```{mermaid}
+flowchart LR
+    Git["💻 Local Folder (Git)
+    ~/Projects/analysis
+    (Scripts, Reports, Configs)"] 
+    
+    Cloud["☁️ Cloud Storage
+    ~/OneDrive/Data
+    (Raw CSVs, Large Zips, Final PDFs)"]
+
+    Git <-->|"Linked via Code"| Cloud
+
+    style Git stroke:#2563eb,stroke-width:2px,fill:#fff,color:#333
+    style Cloud stroke:#f59e0b,stroke-width:2px,fill:#fff,color:#333
+```
+
+**How to link them:**
+Keep your code in a standard local directory, but tell your script to load data from the OneDrive path.
+
+```r
+# R Example: Linking the two worlds
+data_path <- "~/OneDrive/Research/Data/my-analysis/huge_dataset.csv"
+df <- read.csv(data_path)
+
+# You get version control on your code, 
+# and cloud backup on your data. Best of both worlds.
+```
+
+## 3. The Danger Zone: Git INSIDE OneDrive
+
+::: callout-important
+## ⚠️ CRITICAL WARNING
+Never initialize a Git repository *inside* a synced OneDrive/Dropbox folder.
+:::
+
+Why? Sync clients (OneDrive) and Version Control (Git) fight over the hidden `.git` folder. This leads to:
+
+*   **Repo Corruption:** OneDrive may "sync" a file lock that Git needs, breaking your repo.
+*   **Infinite Loops:** Git changes a timestamp -> OneDrive syncs it -> Git sees a change -> Repeat.
+*   **Conflicted Copies:** You will end up with files named `script.py (Computer Name Conflicted Copy)`.
+
+## 4. How to Fix It (Moving Out of OneDrive)
+
+If your project is currently stuck in OneDrive and causing headaches, here is the safe extraction procedure.
+
+### Step 1: On Your Primary Computer
+Since your code is pushed to GitHub, it is safe to move the folder.
+
+1.  **Move the Folder:** Drag your project folder **OUT** of OneDrive and into a local directory (e.g., `~/Documents/Projects/`).
+2.  **Verify:** Open your terminal and check the status.
+    ```bash
+    cd ~/Documents/Projects/my-project
+    git status
+    ```
+3.  **Cleanup:** Check OneDrive. If a copy remains there, delete it to stop the sync confusion.
+
+### Step 2: On Your Secondary Computer
+Do not try to "fix" the existing folder on your second computer. It's faster to start fresh.
+
+1.  **Let OneDrive Sync:** Wait for OneDrive to update. It should automatically remove the old folder (since you moved/deleted it on Computer 1).
+2.  **Clone Fresh:** Download a clean connection to GitHub in a safe local folder.
+    ```bash
+    cd ~/Documents
+    git clone https://github.com/yourname/my-project.git
+    ```
+
+## Summary
+
+*   **Code** lives in **Git**.
+*   **Data** lives in **OneDrive**.
+*   **Never** put Git inside OneDrive.
+
+<div class="footer-note">
+    This post was created with the help of Gemini.
+</div>
