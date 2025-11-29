@@ -159,6 +159,7 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
 
             if (activeFile === 'index.html') src = '/blog/index.html';
             else if (activeFile === 'anscombe_quartet.html') src = '/blog/posts/anscombe_quartet.html';
+            else if (activeFile === 'git-vs-onedrive.html') src = '/blog/posts/git-vs-onedrive.html';
             else if (activeFile === 'projects.html') src = '/projects.html';
             else if (activeFile === 'certest.html') src = '/certest.html';
             else if (activeFile === 'gkn_prosperity.html') src = '/gkn_prosperity.html';

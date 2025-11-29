@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git vs. OneDrive: The Data Scientist's Guide</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #475569;
+            --bg-light: #f8fafc;
+            --code-bg: #1e293b;
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 0.5em; color: #111; }
+        h2 { font-size: 1.8rem; margin-top: 1.5em; color: #222; border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
+        h3 { font-size: 1.4rem; margin-top: 1.5em; color: #444; }
+
+        p { margin-bottom: 1.2em; font-size: 1.1rem; }
+
+        /* Visual Components */
+        .callout {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .callout-danger { background-color: #fef2f2; border-left: 5px solid var(--danger); }
+        .callout-tip { background-color: #f0f9ff; border-left: 5px solid var(--primary); }
+        
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+        table thead tr {
+            background-color: var(--primary);
+            color: #ffffff;
+            text-align: left;
+        }
+        table th, table td { padding: 12px 15px; border-bottom: 1px solid #dddddd; }
+        table tbody tr:nth-of-type(even) { background-color: var(--bg-light); }
+        
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        code {
+            background-color: #f1f5f9;
+            color: var(--primary);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        pre code {
+            background-color: transparent;
+            color: inherit;
+        }
+
+        /* CSS Diagram for Hybrid Workflow */
+        .workflow-diagram {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+            align-items: center;
+        }
+        .box {
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            width: 220px;
+            text-align: center;
+            background: white;
+            position: relative;
+        }
+        .box-git { border-color: var(--primary); }
+        .box-cloud { border-color: var(--warning); }
+        
+        .box h4 { margin-top: 0; margin-bottom: 10px; }
+        .icon { font-size: 2rem; display: block; margin-bottom: 10px; }
+        
+        .arrow {
+            font-size: 2rem;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        /* Read Time Tag */
+        .read-time {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer-note {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            .workflow-diagram { flex-direction: column; }
+            .arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <span class="read-time">Read Time: ~6 Minutes</span>
+    <h1>The Data Scientist's Dilemma: OneDrive vs. GitHub</h1>
+    
+    <p>As Data Scientists, we live in two worlds. We deal with massive, messy datasets (perfect for Cloud Storage) and intricate, version-dependent code (perfect for Git). </p>
+    
+    <p>Deciding where to store a project can be confusing. Make the wrong choice, and you end up with corrupted repositories or lost versions. This guide breaks down exactly where your files belong and how to fix your setup if you've already mixed them up.</p>
+
+    <h2>1. The Decision Matrix: What Goes Where?</h2>
+    
+    <p>The fundamental difference is simple: <strong>OneDrive syncs the "Now"</strong> (making folders identical across devices), while <strong>GitHub tracks the "History"</strong> (how a file evolved line-by-line).</p>
+
+    <div class="callout callout-tip">
+        <strong>🧪 The "Notepad Test" (Rule of Thumb)</strong><br>
+        Open your file in a basic text editor (Notepad/TextEdit).
+        <ul>
+            <li>Can you read it? (Python script, Markdown, CSV) &rarr; <strong>Use GitHub.</strong></li>
+            <li>Does it look like alien gibberish? (PDF, Excel, .pkl, .exe) &rarr; <strong>Use OneDrive.</strong></li>
+        </ul>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>OneDrive / Dropbox</th>
+                <th>GitHub / GitLab</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Best For</strong></td>
+                <td>Final Results, Documents, Images</td>
+                <td>Source Code, Configs, Text</td>
+            </tr>
+            <tr>
+                <td><strong>File Types</strong></td>
+                <td>Binary (.docx, .pdf, .jpg, .zip)</td>
+                <td>Plain Text (.py, .R, .md, .tex)</td>
+            </tr>
+            <tr>
+                <td><strong>Data Size</strong></td>
+                <td>Great for Large Data (>100MB)</td>
+                <td>Poor for large files (Keep repo < 1GB)</td>
+            </tr>
+            <tr>
+                <td><strong>Conflict Handling</strong></td>
+                <td>Creates "Conflicted Copy" files</td>
+                <td>Manual line-by-line merge</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>2. The "Hybrid" Workflow (Recommended)</h2>
+
+    <p>For research and data science, you shouldn't choose one or the other. <strong>You need both, but they must remain separate.</strong></p>
+
+    <div class="workflow-diagram">
+        <div class="box box-git">
+            <span class="icon">💻</span>
+            <h4>Local Folder (Git)</h4>
+            <p><code>~/Projects/analysis</code></p>
+            <small>Contains: Scripts (.R, .py), Reports (.qmd), Configs.</small>
+        </div>
+        
+        <div class="arrow">&harr; Linked via Code &harr;</div>
+
+        <div class="box box-cloud">
+            <span class="icon">☁️</span>
+            <h4>Cloud Storage</h4>
+            <p><code>~/OneDrive/Data</code></p>
+            <small>Contains: Raw CSVs, Large Zips, Final PDFs.</small>
+        </div>
+    </div>
+
+    <p><strong>How to link them:</strong><br>
+    Keep your code in a standard local directory, but tell your script to load data from the OneDrive path.</p>
+
+    <pre><code># R Example: Linking the two worlds
+data_path <- "~/OneDrive/Research/Data/my-analysis/huge_dataset.csv"
+df <- read.csv(data_path)
+
+# You get version control on your code, 
+# and cloud backup on your data. Best of both worlds.</code></pre>
+
+    <h2>3. The Danger Zone: Git INSIDE OneDrive</h2>
+
+    <div class="callout callout-danger">
+        <strong>⚠️ CRITICAL WARNING</strong><br>
+        Never initialize a Git repository <em>inside</em> a synced OneDrive/Dropbox folder.
+    </div>
+
+    <p>Why? Sync clients (OneDrive) and Version Control (Git) fight over the hidden <code>.git</code> folder. This leads to:</p>
+    <ul>
+        <li><strong>Repo Corruption:</strong> OneDrive may "sync" a file lock that Git needs, breaking your repo.</li>
+        <li><strong>Infinite Loops:</strong> Git changes a timestamp -> OneDrive syncs it -> Git sees a change -> Repeat.</li>
+        <li><strong>Conflicted Copies:</strong> You will end up with files named <code>script.py (Computer Name Conflicted Copy)</code>.</li>
+    </ul>
+
+    <h2>4. How to Fix It (Moving Out of OneDrive)</h2>
+
+    <p>If your project is currently stuck in OneDrive and causing headaches, here is the safe extraction procedure.</p>
+
+    <h3>Step 1: On Your Primary Computer</h3>
+    <p>Since your code is pushed to GitHub, it is safe to move the folder.</p>
+    <ol>
+        <li><strong>Move the Folder:</strong> Drag your project folder <strong>OUT</strong> of OneDrive and into a local directory (e.g., <code>~/Documents/Projects/</code>).</li>
+        <li><strong>Verify:</strong> Open your terminal and check the status.
+            <pre><code>cd ~/Documents/Projects/my-project
+git status</code></pre>
+        </li>
+        <li><strong>Cleanup:</strong> Check OneDrive. If a copy remains there, delete it to stop the sync confusion.</li>
+    </ol>
+
+    <h3>Step 2: On Your Secondary Computer</h3>
+    <p>Do not try to "fix" the existing folder on your second computer. It's faster to start fresh.</p>
+    <ol>
+        <li><strong>Let OneDrive Sync:</strong> Wait for OneDrive to update. It should automatically remove the old folder (since you moved/deleted it on Computer 1).</li>
+        <li><strong>Clone Fresh:</strong> Download a clean connection to GitHub in a safe local folder.
+            <pre><code>cd ~/Documents
+git clone https://github.com/yourname/my-project.git</code></pre>
+        </li>
+    </ol>
+
+    <h2>Summary</h2>
+    <ul>
+        <li><strong>Code</strong> lives in <strong>Git</strong>.</li>
+        <li><strong>Data</strong> lives in <strong>OneDrive</strong>.</li>
+        <li><strong>Never</strong> put Git inside OneDrive.</li>
+    </ul>
+
+    <div class="footer-note">
+        This post was created with the help of Gemini.
+    </div>
+
+</body>
+</html>

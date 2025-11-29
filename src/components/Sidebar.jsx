@@ -52,6 +52,7 @@ const Sidebar = ({ activeFile, setActiveFile, theme, toggleTheme, onSearchClick 
             type: 'folder',
             children: [
                 { name: 'index.html', icon: <VscCode color="#e44d26" />, type: 'html', path: '/blog/index.html' },
+                { name: 'git-vs-onedrive.html', icon: <VscCode color="#e44d26" />, type: 'html', path: '/blog/posts/git-vs-onedrive.html' },
             ]
         },
         { name: 'about_me.html', icon: <VscCode color="#e34c26" />, type: 'html' },
