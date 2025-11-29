@@ -233,3 +233,15 @@ The site uses CSS variables to handle theming.
 ## 🤖 Built With
 
 This website was built with the assistance of **Gemini Antigravity**, an advanced agentic AI coding assistant by Google Deepmind.
+
+---
+
+## 💻 Development Workflow
+
+To avoid conflicts when working across multiple machines, please refer to the [Sync Instructions](SYNC_INSTRUCTIONS.md).
+
+**Quick Command:**
+```bash
+./scripts/sync_work.sh
+```
+Run this **before** starting work and **after** finishing work.
