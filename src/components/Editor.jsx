@@ -10,6 +10,8 @@ import { VscClose, VscCloseAll, VscChevronRight, VscLaw, VscGame, VscCode, VscGi
 import { FaMarkdown, FaPython, FaJs, FaReact, FaHtml5 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
+import BlogViewer from './BlogViewer';
+
 const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme, simpleMode, toggleSimpleMode }) => {
     const { i18n } = useTranslation();
 
@@ -137,6 +139,10 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
             return <WelcomePage onNavigate={setActiveFile} simpleMode={simpleMode} toggleSimpleMode={toggleSimpleMode} />;
         }
 
+        if (activeFile === 'blog.html') {
+            return <BlogViewer setActiveFile={setActiveFile} />;
+        }
+
         if (activeFile.endsWith('.ipynb')) {
             return <NotebookViewer fileName={activeFile} />;
         }
@@ -160,6 +166,7 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
             if (activeFile === 'index.html') src = '/blog/index.html';
             else if (activeFile === 'anscombe_quartet.html') src = '/blog/posts/anscombe_quartet.html';
             else if (activeFile === 'git-vs-onedrive.html') src = '/blog/posts/git-vs-onedrive.html';
+            else if (activeFile === 'first-post.html') src = '/blog/posts/first-post.html';
             else if (activeFile === 'projects.html') src = '/projects.html';
             else if (activeFile === 'certest.html') src = '/certest.html';
             else if (activeFile === 'gkn_prosperity.html') src = '/gkn_prosperity.html';

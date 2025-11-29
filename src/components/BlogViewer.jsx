@@ -1,0 +1,117 @@
+import React, { useState } from 'react';
+import { VscSearch } from 'react-icons/vsc';
+
+const BlogViewer = ({ setActiveFile }) => {
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const posts = [
+        {
+            id: 'git-vs-onedrive.html',
+            title: 'Git vs OneDrive',
+            date: '2023-10-27',
+            description: 'Why you should use Git instead of OneDrive for version control.',
+            tags: ['git', 'version-control', 'productivity']
+        },
+        {
+            id: 'anscombe_quartet.html',
+            title: "Anscombe's Quartet",
+            date: '2023-10-24',
+            description: 'The importance of visualizing data before analyzing it.',
+            tags: ['statistics', 'visualization', 'r']
+        },
+        {
+            id: 'first-post.html',
+            title: 'Welcome to my Blog',
+            date: '2023-10-20',
+            description: 'Introduction to my new Quarto-powered blog.',
+            tags: ['general', 'quarto']
+        }
+    ];
+
+    const filteredPosts = posts.filter(post =>
+        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+
+    return (
+        <div className="p-4" style={{ color: 'var(--vscode-text)', maxWidth: '800px', height: '100%', overflowY: 'auto' }}>
+            <h1 className="mb-4">Blog Posts</h1>
+
+            <div className="d-flex align-items-center mb-4" style={{
+                backgroundColor: 'var(--vscode-input-background)',
+                border: '1px solid var(--vscode-input-border)',
+                padding: '8px 12px',
+                borderRadius: '4px',
+                maxWidth: '400px'
+            }}>
+                <VscSearch className="me-2" style={{ color: 'var(--vscode-input-foreground)' }} />
+                <input
+                    type="text"
+                    placeholder="Search posts..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    style={{
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        color: 'var(--vscode-input-foreground)',
+                        outline: 'none',
+                        width: '100%'
+                    }}
+                />
+            </div>
+
+            <div className="d-flex flex-column gap-3">
+                {filteredPosts.map(post => (
+                    <div
+                        key={post.id}
+                        className="p-3"
+                        style={{
+                            backgroundColor: 'var(--vscode-editor-bg)',
+                            border: '1px solid var(--vscode-border)',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                            transition: 'transform 0.2s, border-color 0.2s'
+                        }}
+                        onClick={() => setActiveFile(post.id)}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.borderColor = 'var(--vscode-focusBorder)';
+                            e.currentTarget.style.transform = 'translateY(-2px)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.borderColor = 'var(--vscode-border)';
+                            e.currentTarget.style.transform = 'translateY(0)';
+                        }}
+                    >
+                        <div className="d-flex justify-content-between align-items-start mb-2">
+                            <h3 className="m-0" style={{ color: 'var(--vscode-text-link-foreground, #3794ff)' }}>{post.title}</h3>
+                            <span style={{ fontSize: '12px', opacity: 0.7 }}>{post.date}</span>
+                        </div>
+                        <p className="mb-2" style={{ opacity: 0.9 }}>{post.description}</p>
+                        <div className="d-flex gap-2">
+                            {post.tags.map(tag => (
+                                <span key={tag} style={{
+                                    fontSize: '11px',
+                                    backgroundColor: 'var(--vscode-badge-background)',
+                                    color: 'var(--vscode-badge-foreground)',
+                                    padding: '2px 8px',
+                                    borderRadius: '10px'
+                                }}>
+                                    #{tag}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+
+                {filteredPosts.length === 0 && (
+                    <div className="text-center opacity-50 mt-5">
+                        No posts found matching "{searchTerm}"
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default BlogViewer;
