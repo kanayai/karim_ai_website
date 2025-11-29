@@ -50,6 +50,9 @@
   --vscode-button-hoverBackground: #0062a3;
   --vscode-descriptionForeground: #666666;
   --vscode-list-hover-bg: #e8e8e8;
+  --vscode-activity-bar-active-border: #007acc;
+  --vscode-activity-bar-inactive-foreground: #999999;
+  --vscode-activity-bar-foreground: #333333;
 }
 
 body {
