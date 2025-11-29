@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
+import ActivityBar from './ActivityBar';
 import Statusbar from './Statusbar';
 import CommandPalette from './CommandPalette';
 import TitleBar from './TitleBar';
@@ -8,6 +9,7 @@ import Terminal from './Terminal';
 const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, isSidebarOpen, toggleSidebar, simpleMode, toggleSimpleMode }) => {
     const [isPaletteOpen, setIsPaletteOpen] = useState(false);
     const [isTerminalOpen, setIsTerminalOpen] = useState(true); // Default open for demo
+    const [activeView, setActiveView] = useState('explorer');
 
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -40,15 +42,30 @@ const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, isSid
                 toggleSimpleMode={toggleSimpleMode}
             />
             <div className="main-container" style={{ position: 'relative' }}>
-                {/* Hide Sidebar in Simple Mode */}
+                {/* Activity Bar - Always visible unless in Simple Mode */}
+                {!simpleMode && (
+                    <ActivityBar
+                        activeView={activeView}
+                        setActiveView={(view) => {
+                            setActiveView(view);
+                            if (!isSidebarOpen) toggleSidebar();
+                        }}
+                        activeFile={activeFile}
+                        setActiveFile={setActiveFile}
+                        theme={theme}
+                        toggleTheme={toggleTheme}
+                        onSearchClick={() => setIsPaletteOpen(true)}
+                    />
+                )}
+
+                {/* Sidebar - Collapsible */}
                 {!simpleMode && (
                     <div className={`sidebar-container ${isSidebarOpen ? 'open' : 'closed'}`}>
                         <Sidebar
                             activeFile={activeFile}
                             setActiveFile={setActiveFile}
-                            theme={theme}
-                            toggleTheme={toggleTheme}
-                            onSearchClick={() => setIsPaletteOpen(true)}
+                            activeView={activeView}
+                            setActiveView={setActiveView}
                         />
                     </div>
                 )}
