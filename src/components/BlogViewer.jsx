@@ -61,45 +61,46 @@ const BlogViewer = ({ setActiveFile }) => {
                 />
             </div>
 
-            <div className="d-flex flex-column gap-3">
+            <div className="row g-3">
                 {filteredPosts.map(post => (
-                    <div
-                        key={post.id}
-                        className="p-3"
-                        style={{
-                            backgroundColor: 'var(--vscode-editor-bg)',
-                            border: '1px solid var(--vscode-border)',
-                            borderRadius: '6px',
-                            cursor: 'pointer',
-                            transition: 'transform 0.2s, border-color 0.2s'
-                        }}
-                        onClick={() => setActiveFile(post.id)}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.borderColor = 'var(--vscode-focusBorder)';
-                            e.currentTarget.style.transform = 'translateY(-2px)';
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.borderColor = 'var(--vscode-border)';
-                            e.currentTarget.style.transform = 'translateY(0)';
-                        }}
-                    >
-                        <div className="d-flex justify-content-between align-items-start mb-2">
-                            <h3 className="m-0" style={{ color: 'var(--vscode-text-link-foreground, #3794ff)' }}>{post.title}</h3>
-                            <span style={{ fontSize: '12px', opacity: 0.7 }}>{post.date}</span>
-                        </div>
-                        <p className="mb-2" style={{ opacity: 0.9 }}>{post.description}</p>
-                        <div className="d-flex gap-2">
-                            {post.tags.map(tag => (
-                                <span key={tag} style={{
-                                    fontSize: '11px',
-                                    backgroundColor: 'var(--vscode-badge-background)',
-                                    color: 'var(--vscode-badge-foreground)',
-                                    padding: '2px 8px',
-                                    borderRadius: '10px'
-                                }}>
-                                    #{tag}
-                                </span>
-                            ))}
+                    <div key={post.id} className="col-12 col-md-6">
+                        <div
+                            className="p-3 h-100 d-flex flex-column"
+                            style={{
+                                backgroundColor: 'var(--vscode-editor-bg)',
+                                border: '1px solid var(--vscode-border)',
+                                borderRadius: '6px',
+                                cursor: 'pointer',
+                                transition: 'transform 0.2s, border-color 0.2s'
+                            }}
+                            onClick={() => setActiveFile(post.id)}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.borderColor = 'var(--vscode-focusBorder)';
+                                e.currentTarget.style.transform = 'translateY(-2px)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.borderColor = 'var(--vscode-border)';
+                                e.currentTarget.style.transform = 'translateY(0)';
+                            }}
+                        >
+                            <div className="d-flex justify-content-between align-items-start mb-2">
+                                <h3 className="m-0" style={{ color: 'var(--vscode-text-link-foreground, #3794ff)', fontSize: '1.1rem' }}>{post.title}</h3>
+                            </div>
+                            <span className="mb-2 d-block" style={{ fontSize: '12px', opacity: 0.7 }}>{post.date}</span>
+                            <p className="mb-3 flex-grow-1" style={{ opacity: 0.9, fontSize: '0.9rem' }}>{post.description}</p>
+                            <div className="d-flex gap-2 flex-wrap mt-auto">
+                                {post.tags.map(tag => (
+                                    <span key={tag} style={{
+                                        fontSize: '11px',
+                                        backgroundColor: 'var(--vscode-badge-background)',
+                                        color: 'var(--vscode-badge-foreground)',
+                                        padding: '2px 8px',
+                                        borderRadius: '10px'
+                                    }}>
+                                        #{tag}
+                                    </span>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 ))}
