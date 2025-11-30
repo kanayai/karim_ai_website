@@ -138,9 +138,10 @@ If you need to recreate the frontend logic, here is how the core components inte
 
 ### Blog (Quarto)
 1.  **Write**: Create `.qmd` files in `blog/posts/`.
-2.  **Build**: Run `quarto render` inside `blog/`.
+2.  **Build**: Run `npm run build-blog` (or `quarto render blog`).
 3.  **Output**: HTML files are generated in `public/blog/`.
-4.  **Link**: Add the new file to `Sidebar.jsx` or `CommandPalette.jsx` if desired.
+4.  **Navigation**: Users can navigate back to the post list using the "Back to Blog" button.
+5.  **Guide**: Refer to `QUARTO_GUIDE.md` for a detailed tutorial.
 
 ---
 

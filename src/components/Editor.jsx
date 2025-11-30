@@ -179,49 +179,74 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
                 src += `?theme=${theme}`;
             }
 
+            const isBlogPost = src.includes('/blog/posts/');
+
             return (
-                <iframe
-                    key={src} // Force re-render on src change
-                    src={src}
-                    style={{ width: '100%', height: '100%', border: 'none', backgroundColor: 'var(--vscode-editor-bg)' }}
-                    title="Blog Post"
-                    onLoad={(e) => {
-                        const iframe = e.target;
-                        const doc = iframe.contentDocument;
-                        if (doc) {
-                            // Inject styles to override Quarto theme with VS Code theme
-                            const styleId = 'vscode-theme-override';
-                            let style = doc.getElementById(styleId);
-                            if (!style) {
-                                style = doc.createElement('style');
-                                style.id = styleId;
-                                doc.head.appendChild(style);
-                            }
-
-                            const isDark = theme === 'dark';
-                            const bg = isDark ? '#1e1e1e' : '#ffffff';
-                            const text = isDark ? '#cccccc' : '#333333';
-                            const link = isDark ? '#3794ff' : '#007acc';
-                            const border = isDark ? '#454545' : '#e4e4e4';
-
-                            style.textContent = `
-                                body {
-                                    background-color: ${bg} !important;
-                                    color: ${text} !important;
+                <div className="d-flex flex-column h-100" style={{ backgroundColor: 'var(--vscode-editor-bg)' }}>
+                    {isBlogPost && (
+                        <div className="p-2 border-bottom" style={{ borderColor: 'var(--vscode-border)' }}>
+                            <button
+                                className="btn btn-sm"
+                                onClick={() => setActiveFile('blog.html')}
+                                style={{
+                                    color: 'var(--vscode-text)',
+                                    backgroundColor: 'var(--vscode-button-background)',
+                                    border: 'none',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '5px'
+                                }}
+                                onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--vscode-button-hover-background)'}
+                                onMouseLeave={(e) => e.target.style.backgroundColor = 'var(--vscode-button-background)'}
+                            >
+                                <VscChevronRight style={{ transform: 'rotate(180deg)' }} />
+                                Back to Blog
+                            </button>
+                        </div>
+                    )}
+                    <iframe
+                        key={src} // Force re-render on src change
+                        src={src}
+                        style={{ width: '100%', flexGrow: 1, border: 'none', backgroundColor: 'var(--vscode-editor-bg)' }}
+                        title="Blog Post"
+                        onLoad={(e) => {
+                            const iframe = e.target;
+                            const doc = iframe.contentDocument;
+                            if (doc) {
+                                // Inject styles to override Quarto theme with VS Code theme
+                                const styleId = 'vscode-theme-override';
+                                let style = doc.getElementById(styleId);
+                                if (!style) {
+                                    style = doc.createElement('style');
+                                    style.id = styleId;
+                                    doc.head.appendChild(style);
                                 }
-                                a { color: ${link} !important; }
-                                h1, h2, h3, h4, h5, h6 { color: ${text} !important; }
-                                .quarto-title-meta-heading { color: ${text} !important; opacity: 0.8; }
-                                .quarto-title-meta-contents { color: ${text} !important; }
-                                blockquote { border-left-color: ${border} !important; color: ${text} !important; opacity: 0.8; }
-                                code { background-color: ${isDark ? '#2d2d2d' : '#f5f5f5'} !important; color: ${isDark ? '#d4d4d4' : '#333333'} !important; }
-                                pre { background-color: ${isDark ? '#1e1e1e' : '#f5f5f5'} !important; border: 1px solid ${border} !important; }
-                                .table { color: ${text} !important; }
-                                .table th, .table td { border-color: ${border} !important; }
-                            `;
-                        }
-                    }}
-                />
+
+                                const isDark = theme === 'dark';
+                                const bg = isDark ? '#1e1e1e' : '#ffffff';
+                                const text = isDark ? '#cccccc' : '#333333';
+                                const link = isDark ? '#3794ff' : '#007acc';
+                                const border = isDark ? '#454545' : '#e4e4e4';
+
+                                style.textContent = `
+                                    body {
+                                        background-color: ${bg} !important;
+                                        color: ${text} !important;
+                                    }
+                                    a { color: ${link} !important; }
+                                    h1, h2, h3, h4, h5, h6 { color: ${text} !important; }
+                                    .quarto-title-meta-heading { color: ${text} !important; opacity: 0.8; }
+                                    .quarto-title-meta-contents { color: ${text} !important; }
+                                    blockquote { border-left-color: ${border} !important; color: ${text} !important; opacity: 0.8; }
+                                    code { background-color: ${isDark ? '#2d2d2d' : '#f5f5f5'} !important; color: ${isDark ? '#d4d4d4' : '#333333'} !important; }
+                                    pre { background-color: ${isDark ? '#1e1e1e' : '#f5f5f5'} !important; border: 1px solid ${border} !important; }
+                                    .table { color: ${text} !important; }
+                                    .table th, .table td { border-color: ${border} !important; }
+                                `;
+                            }
+                        }}
+                    />
+                </div>
             );
         }
 

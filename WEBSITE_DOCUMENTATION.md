@@ -79,9 +79,14 @@ The Research folder contains three dynamically generated HTML pages with a moder
 - **previous_courses.ipynb**: Jupyter notebook with past teaching history
 
 #### 4. Blog
-- **index.html**: Main blog listing page
-- **anscombe_quartet.html**: Blog post about Anscombe's Quartet
-- Generated using Quarto from markdown source files in `blog/posts/`
+### Blog (Quarto)
+1.  **Write**: Create `.qmd` files in `blog/posts/`.
+2.  **Build**: Run `npm run build-blog` (or `quarto render blog`).
+3.  **Output**: HTML files are generated in `public/blog/`.
+4.  **Navigation**:
+    -   Clicking a post opens it in an iframe.
+    -   A **"Back to Blog"** button appears above the post to return to the list.
+5.  **Guide**: See `QUARTO_GUIDE.md` for detailed instructions.
 
 #### 5. About Me
 - **about_me.md**: Detailed biography including:

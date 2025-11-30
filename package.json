@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "update-publications": "node scripts/fetch_orcid_publications.js && Rscript data/publications.R"
+    "update-publications": "node scripts/fetch_orcid_publications.js && Rscript data/publications.R",
+    "build-blog": "quarto render blog"
   },
   "dependencies": {
     "bootstrap": "^5.3.8",
