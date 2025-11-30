@@ -13,6 +13,13 @@ const BlogViewer = ({ setActiveFile }) => {
             tags: ['git', 'version-control', 'productivity']
         },
         {
+            id: 'academic_workflow.html',
+            title: 'The Academic Workflow',
+            date: '2025-11-30',
+            description: 'A master guide to managing Teaching, Research, and Code across multiple computers.',
+            tags: ['workflow', 'academic', 'git', 'onedrive']
+        },
+        {
             id: 'anscombe_quartet.html',
             title: "Anscombe's Quartet",
             date: '2023-10-24',

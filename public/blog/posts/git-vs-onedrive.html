@@ -283,7 +283,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Since your code is pushed to GitHub, it is safe to move the folder.</p>
 <ol type="1">
 <li><strong>Move the Folder:</strong> Drag your project folder <strong>OUT</strong> of OneDrive and into a local directory (e.g., <code>~/Documents/Projects/</code>).</li>
-<li><strong>Verify:</strong> Open your terminal and check the status. <code>bash     cd ~/Documents/Projects/my-project     git status</code></li>
+<li><strong>Verify:</strong> Open your terminal and check the status. <pre><code class="sourceCode bash">cd ~/Documents/Projects/my-project
+git status</code></pre></li>
 <li><strong>Cleanup:</strong> Check OneDrive. If a copy remains there, delete it to stop the sync confusion.</li>
 </ol>
 </section>
@@ -292,7 +293,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Do not try to “fix” the existing folder on your second computer. It’s faster to start fresh.</p>
 <ol type="1">
 <li><strong>Let OneDrive Sync:</strong> Wait for OneDrive to update. It should automatically remove the old folder (since you moved/deleted it on Computer 1).</li>
-<li><strong>Clone Fresh:</strong> Download a clean connection to GitHub in a safe local folder. <code>bash     cd ~/Documents     git clone https://github.com/yourname/my-project.git</code></li>
+<li><strong>Clone Fresh:</strong> Download a clean connection to GitHub in a safe local folder. <pre><code class="sourceCode bash">cd ~/Documents
+git clone https://github.com/yourname/my-project.git</code></pre></li>
 </ol>
 </section>
 </section>

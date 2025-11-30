@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Academic Data Scientist's Workflow</title>
+    <style>
+        :root {
+            --git-color: #2da44e;
+            /* GitHub Green */
+            --cloud-color: #0078d4;
+            /* OneDrive Blue */
+            --terminal-bg: #1e1e1e;
+            --text-main: #333;
+            --bg-light: #f9f9f9;
+            --accent: #6366f1;
+            --teaching-color: #e11d48;
+            /* Pink/Red for Teaching */
+            --research-color: #7c3aed;
+            /* Violet for Research */
+            --warning-bg: #fff7ed;
+            --warning-border: #f97316;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #fff;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.2em;
+            letter-spacing: -0.02em;
+            color: #111;
+        }
+
+        h2 {
+            margin-top: 2em;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            padding-bottom: 5px;
+            color: #222;
+        }
+
+        h3 {
+            color: #444;
+            margin-top: 1.5em;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 2em;
+            font-weight: 300;
+        }
+
+        /* Components */
+        .read-time {
+            background: #eee;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #555;
+        }
+
+        /* Callouts */
+        .callout {
+            background: var(--warning-bg);
+            border-left: 5px solid var(--warning-border);
+            padding: 20px;
+            border-radius: 4px;
+            margin: 25px 0;
+        }
+
+        .callout h4 {
+            margin-top: 0;
+            color: #c2410c;
+        }
+
+        /* The Mirror Diagram */
+        .mirror-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .mirror-box {
+            flex: 1;
+            min-width: 350px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            background: var(--bg-light);
+            position: relative;
+        }
+
+        .mirror-box.git {
+            border-top: 5px solid var(--git-color);
+        }
+
+        .mirror-box.cloud {
+            border-top: 5px solid var(--cloud-color);
+        }
+
+        .mirror-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* Folder Tree Styling */
+        .folder-tree {
+            font-family: "Consolas", monospace;
+            font-size: 0.9rem;
+            color: #444;
+        }
+
+        .folder-tree div {
+            padding: 3px 0;
+            white-space: nowrap;
+        }
+
+        .dim {
+            color: #999;
+            font-style: italic;
+        }
+
+        /* Highlighting distinct sections */
+        .teaching-group {
+            color: var(--teaching-color);
+            font-weight: bold;
+        }
+
+        .research-group {
+            color: var(--research-color);
+            font-weight: bold;
+        }
+
+        /* OS Cards */
+        .os-grid {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .os-card {
+            flex: 1;
+            min-width: 250px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .os-card strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* The Script Terminal */
+        .terminal {
+            background-color: var(--terminal-bg);
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: "Consolas", "Monaco", monospace;
+            overflow-x: auto;
+            margin: 20px 0;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .terminal-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 25px;
+            background: #333;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .red {
+            background: #ff5f56;
+        }
+
+        .yellow {
+            background: #ffbd2e;
+        }
+
+        .green {
+            background: #27c93f;
+        }
+
+        /* Code snippet styling */
+        .code-block {
+            display: block;
+            background: #f4f4f5;
+            padding: 15px;
+            border-left: 4px solid var(--accent);
+            font-family: monospace;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .code-title {
+            font-size: 0.85rem;
+            color: #666;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+            font-family: sans-serif;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            color: #777;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Tags */
+        .quarto-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5em;
+            margin-bottom: 1em;
+            margin-top: 0.5em;
+        }
+
+        .quarto-category {
+            text-transform: uppercase;
+            font-size: 0.75em;
+            padding: 0.2em 0.6em;
+            border: 1px solid var(--accent);
+            border-radius: 0.25rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        @media (max-width: 700px) {
+            .mirror-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <span class="read-time">Read Time: ~15 Minutes</span>
+    <h1>The Academic Workflow: Git vs. Cloud</h1>
+    <div class="quarto-categories">
+        <div class="quarto-category">workflow</div>
+        <div class="quarto-category">academic</div>
+        <div class="quarto-category">git</div>
+        <div class="quarto-category">onedrive</div>
+    </div>
+    <p class="subtitle">A master guide to managing Teaching, Research, and Code across multiple computers (Mac, Windows,
+        and Linux).</p>
+
+    <p>As academic data scientists, we juggle three distinct types of work: <strong>Teaching</strong> (slides, quizzes),
+        <strong>Research</strong> (papers, heavy analysis), and <strong>Administration</strong>. </p>
+
+    <p>If you work across multiple machines—say, a powerful Office Desktop and a personal Laptop—you face a dilemma:
+        Cloud storage (OneDrive/Dropbox) is great for PDFs but ruins code history. Git is perfect for code but chokes on
+        2GB datasets.</p>
+
+    <p>Here is the "Mirrored Architecture" to handle it all effortlessly.</p>
+
+    <h2>1. The Setup: Where to create your folders</h2>
+    <p>Before we talk about Git, we must talk about <strong>Location</strong>. Most modern Operating Systems try to
+        "help" you by syncing your <code>Documents</code> folder to the cloud automatically (iCloud on Mac, OneDrive on
+        Windows).</p>
+
+    <div class="callout">
+        <h4>⚠️ The "Documents" Trap</h4>
+        Do <strong>NOT</strong> put your Git repositories inside your <code>Documents</code> folder. If iCloud/OneDrive
+        syncs a file while Git is writing to it, your repository can become corrupted.
+    </div>
+
+    <p>You need to create a dedicated <strong>Projects</strong> folder at your "User Root" (Home) level, sitting
+        side-by-side with your Cloud folder.</p>
+
+    <div class="os-grid">
+        <div class="os-card">
+            <strong>🍎 macOS</strong>
+            <p>1. Go to Finder.<br>
+                2. Press <code>Cmd + Shift + H</code> (Go to Home).<br>
+                3. Create a folder named <code>Projects</code>.<br>
+                4. Drag it to your Sidebar favorites.</p>
+            <em>Path: <code>/Users/yourname/Projects</code></em>
+        </div>
+        <div class="os-card">
+            <strong>🪟 Windows</strong>
+            <p>1. Open File Explorer.<br>
+                2. Go to <code>C:\Users\YourName</code>.<br>
+                3. Create a folder named <code>Projects</code>.<br>
+                4. Right-click -> "Pin to Quick Access".</p>
+            <em>Path: <code>C:\Users\yourname\Projects</code></em>
+        </div>
+        <div class="os-card">
+            <strong>🐧 Linux</strong>
+            <p>1. Open Terminal.<br>
+                2. Type <code>mkdir ~/Projects</code>.<br>
+                3. You're done.</p>
+            <em>Path: <code>/home/yourname/Projects</code></em>
+        </div>
+    </div>
+
+    <h2>2. The Architecture: Mirrored Roots</h2>
+    <p>Now that you have your locations set, follow the <strong>Mirrored Strategy</strong>. You will have two root
+        folders. They will have <strong>identical sub-folder structures</strong>, but they serve different purposes.</p>
+
+    <div class="mirror-container">
+        <!-- GIT SIDE -->
+        <div class="mirror-box git">
+            <div class="mirror-title">
+                <span>💻 ~/Projects</span>
+                <span style="font-size:0.8em; font-weight:normal; color:#666;">(Local + Git)</span>
+            </div>
+            <div class="folder-tree">
+                <!-- Teaching Section -->
+                <div class="teaching-group">📂 Teaching/</div>
+                <div style="padding-left: 20px;">📂 ma101_linear_algebra/</div>
+                <div style="padding-left: 40px;">📄 lectures.qmd</div>
+                <div style="padding-left: 40px;">📄 script_week1.R</div>
+                <div style="padding-left: 40px;">📄 _quarto.yml</div>
+
+                <br>
+                <!-- Research Section -->
+                <div class="research-group">📂 Research/</div>
+                <div style="padding-left: 20px;">📂 climate_change_paper/</div>
+                <div style="padding-left: 40px;">📄 analysis.ipynb</div>
+                <div style="padding-left: 40px;">📄 manuscript.tex</div>
+            </div>
+            <p style="margin-top:15px; font-size:0.9rem;"><em><strong>Rule:</strong> Contains Text & Code only. No large
+                    files (>50MB). This is backed up via GitHub.</em></p>
+        </div>
+
+        <!-- CLOUD SIDE -->
+        <div class="mirror-box cloud">
+            <div class="mirror-title">
+                <span>☁️ ~/OneDrive</span>
+                <span style="font-size:0.8em; font-weight:normal; color:#666;">(Synced)</span>
+            </div>
+            <div class="folder-tree">
+                <!-- Teaching Section -->
+                <div class="teaching-group">📂 Teaching/</div>
+                <div style="padding-left: 20px;">📂 ma101_linear_algebra/</div>
+                <div style="padding-left: 40px;">📄 scanned_textbook.pdf</div>
+                <div style="padding-left: 40px;">📄 student_grades.xlsx</div>
+
+                <br>
+                <!-- Research Section -->
+                <div class="research-group">📂 Research/</div>
+                <div style="padding-left: 20px;">📂 climate_change_paper/</div>
+                <div style="padding-left: 40px;">📄 raw_weather_data.csv <span class="dim">(2GB)</span></div>
+                <div style="padding-left: 40px;">📄 final_proof.pdf</div>
+            </div>
+            <p style="margin-top:15px; font-size:0.9rem;"><em><strong>Rule:</strong> Contains Binaries, Data, and PDFs.
+                    Accessible from anywhere (web/phone).</em></p>
+        </div>
+    </div>
+
+    <h2>3. The Automation: One Script to Rule Them All</h2>
+    <p>When you have 10+ active repositories, you cannot manually <code>git pull</code> inside every folder. You need a
+        "Master Loop" script.</p>
+
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="dot red"></div>
+            <div class="dot yellow"></div>
+            <div class="dot green"></div>
+        </div>
+        <br>
+        <pre>#!/bin/bash
+# 💾 Save this as: sync_work.sh
+# ---------------------------------------------------------
+# Define where your Git Projects live (Not OneDrive paths!)
+# ---------------------------------------------------------
+TARGET_DIRS=(
+    "$HOME/Projects/Teaching"
+    "$HOME/Projects/Research"
+)
+
+echo "🔄 MASTER SYNC INITIATED..."
+
+# Function to handle a single repository
+sync_repo() {
+    local repo_path="$1"
+    local name=$(basename "$repo_path")
+    cd "$repo_path" || return
+
+    # Check if it's actually a git repo
+    if [ ! -d ".git" ]; then return; fi
+
+    echo -e "\n📂 Processing: $name"
+
+    # 1. ADD & COMMIT (Save your work)
+    git add .
+    if ! git diff-index --quiet HEAD --; then
+        timestamp=$(date "+%Y-%m-%d %H:%M")
+        git commit -m "Auto-Sync: $(hostname) at $timestamp" --quiet
+        echo "   💾 Local changes committed."
+    fi
+
+    # 2. PULL (Get work from other computers)
+    # We use --rebase to keep history clean (linear)
+    if git pull --rebase origin main --quiet; then
+        echo "   ⬇️  Pulled latest changes."
+    else
+        echo "   ❌ CONFLICT DETECTED. Please resolve manually."
+        return 1
+    fi
+
+    # 3. PUSH (Upload your work)
+    if git push origin main --quiet; then
+        echo "   ⬆️  Pushed to GitHub."
+    else
+        echo "   ❌ Push failed. Check internet connection."
+    fi
+}
+
+# MAIN LOOP
+# Find all subdirectories in your target folders and sync them
+for parent in "${TARGET_DIRS[@]}"; do
+    if [ -d "$parent" ]; then
+        for d in "$parent"/*/; do
+            sync_repo "${d%/}"
+        done
+    fi
+done
+
+echo -e "\n🎉 Sync Complete! Safe to switch computers."</pre>
+    </div>
+
+    <p><strong>Mac/Linux Users:</strong> Run <code>chmod +x sync_work.sh</code> to make it executable.<br>
+        <strong>Windows Users:</strong> Install "Git Bash" (included with Git for Windows) to run this script.
+    </p>
+
+    <h2>4. Connecting the Worlds: How to Load Data</h2>
+    <p>Your code is in <code>~/Projects</code>, but your data is in <code>~/OneDrive</code>. How do you load the data
+        without hardcoding paths that break when you switch computers?</p>
+
+    <h3>Method A: For Small Data (Inside Git)</h3>
+    <p>If your data is small (<50MB) and lives <strong>inside</strong> your project folder, use <strong>Project-Relative
+                Paths</strong>. This guarantees your code runs anywhere.</p>
+
+    <span class="code-title">Using R's `here` package</span>
+    <pre class="code-block"><code>library(here) 
+# 'here()' automatically finds the root of your Git project
+# No more setwd()! 
+df <- read.csv(here("data", "small_dataset.csv"))</code></pre>
+
+    <span class="code-title">Using Python's `pyprojroot`</span>
+    <pre class="code-block"><code>import pandas as pd
+from pyprojroot import here
+
+# Finds the root containing .git, requirements.txt, etc.
+# The '/' operator works because here() returns a Path object
+data_path = here() / "data" / "small_dataset.csv"
+df = pd.read_csv(data_path)</code></pre>
+
+    <h3>Method B: For Large Data (In OneDrive/Cloud)</h3>
+    <p>For data that lives <strong>outside</strong> the project (in the cloud), paths might differ per machine (e.g.,
+        <code>OneDrive - University</code> vs <code>OneDrive - Personal</code>). The professional solution is
+        <strong>Environment Variables</strong>.</p>
+
+    <p>1. Create a hidden file in your Home folder containing the path for <em>that specific computer</em>.</p>
+
+    <span class="code-title">📄 .Renviron (Save in your Home folder)</span>
+    <pre class="code-block"><code># On your Work Computer
+CLOUD_DATA_DIR="/Users/admin/OneDrive - University/Research"
+
+# On your Home Computer
+CLOUD_DATA_DIR="/Users/john/OneDrive/Research"</code></pre>
+
+    <p>2. Load it in your code using the variable name. The code remains identical on both machines!</p>
+
+    <span class="code-title">In R (Automatic Loading)</span>
+    <pre class="code-block"><code># R automatically reads .Renviron on startup
+data_root <- Sys.getenv("CLOUD_DATA_DIR")
+
+df <- read.csv(file.path(data_root, "climate_change_paper", "big_data.csv"))</code></pre>
+
+    <span class="code-title">In Python (Using dotenv)</span>
+    <pre class="code-block"><code>import os
+import pandas as pd
+from dotenv import load_dotenv
+
+# Load variables from .env or .Renviron file
+load_dotenv() 
+
+data_root = os.getenv("CLOUD_DATA_DIR")
+df = pd.read_csv(f"{data_root}/climate_change_paper/big_data.csv")</code></pre>
+
+    <h2>Summary Checklist</h2>
+    <ol>
+        <li><strong>Location:</strong> Move all code to <code>~/Projects</code>. Move all docs to
+            <code>~/OneDrive</code>.</li>
+        <li><strong>Structure:</strong> Keep separate folders for <code>Teaching</code> and <code>Research</code> inside
+            both locations.</li>
+        <li><strong>Automate:</strong> Run the sync script when you sit down (Pull) and when you stand up (Push).</li>
+        <li><strong>Paths:</strong> Use <code>here()</code> for repo files and <code>Sys.getenv()</code> for cloud
+            files.</li>
+    </ol>
+
+    <div class="footer">
+        Created with the help of Gemini.
+    </div>
+
+</body>
+
+</html>

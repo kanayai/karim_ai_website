@@ -166,6 +166,7 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
             if (activeFile === 'index.html') src = '/blog/index.html';
             else if (activeFile === 'anscombe_quartet.html') src = '/blog/posts/anscombe_quartet.html';
             else if (activeFile === 'git-vs-onedrive.html') src = '/blog/posts/git-vs-onedrive.html';
+            else if (activeFile === 'academic_workflow.html') src = '/blog/posts/academic_workflow.html';
             else if (activeFile === 'first-post.html') src = '/blog/posts/first-post.html';
             else if (activeFile === 'projects.html') src = '/projects.html';
             else if (activeFile === 'certest.html') src = '/certest.html';
@@ -240,6 +241,7 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
                                     blockquote { border-left-color: ${border} !important; color: ${text} !important; opacity: 0.8; }
                                     code { background-color: ${isDark ? '#2d2d2d' : '#f5f5f5'} !important; color: ${isDark ? '#d4d4d4' : '#333333'} !important; }
                                     pre { background-color: ${isDark ? '#1e1e1e' : '#f5f5f5'} !important; border: 1px solid ${border} !important; }
+                                    .code-block { background-color: ${isDark ? '#1e1e1e' : '#f4f4f5'} !important; color: ${isDark ? '#d4d4d4' : '#333333'} !important; border-left-color: ${isDark ? '#3794ff' : 'var(--accent)'} !important; }
                                     .table { color: ${text} !important; }
                                     .table th, .table td { border-color: ${border} !important; }
                                 `;
