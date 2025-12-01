@@ -13,3 +13,8 @@ format:
     theme: cosmo
     css: styles.css
     toc: true
+    comments:
+      giscus:
+        repo: kanayai/karim_ai_website
+        mapping: title
+        theme: auto
