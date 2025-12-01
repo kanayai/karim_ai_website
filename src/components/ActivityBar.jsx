@@ -41,11 +41,11 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
                         onClick={onSearchClick}
                     />
                 </div>
-                <div className="d-flex justify-content-center py-3" style={{ width: '100%', cursor: 'pointer' }}>
+                <div className="d-flex justify-content-center py-3" style={{ width: '100%', cursor: 'pointer', borderLeft: activeView === 'git-graph' ? '2px solid var(--vscode-activity-bar-active-border)' : '2px solid transparent' }}>
                     <VscSourceControl
                         size={24}
-                        color="var(--vscode-activity-bar-inactive-foreground)"
-                        onClick={() => setActiveFile('git-graph')}
+                        color={activeView === 'git-graph' ? "var(--vscode-activity-bar-foreground)" : "var(--vscode-activity-bar-inactive-foreground)"}
+                        onClick={() => setActiveView('git-graph')}
                         title="Git Graph (Career Timeline)"
                     />
                 </div>

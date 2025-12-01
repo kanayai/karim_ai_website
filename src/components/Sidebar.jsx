@@ -213,6 +213,161 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
                         <div className="d-flex align-items-center gap-2 mb-1"><span>Admin</span> <span style={{ color: '#858585' }}>(meetings.cal:9)</span></div>
                     </div>
                 </>
+            ) : activeView === 'git-graph' ? (
+                <>
+                    <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>Git Graph: Career Timeline</div>
+                    <div className="d-flex flex-column px-3" style={{ fontSize: '13px', color: 'var(--vscode-text)', fontFamily: 'Menlo, Monaco, "Courier New", monospace' }}>
+
+                        {/* HEAD */}
+                        <div className="d-flex gap-2">
+                            <div className="d-flex flex-column align-items-center" style={{ minWidth: '16px' }}>
+                                <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#007acc', marginTop: '6px' }}></div>
+                                <div style={{ width: '2px', flexGrow: 1, backgroundColor: '#404040', margin: '2px 0' }}></div>
+                            </div>
+                            <div className="pb-3">
+                                <div className="d-flex align-items-center flex-wrap gap-2">
+                                    <span style={{ color: '#4ec9b0' }}>* HEAD</span>
+                                    <span style={{ color: '#cccccc' }}>Senior Lecturer in Statistics, University of Bath</span>
+                                    <span style={{ backgroundColor: '#007acc', color: 'white', padding: '0 4px', borderRadius: '2px', fontSize: '11px' }}>main</span>
+                                </div>
+                                <div className="d-flex gap-3" style={{ color: '#858585', fontSize: '12px' }}>
+                                    <span>Karim AI</span>
+                                    <span>Since 2023</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Fellow */}
+                        <div className="d-flex gap-2">
+                            <div className="d-flex flex-column align-items-center" style={{ minWidth: '16px' }}>
+                                <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#007acc', marginTop: '6px' }}></div>
+                                <div style={{ width: '2px', flexGrow: 1, backgroundColor: '#404040', margin: '2px 0' }}></div>
+                            </div>
+                            <div className="pb-3">
+                                <div className="d-flex align-items-center flex-wrap gap-2">
+                                    <span style={{ color: '#4ec9b0' }}>* 16a00b</span>
+                                    <span style={{ color: '#cccccc' }}>Fellow of the Higher Education Academy</span>
+                                    <span style={{ backgroundColor: '#007acc', color: 'white', padding: '0 4px', borderRadius: '2px', fontSize: '11px' }}>fellow</span>
+                                </div>
+                                <div className="d-flex gap-3" style={{ color: '#858585', fontSize: '12px' }}>
+                                    <span>Karim AI</span>
+                                    <span>2016</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Lecturer Bath */}
+                        <div className="d-flex gap-2">
+                            <div className="d-flex flex-column align-items-center" style={{ minWidth: '16px' }}>
+                                <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#858585', marginTop: '6px' }}></div>
+                                <div style={{ width: '2px', flexGrow: 1, backgroundColor: '#404040', margin: '2px 0' }}></div>
+                            </div>
+                            <div className="pb-3">
+                                <div className="d-flex align-items-center flex-wrap gap-2">
+                                    <span style={{ color: '#4ec9b0' }}>* 13a23b</span>
+                                    <span style={{ color: '#cccccc' }}>Lecturer in Statistics, University of Bath</span>
+                                </div>
+                                <div className="d-flex gap-3" style={{ color: '#858585', fontSize: '12px' }}>
+                                    <span>Karim AI</span>
+                                    <span>2013–2023</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Lecturer LSHTM */}
+                        <div className="d-flex gap-2">
+                            <div className="d-flex flex-column align-items-center" style={{ minWidth: '16px' }}>
+                                <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#858585', marginTop: '6px' }}></div>
+                                <div style={{ width: '2px', flexGrow: 1, backgroundColor: '#404040', margin: '2px 0' }}></div>
+                            </div>
+                            <div className="pb-3">
+                                <div className="d-flex align-items-center flex-wrap gap-2">
+                                    <span style={{ color: '#4ec9b0' }}>* 11a13b</span>
+                                    <span style={{ color: '#cccccc' }}>Lecturer in Medical Statistics, LSHTM</span>
+                                </div>
+                                <div className="d-flex gap-3" style={{ color: '#858585', fontSize: '12px' }}>
+                                    <span>Karim AI</span>
+                                    <span>2011–2013</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* PostDoc */}
+                        <div className="d-flex gap-2">
+                            <div className="d-flex flex-column align-items-center" style={{ minWidth: '16px' }}>
+                                <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#858585', marginTop: '6px' }}></div>
+                                <div style={{ width: '2px', flexGrow: 1, backgroundColor: '#404040', margin: '2px 0' }}></div>
+                            </div>
+                            <div className="pb-3">
+                                <div className="d-flex align-items-center flex-wrap gap-2">
+                                    <span style={{ color: '#4ec9b0' }}>* 05a11b</span>
+                                    <span style={{ color: '#cccccc' }}>Postdoc Open University, Milton Keynes</span>
+                                </div>
+                                <div className="d-flex gap-3" style={{ color: '#858585', fontSize: '12px' }}>
+                                    <span>Karim AI</span>
+                                    <span>2005–2011</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* PhD */}
+                        <div className="d-flex gap-2">
+                            <div className="d-flex flex-column align-items-center" style={{ minWidth: '16px' }}>
+                                <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#007acc', marginTop: '6px' }}></div>
+                                <div style={{ width: '2px', flexGrow: 1, backgroundColor: '#404040', margin: '2px 0' }}></div>
+                            </div>
+                            <div className="pb-3">
+                                <div className="d-flex align-items-center flex-wrap gap-2">
+                                    <span style={{ color: '#4ec9b0' }}>* 00a05b</span>
+                                    <span style={{ color: '#cccccc' }}>PhD in Mathematics, IIMAS, UNAM, Mexico</span>
+                                    <span style={{ backgroundColor: '#007acc', color: 'white', padding: '0 4px', borderRadius: '2px', fontSize: '11px' }}>phd</span>
+                                </div>
+                                <div className="d-flex gap-3" style={{ color: '#858585', fontSize: '12px' }}>
+                                    <span>Karim AI</span>
+                                    <span>2000–2005</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* MSc */}
+                        <div className="d-flex gap-2">
+                            <div className="d-flex flex-column align-items-center" style={{ minWidth: '16px' }}>
+                                <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#858585', marginTop: '6px' }}></div>
+                                <div style={{ width: '2px', flexGrow: 1, backgroundColor: '#404040', margin: '2px 0' }}></div>
+                            </div>
+                            <div className="pb-3">
+                                <div className="d-flex align-items-center flex-wrap gap-2">
+                                    <span style={{ color: '#4ec9b0' }}>* 98a00b</span>
+                                    <span style={{ color: '#cccccc' }}>MSc in Statistics, IIMAS, UNAM, Mexico</span>
+                                </div>
+                                <div className="d-flex gap-3" style={{ color: '#858585', fontSize: '12px' }}>
+                                    <span>Karim AI</span>
+                                    <span>1998–2000</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* BSc */}
+                        <div className="d-flex gap-2">
+                            <div className="d-flex flex-column align-items-center" style={{ minWidth: '16px' }}>
+                                <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#007acc', marginTop: '6px' }}></div>
+                                <div style={{ width: '2px', flexGrow: 0, backgroundColor: 'transparent', margin: '2px 0' }}></div>
+                            </div>
+                            <div className="pb-3">
+                                <div className="d-flex align-items-center flex-wrap gap-2">
+                                    <span style={{ color: '#4ec9b0' }}>* 93a98b</span>
+                                    <span style={{ color: '#cccccc' }}>BSc in Actuarial Sciences, ITAM, Mexico</span>
+                                    <span style={{ backgroundColor: '#007acc', color: 'white', padding: '0 4px', borderRadius: '2px', fontSize: '11px' }}>v1.0.0</span>
+                                </div>
+                                <div className="d-flex gap-3" style={{ color: '#858585', fontSize: '12px' }}>
+                                    <span>Karim AI</span>
+                                    <span>1993–1998</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </>
             ) : activeView === 'chat' ? (
                 <CopilotChat />
             ) : (
