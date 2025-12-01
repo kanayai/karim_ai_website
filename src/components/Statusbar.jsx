@@ -1,5 +1,5 @@
 import React from 'react';
-import { VscSourceControl, VscBell, VscCheck, VscFeedback, VscTerminal, VscGlobe, VscBook } from 'react-icons/vsc';
+import { VscSourceControl, VscBell, VscCheck, VscFeedback, VscTerminal, VscGlobe, VscBook, VscCheckAll } from 'react-icons/vsc';
 import { useTranslation } from 'react-i18next';
 
 const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal, simpleMode, toggleSimpleMode }) => {
@@ -72,13 +72,17 @@ const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal, simpleMode, tog
                 {!simpleMode && (
                     <>
                         <div className="d-flex align-items-center gap-1 d-none d-md-flex">
-                            <span>Ln 12, Col 45</span>
+                            <span style={{ minWidth: '80px', textAlign: 'right' }}>Ln {Math.floor(Math.random() * 100) + 1}, Col {Math.floor(Math.random() * 50) + 1}</span>
                         </div>
                         <div className="d-flex align-items-center gap-1 d-none d-md-flex">
                             <span>UTF-8</span>
                         </div>
                         <div className="d-flex align-items-center gap-1 d-none d-md-flex">
                             <span>{getLanguage(activeFile)}</span>
+                        </div>
+                        <div className="d-flex align-items-center gap-1 d-none d-md-flex" title="Prettier">
+                            <VscCheckAll />
+                            <span style={{ fontSize: '11px' }}>Prettier</span>
                         </div>
                     </>
                 )}
@@ -123,7 +127,7 @@ const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal, simpleMode, tog
                     </svg>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

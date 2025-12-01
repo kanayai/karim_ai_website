@@ -112,9 +112,35 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.`,
 
-        '.gitignore': `node_modules
+        '.gitignore': `# Mac
 .DS_Store
-dist
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# R
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Quarto
+/_site/
+/.quarto/
+
+# LaTeX
+*.aux
+*.log
+*.out
+*.pdf
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Node
+node_modules/
+dist/
 .env`,
 
         'README.md': `# Karim AI Portfolio Website

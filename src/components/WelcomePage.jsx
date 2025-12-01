@@ -16,19 +16,19 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode }) => {
             icon: <VscPreview size={20} color="#e44d26" />,
             title: t('welcome.read_blog'),
             description: t('welcome.read_blog_desc'),
-            action: () => onNavigate('index.html')
+            action: () => onNavigate('blog.html')
         },
         {
             icon: <VscProject size={20} color="#519aba" />,
             title: t('welcome.explore_projects'),
             description: t('welcome.explore_projects_desc'),
-            action: () => onNavigate('projects.md')
+            action: () => onNavigate('projects.html')
         },
         {
             icon: <VscAccount size={20} color="#4ec9b0" />,
             title: t('welcome.about_me'),
             description: t('welcome.about_me_desc'),
-            action: () => onNavigate('about_me.md')
+            action: () => onNavigate('about_me.html')
         }
     ];
 
