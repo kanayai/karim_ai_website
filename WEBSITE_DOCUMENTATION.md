@@ -80,9 +80,8 @@ The Research folder contains three dynamically generated HTML pages with a moder
 
 #### 4. Blog
 ### Blog (Quarto)
-1.  **Write**: Run `npm run new-post` to create a new post. Enter the title and tags when prompted.
-2.  **Edit**: Open the generated `.qmd` file and add your content (HTML or Markdown).
-3.  **Build**: Run `npm run build-blog` (or `quarto render blog`).
+1.  **Write**: Create `.qmd` files in `blog/posts/`.
+2.  **Build**: Run `npm run build-blog` (or `quarto render blog`).
 3.  **Output**: HTML files are generated in `public/blog/`.
 4.  **Navigation**:
     -   Clicking a post opens it in an iframe.

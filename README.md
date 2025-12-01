@@ -137,9 +137,8 @@ If you need to recreate the frontend logic, here is how the core components inte
 - **Output**: Generates `public/projects.html` and `public/phd_students.html`.
 
 ### Blog (Quarto)
-1.  **Write**: Run `npm run new-post` to generate a new `.qmd` file with the correct metadata.
-2.  **Edit**: Paste your HTML or write Markdown in the generated file.
-3.  **Build**: Run `npm run build-blog` (or `quarto render blog`).
+1.  **Write**: Create `.qmd` files in `blog/posts/`.
+2.  **Build**: Run `npm run build-blog` (or `quarto render blog`).
 3.  **Output**: HTML files are generated in `public/blog/`.
 4.  **Navigation**: Users can navigate back to the post list using the "Back to Blog" button.
 5.  **Guide**: Refer to `QUARTO_GUIDE.md` for a detailed tutorial.

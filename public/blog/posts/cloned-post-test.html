@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Blog – Karim’s Blog</title>
+<title>cloned-post-test – Karim’s Blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,21 +23,19 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -53,67 +51,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="quarto-light">
@@ -124,21 +64,37 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="ZGF0YS1zY2llbmNl">data-science <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Z2l0">git <span class="quarto-category-count">(2)</span></div><div class="category" data-category="cHl0aG9u">python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dHV0b3JpYWw=">tutorial <span class="quarto-category-count">(1)</span></div><div class="category" data-category="d29ya2Zsb3c=">workflow <span class="quarto-category-count">(2)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#path.home-is-the-universal-way-to-find-the-user-folder" id="toc-path.home-is-the-universal-way-to-find-the-user-folder" class="nav-link active" data-scroll-target="#path.home-is-the-universal-way-to-find-the-user-folder">Path.home() is the universal way to find the user folder</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Blog</h1>
-</div>
+<h1 class="title">cloned-post-test</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">git</div>
+    <div class="quarto-category">workflow</div>
+  </div>
+  </div>
 
 
 
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">1/12/2025</p>
+    </div>
+  </div>
   
     
   </div>
@@ -148,105 +104,318 @@ window.Quarto = {
 </header>
 
 
-<p>Welcome to my research blog. Here I share my thoughts on AI, Data Science, and more.</p>
+<!-- Paste your HTML or write Markdown below this line -->
+&lt;!DOCTYPE html&gt;
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+Git vs.&nbsp;OneDrive: The Data Scientist’s Guide
+</title>
+<style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #475569;
+            --bg-light: #f8fafc;
+            --code-bg: #1e293b;
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 0.5em; color: #111; }
+        h2 { font-size: 1.8rem; margin-top: 1.5em; color: #222; border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
+        h3 { font-size: 1.4rem; margin-top: 1.5em; color: #444; }
+
+        p { margin-bottom: 1.2em; font-size: 1.1rem; }
+
+        /* Visual Components */
+        .callout {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .callout-danger { background-color: #fef2f2; border-left: 5px solid var(--danger); }
+        .callout-tip { background-color: #f0f9ff; border-left: 5px solid var(--primary); }
+        
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+        table thead tr {
+            background-color: var(--primary);
+            color: #ffffff;
+            text-align: left;
+        }
+        table th, table td { padding: 12px 15px; border-bottom: 1px solid #dddddd; }
+        table tbody tr:nth-of-type(even) { background-color: var(--bg-light); }
+        
+        /* OS Grid */
+        .os-grid { display: flex; gap: 10px; margin: 20px 0; flex-wrap: wrap; }
+        .os-card { 
+            flex: 1; min-width: 200px; 
+            border: 1px solid #ddd; border-radius: 8px; 
+            padding: 15px; background: #fff; 
+        }
+        .os-card strong { color: var(--primary); display: block; margin-bottom: 5px; }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre; /* Preserves line breaks */
+        }
+        code {
+            background-color: #f1f5f9;
+            color: var(--primary);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        pre code {
+            background-color: transparent;
+            color: inherit;
+        }
+
+        /* CSS Diagram for Hybrid Workflow */
+        .workflow-diagram {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+            align-items: center;
+        }
+        .box {
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            width: 220px;
+            text-align: center;
+            background: white;
+            position: relative;
+        }
+        .box-git { border-color: var(--primary); }
+        .box-cloud { border-color: var(--warning); }
+        
+        .box h4 { margin-top: 0; margin-bottom: 10px; }
+        .icon { font-size: 2rem; display: block; margin-bottom: 10px; }
+        
+        .arrow {
+            font-size: 2rem;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        /* Read Time Tag */
+        .read-time {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer-note {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            .workflow-diagram { flex-direction: column; }
+            .arrow { transform: rotate(90deg); }
+        }
+    </style>
+
+
+<pre><code>&lt;span class="read-time"&gt;Read Time: ~8 Minutes&lt;/span&gt;
+&lt;h1&gt;The Data Scientist's Dilemma: OneDrive vs. GitHub&lt;/h1&gt;
+
+&lt;p&gt;As Data Scientists using &lt;strong&gt;Mac, Windows, or Linux&lt;/strong&gt;, we live in two worlds. We deal with massive datasets (perfect for Cloud Storage) and version-dependent code (perfect for Git). &lt;/p&gt;
+
+&lt;p&gt;Deciding where to store a project can be confusing. Make the wrong choice, and you end up with corrupted repositories or lost versions. This guide breaks down exactly where your files belong.&lt;/p&gt;
+
+&lt;h2&gt;1. The Decision Matrix: What Goes Where?&lt;/h2&gt;
+
+&lt;p&gt;The fundamental difference is simple: &lt;strong&gt;OneDrive syncs the "Now"&lt;/strong&gt; (making folders identical across devices), while &lt;strong&gt;GitHub tracks the "History"&lt;/strong&gt; (how a file evolved line-by-line).&lt;/p&gt;
+
+&lt;div class="callout callout-tip"&gt;
+    &lt;strong&gt;🧪 The "Notepad Test" (Rule of Thumb)&lt;/strong&gt;&lt;br&gt;
+    Open your file in a basic text editor (Notepad/TextEdit).
+    &lt;ul&gt;
+        &lt;li&gt;Can you read it? (Python script, Markdown, CSV) &amp;rarr; &lt;strong&gt;Use GitHub.&lt;/strong&gt;&lt;/li&gt;
+        &lt;li&gt;Does it look like alien gibberish? (PDF, Excel, .pkl, .exe) &amp;rarr; &lt;strong&gt;Use OneDrive.&lt;/strong&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Feature&lt;/th&gt;
+            &lt;th&gt;OneDrive / Dropbox&lt;/th&gt;
+            &lt;th&gt;GitHub / GitLab&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;&lt;strong&gt;Best For&lt;/strong&gt;&lt;/td&gt;
+            &lt;td&gt;Final Results, Documents, Images&lt;/td&gt;
+            &lt;td&gt;Source Code, Configs, Text&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;&lt;strong&gt;File Types&lt;/strong&gt;&lt;/td&gt;
+            &lt;td&gt;Binary (.docx, .pdf, .jpg, .zip)&lt;/td&gt;
+            &lt;td&gt;Plain Text (.py, .R, .md, .tex)&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;&lt;strong&gt;Data Size&lt;/strong&gt;&lt;/td&gt;
+            &lt;td&gt;Great for Large Data (&gt;100MB)&lt;/td&gt;
+            &lt;td&gt;Poor for large files (Keep repo &lt; 1GB)&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;&lt;strong&gt;Conflict Handling&lt;/strong&gt;&lt;/td&gt;
+            &lt;td&gt;Creates "Conflicted Copy" files&lt;/td&gt;
+            &lt;td&gt;Manual line-by-line merge&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2&gt;2. The "Mirrored" Workflow (Recommended)&lt;/h2&gt;
+
+&lt;p&gt;For research and data science, you shouldn't choose one or the other. &lt;strong&gt;You need both, but they must remain separate.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class="workflow-diagram"&gt;
+    &lt;div class="box box-git"&gt;
+        &lt;span class="icon"&gt;💻&lt;/span&gt;
+        &lt;h4&gt;Local Folder (Git)&lt;/h4&gt;
+        &lt;p&gt;&lt;code&gt;~/Projects/analysis&lt;/code&gt;&lt;/p&gt;
+        &lt;small&gt;Contains: Scripts (.R, .py), Reports (.qmd), Configs.&lt;/small&gt;
+    &lt;/div&gt;
+    
+    &lt;div class="arrow"&gt;&amp;harr; Linked via Code &amp;harr;&lt;/div&gt;
+
+    &lt;div class="box box-cloud"&gt;
+        &lt;span class="icon"&gt;☁️&lt;/span&gt;
+        &lt;h4&gt;Cloud Storage&lt;/h4&gt;
+        &lt;p&gt;&lt;code&gt;~/OneDrive/Data&lt;/code&gt;&lt;/p&gt;
+        &lt;small&gt;Contains: Raw CSVs, Large Zips, Final PDFs.&lt;/small&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;How to link them safely (Mac/Win/Linux safe)&lt;/h3&gt;
+&lt;p&gt;Use code that detects your OS automatically so you don't have to change paths when switching from Mac to Windows.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;R Example:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# path.expand("~") finds C:/Users/Name (Win) or /Users/Name (Mac)</code></pre>
+data_path &lt;- file.path(path.expand(“~”), “OneDrive”, “Research”, “data.csv”) df &lt;- read.csv(data_path)
+
+<pre><code>&lt;p&gt;&lt;strong&gt;Python Example:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;from pathlib import Path</code></pre>
+<p>import pandas as pd</p>
+<section id="path.home-is-the-universal-way-to-find-the-user-folder" class="level1">
+<h1>Path.home() is the universal way to find the user folder</h1>
+data_path = Path.home() / “OneDrive” / “Research” / “data.csv” df = pd.read_csv(data_path)
+
+<pre><code>&lt;h2&gt;3. The Danger Zone: Git INSIDE OneDrive&lt;/h2&gt;
+
+&lt;div class="callout callout-danger"&gt;
+    &lt;strong&gt;⚠️ CRITICAL WARNING&lt;/strong&gt;&lt;br&gt;
+    Never initialize a Git repository &lt;em&gt;inside&lt;/em&gt; a synced OneDrive/Dropbox/iCloud folder.
+&lt;/div&gt;
+
+&lt;p&gt;Why? Sync clients (OneDrive) and Version Control (Git) fight over the hidden &lt;code&gt;.git&lt;/code&gt; folder. This leads to:&lt;/p&gt;
+&lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Repo Corruption:&lt;/strong&gt; OneDrive may "sync" a file lock that Git needs.&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Conflicted Copies:&lt;/strong&gt; You will end up with files named &lt;code&gt;script.py (Computer Name Conflicted Copy)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;4. How to Fix It (Moving Out of OneDrive)&lt;/h2&gt;
+
+&lt;p&gt;If your project is currently stuck in OneDrive, follow these steps. &lt;strong&gt;Do NOT move it to "Documents"&lt;/strong&gt; (as Documents often auto-syncs to Cloud too).&lt;/p&gt;
+
+&lt;h3&gt;Step 0: Create a Safe "Projects" Folder&lt;/h3&gt;
+&lt;div class="os-grid"&gt;
+    &lt;div class="os-card"&gt;
+        &lt;strong&gt;🍎 macOS&lt;/strong&gt;
+        Create &lt;code&gt;/Users/name/Projects&lt;/code&gt;&lt;br&gt;
+        &lt;small&gt;(Do not put in Documents!)&lt;/small&gt;
+    &lt;/div&gt;
+    &lt;div class="os-card"&gt;
+        &lt;strong&gt;🪟 Windows&lt;/strong&gt;
+        Create &lt;code&gt;C:\Users\name\Projects&lt;/code&gt;&lt;br&gt;
+        &lt;small&gt;(Do not put in Documents!)&lt;/small&gt;
+    &lt;/div&gt;
+    &lt;div class="os-card"&gt;
+        &lt;strong&gt;🐧 Linux&lt;/strong&gt;
+        Create &lt;code&gt;/home/name/Projects&lt;/code&gt;&lt;br&gt;
+        &lt;small&gt;(Safe anywhere in ~)&lt;/small&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Step 1: On Your Primary Computer&lt;/h3&gt;
+&lt;ol&gt;
+    &lt;li&gt;&lt;strong&gt;Move the Folder:&lt;/strong&gt; Drag your project folder &lt;strong&gt;OUT&lt;/strong&gt; of OneDrive and into your new &lt;code&gt;Projects&lt;/code&gt; folder.&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Verify:&lt;/strong&gt; Open your terminal (Git Bash on Windows).
+        &lt;pre&gt;&lt;code&gt;cd ~/Projects/my-project</code></pre>
+git status
+
+<pre><code>    &lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Cleanup:&lt;/strong&gt; Check OneDrive. If a copy remains there, delete it to stop the sync confusion.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;Step 2: On Your Secondary Computer&lt;/h3&gt;
+&lt;p&gt;Do not try to "fix" the existing folder on your second computer. It's faster to start fresh.&lt;/p&gt;
+&lt;ol&gt;
+    &lt;li&gt;&lt;strong&gt;Let OneDrive Sync:&lt;/strong&gt; Wait for OneDrive to update. It should automatically remove the old folder.&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Clone Fresh:&lt;/strong&gt; Download a clean connection to GitHub in your safe local folder.
+        &lt;pre&gt;&lt;code&gt;cd ~/Projects</code></pre>
+git clone https://github.com/yourname/my-project.git
+
+<pre><code>    &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Code&lt;/strong&gt; lives in &lt;strong&gt;~/Projects&lt;/strong&gt; (Git).&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Data&lt;/strong&gt; lives in &lt;strong&gt;~/OneDrive&lt;/strong&gt; (Cloud).&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Never&lt;/strong&gt; put Git inside OneDrive or Documents (if synced).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class="footer-note"&gt;
+    This post was created with the help of Gemini.
+&lt;/div&gt;</code></pre>
 
 
 
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Z2l0JTJDd29ya2Zsb3c=" data-listing-date-sort="1764547200000" data-listing-file-modified-sort="1764590616576" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3216">
-<div class="thumbnail"><a href="./posts/cloned-post-test.html" class="no-external">
+</section>
 
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/cloned-post-test.html" class="no-external">cloned-post-test</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Z2l0'); return false;">git</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('d29ya2Zsb3c='); return false;">workflow</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/cloned-post-test.html" class="no-external">
-import pandas as pd
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/cloned-post-test.html" class="no-external">
-<div class="listing-date">
-1/12/2025
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="Z2l0JTJDd29ya2Zsb3clMkNkYXRhLXNjaWVuY2U=" data-listing-date-sort="1764288000000" data-listing-file-modified-sort="1764589458815" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="671">
-<div class="thumbnail"><a href="./posts/git-vs-onedrive.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/git-vs-onedrive.html" class="no-external">Git vs.&nbsp;OneDrive: The Data Scientist’s Guide</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Z2l0'); return false;">git</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('d29ya2Zsb3c='); return false;">workflow</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YS1zY2llbmNl'); return false;">data-science</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/git-vs-onedrive.html" class="no-external">
-<p>A guide on how to manage data science projects using both Git and OneDrive effectively.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/git-vs-onedrive.html" class="no-external">
-<div class="listing-date">
-28/11/2025
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="dHV0b3JpYWwlMkNweXRob24=" data-listing-date-sort="1763164800000" data-listing-file-modified-sort="1764509148199" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="80">
-<div class="thumbnail"><a href="./posts/anscombe_quartet.html" class="no-external">
-
-<p class="card-img-top"><img src="posts/anscombe_quartet_files/figure-html/unnamed-chunk-2-1.png"  class="thumbnail-image card-img"/></p>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/anscombe_quartet.html" class="no-external">Anscombe’s quartet</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('dHV0b3JpYWw='); return false;">tutorial</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('cHl0aG9u'); return false;">python</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/anscombe_quartet.html" class="no-external">
-<p>This is a short summary of the post that will appear in the blog list and on the card.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/anscombe_quartet.html" class="no-external">
-<div class="listing-date">
-15/11/2025
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
