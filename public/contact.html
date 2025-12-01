@@ -14,6 +14,27 @@
             color: #333;
             background-color: #fff;
             padding: 40px 20px;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Background Image via Pseudo-element */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/images/background_code.png');
+            background-repeat: repeat-y;
+            background-position: top center;
+            background-size: 100% auto;
+            /* Fit width, maintain aspect ratio */
+            opacity: 0.08;
+            /* Fainter */
+            z-index: -1;
+            pointer-events: none;
         }
 
         h1 {

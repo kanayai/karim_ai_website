@@ -189,8 +189,9 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
                         </div>
                     </div>
                     <div className="d-flex flex-column px-3 pb-2" style={{ fontSize: '13px', color: 'var(--vscode-text)', fontFamily: 'Menlo, Monaco, "Courier New", monospace' }}>
-                        <div className="d-flex"><span style={{ color: '#9cdcfe' }}>h_index</span>: <span style={{ color: '#b5cea8' }}>18</span></div>
-                        <div className="d-flex"><span style={{ color: '#9cdcfe' }}>citations</span>: <span style={{ color: '#b5cea8' }}>1250+</span></div>
+                        <div className="d-flex"><span style={{ color: '#9cdcfe' }}>citations</span>: <span style={{ color: '#b5cea8' }}>462</span></div>
+                        <div className="d-flex"><span style={{ color: '#9cdcfe' }}>h_index</span>: <span style={{ color: '#b5cea8' }}>10</span></div>
+                        <div className="d-flex"><span style={{ color: '#9cdcfe' }}>i10_index</span>: <span style={{ color: '#b5cea8' }}>11</span></div>
                         <div className="d-flex"><span style={{ color: '#9cdcfe' }}>coffee_level</span>: <span style={{ color: '#ce9178' }}>"Critical" ☕</span></div>
                         <div className="d-flex"><span style={{ color: '#9cdcfe' }}>next_deadline</span>: <span style={{ color: '#ce9178' }}>"Tomorrow"</span></div>
                     </div>
