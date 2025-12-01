@@ -108,10 +108,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#the-decision-matrix-what-goes-where" id="toc-the-decision-matrix-what-goes-where" class="nav-link active" data-scroll-target="#the-decision-matrix-what-goes-where">1. The Decision Matrix: What Goes Where?</a></li>
-  <li><a href="#the-hybrid-workflow-recommended" id="toc-the-hybrid-workflow-recommended" class="nav-link" data-scroll-target="#the-hybrid-workflow-recommended">2. The “Hybrid” Workflow (Recommended)</a></li>
+  <li><a href="#the-mirrored-workflow-recommended" id="toc-the-mirrored-workflow-recommended" class="nav-link" data-scroll-target="#the-mirrored-workflow-recommended">2. The “Mirrored” Workflow (Recommended)</a>
+  <ul class="collapse">
+  <li><a href="#how-to-link-them-safely-macwinlinux-safe" id="toc-how-to-link-them-safely-macwinlinux-safe" class="nav-link" data-scroll-target="#how-to-link-them-safely-macwinlinux-safe">How to link them safely (Mac/Win/Linux safe)</a></li>
+  </ul></li>
   <li><a href="#the-danger-zone-git-inside-onedrive" id="toc-the-danger-zone-git-inside-onedrive" class="nav-link" data-scroll-target="#the-danger-zone-git-inside-onedrive">3. The Danger Zone: Git INSIDE OneDrive</a></li>
   <li><a href="#how-to-fix-it-moving-out-of-onedrive" id="toc-how-to-fix-it-moving-out-of-onedrive" class="nav-link" data-scroll-target="#how-to-fix-it-moving-out-of-onedrive">4. How to Fix It (Moving Out of OneDrive)</a>
   <ul class="collapse">
+  <li><a href="#step-0-create-a-safe-projects-folder" id="toc-step-0-create-a-safe-projects-folder" class="nav-link" data-scroll-target="#step-0-create-a-safe-projects-folder">Step 0: Create a Safe “Projects” Folder</a></li>
   <li><a href="#step-1-on-your-primary-computer" id="toc-step-1-on-your-primary-computer" class="nav-link" data-scroll-target="#step-1-on-your-primary-computer">Step 1: On Your Primary Computer</a></li>
   <li><a href="#step-2-on-your-secondary-computer" id="toc-step-2-on-your-secondary-computer" class="nav-link" data-scroll-target="#step-2-on-your-secondary-computer">Step 2: On Your Secondary Computer</a></li>
   </ul></li>
@@ -157,9 +161,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><span class="read-time">Read Time: ~6 Minutes</span></p>
-<p>As Data Scientists, we live in two worlds. We deal with massive, messy datasets (perfect for Cloud Storage) and intricate, version-dependent code (perfect for Git).</p>
-<p>Deciding where to store a project can be confusing. Make the wrong choice, and you end up with corrupted repositories or lost versions. This guide breaks down exactly where your files belong and how to fix your setup if you’ve already mixed them up.</p>
+<p><span class="read-time">Read Time: ~8 Minutes</span></p>
+<p>As Data Scientists using <strong>Mac, Windows, or Linux</strong>, we live in two worlds. We deal with massive datasets (perfect for Cloud Storage) and version-dependent code (perfect for Git).</p>
+<p>Deciding where to store a project can be confusing. Make the wrong choice, and you end up with corrupted repositories or lost versions. This guide breaks down exactly where your files belong.</p>
 <section id="the-decision-matrix-what-goes-where" class="level2">
 <h2 class="anchored" data-anchor-id="the-decision-matrix-what-goes-where">1. The Decision Matrix: What Goes Where?</h2>
 <p>The fundamental difference is simple: <strong>OneDrive syncs the “Now”</strong> (making folders identical across devices), while <strong>GitHub tracks the “History”</strong> (how a file evolved line-by-line).</p>
@@ -217,8 +221,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="the-hybrid-workflow-recommended" class="level2">
-<h2 class="anchored" data-anchor-id="the-hybrid-workflow-recommended">2. The “Hybrid” Workflow (Recommended)</h2>
+<section id="the-mirrored-workflow-recommended" class="level2">
+<h2 class="anchored" data-anchor-id="the-mirrored-workflow-recommended">2. The “Mirrored” Workflow (Recommended)</h2>
 <p>For research and data science, you shouldn’t choose one or the other. <strong>You need both, but they must remain separate.</strong></p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
@@ -244,13 +248,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p><strong>How to link them:</strong> Keep your code in a standard local directory, but tell your script to load data from the OneDrive path.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R Example: Linking the two worlds</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="st">"~/OneDrive/Research/Data/my-analysis/huge_dataset.csv"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(data_path)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># You get version control on your code, </span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># and cloud backup on your data. Best of both worlds.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="how-to-link-them-safely-macwinlinux-safe" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-link-them-safely-macwinlinux-safe">How to link them safely (Mac/Win/Linux safe)</h3>
+<p>Use code that detects your OS automatically so you don’t have to change paths when switching from Mac to Windows.</p>
+<p><strong>R Example:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># path.expand("~") finds C:/Users/Name (Win) or /Users/Name (Mac)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">path.expand</span>(<span class="st">"~"</span>), <span class="st">"OneDrive"</span>, <span class="st">"Research"</span>, <span class="st">"data.csv"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(data_path)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Python Example:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Path.home() is the universal way to find the user folder</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>data_path <span class="op">=</span> Path.home() <span class="op">/</span> <span class="st">"OneDrive"</span> <span class="op">/</span> <span class="st">"Research"</span> <span class="op">/</span> <span class="st">"data.csv"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(data_path)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
 </section>
 <section id="the-danger-zone-git-inside-onedrive" class="level2">
 <h2 class="anchored" data-anchor-id="the-danger-zone-git-inside-onedrive">3. The Danger Zone: Git INSIDE OneDrive</h2>
@@ -264,43 +276,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Never initialize a Git repository <em>inside</em> a synced OneDrive/Dropbox folder.</p>
+<p>Never initialize a Git repository <em>inside</em> a synced OneDrive/Dropbox/iCloud folder.</p>
 </div>
 </div>
 <p>Why? Sync clients (OneDrive) and Version Control (Git) fight over the hidden <code>.git</code> folder. This leads to:</p>
 <ul>
-<li><strong>Repo Corruption:</strong> OneDrive may “sync” a file lock that Git needs, breaking your repo.</li>
-<li><strong>Infinite Loops:</strong> Git changes a timestamp -&gt; OneDrive syncs it -&gt; Git sees a change -&gt; Repeat.</li>
+<li><strong>Repo Corruption:</strong> OneDrive may “sync” a file lock that Git needs.</li>
 <li><strong>Conflicted Copies:</strong> You will end up with files named <code>script.py (Computer Name Conflicted Copy)</code>.</li>
 </ul>
 </section>
 <section id="how-to-fix-it-moving-out-of-onedrive" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-fix-it-moving-out-of-onedrive">4. How to Fix It (Moving Out of OneDrive)</h2>
-<p>If your project is currently stuck in OneDrive and causing headaches, here is the safe extraction procedure.</p>
+<p>If your project is currently stuck in OneDrive, follow these steps. <strong>Do NOT move it to “Documents”</strong> (as Documents often auto-syncs to Cloud too).</p>
+<section id="step-0-create-a-safe-projects-folder" class="level3">
+<h3 class="anchored" data-anchor-id="step-0-create-a-safe-projects-folder">Step 0: Create a Safe “Projects” Folder</h3>
+<ul>
+<li><strong>🍎 macOS:</strong> Create <code>/Users/name/Projects</code> (Do not put in Documents!)</li>
+<li><strong>🪟 Windows:</strong> Create <code>C:\Users\name\Projects</code> (Do not put in Documents!)</li>
+<li><strong>🐧 Linux:</strong> Create <code>/home/name/Projects</code> (Safe anywhere in ~)</li>
+</ul>
+</section>
 <section id="step-1-on-your-primary-computer" class="level3">
 <h3 class="anchored" data-anchor-id="step-1-on-your-primary-computer">Step 1: On Your Primary Computer</h3>
-<p>Since your code is pushed to GitHub, it is safe to move the folder.</p>
 <ol type="1">
-<li><strong>Move the Folder:</strong> Drag your project folder <strong>OUT</strong> of OneDrive and into a local directory (e.g., <code>~/Documents/Projects/</code>).</li>
-<li><strong>Verify:</strong> Open your terminal and check the status. <code>bash     cd ~/Documents/Projects/my-project     git status</code></li>
-<li><strong>Cleanup:</strong> Check OneDrive. If a copy remains there, delete it to stop the sync confusion.</li>
+<li><p><strong>Move the Folder:</strong> Drag your project folder <strong>OUT</strong> of OneDrive and into your new <code>Projects</code> folder.</p></li>
+<li><p><strong>Verify:</strong> Open your terminal (Git Bash on Windows).</p>
+<pre class="text"><code>cd ~/Projects/my-project
+git status</code></pre></li>
+<li><p><strong>Cleanup:</strong> Check OneDrive. If a copy remains there, delete it to stop the sync confusion.</p></li>
 </ol>
 </section>
 <section id="step-2-on-your-secondary-computer" class="level3">
 <h3 class="anchored" data-anchor-id="step-2-on-your-secondary-computer">Step 2: On Your Secondary Computer</h3>
 <p>Do not try to “fix” the existing folder on your second computer. It’s faster to start fresh.</p>
 <ol type="1">
-<li><strong>Let OneDrive Sync:</strong> Wait for OneDrive to update. It should automatically remove the old folder (since you moved/deleted it on Computer 1).</li>
-<li><strong>Clone Fresh:</strong> Download a clean connection to GitHub in a safe local folder. <code>bash     cd ~/Documents     git clone https://github.com/yourname/my-project.git</code></li>
+<li><p><strong>Let OneDrive Sync:</strong> Wait for OneDrive to update. It should automatically remove the old folder.</p></li>
+<li><p><strong>Clone Fresh:</strong> Download a clean connection to GitHub in your safe local folder.</p>
+<pre class="text"><code>cd ~/Projects
+git clone https://github.com/yourname/my-project.git</code></pre></li>
 </ol>
 </section>
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
 <ul>
-<li><strong>Code</strong> lives in <strong>Git</strong>.</li>
-<li><strong>Data</strong> lives in <strong>OneDrive</strong>.</li>
-<li><strong>Never</strong> put Git inside OneDrive.</li>
+<li><strong>Code</strong> lives in <strong>~/Projects</strong> (Git).</li>
+<li><strong>Data</strong> lives in <strong>~/OneDrive</strong> (Cloud).</li>
+<li><strong>Never</strong> put Git inside OneDrive or Documents (if synced).</li>
 </ul>
 <div class="footer-note">
 <pre><code>This post was created with the help of Gemini.</code></pre>

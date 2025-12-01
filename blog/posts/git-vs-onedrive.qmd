@@ -5,11 +5,11 @@ description: "A guide on how to manage data science projects using both Git and 
 categories: ["git", "workflow", "data-science"]
 ---
 
-<span class="read-time">Read Time: ~6 Minutes</span>
+<span class="read-time">Read Time: ~8 Minutes</span>
 
-As Data Scientists, we live in two worlds. We deal with massive, messy datasets (perfect for Cloud Storage) and intricate, version-dependent code (perfect for Git).
+As Data Scientists using **Mac, Windows, or Linux**, we live in two worlds. We deal with massive datasets (perfect for Cloud Storage) and version-dependent code (perfect for Git).
 
-Deciding where to store a project can be confusing. Make the wrong choice, and you end up with corrupted repositories or lost versions. This guide breaks down exactly where your files belong and how to fix your setup if you've already mixed them up.
+Deciding where to store a project can be confusing. Make the wrong choice, and you end up with corrupted repositories or lost versions. This guide breaks down exactly where your files belong.
 
 ## 1. The Decision Matrix: What Goes Where?
 
@@ -30,7 +30,7 @@ Open your file in a basic text editor (Notepad/TextEdit).
 | **Data Size** | Great for Large Data (>100MB) | Poor for large files (Keep repo < 1GB) |
 | **Conflict Handling** | Creates "Conflicted Copy" files | Manual line-by-line merge |
 
-## 2. The "Hybrid" Workflow (Recommended)
+## 2. The "Mirrored" Workflow (Recommended)
 
 For research and data science, you shouldn't choose one or the other. **You need both, but they must remain separate.**
 
@@ -50,61 +50,79 @@ flowchart LR
     style Cloud stroke:#f59e0b,stroke-width:2px,fill:#fff,color:#333
 ```
 
-**How to link them:**
-Keep your code in a standard local directory, but tell your script to load data from the OneDrive path.
+### How to link them safely (Mac/Win/Linux safe)
+
+Use code that detects your OS automatically so you don't have to change paths when switching from Mac to Windows.
+
+**R Example:**
 
 ```r
-# R Example: Linking the two worlds
-data_path <- "~/OneDrive/Research/Data/my-analysis/huge_dataset.csv"
+# path.expand("~") finds C:/Users/Name (Win) or /Users/Name (Mac)
+data_path <- file.path(path.expand("~"), "OneDrive", "Research", "data.csv")
 df <- read.csv(data_path)
+```
 
-# You get version control on your code, 
-# and cloud backup on your data. Best of both worlds.
+**Python Example:**
+
+```python
+from pathlib import Path
+import pandas as pd
+
+# Path.home() is the universal way to find the user folder
+data_path = Path.home() / "OneDrive" / "Research" / "data.csv"
+df = pd.read_csv(data_path)
 ```
 
 ## 3. The Danger Zone: Git INSIDE OneDrive
 
 ::: callout-important
 ## ⚠️ CRITICAL WARNING
-Never initialize a Git repository *inside* a synced OneDrive/Dropbox folder.
+Never initialize a Git repository *inside* a synced OneDrive/Dropbox/iCloud folder.
 :::
 
 Why? Sync clients (OneDrive) and Version Control (Git) fight over the hidden `.git` folder. This leads to:
 
-*   **Repo Corruption:** OneDrive may "sync" a file lock that Git needs, breaking your repo.
-*   **Infinite Loops:** Git changes a timestamp -> OneDrive syncs it -> Git sees a change -> Repeat.
+*   **Repo Corruption:** OneDrive may "sync" a file lock that Git needs.
 *   **Conflicted Copies:** You will end up with files named `script.py (Computer Name Conflicted Copy)`.
 
 ## 4. How to Fix It (Moving Out of OneDrive)
 
-If your project is currently stuck in OneDrive and causing headaches, here is the safe extraction procedure.
+If your project is currently stuck in OneDrive, follow these steps. **Do NOT move it to "Documents"** (as Documents often auto-syncs to Cloud too).
+
+### Step 0: Create a Safe "Projects" Folder
+
+*   **🍎 macOS:** Create `/Users/name/Projects` (Do not put in Documents!)
+*   **🪟 Windows:** Create `C:\Users\name\Projects` (Do not put in Documents!)
+*   **🐧 Linux:** Create `/home/name/Projects` (Safe anywhere in ~)
 
 ### Step 1: On Your Primary Computer
-Since your code is pushed to GitHub, it is safe to move the folder.
 
-1.  **Move the Folder:** Drag your project folder **OUT** of OneDrive and into a local directory (e.g., `~/Documents/Projects/`).
-2.  **Verify:** Open your terminal and check the status.
-    ```bash
-    cd ~/Documents/Projects/my-project
+1.  **Move the Folder:** Drag your project folder **OUT** of OneDrive and into your new `Projects` folder.
+2.  **Verify:** Open your terminal (Git Bash on Windows).
+
+    ```text
+    cd ~/Projects/my-project
     git status
     ```
 3.  **Cleanup:** Check OneDrive. If a copy remains there, delete it to stop the sync confusion.
 
 ### Step 2: On Your Secondary Computer
+
 Do not try to "fix" the existing folder on your second computer. It's faster to start fresh.
 
-1.  **Let OneDrive Sync:** Wait for OneDrive to update. It should automatically remove the old folder (since you moved/deleted it on Computer 1).
-2.  **Clone Fresh:** Download a clean connection to GitHub in a safe local folder.
-    ```bash
-    cd ~/Documents
+1.  **Let OneDrive Sync:** Wait for OneDrive to update. It should automatically remove the old folder.
+2.  **Clone Fresh:** Download a clean connection to GitHub in your safe local folder.
+
+    ```text
+    cd ~/Projects
     git clone https://github.com/yourname/my-project.git
     ```
 
 ## Summary
 
-*   **Code** lives in **Git**.
-*   **Data** lives in **OneDrive**.
-*   **Never** put Git inside OneDrive.
+*   **Code** lives in **~/Projects** (Git).
+*   **Data** lives in **~/OneDrive** (Cloud).
+*   **Never** put Git inside OneDrive or Documents (if synced).
 
 <div class="footer-note">
     This post was created with the help of Gemini.
