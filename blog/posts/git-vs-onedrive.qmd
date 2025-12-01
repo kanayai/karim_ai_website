@@ -1,6 +1,6 @@
 ---
 title: "Git vs. OneDrive: The Data Scientist's Guide"
-date: "2025-11-29"
+date: "2025-11-28"
 description: "A guide on how to manage data science projects using both Git and OneDrive effectively."
 categories: ["git", "workflow", "data-science"]
 ---

@@ -8,30 +8,23 @@ const BlogViewer = ({ setActiveFile }) => {
         {
             id: 'git-vs-onedrive.html',
             title: 'Git vs OneDrive',
-            date: '2023-10-27',
+            date: '28/11/2025',
             description: 'Why you should use Git instead of OneDrive for version control.',
             tags: ['git', 'version-control', 'productivity']
         },
         {
             id: 'academic_workflow.html',
             title: 'The Academic Workflow',
-            date: '2025-11-30',
+            date: '28/11/2025',
             description: 'A master guide to managing Teaching, Research, and Code across multiple computers.',
             tags: ['workflow', 'academic', 'git', 'onedrive']
         },
         {
             id: 'anscombe_quartet.html',
             title: "Anscombe's Quartet",
-            date: '2023-10-24',
+            date: '24/11/2025',
             description: 'The importance of visualizing data before analyzing it.',
             tags: ['statistics', 'visualization', 'r']
-        },
-        {
-            id: 'first-post.html',
-            title: 'Welcome to my Blog',
-            date: '2023-10-20',
-            description: 'Introduction to my new Quarto-powered blog.',
-            tags: ['general', 'quarto']
         }
     ];
 

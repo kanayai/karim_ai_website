@@ -13,6 +13,7 @@ format:
     theme: cosmo
     css: styles.css
     toc: true
+    date-format: "D/M/YYYY"
     comments:
       giscus:
         repo: kanayai/karim_ai_website

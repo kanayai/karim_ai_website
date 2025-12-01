@@ -244,7 +244,40 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
                                     .code-block { background-color: ${isDark ? '#1e1e1e' : '#f4f4f5'} !important; color: ${isDark ? '#d4d4d4' : '#333333'} !important; border-left-color: ${isDark ? '#3794ff' : 'var(--accent)'} !important; }
                                     .table { color: ${text} !important; }
                                     .table th, .table td { border-color: ${border} !important; }
+
+                                    /* Callout Fixes for Dark Mode */
+                                    .callout-tip {
+                                        background-color: ${isDark ? '#1e1e1e' : '#f9f9f9'} !important;
+                                        border-left-color: ${isDark ? '#4caf50' : '#4caf50'} !important;
+                                        color: ${text} !important;
+                                    }
+                                    .callout-tip .callout-header {
+                                        background-color: ${isDark ? '#252526' : '#e6fffa'} !important;
+                                        color: ${isDark ? '#4caf50' : '#2c7a7b'} !important;
+                                    }
+                                    .callout-important {
+                                        background-color: ${isDark ? '#1e1e1e' : '#fff5f5'} !important;
+                                        border-left-color: ${isDark ? '#f44336' : '#f44336'} !important;
+                                        color: ${text} !important;
+                                    }
+                                    .callout-important .callout-header {
+                                        background-color: ${isDark ? '#252526' : '#fff5f5'} !important;
+                                        color: ${isDark ? '#f44336' : '#c53030'} !important;
+                                    }
                                 `;
+
+                                // Sync Giscus Theme
+                                const giscusTheme = isDark ? 'dark' : 'light';
+                                const iframeWindow = iframe.contentWindow;
+                                if (iframeWindow) {
+                                    iframeWindow.postMessage({
+                                        giscus: {
+                                            setConfig: {
+                                                theme: giscusTheme
+                                            }
+                                        }
+                                    }, 'https://giscus.app');
+                                }
                             }
                         }}
                     />
