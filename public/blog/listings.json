@@ -2,7 +2,6 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/cloned-post-test.html",
       "/posts/git-vs-onedrive.html",
       "/posts/anscombe_quartet.html"
     ]

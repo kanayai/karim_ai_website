@@ -89,7 +89,7 @@ const CopilotChat = () => {
                             padding: '8px 12px',
                             borderRadius: '8px',
                             backgroundColor: msg.sender === 'user' ? 'var(--vscode-button-background)' : 'var(--vscode-editor-bg)',
-                            color: msg.sender === 'user' ? 'var(--vscode-button-foreground)' : 'var(--vscode-foreground)',
+                            color: msg.sender === 'user' ? 'var(--vscode-button-foreground)' : 'var(--vscode-text)',
                             border: msg.sender === 'ai' ? '1px solid var(--vscode-border)' : 'none'
                         }}>
                             {msg.text}

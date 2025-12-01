@@ -25,7 +25,7 @@ const CodeViewer = ({ content, language }) => {
             {/* Code Content */}
             <div className="code-content flex-grow-1 py-3 px-3" style={{ overflow: 'auto' }}>
                 {lines.map((line, i) => (
-                    <div key={i} style={{ lineHeight: '1.5', whiteSpace: 'pre' }}>
+                    <div key={i} style={{ lineHeight: '1.5', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
                         {line || ' '}
                     </div>
                 ))}

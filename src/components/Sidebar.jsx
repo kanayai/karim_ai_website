@@ -189,22 +189,28 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
                         </div>
                     </div>
                     <div className="d-flex flex-column px-3 pb-2" style={{ fontSize: '13px', color: 'var(--vscode-text)', fontFamily: 'Menlo, Monaco, "Courier New", monospace' }}>
-                        <div className="d-flex"><span style={{ color: '#9cdcfe' }}>currentRole</span>: <span style={{ color: '#ce9178' }}>"Senior Lecturer"</span></div>
-                        <div className="d-flex"><span style={{ color: '#9cdcfe' }}>location</span>: <span style={{ color: '#ce9178' }}>"Bath, UK"</span></div>
-                        <div className="d-flex"><span style={{ color: '#9cdcfe' }}>status</span>: <span style={{ color: '#ce9178' }}>"Open to collaborations"</span></div>
-                        <div className="d-flex"><span style={{ color: '#9cdcfe' }}>coffeeLevel</span>: <span style={{ color: '#ce9178' }}>"High" ☕</span></div>
-                        <div className="d-flex"><span style={{ color: '#9cdcfe' }}>publications</span>: <span style={{ color: '#b5cea8' }}>20+</span></div>
+                        <div className="d-flex"><span style={{ color: '#9cdcfe' }}>h_index</span>: <span style={{ color: '#b5cea8' }}>18</span></div>
+                        <div className="d-flex"><span style={{ color: '#9cdcfe' }}>citations</span>: <span style={{ color: '#b5cea8' }}>1250+</span></div>
+                        <div className="d-flex"><span style={{ color: '#9cdcfe' }}>coffee_level</span>: <span style={{ color: '#ce9178' }}>"Critical" ☕</span></div>
+                        <div className="d-flex"><span style={{ color: '#9cdcfe' }}>next_deadline</span>: <span style={{ color: '#ce9178' }}>"Tomorrow"</span></div>
                     </div>
 
                     <div className="px-3 py-2 text-uppercase d-flex align-items-center" style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--vscode-text)', backgroundColor: 'var(--vscode-sidebar-bg)', cursor: 'pointer', marginTop: '10px' }}>
-                        <span><VscChevronDown className="me-1" /> {t('sidebar.unit_tests')}</span>
+                        <span><VscChevronDown className="me-1" /> {t('sidebar.watch')}</span>
                     </div>
                     <div className="d-flex flex-column px-3 pb-2" style={{ fontSize: '13px', color: 'var(--vscode-text)', fontFamily: 'Menlo, Monaco, "Courier New", monospace' }}>
-                        <div className="d-flex align-items-center gap-2 mb-1"><span style={{ color: '#4caf50' }}>✅</span> <span>test_statistical_modelling</span></div>
-                        <div className="d-flex align-items-center gap-2 mb-1"><span style={{ color: '#4caf50' }}>✅</span> <span>test_r_programming</span></div>
-                        <div className="d-flex align-items-center gap-2 mb-1"><span style={{ color: '#4caf50' }}>✅</span> <span>test_python_development</span></div>
-                        <div className="d-flex align-items-center gap-2 mb-1"><span style={{ color: '#4caf50' }}>✅</span> <span>test_teaching_excellence</span></div>
-                        <div className="d-flex align-items-center gap-2 mb-1"><span style={{ color: '#4caf50' }}>✅</span> <span>test_machine_learning</span></div>
+                        <div className="d-flex"><span style={{ color: '#9cdcfe' }}>grant_proposal</span>: <span style={{ color: '#ce9178' }}>"Pending Review"</span></div>
+                        <div className="d-flex"><span style={{ color: '#9cdcfe' }}>phd_students</span>: <span style={{ color: '#b5cea8' }}>3</span></div>
+                        <div className="d-flex"><span style={{ color: '#9cdcfe' }}>marking_pile</span>: <span style={{ color: '#b5cea8' }}>999</span></div>
+                    </div>
+
+                    <div className="px-3 py-2 text-uppercase d-flex align-items-center" style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--vscode-text)', backgroundColor: 'var(--vscode-sidebar-bg)', cursor: 'pointer', marginTop: '10px' }}>
+                        <span><VscChevronDown className="me-1" /> {t('sidebar.call_stack')}</span>
+                    </div>
+                    <div className="d-flex flex-column px-3 pb-2" style={{ fontSize: '13px', color: 'var(--vscode-text)', fontFamily: 'Menlo, Monaco, "Courier New", monospace' }}>
+                        <div className="d-flex align-items-center gap-2 mb-1"><span>Teaching</span> <span style={{ color: '#858585' }}>(main.js:45)</span></div>
+                        <div className="d-flex align-items-center gap-2 mb-1"><span>Research</span> <span style={{ color: '#858585' }}>(paper.tex:120)</span></div>
+                        <div className="d-flex align-items-center gap-2 mb-1"><span>Admin</span> <span style={{ color: '#858585' }}>(meetings.cal:9)</span></div>
                     </div>
                 </>
             ) : activeView === 'chat' ? (
