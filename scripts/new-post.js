@@ -1,6 +1,11 @@
-const fs = require('fs');
-const path = require('path');
-const readline = require('readline');
+```javascript
+import fs from 'fs';
+import path from 'path';
+import readline from 'readline';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -11,7 +16,7 @@ const POSTS_DIR = path.join(__dirname, '../blog/posts');
 
 // Ensure posts directory exists
 if (!fs.existsSync(POSTS_DIR)) {
-    console.error(`Error: Posts directory not found at ${POSTS_DIR}`);
+    console.error(`Error: Posts directory not found at ${ POSTS_DIR } `);
     process.exit(1);
 }
 
@@ -48,22 +53,23 @@ const createPost = async () => {
 
     const date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
 
-    const content = `---
-title: "${title}"
+    const content = `-- -
+    title: "${title}"
 date: "${date}"
-categories: [${tags}]
+categories: [${ tags }]
 ---
 
-<!-- Paste your HTML or write Markdown below this line -->
+< !--Paste your HTML or write Markdown below this line-- >
 
-`;
+    `;
 
     fs.writeFileSync(filepath, content);
 
-    console.log(`\n✅ Created: ${filepath}`);
+    console.log(`\n✅ Created: ${ filepath } `);
     console.log(`\nNow open this file and paste your content!`);
 
     rl.close();
 };
 
 createPost();
+```
