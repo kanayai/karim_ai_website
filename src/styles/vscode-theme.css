@@ -150,4 +150,12 @@ body {
   .sidebar-content {
     width: 100% !important;
   }
+
+  .activity-bar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 102 !important;
+  }
 }

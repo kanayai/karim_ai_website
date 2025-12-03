@@ -32,7 +32,7 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
     );
 
     return (
-        <div className="d-flex flex-column justify-content-between align-items-center py-2"
+        <div className="d-flex flex-column justify-content-between align-items-center py-2 activity-bar"
             style={{
                 width: '48px',
                 minWidth: '48px',
