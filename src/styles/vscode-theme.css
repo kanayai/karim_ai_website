@@ -113,14 +113,13 @@ body {
     position: absolute;
     top: 0;
     left: 48px;
-    /* Keep Activity Bar visible */
     z-index: 100;
     height: 100dvh;
     /* Use dynamic viewport height */
-    width: calc(100% - 48px);
-    /* Full width minus Activity Bar */
-    box-shadow: none;
-    /* Remove shadow as it's full width */
+    width: 250px;
+    /* Fixed width on mobile */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    /* Add shadow back */
   }
 
   .sidebar-container.closed {
@@ -128,8 +127,14 @@ body {
   }
 
   .sidebar-overlay {
-    display: none;
-    /* No need for overlay if full width */
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
   }
 
   /* Adjust Search Bar width on mobile */

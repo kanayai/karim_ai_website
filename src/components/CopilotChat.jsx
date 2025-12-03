@@ -81,7 +81,7 @@ const CopilotChat = () => {
             </div>
 
             {/* Messages Area */}
-            <div className="flex-grow-1 p-3" style={{ overflowY: 'auto', fontSize: '13px' }}>
+            <div className="flex-grow-1 p-2" style={{ overflowY: 'auto', fontSize: '12px' }}>
                 {messages.map(msg => (
                     <div key={msg.id} className={`d-flex mb-3 ${msg.sender === 'user' ? 'justify-content-end' : 'justify-content-start'}`}>
                         <div style={{
@@ -114,7 +114,7 @@ const CopilotChat = () => {
             </div>
 
             {/* Input Area */}
-            <div className="p-3" style={{ borderTop: '1px solid var(--vscode-border)' }}>
+            <div className="p-2" style={{ borderTop: '1px solid var(--vscode-border)' }}>
                 <div className="d-flex gap-2">
                     <input
                         type="text"
@@ -152,9 +152,9 @@ const CopilotChat = () => {
                 </div>
 
                 {/* Suggested Questions */}
-                <div className="mt-3">
-                    <div style={{ fontSize: '11px', fontWeight: 'bold', marginBottom: '6px', opacity: 0.8 }}>Suggested Questions:</div>
-                    <div className="d-flex flex-wrap gap-2">
+                <div className="mt-2">
+                    <div style={{ fontSize: '10px', fontWeight: 'bold', marginBottom: '4px', opacity: 0.8 }}>Suggested Questions:</div>
+                    <div className="d-flex flex-wrap gap-1">
                         {[
                             "Who is Karim?",
                             "What are his publications?",
@@ -169,7 +169,7 @@ const CopilotChat = () => {
                                     // Optional: Auto-send or just populate input
                                 }}
                                 style={{
-                                    fontSize: '11px',
+                                    fontSize: '10px',
                                     backgroundColor: 'var(--vscode-badge-background)',
                                     color: 'var(--vscode-badge-foreground)',
                                     padding: '4px 8px',
