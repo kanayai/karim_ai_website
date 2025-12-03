@@ -3,7 +3,7 @@ import { VscArrowLeft, VscArrowRight, VscSearch, VscLayoutSidebarLeft, VscLayout
 
 const TitleBar = ({ onSearchClick, toggleSidebar, simpleMode, toggleSimpleMode }) => {
     return (
-        <div className="d-flex align-items-center justify-content-between px-2"
+        <div className="d-flex align-items-center justify-content-between px-2 title-bar"
             style={{
                 height: '35px',
                 flexShrink: 0,

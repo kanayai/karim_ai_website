@@ -158,4 +158,13 @@ body {
     bottom: 0;
     z-index: 102 !important;
   }
+
+  .main-container {
+    padding-left: 48px;
+  }
+
+  .title-bar {
+    padding-left: 56px !important;
+    /* 48px + 8px padding */
+  }
 }
