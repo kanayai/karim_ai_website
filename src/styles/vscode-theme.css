@@ -103,6 +103,10 @@ body {
   display: flex;
 }
 
+.sidebar-content {
+  width: 250px;
+}
+
 /* Mobile Optimization */
 @media (max-width: 768px) {
   .sidebar-container {
@@ -110,8 +114,12 @@ body {
     top: 0;
     left: 0;
     z-index: 100;
-    height: 100%;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    height: 100dvh;
+    /* Use dynamic viewport height */
+    width: 100%;
+    /* Full width on mobile */
+    box-shadow: none;
+    /* Remove shadow as it's full width */
   }
 
   .sidebar-container.closed {
@@ -119,22 +127,22 @@ body {
   }
 
   .sidebar-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 99;
+    display: none;
+    /* No need for overlay if full width */
   }
 
   /* Adjust Search Bar width on mobile */
   .d-flex.align-items-center.px-2.rounded {
-    width: 200px !important;
+    width: 100% !important;
+    /* Full width search */
   }
 
   /* Hide navigation arrows on mobile */
   .nav-icon {
     display: none !important;
+  }
+
+  .sidebar-content {
+    width: 100% !important;
   }
 }
