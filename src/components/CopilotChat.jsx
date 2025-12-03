@@ -74,7 +74,7 @@ const CopilotChat = () => {
     };
 
     return (
-        <div className="d-flex flex-column h-100" style={{ backgroundColor: 'var(--vscode-sidebar-bg)', color: 'var(--vscode-foreground)' }}>
+        <div className="d-flex flex-column" style={{ backgroundColor: 'var(--vscode-sidebar-bg)', color: 'var(--vscode-foreground)', height: '100%' }}>
             {/* Header */}
             <div className="px-3 py-2 d-flex align-items-center gap-2" style={{ borderBottom: '1px solid var(--vscode-border)', fontWeight: 'bold', fontSize: '11px' }}>
                 <VscSparkle /> COPILOT CHAT

@@ -8,7 +8,7 @@ import Terminal from './Terminal';
 
 const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, isSidebarOpen, toggleSidebar, simpleMode, toggleSimpleMode }) => {
     const [isPaletteOpen, setIsPaletteOpen] = useState(false);
-    const [isTerminalOpen, setIsTerminalOpen] = useState(true); // Default open for demo
+    const [isTerminalOpen, setIsTerminalOpen] = useState(false); // Default closed
     const [activeView, setActiveView] = useState('explorer');
 
     useEffect(() => {
