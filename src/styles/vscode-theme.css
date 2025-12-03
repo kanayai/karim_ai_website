@@ -155,7 +155,7 @@ body {
     position: fixed !important;
     top: 0;
     left: 0;
-    bottom: 22px !important;
+    bottom: 0;
     z-index: 102 !important;
   }
 
@@ -175,5 +175,13 @@ body {
   /* Prevent auto-zoom on mobile inputs */
   .command-palette-input {
     font-size: 16px !important;
+  }
+
+  .status-bar {
+    padding-left: 48px !important;
+  }
+
+  .status-bar.simple-mode {
+    padding-left: 0 !important;
   }
 }
