@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { VscFiles, VscSearch, VscGitMerge, VscDebugAlt, VscExtensions, VscGithub, VscAccount, VscSettingsGear, VscColorMode } from 'react-icons/vsc';
 
@@ -6,6 +6,16 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
     const [showAccountsMenu, setShowAccountsMenu] = useState(false);
     const [showSettingsMenu, setShowSettingsMenu] = useState(false);
     const { t, i18n } = useTranslation();
+
+    useEffect(() => {
+        const handleClickOutside = () => {
+            setShowAccountsMenu(false);
+            setShowSettingsMenu(false);
+        };
+
+        window.addEventListener('click', handleClickOutside);
+        return () => window.removeEventListener('click', handleClickOutside);
+    }, []);
 
     const socialLinks = [
         { name: 'GitHub', url: 'https://github.com/kanayai' },
@@ -70,23 +80,28 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
                 </IconWrapper>
 
                 <div style={{ position: 'relative', width: '100%' }}>
-                    <IconWrapper onClick={() => setShowAccountsMenu(!showAccountsMenu)} title="Accounts">
+                    <IconWrapper onClick={(e) => {
+                        e.stopPropagation();
+                        setShowAccountsMenu(!showAccountsMenu);
+                    }} title="Accounts">
                         <VscAccount />
                     </IconWrapper>
                     {showAccountsMenu && (
-                        <div style={{
-                            position: 'absolute',
-                            bottom: '0',
-                            left: '48px',
-                            backgroundColor: 'var(--vscode-sidebar-bg)',
-                            border: '1px solid var(--vscode-border)',
-                            boxShadow: '0 4px 10px rgba(0,0,0,0.4)',
-                            zIndex: 1000,
-                            minWidth: '180px',
-                            padding: '5px 0',
-                            borderRadius: '5px',
-                            color: 'var(--vscode-text)'
-                        }}>
+                        <div
+                            onClick={(e) => e.stopPropagation()}
+                            style={{
+                                position: 'absolute',
+                                bottom: '0',
+                                left: '48px',
+                                backgroundColor: 'var(--vscode-sidebar-bg)',
+                                border: '1px solid var(--vscode-border)',
+                                boxShadow: '0 4px 10px rgba(0,0,0,0.4)',
+                                zIndex: 1000,
+                                minWidth: '180px',
+                                padding: '5px 0',
+                                borderRadius: '5px',
+                                color: 'var(--vscode-text)'
+                            }}>
                             <div className="px-3 py-2" style={{ borderBottom: '1px solid var(--vscode-border)', fontWeight: 'bold', fontSize: '12px', opacity: 0.8 }}>
                                 Find me on:
                             </div>
@@ -117,19 +132,21 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
                         <VscSettingsGear />
                     </IconWrapper>
                     {showSettingsMenu && (
-                        <div style={{
-                            position: 'absolute',
-                            bottom: '0',
-                            left: '48px',
-                            backgroundColor: 'var(--vscode-sidebar-bg)',
-                            border: '1px solid var(--vscode-border)',
-                            boxShadow: '0 4px 10px rgba(0,0,0,0.4)',
-                            zIndex: 1000,
-                            minWidth: '200px',
-                            padding: '5px 0',
-                            borderRadius: '5px',
-                            color: 'var(--vscode-text)'
-                        }}>
+                        <div
+                            onClick={(e) => e.stopPropagation()}
+                            style={{
+                                position: 'absolute',
+                                bottom: '0',
+                                left: '48px',
+                                backgroundColor: 'var(--vscode-sidebar-bg)',
+                                border: '1px solid var(--vscode-border)',
+                                boxShadow: '0 4px 10px rgba(0,0,0,0.4)',
+                                zIndex: 1000,
+                                minWidth: '200px',
+                                padding: '5px 0',
+                                borderRadius: '5px',
+                                color: 'var(--vscode-text)'
+                            }}>
                             <div
                                 className="px-3 py-2 d-flex align-items-center justify-content-between"
                                 style={{ cursor: 'pointer', fontSize: '13px', transition: 'background 0.2s' }}

@@ -26,7 +26,7 @@ const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal, simpleMode, tog
     };
 
     return (
-        <div className="d-flex justify-content-between align-items-center px-2 flex-shrink-0"
+        <div className={`d-flex justify-content-between align-items-center px-2 flex-shrink-0 status-bar ${simpleMode ? 'simple-mode' : ''}`}
             style={{
                 backgroundColor: 'var(--vscode-status-bar-bg)',
                 color: '#ffffff',
