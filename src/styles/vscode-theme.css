@@ -167,4 +167,9 @@ body {
     padding-left: 56px !important;
     /* 48px + 8px padding */
   }
+
+  /* Prevent auto-zoom on mobile inputs */
+  .command-palette-input {
+    font-size: 16px !important;
+  }
 }

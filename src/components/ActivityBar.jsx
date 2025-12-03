@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { VscFiles, VscSearch, VscGitMerge, VscDebugAlt, VscExtensions, VscGithub, VscAccount, VscSettingsGear, VscColorMode } from 'react-icons/vsc';
 
 const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, theme, toggleTheme, onSearchClick }) => {
     const [showAccountsMenu, setShowAccountsMenu] = useState(false);
@@ -21,6 +22,7 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
                 width: '100%',
                 cursor: 'pointer',
                 borderLeft: active ? '2px solid var(--vscode-activity-bar-active-border)' : '2px solid transparent',
+                color: active ? 'var(--vscode-activity-bar-foreground)' : 'var(--vscode-activity-bar-inactive-foreground)',
                 fontSize: '20px',
                 lineHeight: '1'
             }}
@@ -43,33 +45,33 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
             }}>
             <div className="d-flex flex-column gap-0" style={{ width: '100%' }}>
                 <IconWrapper active={activeView === 'explorer'} onClick={() => setActiveView('explorer')} title={t('sidebar.explorer')}>
-                    📂
+                    <VscFiles />
                 </IconWrapper>
                 <IconWrapper onClick={onSearchClick} title="Search">
-                    🔍
+                    <VscSearch />
                 </IconWrapper>
                 <IconWrapper active={activeView === 'git-graph'} onClick={() => setActiveView('git-graph')} title="Git Graph">
-                    🌳
+                    <VscGitMerge />
                 </IconWrapper>
 
                 <IconWrapper active={activeView === 'debug'} onClick={() => setActiveView('debug')} title="Run and Debug">
-                    🐞
+                    <VscDebugAlt />
                 </IconWrapper>
                 <IconWrapper active={activeView === 'extensions'} onClick={() => setActiveView('extensions')} title={t('sidebar.extensions')}>
-                    🧩
+                    <VscExtensions />
                 </IconWrapper>
                 <IconWrapper onClick={() => window.open('https://github.com/kanayai/karim_ai_website', '_blank')} title="GitHub Repository">
-                    🐙
+                    <VscGithub />
                 </IconWrapper>
             </div>
             <div className="d-flex flex-column gap-0 align-items-center" style={{ width: '100%' }}>
                 <IconWrapper onClick={toggleTheme} title="Toggle Theme">
-                    {theme === 'dark' ? '☀️' : '🌙'}
+                    <VscColorMode />
                 </IconWrapper>
 
                 <div style={{ position: 'relative', width: '100%' }}>
                     <IconWrapper onClick={() => setShowAccountsMenu(!showAccountsMenu)} title="Accounts">
-                        👤
+                        <VscAccount />
                     </IconWrapper>
                     {showAccountsMenu && (
                         <div style={{
@@ -112,7 +114,7 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
                         e.stopPropagation();
                         setShowSettingsMenu(prev => !prev);
                     }} title="Settings">
-                        ⚙️
+                        <VscSettingsGear />
                     </IconWrapper>
                     {showSettingsMenu && (
                         <div style={{

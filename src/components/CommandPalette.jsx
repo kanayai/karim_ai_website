@@ -80,7 +80,7 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
                         <input
                             ref={inputRef}
                             type="text"
-                            className="form-control bg-transparent border-0 text-white shadow-none"
+                            className="form-control bg-transparent border-0 text-white shadow-none command-palette-input"
                             placeholder="search site"
                             value={query}
                             onChange={e => setQuery(e.target.value)}
