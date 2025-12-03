@@ -51,9 +51,7 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
                 <IconWrapper active={activeView === 'git-graph'} onClick={() => setActiveView('git-graph')} title="Git Graph">
                     🌳
                 </IconWrapper>
-                <IconWrapper active={activeView === 'chat'} onClick={() => setActiveView('chat')} title="Portfolio Copilot">
-                    ✨
-                </IconWrapper>
+
                 <IconWrapper active={activeView === 'debug'} onClick={() => setActiveView('debug')} title="Run and Debug">
                     🐞
                 </IconWrapper>

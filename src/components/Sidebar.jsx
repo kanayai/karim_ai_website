@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { VscChevronRight, VscChevronDown, VscEllipsis, VscCode, VscRadioTower, VscSourceControl, VscLaw } from 'react-icons/vsc';
 import { FaReact, FaJs, FaMarkdown, FaPython, FaHtml5 } from 'react-icons/fa';
-import CopilotChat from './CopilotChat';
+
 import { useTranslation } from 'react-i18next';
 
 const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
@@ -369,8 +369,6 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
 
                     </div>
                 </>
-            ) : activeView === 'chat' ? (
-                <CopilotChat />
             ) : (
                 <div className="p-3" style={{ color: 'var(--vscode-text)' }}>
                     Select a view from the activity bar.
