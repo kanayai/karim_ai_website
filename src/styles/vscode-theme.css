@@ -112,12 +112,13 @@ body {
   .sidebar-container {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 48px;
+    /* Keep Activity Bar visible */
     z-index: 100;
     height: 100dvh;
     /* Use dynamic viewport height */
-    width: 100%;
-    /* Full width on mobile */
+    width: calc(100% - 48px);
+    /* Full width minus Activity Bar */
     box-shadow: none;
     /* Remove shadow as it's full width */
   }
@@ -134,7 +135,6 @@ body {
   /* Adjust Search Bar width on mobile */
   .d-flex.align-items-center.px-2.rounded {
     width: 100% !important;
-    /* Full width search */
   }
 
   /* Hide navigation arrows on mobile */
