@@ -33,9 +33,9 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
         if (filename === 'git-graph') return <VscGitMerge color="#e91e63" />;
         if (filename === 'lofi-radio') return <VscRadioTower color="#4caf50" />;
 
-        if (filename === 'latex-playground') return <VscSymbolKeyword color="#569cd6" />;
-        if (filename === 'citation-generator') return <VscQuote color="#ce9178" />;
-        if (filename === 'data-viz-gallery') return <VscGraph color="#b5cea8" />;
+        if (filename === 'LaTeX') return <VscSymbolKeyword color="#569cd6" />;
+        if (filename === 'cite-gen') return <VscQuote color="#ce9178" />;
+        if (filename === 'data-viz') return <VscGraph color="#b5cea8" />;
         return null;
     };
 
@@ -333,15 +333,15 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
 
 
 
-        if (activeFile === 'latex-playground') {
+        if (activeFile === 'LaTeX') {
             return <LatexPlayground />;
         }
 
-        if (activeFile === 'citation-generator') {
+        if (activeFile === 'cite-gen') {
             return <CitationGenerator />;
         }
 
-        if (activeFile === 'data-viz-gallery') {
+        if (activeFile === 'data-viz') {
             return <DataVizGallery />;
         }
 

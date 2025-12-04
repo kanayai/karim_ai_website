@@ -152,7 +152,7 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
                                 border: '1px solid var(--vscode-border)',
                                 marginBottom: '8px'
                             }}
-                            onClick={() => setActiveFile('latex-playground')}
+                            onClick={() => setActiveFile('LaTeX')}
                         >
                             <div style={{ fontSize: '24px', display: 'flex', alignItems: 'center' }}><VscSymbolKeyword color="#569cd6" /></div>
                             <div className="d-flex flex-column">
@@ -171,7 +171,7 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
                                 border: '1px solid var(--vscode-border)',
                                 marginBottom: '8px'
                             }}
-                            onClick={() => setActiveFile('citation-generator')}
+                            onClick={() => setActiveFile('cite-gen')}
                         >
                             <div style={{ fontSize: '24px', display: 'flex', alignItems: 'center' }}><VscQuote color="#ce9178" /></div>
                             <div className="d-flex flex-column">
@@ -189,7 +189,7 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
                                 borderRadius: '4px',
                                 border: '1px solid var(--vscode-border)'
                             }}
-                            onClick={() => setActiveFile('data-viz-gallery')}
+                            onClick={() => setActiveFile('data-viz')}
                         >
                             <div style={{ fontSize: '24px', display: 'flex', alignItems: 'center' }}><VscGraph color="#b5cea8" /></div>
                             <div className="d-flex flex-column">
