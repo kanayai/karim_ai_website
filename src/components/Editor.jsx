@@ -442,7 +442,7 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
                     color: '#858585', // Dimmed text color
                     userSelect: 'none'
                 }}>
-                    <span style={{ cursor: 'pointer' }}>karim_ai_website</span>
+                    <span style={{ cursor: 'pointer' }}>karim_ai</span>
                     <VscChevronRight className="mx-1" size={14} />
                     {(() => {
                         let path = [];

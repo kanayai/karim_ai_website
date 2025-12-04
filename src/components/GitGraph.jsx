@@ -68,7 +68,7 @@ const GitGraph = () => {
     ].reverse(); // Show newest first
 
     return (
-        <div className="p-4" style={{ color: 'var(--vscode-text)', height: '100%', overflowY: 'auto' }}>
+        <div className="p-4" style={{ color: 'var(--vscode-text)', height: '100%', overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
             <h2 className="mb-4">{t('gitgraph.title')}</h2>
 
             <div style={{ fontFamily: 'Menlo, Monaco, "Courier New", monospace', fontSize: '13px' }}>
