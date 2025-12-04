@@ -48,7 +48,7 @@ const LatexPlayground = () => {
                 <div className="d-flex flex-column flex-grow-1" style={{ flexBasis: '50%' }}>
                     <label className="mb-2 fw-bold">Preview</label>
                     <div
-                        className="flex-grow-1 p-4 rounded d-flex align-items-center justify-content-center"
+                        className="flex-grow-1 p-4 rounded d-flex align-items-center justify-content-center preview-box"
                         style={{
                             backgroundColor: 'var(--vscode-editor-bg)',
                             border: '1px solid var(--vscode-border)',
@@ -63,6 +63,14 @@ const LatexPlayground = () => {
                     </div>
                 </div>
             </div>
+            <style>{`
+                @media (max-width: 768px) {
+                    .preview-box {
+                        min-height: 200px !important;
+                        flex-grow: 0 !important;
+                    }
+                }
+            `}</style>
 
 
         </div>

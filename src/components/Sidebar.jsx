@@ -229,8 +229,8 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
                         >
                             <div style={{ fontSize: '24px' }}>👾</div>
                             <div className="d-flex flex-column">
-                                <div style={{ fontWeight: 'bold', fontSize: '13px', color: 'var(--vscode-text)' }}>Retro Snake Game</div>
-                                <div style={{ fontSize: '11px', color: '#858585' }}>A classic 8-bit style snake game.</div>
+                                <div style={{ fontWeight: 'bold', fontSize: '13px', color: 'var(--vscode-text)' }}>Memory Match</div>
+                                <div style={{ fontSize: '11px', color: '#858585' }}>A classic memory card game.</div>
                                 <div style={{ fontSize: '10px', color: '#0e639c', marginTop: '4px' }}>Karim AI • Installed</div>
                             </div>
                         </div>
