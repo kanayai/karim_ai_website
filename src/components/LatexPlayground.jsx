@@ -21,9 +21,9 @@ const LatexPlayground = () => {
     }, [input]);
 
     return (
-        <div className="p-4 d-flex flex-column h-100" style={{ color: 'var(--vscode-text)' }}>
+        <div className="p-4 d-flex flex-column h-100" style={{ color: 'var(--vscode-text)', overflowY: 'auto' }}>
             <h2 className="mb-4">LaTeX Playground</h2>
-            <p className="mb-4" style={{ opacity: 0.8 }}>Type LaTeX math equations below to render them in real-time.</p>
+            <p className="mb-4" style={{ opacity: 0.8 }}>Type LaTeX equations & render them in real time</p>
 
             <div className="d-flex flex-column flex-md-row gap-4 flex-grow-1" style={{ minHeight: 0 }}>
                 {/* Input Area */}

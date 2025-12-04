@@ -47,8 +47,12 @@ const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, isSid
                     <ActivityBar
                         activeView={activeView}
                         setActiveView={(view) => {
-                            setActiveView(view);
-                            if (!isSidebarOpen) toggleSidebar();
+                            if (activeView === view) {
+                                toggleSidebar();
+                            } else {
+                                setActiveView(view);
+                                if (!isSidebarOpen) toggleSidebar();
+                            }
                         }}
                         activeFile={activeFile}
                         setActiveFile={setActiveFile}
