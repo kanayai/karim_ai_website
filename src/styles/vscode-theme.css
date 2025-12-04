@@ -151,37 +151,8 @@ body {
     width: 100% !important;
   }
 
-  .activity-bar {
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 102 !important;
-  }
-
-  .main-container {
-    padding-left: 48px;
-  }
-
-  .title-bar {
-    padding-left: 56px !important;
-    /* 48px + 8px padding */
-  }
-
-  .main-container.simple-mode {
-    padding-left: 0 !important;
-  }
-
   /* Prevent auto-zoom on mobile inputs */
   .command-palette-input {
     font-size: 16px !important;
-  }
-
-  .status-bar {
-    padding-left: 48px !important;
-  }
-
-  .status-bar.simple-mode {
-    padding-left: 0 !important;
   }
 }
