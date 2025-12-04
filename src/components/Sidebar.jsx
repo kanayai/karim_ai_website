@@ -108,7 +108,7 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
     };
 
     return (
-        <div className="d-flex flex-column sidebar-content" style={{ backgroundColor: 'var(--vscode-sidebar-bg)', borderRight: '1px solid var(--vscode-border)', height: '100%' }}>
+        <div className="d-flex flex-column sidebar-content" style={{ backgroundColor: 'var(--vscode-sidebar-bg)', borderRight: '1px solid var(--vscode-border)', height: '100%', overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
             {activeView === 'explorer' ? (
                 <>
                     <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>{t('sidebar.explorer')}</div>
