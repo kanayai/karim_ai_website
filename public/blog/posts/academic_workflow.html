@@ -1,550 +1,821 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Academic Data Scientist's Workflow</title>
-    <style>
-        :root {
-            --git-color: #2da44e;
-            /* GitHub Green */
-            --cloud-color: #0078d4;
-            /* OneDrive Blue */
-            --terminal-bg: #1e1e1e;
-            --text-main: #333;
-            --bg-light: #f9f9f9;
-            --accent: #6366f1;
-            --teaching-color: #e11d48;
-            /* Pink/Red for Teaching */
-            --research-color: #7c3aed;
-            /* Violet for Research */
-            --warning-bg: #fff7ed;
-            --warning-border: #f97316;
-        }
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-main);
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            background-color: #fff;
-        }
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-        /* Typography */
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.2em;
-            letter-spacing: -0.02em;
-            color: #111;
-        }
+<meta name="description" content="A master guide to managing Teaching, Research, and Code across multiple computers.">
 
-        h2 {
-            margin-top: 2em;
-            border-bottom: 2px solid var(--accent);
-            display: inline-block;
-            padding-bottom: 5px;
-            color: #222;
-        }
+<title>The Academic Workflow – Karim’s Blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
 
-        h3 {
-            color: #444;
-            margin-top: 1.5em;
-            font-weight: 600;
-        }
 
-        .subtitle {
-            color: #666;
-            font-size: 1.2rem;
-            margin-bottom: 2em;
-            font-weight: 300;
-        }
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
 
-        /* Components */
-        .read-time {
-            background: #eee;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            color: #555;
-        }
 
-        /* Callouts */
-        .callout {
-            background: var(--warning-bg);
-            border-left: 5px solid var(--warning-border);
-            padding: 20px;
-            border-radius: 4px;
-            margin: 25px 0;
-        }
-
-        .callout h4 {
-            margin-top: 0;
-            color: #c2410c;
-        }
-
-        /* The Mirror Diagram */
-        .mirror-container {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin: 40px 0;
-            flex-wrap: wrap;
-        }
-
-        .mirror-box {
-            flex: 1;
-            min-width: 350px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 20px;
-            background: var(--bg-light);
-            position: relative;
-        }
-
-        .mirror-box.git {
-            border-top: 5px solid var(--git-color);
-        }
-
-        .mirror-box.cloud {
-            border-top: 5px solid var(--cloud-color);
-        }
-
-        .mirror-title {
-            font-weight: bold;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        /* Folder Tree Styling */
-        .folder-tree {
-            font-family: "Consolas", monospace;
-            font-size: 0.9rem;
-            color: #444;
-        }
-
-        .folder-tree div {
-            padding: 3px 0;
-            white-space: nowrap;
-        }
-
-        .dim {
-            color: #999;
-            font-style: italic;
-        }
-
-        /* Highlighting distinct sections */
-        .teaching-group {
-            color: var(--teaching-color);
-            font-weight: bold;
-        }
-
-        .research-group {
-            color: var(--research-color);
-            font-weight: bold;
-        }
-
-        /* OS Cards */
-        .os-grid {
-            display: flex;
-            gap: 15px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
-        .os-card {
-            flex: 1;
-            min-width: 250px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 15px;
-            background: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-
-        .os-card strong {
-            color: var(--accent);
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        /* The Script Terminal */
-        .terminal {
-            background-color: var(--terminal-bg);
-            color: #d4d4d4;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: "Consolas", "Monaco", monospace;
-            overflow-x: auto;
-            margin: 20px 0;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .terminal-header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 25px;
-            background: #333;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-            display: flex;
-            align-items: center;
-            padding-left: 10px;
-            gap: 5px;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .red {
-            background: #ff5f56;
-        }
-
-        .yellow {
-            background: #ffbd2e;
-        }
-
-        .green {
-            background: #27c93f;
-        }
-
-        /* Code snippet styling */
-        .code-block {
-            display: block;
-            background: #f4f4f5;
-            padding: 15px;
-            border-left: 4px solid var(--accent);
-            font-family: monospace;
-            border-radius: 4px;
-            margin: 15px 0;
-            overflow-x: auto;
-            white-space: pre;
-        }
-
-        .code-title {
-            font-size: 0.85rem;
-            color: #666;
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-            font-family: sans-serif;
-        }
-
-        /* Footer */
-        .footer {
-            margin-top: 60px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            text-align: center;
-            color: #777;
-            font-size: 0.9rem;
-            font-style: italic;
-        }
-
-        /* Tags */
-        .quarto-categories {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5em;
-            margin-bottom: 1em;
-            margin-top: 0.5em;
-        }
-
-        .quarto-category {
-            text-transform: uppercase;
-            font-size: 0.75em;
-            padding: 0.2em 0.6em;
-            border: 1px solid var(--accent);
-            border-radius: 0.25rem;
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        @media (max-width: 700px) {
-            .mirror-container {
-                flex-direction: column;
-            }
-        }
-    </style>
+<link rel="stylesheet" href="../styles.css">
 </head>
 
-<body>
+<body class="quarto-light">
 
-    <span class="read-time">Read Time: ~15 Minutes</span>
-    <h1>The Academic Workflow: Git vs. Cloud</h1>
-    <div class="quarto-categories">
-        <div class="quarto-category">workflow</div>
-        <div class="quarto-category">academic</div>
-        <div class="quarto-category">git</div>
-        <div class="quarto-category">onedrive</div>
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-setup-where-to-create-your-folders" id="toc-the-setup-where-to-create-your-folders" class="nav-link active" data-scroll-target="#the-setup-where-to-create-your-folders">1. The Setup: Where to create your folders</a></li>
+  <li><a href="#the-architecture-mirrored-roots" id="toc-the-architecture-mirrored-roots" class="nav-link" data-scroll-target="#the-architecture-mirrored-roots">2. The Architecture: Mirrored Roots</a></li>
+  <li><a href="#the-automation-one-script-to-rule-them-all" id="toc-the-automation-one-script-to-rule-them-all" class="nav-link" data-scroll-target="#the-automation-one-script-to-rule-them-all">3. The Automation: One Script to Rule Them All</a></li>
+  <li><a href="#connecting-the-worlds-how-to-load-data" id="toc-connecting-the-worlds-how-to-load-data" class="nav-link" data-scroll-target="#connecting-the-worlds-how-to-load-data">4. Connecting the Worlds: How to Load Data</a>
+  <ul class="collapse">
+  <li><a href="#method-a-for-small-data-inside-git" id="toc-method-a-for-small-data-inside-git" class="nav-link" data-scroll-target="#method-a-for-small-data-inside-git">Method A: For Small Data (Inside Git)</a></li>
+  <li><a href="#method-b-for-large-data-in-onedrivecloud" id="toc-method-b-for-large-data-in-onedrivecloud" class="nav-link" data-scroll-target="#method-b-for-large-data-in-onedrivecloud">Method B: For Large Data (In OneDrive/Cloud)</a></li>
+  </ul></li>
+  <li><a href="#summary-checklist" id="toc-summary-checklist" class="nav-link" data-scroll-target="#summary-checklist">Summary Checklist</a></li>
+  </ul>
+</nav>
     </div>
-    <p class="subtitle">A master guide to managing Teaching, Research, and Code across multiple computers (Mac, Windows,
-        and Linux).</p>
+<!-- main -->
+<main class="content" id="quarto-document-content">
 
-    <p>As academic data scientists, we juggle three distinct types of work: <strong>Teaching</strong> (slides, quizzes),
-        <strong>Research</strong> (papers, heavy analysis), and <strong>Administration</strong>. </p>
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">The Academic Workflow</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">workflow</div>
+    <div class="quarto-category">academic</div>
+    <div class="quarto-category">git</div>
+    <div class="quarto-category">onedrive</div>
+  </div>
+  </div>
 
-    <p>If you work across multiple machines—say, a powerful Office Desktop and a personal Laptop—you face a dilemma:
-        Cloud storage (OneDrive/Dropbox) is great for PDFs but ruins code history. Git is perfect for code but chokes on
-        2GB datasets.</p>
+<div>
+  <div class="description">
+    A master guide to managing Teaching, Research, and Code across multiple computers.
+  </div>
+</div>
 
-    <p>Here is the "Mirrored Architecture" to handle it all effortlessly.</p>
 
-    <h2>1. The Setup: Where to create your folders</h2>
-    <p>Before we talk about Git, we must talk about <strong>Location</strong>. Most modern Operating Systems try to
-        "help" you by syncing your <code>Documents</code> folder to the cloud automatically (iCloud on Mac, OneDrive on
-        Windows).</p>
+<div class="quarto-title-meta">
 
-    <div class="callout">
-        <h4>⚠️ The "Documents" Trap</h4>
-        Do <strong>NOT</strong> put your Git repositories inside your <code>Documents</code> folder. If iCloud/OneDrive
-        syncs a file while Git is writing to it, your repository can become corrupted.
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">28/11/2025</p>
     </div>
+  </div>
+  
+    
+  </div>
+  
 
-    <p>You need to create a dedicated <strong>Projects</strong> folder at your "User Root" (Home) level, sitting
-        side-by-side with your Cloud folder.</p>
 
-    <div class="os-grid">
-        <div class="os-card">
-            <strong>🍎 macOS</strong>
-            <p>1. Go to Finder.<br>
-                2. Press <code>Cmd + Shift + H</code> (Go to Home).<br>
-                3. Create a folder named <code>Projects</code>.<br>
-                4. Drag it to your Sidebar favorites.</p>
-            <em>Path: <code>/Users/yourname/Projects</code></em>
-        </div>
-        <div class="os-card">
-            <strong>🪟 Windows</strong>
-            <p>1. Open File Explorer.<br>
-                2. Go to <code>C:\Users\YourName</code>.<br>
-                3. Create a folder named <code>Projects</code>.<br>
-                4. Right-click -> "Pin to Quick Access".</p>
-            <em>Path: <code>C:\Users\yourname\Projects</code></em>
-        </div>
-        <div class="os-card">
-            <strong>🐧 Linux</strong>
-            <p>1. Open Terminal.<br>
-                2. Type <code>mkdir ~/Projects</code>.<br>
-                3. You're done.</p>
-            <em>Path: <code>/home/yourname/Projects</code></em>
-        </div>
-    </div>
+</header>
 
-    <h2>2. The Architecture: Mirrored Roots</h2>
-    <p>Now that you have your locations set, follow the <strong>Mirrored Strategy</strong>. You will have two root
-        folders. They will have <strong>identical sub-folder structures</strong>, but they serve different purposes.</p>
 
-    <div class="mirror-container">
-        <!-- GIT SIDE -->
-        <div class="mirror-box git">
-            <div class="mirror-title">
-                <span>💻 ~/Projects</span>
-                <span style="font-size:0.8em; font-weight:normal; color:#666;">(Local + Git)</span>
-            </div>
-            <div class="folder-tree">
-                <!-- Teaching Section -->
-                <div class="teaching-group">📂 Teaching/</div>
-                <div style="padding-left: 20px;">📂 ma101_linear_algebra/</div>
-                <div style="padding-left: 40px;">📄 lectures.qmd</div>
-                <div style="padding-left: 40px;">📄 script_week1.R</div>
-                <div style="padding-left: 40px;">📄 _quarto.yml</div>
+<p>As academic data scientists, we juggle three distinct types of work: <strong>Teaching</strong> (slides, quizzes), <strong>Research</strong> (papers, heavy analysis), and <strong>Administration</strong>.</p>
+<p>If you work across multiple machines—say, a powerful Office Desktop and a personal Laptop—you face a dilemma: Cloud storage (OneDrive/Dropbox) is great for PDFs but ruins code history. Git is perfect for code but chokes on 2GB datasets.</p>
+<p>Here is the “Mirrored Architecture” to handle it all effortlessly.</p>
+<section id="the-setup-where-to-create-your-folders" class="level2">
+<h2 class="anchored" data-anchor-id="the-setup-where-to-create-your-folders">1. The Setup: Where to create your folders</h2>
+<p>Before we talk about Git, we must talk about <strong>Location</strong>. Most modern Operating Systems try to “help” you by syncing your <code>Documents</code> folder to the cloud automatically (iCloud on Mac, OneDrive on Windows).</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>The “Documents” Trap
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Do <strong>NOT</strong> put your Git repositories inside your <code>Documents</code> folder. If iCloud/OneDrive syncs a file while Git is writing to it, your repository can become corrupted.</p>
+</div>
+</div>
+<p>You need to create a dedicated <strong>Projects</strong> folder at your “User Root” (Home) level, sitting side-by-side with your Cloud folder.</p>
+<div class="os-grid">
+<pre><code>&lt;div class="os-card"&gt;
+    &lt;strong&gt;🍎 macOS&lt;/strong&gt;
+    &lt;p&gt;1. Go to Finder.&lt;br&gt;
+        2. Press &lt;code&gt;Cmd + Shift + H&lt;/code&gt; (Go to Home).&lt;br&gt;
+        3. Create a folder named &lt;code&gt;Projects&lt;/code&gt;.&lt;br&gt;
+        4. Drag it to your Sidebar favorites.&lt;/p&gt;
+    &lt;em&gt;Path: &lt;code&gt;/Users/yourname/Projects&lt;/code&gt;&lt;/em&gt;
+&lt;/div&gt;
+&lt;div class="os-card"&gt;
+    &lt;strong&gt;🪟 Windows&lt;/strong&gt;
+    &lt;p&gt;1. Open File Explorer.&lt;br&gt;
+        2. Go to &lt;code&gt;C:\Users\YourName&lt;/code&gt;.&lt;br&gt;
+        3. Create a folder named &lt;code&gt;Projects&lt;/code&gt;.&lt;br&gt;
+        4. Right-click -&gt; "Pin to Quick Access".&lt;/p&gt;
+    &lt;em&gt;Path: &lt;code&gt;C:\Users\yourname\Projects&lt;/code&gt;&lt;/em&gt;
+&lt;/div&gt;
+&lt;div class="os-card"&gt;
+    &lt;strong&gt;🐧 Linux&lt;/strong&gt;
+    &lt;p&gt;1. Open Terminal.&lt;br&gt;
+        2. Type &lt;code&gt;mkdir ~/Projects&lt;/code&gt;.&lt;br&gt;
+        3. You're done.&lt;/p&gt;
+    &lt;em&gt;Path: &lt;code&gt;/home/yourname/Projects&lt;/code&gt;&lt;/em&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</section>
+<section id="the-architecture-mirrored-roots" class="level2">
+<h2 class="anchored" data-anchor-id="the-architecture-mirrored-roots">2. The Architecture: Mirrored Roots</h2>
+<p>Now that you have your locations set, follow the <strong>Mirrored Strategy</strong>. You will have two root folders. They will have <strong>identical sub-folder structures</strong>, but they serve different purposes.</p>
+<div class="mirror-container">
+<pre><code>&lt;!-- GIT SIDE --&gt;
+&lt;div class="mirror-box git"&gt;
+    &lt;div class="mirror-title"&gt;
+        &lt;span&gt;💻 ~/Projects&lt;/span&gt;
+        &lt;span style="font-size:0.8em; font-weight:normal; color:#666;"&gt;(Local + Git)&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="folder-tree"&gt;
+        &lt;!-- Teaching Section --&gt;
+        &lt;div class="teaching-group"&gt;📂 Teaching/&lt;/div&gt;
+        &lt;div style="padding-left: 20px;"&gt;📂 ma101_linear_algebra/&lt;/div&gt;
+        &lt;div style="padding-left: 40px;"&gt;📄 lectures.qmd&lt;/div&gt;
+        &lt;div style="padding-left: 40px;"&gt;📄 script_week1.R&lt;/div&gt;
+        &lt;div style="padding-left: 40px;"&gt;📄 _quarto.yml&lt;/div&gt;
 
-                <br>
-                <!-- Research Section -->
-                <div class="research-group">📂 Research/</div>
-                <div style="padding-left: 20px;">📂 climate_change_paper/</div>
-                <div style="padding-left: 40px;">📄 analysis.ipynb</div>
-                <div style="padding-left: 40px;">📄 manuscript.tex</div>
-            </div>
-            <p style="margin-top:15px; font-size:0.9rem;"><em><strong>Rule:</strong> Contains Text & Code only. No large
-                    files (>50MB). This is backed up via GitHub.</em></p>
-        </div>
+        &lt;br&gt;
+        &lt;!-- Research Section --&gt;
+        &lt;div class="research-group"&gt;📂 Research/&lt;/div&gt;
+        &lt;div style="padding-left: 20px;"&gt;📂 climate_change_paper/&lt;/div&gt;
+        &lt;div style="padding-left: 40px;"&gt;📄 analysis.ipynb&lt;/div&gt;
+        &lt;div style="padding-left: 40px;"&gt;📄 manuscript.tex&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;p style="margin-top:15px; font-size:0.9rem;"&gt;&lt;em&gt;&lt;strong&gt;Rule:&lt;/strong&gt; Contains Text &amp; Code only. No large
+            files (&gt;50MB). This is backed up via GitHub.&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;
 
-        <!-- CLOUD SIDE -->
-        <div class="mirror-box cloud">
-            <div class="mirror-title">
-                <span>☁️ ~/OneDrive</span>
-                <span style="font-size:0.8em; font-weight:normal; color:#666;">(Synced)</span>
-            </div>
-            <div class="folder-tree">
-                <!-- Teaching Section -->
-                <div class="teaching-group">📂 Teaching/</div>
-                <div style="padding-left: 20px;">📂 ma101_linear_algebra/</div>
-                <div style="padding-left: 40px;">📄 scanned_textbook.pdf</div>
-                <div style="padding-left: 40px;">📄 student_grades.xlsx</div>
+&lt;!-- CLOUD SIDE --&gt;
+&lt;div class="mirror-box cloud"&gt;
+    &lt;div class="mirror-title"&gt;
+        &lt;span&gt;☁️ ~/OneDrive&lt;/span&gt;
+        &lt;span style="font-size:0.8em; font-weight:normal; color:#666;"&gt;(Synced)&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="folder-tree"&gt;
+        &lt;!-- Teaching Section --&gt;
+        &lt;div class="teaching-group"&gt;📂 Teaching/&lt;/div&gt;
+        &lt;div style="padding-left: 20px;"&gt;📂 ma101_linear_algebra/&lt;/div&gt;
+        &lt;div style="padding-left: 40px;"&gt;📄 scanned_textbook.pdf&lt;/div&gt;
+        &lt;div style="padding-left: 40px;"&gt;📄 student_grades.xlsx&lt;/div&gt;
 
-                <br>
-                <!-- Research Section -->
-                <div class="research-group">📂 Research/</div>
-                <div style="padding-left: 20px;">📂 climate_change_paper/</div>
-                <div style="padding-left: 40px;">📄 raw_weather_data.csv <span class="dim">(2GB)</span></div>
-                <div style="padding-left: 40px;">📄 final_proof.pdf</div>
-            </div>
-            <p style="margin-top:15px; font-size:0.9rem;"><em><strong>Rule:</strong> Contains Binaries, Data, and PDFs.
-                    Accessible from anywhere (web/phone).</em></p>
-        </div>
-    </div>
+        &lt;br&gt;
+        &lt;!-- Research Section --&gt;
+        &lt;div class="research-group"&gt;📂 Research/&lt;/div&gt;
+        &lt;div style="padding-left: 20px;"&gt;📂 climate_change_paper/&lt;/div&gt;
+        &lt;div style="padding-left: 40px;"&gt;📄 raw_weather_data.csv &lt;span class="dim"&gt;(2GB)&lt;/span&gt;&lt;/div&gt;
+        &lt;div style="padding-left: 40px;"&gt;📄 final_proof.pdf&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;p style="margin-top:15px; font-size:0.9rem;"&gt;&lt;em&gt;&lt;strong&gt;Rule:&lt;/strong&gt; Contains Binaries, Data, and PDFs.
+            Accessible from anywhere (web/phone).&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</section>
+<section id="the-automation-one-script-to-rule-them-all" class="level2">
+<h2 class="anchored" data-anchor-id="the-automation-one-script-to-rule-them-all">3. The Automation: One Script to Rule Them All</h2>
+<p>When you have 10+ active repositories, you cannot manually <code>git pull</code> inside every folder. You need a “Master Loop” script.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 💾 Save this as: sync_work.sh</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------------------</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define where your Git Projects live (Not OneDrive paths!)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------------------</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="va">TARGET_DIRS</span><span class="op">=</span><span class="va">(</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"</span><span class="va">$HOME</span><span class="st">/Projects/Teaching"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"</span><span class="va">$HOME</span><span class="st">/Projects/Research"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="va">)</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"🔄 MASTER SYNC INITIATED..."</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to handle a single repository</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">sync_repo()</span> <span class="kw">{</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">local</span> <span class="va">repo_path</span><span class="op">=</span><span class="st">"</span><span class="va">$1</span><span class="st">"</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">local</span> <span class="va">name</span><span class="op">=</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">$repo_path</span><span class="st">"</span><span class="va">)</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">cd</span> <span class="st">"</span><span class="va">$repo_path</span><span class="st">"</span> <span class="kw">||</span> <span class="cf">return</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check if it's actually a git repo</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-d</span> <span class="st">".git"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span> <span class="cf">return</span><span class="kw">;</span> <span class="cf">fi</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\n📂 Processing: </span><span class="va">$name</span><span class="st">"</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1. ADD &amp; COMMIT (Save your work)</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">git</span> add .</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="ot">! </span><span class="fu">git</span> diff-index <span class="at">--quiet</span> HEAD <span class="at">--</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>        <span class="va">timestamp</span><span class="op">=</span><span class="va">$(</span><span class="fu">date</span> <span class="st">"+%Y-%m-%d %H:%M"</span><span class="va">)</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        <span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Auto-Sync: </span><span class="va">$(</span><span class="fu">hostname</span><span class="va">)</span><span class="st"> at </span><span class="va">$timestamp</span><span class="st">"</span> <span class="at">--quiet</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> <span class="st">"   💾 Local changes committed."</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">fi</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 2. PULL (Get work from other computers)</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># We use --rebase to keep history clean (linear)</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="fu">git</span> pull <span class="at">--rebase</span> origin main <span class="at">--quiet</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> <span class="st">"   ⬇️  Pulled latest changes."</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> <span class="st">"   ❌ CONFLICT DETECTED. Please resolve manually."</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">fi</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3. PUSH (Upload your work)</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="fu">git</span> push origin main <span class="at">--quiet</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> <span class="st">"   ⬆️  Pushed to GitHub."</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> <span class="st">"   ❌ Push failed. Check internet connection."</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">fi</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="co"># MAIN LOOP</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Find all subdirectories in your target folders and sync them</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> parent <span class="kw">in</span> <span class="st">"</span><span class="va">${TARGET_DIRS</span><span class="op">[@]</span><span class="va">}</span><span class="st">"</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">[</span> <span class="ot">-d</span> <span class="st">"</span><span class="va">$parent</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> d <span class="kw">in</span> <span class="st">"</span><span class="va">$parent</span><span class="st">"</span>/<span class="pp">*</span>/<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>            <span class="ex">sync_repo</span> <span class="st">"</span><span class="va">${d</span><span class="op">%</span>/<span class="va">}</span><span class="st">"</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>        <span class="cf">done</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">fi</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\n🎉 Sync Complete! Safe to switch computers."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Mac/Linux Users:</strong> Run <code>chmod +x sync_work.sh</code> to make it executable. <strong>Windows Users:</strong> Install “Git Bash” (included with Git for Windows) to run this script.</p>
+</section>
+<section id="connecting-the-worlds-how-to-load-data" class="level2">
+<h2 class="anchored" data-anchor-id="connecting-the-worlds-how-to-load-data">4. Connecting the Worlds: How to Load Data</h2>
+<p>Your code is in <code>~/Projects</code>, but your data is in <code>~/OneDrive</code>. How do you load the data without hardcoding paths that break when you switch computers?</p>
+<section id="method-a-for-small-data-inside-git" class="level3">
+<h3 class="anchored" data-anchor-id="method-a-for-small-data-inside-git">Method A: For Small Data (Inside Git)</h3>
+<p>If your data is small (&lt;50MB) and lives <strong>inside</strong> your project folder, use <strong>Project-Relative Paths</strong>. This guarantees your code runs anywhere.</p>
+<p><strong>Using R’s <code>here</code> package</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here) </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 'here()' automatically finds the root of your Git project</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># No more setwd()! </span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"small_dataset.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Using Python’s <code>pyprojroot</code></strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyprojroot <span class="im">import</span> here</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Finds the root containing .git, requirements.txt, etc.</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The '/' operator works because here() returns a Path object</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>data_path <span class="op">=</span> here() <span class="op">/</span> <span class="st">"data"</span> <span class="op">/</span> <span class="st">"small_dataset.csv"</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(data_path)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="method-b-for-large-data-in-onedrivecloud" class="level3">
+<h3 class="anchored" data-anchor-id="method-b-for-large-data-in-onedrivecloud">Method B: For Large Data (In OneDrive/Cloud)</h3>
+<p>For data that lives <strong>outside</strong> the project (in the cloud), paths might differ per machine (e.g., <code>OneDrive - University</code> vs <code>OneDrive - Personal</code>). The professional solution is <strong>Environment Variables</strong>.</p>
+<ol type="1">
+<li>Create a hidden file in your Home folder containing the path for <em>that specific computer</em>.</li>
+</ol>
+<p><strong>📄 .Renviron (Save in your Home folder)</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># On your Work Computer</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="va">CLOUD_DATA_DIR</span><span class="op">=</span><span class="st">"/Users/admin/OneDrive - University/Research"</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># On your Home Computer</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="va">CLOUD_DATA_DIR</span><span class="op">=</span><span class="st">"/Users/john/OneDrive/Research"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="1">
+<li>Load it in your code using the variable name. The code remains identical on both machines!</li>
+</ol>
+<p><strong>In R (Automatic Loading)</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R automatically reads .Renviron on startup</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>data_root <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"CLOUD_DATA_DIR"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">file.path</span>(data_root, <span class="st">"climate_change_paper"</span>, <span class="st">"big_data.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>In Python (Using dotenv)</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load variables from .env or .Renviron file</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>load_dotenv() </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>data_root <span class="op">=</span> os.getenv(<span class="st">"CLOUD_DATA_DIR"</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="ss">f"</span><span class="sc">{</span>data_root<span class="sc">}</span><span class="ss">/climate_change_paper/big_data.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="summary-checklist" class="level2">
+<h2 class="anchored" data-anchor-id="summary-checklist">Summary Checklist</h2>
+<ol type="1">
+<li><strong>Location:</strong> Move all code to <code>~/Projects</code>. Move all docs to <code>~/OneDrive</code>.</li>
+<li><strong>Structure:</strong> Keep separate folders for <code>Teaching</code> and <code>Research</code> inside both locations.</li>
+<li><strong>Automate:</strong> Run the sync script when you sit down (Pull) and when you stand up (Push).</li>
+<li><strong>Paths:</strong> Use <code>here()</code> for repo files and <code>Sys.getenv()</code> for cloud files.</li>
+</ol>
 
-    <h2>3. The Automation: One Script to Rule Them All</h2>
-    <p>When you have 10+ active repositories, you cannot manually <code>git pull</code> inside every folder. You need a
-        "Master Loop" script.</p>
 
-    <div class="terminal">
-        <div class="terminal-header">
-            <div class="dot red"></div>
-            <div class="dot yellow"></div>
-            <div class="dot green"></div>
-        </div>
-        <br>
-        <pre>#!/bin/bash
-# 💾 Save this as: sync_work.sh
-# ---------------------------------------------------------
-# Define where your Git Projects live (Not OneDrive paths!)
-# ---------------------------------------------------------
-TARGET_DIRS=(
-    "$HOME/Projects/Teaching"
-    "$HOME/Projects/Research"
-)
+</section>
 
-echo "🔄 MASTER SYNC INITIATED..."
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="auto">
+<input type="hidden" id="giscus-alt-theme" value="auto">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "kanayai/karim_ai_website";
+    script.dataset.repoId = "R_kgDOQbALeQ";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "";
+    script.dataset.mapping = "title";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
 
-# Function to handle a single repository
-sync_repo() {
-    local repo_path="$1"
-    local name=$(basename "$repo_path")
-    cd "$repo_path" || return
 
-    # Check if it's actually a git repo
-    if [ ! -d ".git" ]; then return; fi
 
-    echo -e "\n📂 Processing: $name"
 
-    # 1. ADD & COMMIT (Save your work)
-    git add .
-    if ! git diff-index --quiet HEAD --; then
-        timestamp=$(date "+%Y-%m-%d %H:%M")
-        git commit -m "Auto-Sync: $(hostname) at $timestamp" --quiet
-        echo "   💾 Local changes committed."
-    fi
-
-    # 2. PULL (Get work from other computers)
-    # We use --rebase to keep history clean (linear)
-    if git pull --rebase origin main --quiet; then
-        echo "   ⬇️  Pulled latest changes."
-    else
-        echo "   ❌ CONFLICT DETECTED. Please resolve manually."
-        return 1
-    fi
-
-    # 3. PUSH (Upload your work)
-    if git push origin main --quiet; then
-        echo "   ⬆️  Pushed to GitHub."
-    else
-        echo "   ❌ Push failed. Check internet connection."
-    fi
-}
-
-# MAIN LOOP
-# Find all subdirectories in your target folders and sync them
-for parent in "${TARGET_DIRS[@]}"; do
-    if [ -d "$parent" ]; then
-        for d in "$parent"/*/; do
-            sync_repo "${d%/}"
-        done
-    fi
-done
-
-echo -e "\n🎉 Sync Complete! Safe to switch computers."</pre>
-    </div>
-
-    <p><strong>Mac/Linux Users:</strong> Run <code>chmod +x sync_work.sh</code> to make it executable.<br>
-        <strong>Windows Users:</strong> Install "Git Bash" (included with Git for Windows) to run this script.
-    </p>
-
-    <h2>4. Connecting the Worlds: How to Load Data</h2>
-    <p>Your code is in <code>~/Projects</code>, but your data is in <code>~/OneDrive</code>. How do you load the data
-        without hardcoding paths that break when you switch computers?</p>
-
-    <h3>Method A: For Small Data (Inside Git)</h3>
-    <p>If your data is small (<50MB) and lives <strong>inside</strong> your project folder, use <strong>Project-Relative
-                Paths</strong>. This guarantees your code runs anywhere.</p>
-
-    <span class="code-title">Using R's `here` package</span>
-    <pre class="code-block"><code>library(here) 
-# 'here()' automatically finds the root of your Git project
-# No more setwd()! 
-df <- read.csv(here("data", "small_dataset.csv"))</code></pre>
-
-    <span class="code-title">Using Python's `pyprojroot`</span>
-    <pre class="code-block"><code>import pandas as pd
-from pyprojroot import here
-
-# Finds the root containing .git, requirements.txt, etc.
-# The '/' operator works because here() returns a Path object
-data_path = here() / "data" / "small_dataset.csv"
-df = pd.read_csv(data_path)</code></pre>
-
-    <h3>Method B: For Large Data (In OneDrive/Cloud)</h3>
-    <p>For data that lives <strong>outside</strong> the project (in the cloud), paths might differ per machine (e.g.,
-        <code>OneDrive - University</code> vs <code>OneDrive - Personal</code>). The professional solution is
-        <strong>Environment Variables</strong>.</p>
-
-    <p>1. Create a hidden file in your Home folder containing the path for <em>that specific computer</em>.</p>
-
-    <span class="code-title">📄 .Renviron (Save in your Home folder)</span>
-    <pre class="code-block"><code># On your Work Computer
-CLOUD_DATA_DIR="/Users/admin/OneDrive - University/Research"
-
-# On your Home Computer
-CLOUD_DATA_DIR="/Users/john/OneDrive/Research"</code></pre>
-
-    <p>2. Load it in your code using the variable name. The code remains identical on both machines!</p>
-
-    <span class="code-title">In R (Automatic Loading)</span>
-    <pre class="code-block"><code># R automatically reads .Renviron on startup
-data_root <- Sys.getenv("CLOUD_DATA_DIR")
-
-df <- read.csv(file.path(data_root, "climate_change_paper", "big_data.csv"))</code></pre>
-
-    <span class="code-title">In Python (Using dotenv)</span>
-    <pre class="code-block"><code>import os
-import pandas as pd
-from dotenv import load_dotenv
-
-# Load variables from .env or .Renviron file
-load_dotenv() 
-
-data_root = os.getenv("CLOUD_DATA_DIR")
-df = pd.read_csv(f"{data_root}/climate_change_paper/big_data.csv")</code></pre>
-
-    <h2>Summary Checklist</h2>
-    <ol>
-        <li><strong>Location:</strong> Move all code to <code>~/Projects</code>. Move all docs to
-            <code>~/OneDrive</code>.</li>
-        <li><strong>Structure:</strong> Keep separate folders for <code>Teaching</code> and <code>Research</code> inside
-            both locations.</li>
-        <li><strong>Automate:</strong> Run the sync script when you sit down (Pull) and when you stand up (Push).</li>
-        <li><strong>Paths:</strong> Use <code>here()</code> for repo files and <code>Sys.getenv()</code> for cloud
-            files.</li>
-    </ol>
-
-    <div class="footer">
-        Created with the help of Gemini.
-    </div>
-
-</body>
-
-</html>
+</body></html>

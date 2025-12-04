@@ -1,0 +1,253 @@
+---
+title: "The Academic Workflow"
+date: "2025-11-28"
+categories: [workflow, academic, git, onedrive]
+description: "A master guide to managing Teaching, Research, and Code across multiple computers."
+format:
+  html:
+    toc: true
+---
+
+As academic data scientists, we juggle three distinct types of work: **Teaching** (slides, quizzes), **Research** (papers, heavy analysis), and **Administration**.
+
+If you work across multiple machines—say, a powerful Office Desktop and a personal Laptop—you face a dilemma: Cloud storage (OneDrive/Dropbox) is great for PDFs but ruins code history. Git is perfect for code but chokes on 2GB datasets.
+
+Here is the "Mirrored Architecture" to handle it all effortlessly.
+
+## 1. The Setup: Where to create your folders
+
+Before we talk about Git, we must talk about **Location**. Most modern Operating Systems try to "help" you by syncing your `Documents` folder to the cloud automatically (iCloud on Mac, OneDrive on Windows).
+
+::: {.callout-warning}
+#### The "Documents" Trap
+Do **NOT** put your Git repositories inside your `Documents` folder. If iCloud/OneDrive syncs a file while Git is writing to it, your repository can become corrupted.
+:::
+
+You need to create a dedicated **Projects** folder at your "User Root" (Home) level, sitting side-by-side with your Cloud folder.
+
+<div class="os-grid">
+    <div class="os-card">
+        <strong>🍎 macOS</strong>
+        <p>1. Go to Finder.<br>
+            2. Press <code>Cmd + Shift + H</code> (Go to Home).<br>
+            3. Create a folder named <code>Projects</code>.<br>
+            4. Drag it to your Sidebar favorites.</p>
+        <em>Path: <code>/Users/yourname/Projects</code></em>
+    </div>
+    <div class="os-card">
+        <strong>🪟 Windows</strong>
+        <p>1. Open File Explorer.<br>
+            2. Go to <code>C:\Users\YourName</code>.<br>
+            3. Create a folder named <code>Projects</code>.<br>
+            4. Right-click -> "Pin to Quick Access".</p>
+        <em>Path: <code>C:\Users\yourname\Projects</code></em>
+    </div>
+    <div class="os-card">
+        <strong>🐧 Linux</strong>
+        <p>1. Open Terminal.<br>
+            2. Type <code>mkdir ~/Projects</code>.<br>
+            3. You're done.</p>
+        <em>Path: <code>/home/yourname/Projects</code></em>
+    </div>
+</div>
+
+## 2. The Architecture: Mirrored Roots
+
+Now that you have your locations set, follow the **Mirrored Strategy**. You will have two root folders. They will have **identical sub-folder structures**, but they serve different purposes.
+
+<div class="mirror-container">
+    <!-- GIT SIDE -->
+    <div class="mirror-box git">
+        <div class="mirror-title">
+            <span>💻 ~/Projects</span>
+            <span style="font-size:0.8em; font-weight:normal; color:#666;">(Local + Git)</span>
+        </div>
+        <div class="folder-tree">
+            <!-- Teaching Section -->
+            <div class="teaching-group">📂 Teaching/</div>
+            <div style="padding-left: 20px;">📂 ma101_linear_algebra/</div>
+            <div style="padding-left: 40px;">📄 lectures.qmd</div>
+            <div style="padding-left: 40px;">📄 script_week1.R</div>
+            <div style="padding-left: 40px;">📄 _quarto.yml</div>
+
+            <br>
+            <!-- Research Section -->
+            <div class="research-group">📂 Research/</div>
+            <div style="padding-left: 20px;">📂 climate_change_paper/</div>
+            <div style="padding-left: 40px;">📄 analysis.ipynb</div>
+            <div style="padding-left: 40px;">📄 manuscript.tex</div>
+        </div>
+        <p style="margin-top:15px; font-size:0.9rem;"><em><strong>Rule:</strong> Contains Text & Code only. No large
+                files (>50MB). This is backed up via GitHub.</em></p>
+    </div>
+
+    <!-- CLOUD SIDE -->
+    <div class="mirror-box cloud">
+        <div class="mirror-title">
+            <span>☁️ ~/OneDrive</span>
+            <span style="font-size:0.8em; font-weight:normal; color:#666;">(Synced)</span>
+        </div>
+        <div class="folder-tree">
+            <!-- Teaching Section -->
+            <div class="teaching-group">📂 Teaching/</div>
+            <div style="padding-left: 20px;">📂 ma101_linear_algebra/</div>
+            <div style="padding-left: 40px;">📄 scanned_textbook.pdf</div>
+            <div style="padding-left: 40px;">📄 student_grades.xlsx</div>
+
+            <br>
+            <!-- Research Section -->
+            <div class="research-group">📂 Research/</div>
+            <div style="padding-left: 20px;">📂 climate_change_paper/</div>
+            <div style="padding-left: 40px;">📄 raw_weather_data.csv <span class="dim">(2GB)</span></div>
+            <div style="padding-left: 40px;">📄 final_proof.pdf</div>
+        </div>
+        <p style="margin-top:15px; font-size:0.9rem;"><em><strong>Rule:</strong> Contains Binaries, Data, and PDFs.
+                Accessible from anywhere (web/phone).</em></p>
+    </div>
+</div>
+
+## 3. The Automation: One Script to Rule Them All
+
+When you have 10+ active repositories, you cannot manually `git pull` inside every folder. You need a "Master Loop" script.
+
+```bash
+#!/bin/bash
+# 💾 Save this as: sync_work.sh
+# ---------------------------------------------------------
+# Define where your Git Projects live (Not OneDrive paths!)
+# ---------------------------------------------------------
+TARGET_DIRS=(
+    "$HOME/Projects/Teaching"
+    "$HOME/Projects/Research"
+)
+
+echo "🔄 MASTER SYNC INITIATED..."
+
+# Function to handle a single repository
+sync_repo() {
+    local repo_path="$1"
+    local name=$(basename "$repo_path")
+    cd "$repo_path" || return
+
+    # Check if it's actually a git repo
+    if [ ! -d ".git" ]; then return; fi
+
+    echo -e "\n📂 Processing: $name"
+
+    # 1. ADD & COMMIT (Save your work)
+    git add .
+    if ! git diff-index --quiet HEAD --; then
+        timestamp=$(date "+%Y-%m-%d %H:%M")
+        git commit -m "Auto-Sync: $(hostname) at $timestamp" --quiet
+        echo "   💾 Local changes committed."
+    fi
+
+    # 2. PULL (Get work from other computers)
+    # We use --rebase to keep history clean (linear)
+    if git pull --rebase origin main --quiet; then
+        echo "   ⬇️  Pulled latest changes."
+    else
+        echo "   ❌ CONFLICT DETECTED. Please resolve manually."
+        return 1
+    fi
+
+    # 3. PUSH (Upload your work)
+    if git push origin main --quiet; then
+        echo "   ⬆️  Pushed to GitHub."
+    else
+        echo "   ❌ Push failed. Check internet connection."
+    fi
+}
+
+# MAIN LOOP
+# Find all subdirectories in your target folders and sync them
+for parent in "${TARGET_DIRS[@]}"; do
+    if [ -d "$parent" ]; then
+        for d in "$parent"/*/; do
+            sync_repo "${d%/}"
+        done
+    fi
+done
+
+echo -e "\n🎉 Sync Complete! Safe to switch computers."
+```
+
+**Mac/Linux Users:** Run `chmod +x sync_work.sh` to make it executable.
+**Windows Users:** Install "Git Bash" (included with Git for Windows) to run this script.
+
+## 4. Connecting the Worlds: How to Load Data
+
+Your code is in `~/Projects`, but your data is in `~/OneDrive`. How do you load the data without hardcoding paths that break when you switch computers?
+
+### Method A: For Small Data (Inside Git)
+
+If your data is small (<50MB) and lives **inside** your project folder, use **Project-Relative Paths**. This guarantees your code runs anywhere.
+
+**Using R's `here` package**
+
+```r
+library(here) 
+# 'here()' automatically finds the root of your Git project
+# No more setwd()! 
+df <- read.csv(here("data", "small_dataset.csv"))
+```
+
+**Using Python's `pyprojroot`**
+
+```python
+import pandas as pd
+from pyprojroot import here
+
+# Finds the root containing .git, requirements.txt, etc.
+# The '/' operator works because here() returns a Path object
+data_path = here() / "data" / "small_dataset.csv"
+df = pd.read_csv(data_path)
+```
+
+### Method B: For Large Data (In OneDrive/Cloud)
+
+For data that lives **outside** the project (in the cloud), paths might differ per machine (e.g., `OneDrive - University` vs `OneDrive - Personal`). The professional solution is **Environment Variables**.
+
+1. Create a hidden file in your Home folder containing the path for *that specific computer*.
+
+**📄 .Renviron (Save in your Home folder)**
+
+```bash
+# On your Work Computer
+CLOUD_DATA_DIR="/Users/admin/OneDrive - University/Research"
+
+# On your Home Computer
+CLOUD_DATA_DIR="/Users/john/OneDrive/Research"
+```
+
+2. Load it in your code using the variable name. The code remains identical on both machines!
+
+**In R (Automatic Loading)**
+
+```r
+# R automatically reads .Renviron on startup
+data_root <- Sys.getenv("CLOUD_DATA_DIR")
+
+df <- read.csv(file.path(data_root, "climate_change_paper", "big_data.csv"))
+```
+
+**In Python (Using dotenv)**
+
+```python
+import os
+import pandas as pd
+from dotenv import load_dotenv
+
+# Load variables from .env or .Renviron file
+load_dotenv() 
+
+data_root = os.getenv("CLOUD_DATA_DIR")
+df = pd.read_csv(f"{data_root}/climate_change_paper/big_data.csv")
+```
+
+## Summary Checklist
+
+1. **Location:** Move all code to `~/Projects`. Move all docs to `~/OneDrive`.
+2. **Structure:** Keep separate folders for `Teaching` and `Research` inside both locations.
+3. **Automate:** Run the sync script when you sit down (Pull) and when you stand up (Push).
+4. **Paths:** Use `here()` for repo files and `Sys.getenv()` for cloud files.

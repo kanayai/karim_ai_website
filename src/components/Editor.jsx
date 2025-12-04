@@ -293,7 +293,7 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
                                 `;
 
                                 // Sync Giscus Theme
-                                const giscusTheme = isDark ? 'dark' : 'light';
+                                const giscusTheme = isDark ? 'transparent_dark' : 'light';
                                 const iframeWindow = iframe.contentWindow;
                                 if (iframeWindow) {
                                     iframeWindow.postMessage({

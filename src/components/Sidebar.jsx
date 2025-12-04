@@ -114,7 +114,7 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
                     <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>{t('sidebar.explorer')}</div>
                     <div className="d-flex flex-column">
                         <div className="px-2 py-1 d-flex align-items-center" style={{ fontWeight: 'bold', cursor: 'pointer', color: 'var(--vscode-text)' }}>
-                            <VscChevronDown className="me-1" /> KARIM AI SITE
+                            <VscChevronDown className="me-1" /> Karim AI
                             <VscEllipsis className="ms-auto" />
                         </div>
                         {structure.map(item => renderItem(item))}
