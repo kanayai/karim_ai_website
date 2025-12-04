@@ -64,9 +64,7 @@ const LatexPlayground = () => {
                 </div>
             </div>
 
-            <div className="mt-3 p-3 rounded" style={{ backgroundColor: 'var(--vscode-textBlockQuote-background)', borderLeft: '4px solid var(--vscode-textBlockQuote-border)' }}>
-                <strong>Tip:</strong> Try <code>\\int_&#123;-\\infty&#125;^&#123;\\infty&#125; e^&#123;-x^2&#125; dx = \\sqrt&#123;\\pi&#125;</code>
-            </div>
+
         </div>
     );
 };

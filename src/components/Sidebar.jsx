@@ -141,24 +141,7 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
                     <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>{t('sidebar.extensions')}</div>
                     <div className="d-flex flex-column p-2">
 
-                        <div
-                            className="d-flex p-2 gap-2"
-                            style={{
-                                cursor: 'pointer',
-                                backgroundColor: 'var(--vscode-list-hover-bg)',
-                                borderRadius: '4px',
-                                border: '1px solid var(--vscode-border)',
-                                marginBottom: '8px'
-                            }}
-                            onClick={() => setActiveFile('theme-switcher')}
-                        >
-                            <div style={{ fontSize: '24px', display: 'flex', alignItems: 'center' }}><VscPaintcan color="#d4d4d4" /></div>
-                            <div className="d-flex flex-column">
-                                <div style={{ fontWeight: 'bold', fontSize: '13px', color: 'var(--vscode-text)' }}>Theme Switcher</div>
-                                <div style={{ fontSize: '11px', color: '#858585' }}>Toggle between Dark, Light, and Monokai themes.</div>
-                                <div style={{ fontSize: '10px', color: '#0e639c', marginTop: '4px' }}>Karim AI • Installed</div>
-                            </div>
-                        </div>
+
 
                         <div
                             className="d-flex p-2 gap-2"

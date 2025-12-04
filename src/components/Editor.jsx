@@ -6,7 +6,7 @@ import WelcomePage from './WelcomePage';
 import RetroGame from './RetroGame';
 import GitGraph from './GitGraph';
 import MusicPlayer from './MusicPlayer';
-import ThemeSwitcher from './ThemeSwitcher';
+
 import LatexPlayground from './LatexPlayground';
 import CitationGenerator from './CitationGenerator';
 import DataVizGallery from './DataVizGallery';
@@ -32,7 +32,7 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
         if (filename.endsWith('.exe')) return <VscGame color="#ea8616" />;
         if (filename === 'git-graph') return <VscGitMerge color="#e91e63" />;
         if (filename === 'lofi-radio') return <VscRadioTower color="#4caf50" />;
-        if (filename === 'theme-switcher') return <VscPaintcan color="#d4d4d4" />;
+
         if (filename === 'latex-playground') return <VscSymbolKeyword color="#569cd6" />;
         if (filename === 'citation-generator') return <VscQuote color="#ce9178" />;
         if (filename === 'data-viz-gallery') return <VscGraph color="#b5cea8" />;
@@ -331,9 +331,7 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
             return <MusicPlayer />;
         }
 
-        if (activeFile === 'theme-switcher') {
-            return <ThemeSwitcher currentTheme={theme} setTheme={setTheme} />;
-        }
+
 
         if (activeFile === 'latex-playground') {
             return <LatexPlayground />;
