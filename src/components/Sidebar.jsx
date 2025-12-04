@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { VscChevronRight, VscChevronDown, VscEllipsis, VscCode, VscRadioTower, VscSourceControl, VscLaw } from 'react-icons/vsc';
+import { VscChevronRight, VscChevronDown, VscEllipsis, VscCode, VscRadioTower, VscSourceControl, VscLaw, VscPaintcan, VscSymbolKeyword, VscQuote, VscGraph } from 'react-icons/vsc';
 import { FaReact, FaJs, FaMarkdown, FaPython, FaHtml5 } from 'react-icons/fa';
 
 import { useTranslation } from 'react-i18next';
@@ -141,7 +141,80 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
                     <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>{t('sidebar.extensions')}</div>
                     <div className="d-flex flex-column p-2">
 
+                        <div
+                            className="d-flex p-2 gap-2"
+                            style={{
+                                cursor: 'pointer',
+                                backgroundColor: 'var(--vscode-list-hover-bg)',
+                                borderRadius: '4px',
+                                border: '1px solid var(--vscode-border)',
+                                marginBottom: '8px'
+                            }}
+                            onClick={() => setActiveFile('theme-switcher')}
+                        >
+                            <div style={{ fontSize: '24px', display: 'flex', alignItems: 'center' }}><VscPaintcan color="#d4d4d4" /></div>
+                            <div className="d-flex flex-column">
+                                <div style={{ fontWeight: 'bold', fontSize: '13px', color: 'var(--vscode-text)' }}>Theme Switcher</div>
+                                <div style={{ fontSize: '11px', color: '#858585' }}>Toggle between Dark, Light, and Monokai themes.</div>
+                                <div style={{ fontSize: '10px', color: '#0e639c', marginTop: '4px' }}>Karim AI • Installed</div>
+                            </div>
+                        </div>
 
+                        <div
+                            className="d-flex p-2 gap-2"
+                            style={{
+                                cursor: 'pointer',
+                                backgroundColor: 'var(--vscode-list-hover-bg)',
+                                borderRadius: '4px',
+                                border: '1px solid var(--vscode-border)',
+                                marginBottom: '8px'
+                            }}
+                            onClick={() => setActiveFile('latex-playground')}
+                        >
+                            <div style={{ fontSize: '24px', display: 'flex', alignItems: 'center' }}><VscSymbolKeyword color="#569cd6" /></div>
+                            <div className="d-flex flex-column">
+                                <div style={{ fontWeight: 'bold', fontSize: '13px', color: 'var(--vscode-text)' }}>LaTeX Playground</div>
+                                <div style={{ fontSize: '11px', color: '#858585' }}>Real-time LaTeX math rendering.</div>
+                                <div style={{ fontSize: '10px', color: '#0e639c', marginTop: '4px' }}>Karim AI • Installed</div>
+                            </div>
+                        </div>
+
+                        <div
+                            className="d-flex p-2 gap-2"
+                            style={{
+                                cursor: 'pointer',
+                                backgroundColor: 'var(--vscode-list-hover-bg)',
+                                borderRadius: '4px',
+                                border: '1px solid var(--vscode-border)',
+                                marginBottom: '8px'
+                            }}
+                            onClick={() => setActiveFile('citation-generator')}
+                        >
+                            <div style={{ fontSize: '24px', display: 'flex', alignItems: 'center' }}><VscQuote color="#ce9178" /></div>
+                            <div className="d-flex flex-column">
+                                <div style={{ fontWeight: 'bold', fontSize: '13px', color: 'var(--vscode-text)' }}>Citation Generator</div>
+                                <div style={{ fontSize: '11px', color: '#858585' }}>Generate BibTeX from DOI.</div>
+                                <div style={{ fontSize: '10px', color: '#0e639c', marginTop: '4px' }}>Karim AI • Installed</div>
+                            </div>
+                        </div>
+
+                        <div
+                            className="d-flex p-2 gap-2"
+                            style={{
+                                cursor: 'pointer',
+                                backgroundColor: 'var(--vscode-list-hover-bg)',
+                                borderRadius: '4px',
+                                border: '1px solid var(--vscode-border)'
+                            }}
+                            onClick={() => setActiveFile('data-viz-gallery')}
+                        >
+                            <div style={{ fontSize: '24px', display: 'flex', alignItems: 'center' }}><VscGraph color="#b5cea8" /></div>
+                            <div className="d-flex flex-column">
+                                <div style={{ fontWeight: 'bold', fontSize: '13px', color: 'var(--vscode-text)' }}>Data Viz Gallery</div>
+                                <div style={{ fontSize: '11px', color: '#858585' }}>Interactive charts gallery.</div>
+                                <div style={{ fontSize: '10px', color: '#0e639c', marginTop: '4px' }}>Karim AI • Installed</div>
+                            </div>
+                        </div>
                         <div
                             className="d-flex p-2 gap-2"
                             style={{

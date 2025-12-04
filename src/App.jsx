@@ -86,6 +86,7 @@ function App() {
         onCloseFile={handleCloseFile}
         onCloseAllFiles={handleCloseAllFiles}
         theme={theme}
+        setTheme={setTheme}
         simpleMode={simpleMode}
         toggleSimpleMode={toggleSimpleMode}
       />

@@ -6,13 +6,17 @@ import WelcomePage from './WelcomePage';
 import RetroGame from './RetroGame';
 import GitGraph from './GitGraph';
 import MusicPlayer from './MusicPlayer';
-import { VscClose, VscCloseAll, VscChevronRight, VscLaw, VscGame, VscCode, VscGitMerge, VscRadioTower } from 'react-icons/vsc';
+import ThemeSwitcher from './ThemeSwitcher';
+import LatexPlayground from './LatexPlayground';
+import CitationGenerator from './CitationGenerator';
+import DataVizGallery from './DataVizGallery';
+import { VscClose, VscCloseAll, VscChevronRight, VscLaw, VscGame, VscCode, VscGitMerge, VscRadioTower, VscPaintcan, VscSymbolKeyword, VscQuote, VscGraph } from 'react-icons/vsc';
 import { FaMarkdown, FaPython, FaJs, FaReact, FaHtml5 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
 import BlogViewer from './BlogViewer';
 
-const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme, simpleMode, toggleSimpleMode }) => {
+const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme, setTheme, simpleMode, toggleSimpleMode }) => {
     const { i18n } = useTranslation();
 
     const getIcon = (filename) => {
@@ -28,6 +32,10 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
         if (filename.endsWith('.exe')) return <VscGame color="#ea8616" />;
         if (filename === 'git-graph') return <VscGitMerge color="#e91e63" />;
         if (filename === 'lofi-radio') return <VscRadioTower color="#4caf50" />;
+        if (filename === 'theme-switcher') return <VscPaintcan color="#d4d4d4" />;
+        if (filename === 'latex-playground') return <VscSymbolKeyword color="#569cd6" />;
+        if (filename === 'citation-generator') return <VscQuote color="#ce9178" />;
+        if (filename === 'data-viz-gallery') return <VscGraph color="#b5cea8" />;
         return null;
     };
 
@@ -321,6 +329,22 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
 
         if (activeFile === 'lofi-radio') {
             return <MusicPlayer />;
+        }
+
+        if (activeFile === 'theme-switcher') {
+            return <ThemeSwitcher currentTheme={theme} setTheme={setTheme} />;
+        }
+
+        if (activeFile === 'latex-playground') {
+            return <LatexPlayground />;
+        }
+
+        if (activeFile === 'citation-generator') {
+            return <CitationGenerator />;
+        }
+
+        if (activeFile === 'data-viz-gallery') {
+            return <DataVizGallery />;
         }
 
         if (activeFile.endsWith('.R')) {
