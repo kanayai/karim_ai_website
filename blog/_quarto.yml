@@ -17,5 +17,8 @@ format:
     comments:
       giscus:
         repo: kanayai/karim_ai_website
+        repo-id: R_kgDOQbALeQ
+        category: General
+        category-id: DIC_kwDOQbALec4CzbcG
         mapping: title
         theme: auto
