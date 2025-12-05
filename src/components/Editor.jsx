@@ -298,10 +298,63 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
                                         background-color: ${isDark ? '#252526' : '#fff5f5'} !important;
                                         color: ${isDark ? '#f44336' : '#c53030'} !important;
                                     }
+
+                                    /* Custom Box Styles for Academic Workflow Post */
+                                    .os-grid {
+                                        display: grid;
+                                        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                                        gap: 15px;
+                                        margin: 20px 0;
+                                    }
+
+                                    .os-card {
+                                        background-color: ${isDark ? '#252526' : '#f3f3f3'} !important;
+                                        border: 1px solid ${border} !important;
+                                        border-radius: 8px;
+                                        padding: 15px;
+                                    }
+
+                                    .mirror-container {
+                                        display: flex;
+                                        flex-wrap: wrap;
+                                        gap: 20px;
+                                        margin: 20px 0;
+                                    }
+
+                                    .mirror-box {
+                                        flex: 1;
+                                        min-width: 300px;
+                                        background-color: ${isDark ? '#252526' : '#f3f3f3'} !important;
+                                        border: 1px solid ${border} !important;
+                                        border-radius: 8px;
+                                        padding: 15px;
+                                    }
+
+                                    .mirror-title {
+                                        font-weight: bold;
+                                        font-size: 1.1em;
+                                        margin-bottom: 10px;
+                                        padding-bottom: 5px;
+                                        border-bottom: 1px solid ${border} !important;
+                                        display: flex;
+                                        justify-content: space-between;
+                                        align-items: center;
+                                    }
+
+                                    .folder-tree {
+                                        font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+                                        font-size: 0.9em;
+                                        line-height: 1.5;
+                                    }
+
+                                    .dim {
+                                        opacity: 0.6;
+                                        font-size: 0.9em;
+                                    }
                                 `;
 
                                 // Sync Giscus Theme
-                                const giscusTheme = isDark ? 'transparent_dark' : 'light';
+                                const giscusTheme = isDark ? 'dark_high_contrast' : 'light';
                                 const iframeWindow = iframe.contentWindow;
                                 if (iframeWindow) {
                                     iframeWindow.postMessage({

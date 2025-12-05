@@ -25,86 +25,89 @@ Do **NOT** put your Git repositories inside your `Documents` folder. If iCloud/O
 
 You need to create a dedicated **Projects** folder at your "User Root" (Home) level, sitting side-by-side with your Cloud folder.
 
-<div class="os-grid">
-    <div class="os-card">
-        <strong>🍎 macOS</strong>
-        <p>1. Go to Finder.<br>
-            2. Press <code>Cmd + Shift + H</code> (Go to Home).<br>
-            3. Create a folder named <code>Projects</code>.<br>
-            4. Drag it to your Sidebar favorites.</p>
-        <em>Path: <code>/Users/yourname/Projects</code></em>
-    </div>
-    <div class="os-card">
-        <strong>🪟 Windows</strong>
-        <p>1. Open File Explorer.<br>
-            2. Go to <code>C:\Users\YourName</code>.<br>
-            3. Create a folder named <code>Projects</code>.<br>
-            4. Right-click -> "Pin to Quick Access".</p>
-        <em>Path: <code>C:\Users\yourname\Projects</code></em>
-    </div>
-    <div class="os-card">
-        <strong>🐧 Linux</strong>
-        <p>1. Open Terminal.<br>
-            2. Type <code>mkdir ~/Projects</code>.<br>
-            3. You're done.</p>
-        <em>Path: <code>/home/yourname/Projects</code></em>
-    </div>
-</div>
+::: {.os-grid}
+::: {.os-card}
+**🍎 macOS**
+1. Go to Finder.<br>
+2. Press `Cmd + Shift + H` (Go to Home).<br>
+3. Create a folder named `Projects`.<br>
+4. Drag it to your Sidebar favorites.
+
+*Path: `/Users/yourname/Projects`*
+:::
+::: {.os-card}
+**🪟 Windows**
+1. Open File Explorer.<br>
+2. Go to `C:\Users\YourName`.<br>
+3. Create a folder named `Projects`.<br>
+4. Right-click -> "Pin to Quick Access".
+
+*Path: `C:\Users\yourname\Projects`*
+:::
+::: {.os-card}
+**🐧 Linux**
+1. Open Terminal.<br>
+2. Type `mkdir ~/Projects`.<br>
+3. You're done.
+
+*Path: `/home/yourname/Projects`*
+:::
+:::
 
 ## 2. The Architecture: Mirrored Roots
 
 Now that you have your locations set, follow the **Mirrored Strategy**. You will have two root folders. They will have **identical sub-folder structures**, but they serve different purposes.
 
-<div class="mirror-container">
-    <!-- GIT SIDE -->
-    <div class="mirror-box git">
-        <div class="mirror-title">
-            <span>💻 ~/Projects</span>
-            <span style="font-size:0.8em; font-weight:normal; color:#666;">(Local + Git)</span>
-        </div>
-        <div class="folder-tree">
-            <!-- Teaching Section -->
-            <div class="teaching-group">📂 Teaching/</div>
-            <div style="padding-left: 20px;">📂 ma101_linear_algebra/</div>
-            <div style="padding-left: 40px;">📄 lectures.qmd</div>
-            <div style="padding-left: 40px;">📄 script_week1.R</div>
-            <div style="padding-left: 40px;">📄 _quarto.yml</div>
+::: {.mirror-container}
+<!-- GIT SIDE -->
+::: {.mirror-box .git}
+::: {.mirror-title}
+<span>💻 ~/Projects</span>
+<span style="font-size:0.8em; font-weight:normal; color:#666;">(Local + Git)</span>
+:::
+::: {.folder-tree}
+<!-- Teaching Section -->
+<div class="teaching-group">📂 Teaching/</div>
+<div style="padding-left: 20px;">📂 ma101_linear_algebra/</div>
+<div style="padding-left: 40px;">📄 lectures.qmd</div>
+<div style="padding-left: 40px;">📄 script_week1.R</div>
+<div style="padding-left: 40px;">📄 _quarto.yml</div>
 
-            <br>
-            <!-- Research Section -->
-            <div class="research-group">📂 Research/</div>
-            <div style="padding-left: 20px;">📂 climate_change_paper/</div>
-            <div style="padding-left: 40px;">📄 analysis.ipynb</div>
-            <div style="padding-left: 40px;">📄 manuscript.tex</div>
-        </div>
-        <p style="margin-top:15px; font-size:0.9rem;"><em><strong>Rule:</strong> Contains Text & Code only. No large
-                files (>50MB). This is backed up via GitHub.</em></p>
-    </div>
+<br>
+<!-- Research Section -->
+<div class="research-group">📂 Research/</div>
+<div style="padding-left: 20px;">📂 climate_change_paper/</div>
+<div style="padding-left: 40px;">📄 analysis.ipynb</div>
+<div style="padding-left: 40px;">📄 manuscript.tex</div>
+:::
+<p style="margin-top:15px; font-size:0.9rem;"><em><strong>Rule:</strong> Contains Text & Code only. No large
+files (>50MB). This is backed up via GitHub.</em></p>
+:::
 
-    <!-- CLOUD SIDE -->
-    <div class="mirror-box cloud">
-        <div class="mirror-title">
-            <span>☁️ ~/OneDrive</span>
-            <span style="font-size:0.8em; font-weight:normal; color:#666;">(Synced)</span>
-        </div>
-        <div class="folder-tree">
-            <!-- Teaching Section -->
-            <div class="teaching-group">📂 Teaching/</div>
-            <div style="padding-left: 20px;">📂 ma101_linear_algebra/</div>
-            <div style="padding-left: 40px;">📄 scanned_textbook.pdf</div>
-            <div style="padding-left: 40px;">📄 student_grades.xlsx</div>
+<!-- CLOUD SIDE -->
+::: {.mirror-box .cloud}
+::: {.mirror-title}
+<span>☁️ ~/OneDrive</span>
+<span style="font-size:0.8em; font-weight:normal; color:#666;">(Synced)</span>
+:::
+::: {.folder-tree}
+<!-- Teaching Section -->
+<div class="teaching-group">📂 Teaching/</div>
+<div style="padding-left: 20px;">📂 ma101_linear_algebra/</div>
+<div style="padding-left: 40px;">📄 scanned_textbook.pdf</div>
+<div style="padding-left: 40px;">📄 student_grades.xlsx</div>
 
-            <br>
-            <!-- Research Section -->
-            <div class="research-group">📂 Research/</div>
-            <div style="padding-left: 20px;">📂 climate_change_paper/</div>
-            <div style="padding-left: 40px;">📄 raw_weather_data.csv <span class="dim">(2GB)</span></div>
-            <div style="padding-left: 40px;">📄 final_proof.pdf</div>
-        </div>
-        <p style="margin-top:15px; font-size:0.9rem;"><em><strong>Rule:</strong> Contains Binaries, Data, and PDFs.
-                Accessible from anywhere (web/phone).</em></p>
-    </div>
-</div>
+<br>
+<!-- Research Section -->
+<div class="research-group">📂 Research/</div>
+<div style="padding-left: 20px;">📂 climate_change_paper/</div>
+<div style="padding-left: 40px;">📄 raw_weather_data.csv <span class="dim">(2GB)</span></div>
+<div style="padding-left: 40px;">📄 final_proof.pdf</div>
+:::
+<p style="margin-top:15px; font-size:0.9rem;"><em><strong>Rule:</strong> Contains Binaries, Data, and PDFs.
+Accessible from anywhere (web/phone).</em></p>
+:::
+:::
 
 ## 3. The Automation: One Script to Rule Them All
 
