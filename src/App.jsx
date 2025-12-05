@@ -9,9 +9,9 @@ function App() {
   const [activeFile, setActiveFile] = useState('Welcome');
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') || 'dark';
+      return localStorage.getItem('theme') || 'nord';
     }
-    return 'dark';
+    return 'nord';
   });
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
     // Initialize based on window width

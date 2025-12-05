@@ -257,46 +257,58 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
                                     doc.head.appendChild(style);
                                 }
 
-                                const isDark = theme === 'dark';
-                                const bg = isDark ? '#1e1e1e' : '#ffffff';
-                                const text = isDark ? '#cccccc' : '#333333';
-                                const link = isDark ? '#3794ff' : '#007acc';
-                                const border = isDark ? '#454545' : '#e4e4e4';
+                                // Get computed styles from the parent document to match the exact theme
+                                const computedStyle = window.getComputedStyle(document.documentElement);
+                                const bg = computedStyle.getPropertyValue('--vscode-editor-bg').trim() || (isDark ? '#1e1e1e' : '#ffffff');
+                                const text = computedStyle.getPropertyValue('--vscode-text').trim() || (isDark ? '#cccccc' : '#333333');
+                                const link = computedStyle.getPropertyValue('--vscode-accent').trim() || (isDark ? '#3794ff' : '#007acc');
+                                const border = computedStyle.getPropertyValue('--vscode-border').trim() || (isDark ? '#454545' : '#e4e4e4');
+                                const hoverBg = computedStyle.getPropertyValue('--vscode-hover-bg').trim() || (isDark ? '#2d2d2d' : '#f0f0f0');
+                                const buttonBg = computedStyle.getPropertyValue('--vscode-button-background').trim();
+                                const buttonFg = computedStyle.getPropertyValue('--vscode-button-foreground').trim();
+
+                                // Determine if it's a dark theme based on the theme ID
+                                const lightThemes = ['light', 'solarized-light', 'github-light'];
+                                const isDark = !lightThemes.includes(theme);
 
                                 style.textContent = `
                                     body {
                                         background-color: ${bg} !important;
                                         color: ${text} !important;
                                     }
+                                    /* Fix Background Image Visibility in Dark Mode */
+                                    body::before {
+                                        ${isDark ? 'filter: invert(1); opacity: 0.05;' : 'opacity: 0.08;'}
+                                    }
                                     a { color: ${link} !important; }
                                     h1, h2, h3, h4, h5, h6 { color: ${text} !important; }
                                     .quarto-title-meta-heading { color: ${text} !important; opacity: 0.8; }
                                     .quarto-title-meta-contents { color: ${text} !important; }
                                     blockquote { border-left-color: ${border} !important; color: ${text} !important; opacity: 0.8; }
-                                    code { background-color: ${isDark ? '#2d2d2d' : '#f5f5f5'} !important; color: ${isDark ? '#d4d4d4' : '#333333'} !important; }
-                                    pre { background-color: ${isDark ? '#1e1e1e' : '#f5f5f5'} !important; border: 1px solid ${border} !important; }
-                                    .code-block { background-color: ${isDark ? '#1e1e1e' : '#f4f4f5'} !important; color: ${isDark ? '#d4d4d4' : '#333333'} !important; border-left-color: ${isDark ? '#3794ff' : 'var(--accent)'} !important; }
+                                    code { background-color: ${isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'} !important; color: ${text} !important; }
+                                    pre { background-color: ${bg} !important; border: 1px solid ${border} !important; }
+                                    .code-block { background-color: ${bg} !important; color: ${text} !important; border-left-color: ${link} !important; }
                                     .table { color: ${text} !important; }
                                     .table th, .table td { border-color: ${border} !important; }
 
-                                    /* Callout Fixes for Dark Mode */
+                                    /* Callout Fixes */
                                     .callout-tip {
-                                        background-color: ${isDark ? '#1e1e1e' : '#f9f9f9'} !important;
-                                        border-left-color: ${isDark ? '#4caf50' : '#4caf50'} !important;
+                                        background-color: ${bg} !important;
+                                        border-left-color: #4caf50 !important;
                                         color: ${text} !important;
                                     }
                                     .callout-tip .callout-header {
-                                        background-color: ${isDark ? '#252526' : '#e6fffa'} !important;
-                                        color: ${isDark ? '#4caf50' : '#2c7a7b'} !important;
+                                        background-color: ${hoverBg} !important;
+                                        color: #4caf50 !important;
                                     }
                                     .callout-important {
-                                        background-color: ${isDark ? '#1e1e1e' : '#fff5f5'} !important;
-                                        border-left-color: ${isDark ? '#f44336' : '#f44336'} !important;
+                                        background-color: ${bg} !important;
+                                        border-left-color: #f44336 !important;
                                         color: ${text} !important;
                                     }
                                     .callout-important .callout-header {
-                                        background-color: ${isDark ? '#252526' : '#fff5f5'} !important;
-                                        color: ${isDark ? '#f44336' : '#c53030'} !important;
+                                        background-color: ${hoverBg} !important;
+                                        color: #f44336 !important;
                                     }
 
                                     /* Custom Box Styles for Academic Workflow Post */
@@ -308,7 +320,7 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
                                     }
 
                                     .os-card {
-                                        background-color: ${isDark ? '#252526' : '#f3f3f3'} !important;
+                                        background-color: ${hoverBg} !important;
                                         border: 1px solid ${border} !important;
                                         border-radius: 8px;
                                         padding: 15px;
@@ -324,7 +336,7 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
                                     .mirror-box {
                                         flex: 1;
                                         min-width: 300px;
-                                        background-color: ${isDark ? '#252526' : '#f3f3f3'} !important;
+                                        background-color: ${hoverBg} !important;
                                         border: 1px solid ${border} !important;
                                         border-radius: 8px;
                                         padding: 15px;

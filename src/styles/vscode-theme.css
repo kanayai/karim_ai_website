@@ -84,33 +84,6 @@
   --vscode-activity-bar-foreground: #cdd6f4;
 }
 
-[data-theme="tokyo-night"] {
-  /* Tokyo Night */
-  --vscode-bg: #1a1b26;
-  --vscode-sidebar-bg: #16161e;
-  --vscode-activity-bar-bg: #15161e;
-  --vscode-status-bar-bg: #7aa2f7;
-  --vscode-text: #a9b1d6;
-  --vscode-border: #292e42;
-  /* slightly lighter than bg for borders */
-  --vscode-accent: #7aa2f7;
-  --vscode-editor-bg: #1a1b26;
-  --vscode-tab-active-bg: #1a1b26;
-  --vscode-tab-inactive-bg: #16161e;
-  --vscode-hover-bg: #292e42;
-  --vscode-tree-indentGuidesStroke: #292e42;
-  --vscode-input-background: #1f2335;
-  --vscode-input-foreground: #a9b1d6;
-  --vscode-input-border: #292e42;
-  --vscode-button-background: #7aa2f7;
-  --vscode-button-foreground: #15161e;
-  --vscode-button-hoverBackground: #bb9af7;
-  --vscode-descriptionForeground: #565f89;
-  --vscode-list-hover-bg: #292e42;
-  --vscode-activity-bar-active-border: #7aa2f7;
-  --vscode-activity-bar-inactive-foreground: #565f89;
-  --vscode-activity-bar-foreground: #a9b1d6;
-}
 
 [data-theme="monokai"] {
   /* Monokai */
@@ -139,32 +112,6 @@
   --vscode-activity-bar-foreground: #f8f8f2;
 }
 
-[data-theme="dracula"] {
-  /* Dracula */
-  --vscode-bg: #282a36;
-  --vscode-sidebar-bg: #21222c;
-  --vscode-activity-bar-bg: #191a21;
-  --vscode-status-bar-bg: #44475a;
-  --vscode-text: #f8f8f2;
-  --vscode-border: #6272a4;
-  --vscode-accent: #bd93f9;
-  --vscode-editor-bg: #282a36;
-  --vscode-tab-active-bg: #282a36;
-  --vscode-tab-inactive-bg: #21222c;
-  --vscode-hover-bg: #44475a;
-  --vscode-tree-indentGuidesStroke: #6272a4;
-  --vscode-input-background: #44475a;
-  --vscode-input-foreground: #f8f8f2;
-  --vscode-input-border: #6272a4;
-  --vscode-button-background: #bd93f9;
-  --vscode-button-foreground: #282a36;
-  --vscode-button-hoverBackground: #ff79c6;
-  --vscode-descriptionForeground: #6272a4;
-  --vscode-list-hover-bg: #44475a;
-  --vscode-activity-bar-active-border: #bd93f9;
-  --vscode-activity-bar-inactive-foreground: #6272a4;
-  --vscode-activity-bar-foreground: #f8f8f2;
-}
 
 [data-theme="solarized-light"] {
   /* Solarized Light */
@@ -360,59 +307,7 @@
   --vscode-activity-bar-foreground: #ffffff;
 }
 
-[data-theme="night-owl"] {
-  /* Night Owl */
-  --vscode-bg: #011627;
-  --vscode-sidebar-bg: #011627;
-  --vscode-activity-bar-bg: #011627;
-  --vscode-status-bar-bg: #011627;
-  --vscode-text: #d6deeb;
-  --vscode-border: #5f7e97;
-  --vscode-accent: #82aaff;
-  --vscode-editor-bg: #011627;
-  --vscode-tab-active-bg: #011627;
-  --vscode-tab-inactive-bg: #0b2942;
-  --vscode-hover-bg: #5f7e97;
-  --vscode-tree-indentGuidesStroke: #5f7e97;
-  --vscode-input-background: #0b253a;
-  --vscode-input-foreground: #d6deeb;
-  --vscode-input-border: #5f7e97;
-  --vscode-button-background: #82aaff;
-  --vscode-button-foreground: #ffffff;
-  --vscode-button-hoverBackground: #5f7e97;
-  --vscode-descriptionForeground: #5f7e97;
-  --vscode-list-hover-bg: #010e1a;
-  --vscode-activity-bar-active-border: #82aaff;
-  --vscode-activity-bar-inactive-foreground: #5f7e97;
-  --vscode-activity-bar-foreground: #d6deeb;
-}
 
-[data-theme="cobalt2"] {
-  /* Cobalt2 */
-  --vscode-bg: #193549;
-  --vscode-sidebar-bg: #15232d;
-  --vscode-activity-bar-bg: #0d3a58;
-  --vscode-status-bar-bg: #0d3a58;
-  --vscode-text: #ffffff;
-  --vscode-border: #0d3a58;
-  --vscode-accent: #ffc600;
-  --vscode-editor-bg: #193549;
-  --vscode-tab-active-bg: #193549;
-  --vscode-tab-inactive-bg: #15232d;
-  --vscode-hover-bg: #1f4662;
-  --vscode-tree-indentGuidesStroke: #1f4662;
-  --vscode-input-background: #1f4662;
-  --vscode-input-foreground: #ffffff;
-  --vscode-input-border: #1f4662;
-  --vscode-button-background: #ffc600;
-  --vscode-button-foreground: #15232d;
-  --vscode-button-hoverBackground: #ffe680;
-  --vscode-descriptionForeground: #0088ff;
-  --vscode-list-hover-bg: #1f4662;
-  --vscode-activity-bar-active-border: #ffc600;
-  --vscode-activity-bar-inactive-foreground: #0088ff;
-  --vscode-activity-bar-foreground: #ffffff;
-}
 
 [data-theme="gruvbox-dark"] {
   /* Gruvbox Dark */
