@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { VscFiles, VscSearch, VscGitMerge, VscDebugAlt, VscExtensions, VscGithub, VscAccount, VscSettingsGear, VscColorMode } from 'react-icons/vsc';
+import { themes } from '../constants/themes';
 
 const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, theme, toggleTheme, setTheme, onSearchClick }) => {
     const [showAccountsMenu, setShowAccountsMenu] = useState(false);
@@ -44,13 +45,6 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
             {children}
         </div>
     );
-
-    const themes = [
-        { id: 'dark', label: 'Dark (VS Code)' },
-        { id: 'light', label: 'Light' },
-        { id: 'catppuccin', label: 'Catppuccin' },
-        { id: 'tokyo-night', label: 'Tokyo Night' }
-    ];
 
     const currentThemeLabel = themes.find(t => t.id === theme)?.label || 'Dark';
 

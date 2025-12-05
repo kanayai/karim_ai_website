@@ -112,6 +112,337 @@
   --vscode-activity-bar-foreground: #a9b1d6;
 }
 
+[data-theme="monokai"] {
+  /* Monokai */
+  --vscode-bg: #272822;
+  --vscode-sidebar-bg: #1e1f1c;
+  --vscode-activity-bar-bg: #1e1f1c;
+  --vscode-status-bar-bg: #75715e;
+  --vscode-text: #f8f8f2;
+  --vscode-border: #49483e;
+  --vscode-accent: #a6e22e;
+  --vscode-editor-bg: #272822;
+  --vscode-tab-active-bg: #272822;
+  --vscode-tab-inactive-bg: #1e1f1c;
+  --vscode-hover-bg: #3e3d32;
+  --vscode-tree-indentGuidesStroke: #49483e;
+  --vscode-input-background: #3e3d32;
+  --vscode-input-foreground: #f8f8f2;
+  --vscode-input-border: #49483e;
+  --vscode-button-background: #a6e22e;
+  --vscode-button-foreground: #272822;
+  --vscode-button-hoverBackground: #cbe672;
+  --vscode-descriptionForeground: #75715e;
+  --vscode-list-hover-bg: #3e3d32;
+  --vscode-activity-bar-active-border: #f8f8f2;
+  --vscode-activity-bar-inactive-foreground: #75715e;
+  --vscode-activity-bar-foreground: #f8f8f2;
+}
+
+[data-theme="dracula"] {
+  /* Dracula */
+  --vscode-bg: #282a36;
+  --vscode-sidebar-bg: #21222c;
+  --vscode-activity-bar-bg: #191a21;
+  --vscode-status-bar-bg: #44475a;
+  --vscode-text: #f8f8f2;
+  --vscode-border: #6272a4;
+  --vscode-accent: #bd93f9;
+  --vscode-editor-bg: #282a36;
+  --vscode-tab-active-bg: #282a36;
+  --vscode-tab-inactive-bg: #21222c;
+  --vscode-hover-bg: #44475a;
+  --vscode-tree-indentGuidesStroke: #6272a4;
+  --vscode-input-background: #44475a;
+  --vscode-input-foreground: #f8f8f2;
+  --vscode-input-border: #6272a4;
+  --vscode-button-background: #bd93f9;
+  --vscode-button-foreground: #282a36;
+  --vscode-button-hoverBackground: #ff79c6;
+  --vscode-descriptionForeground: #6272a4;
+  --vscode-list-hover-bg: #44475a;
+  --vscode-activity-bar-active-border: #bd93f9;
+  --vscode-activity-bar-inactive-foreground: #6272a4;
+  --vscode-activity-bar-foreground: #f8f8f2;
+}
+
+[data-theme="solarized-light"] {
+  /* Solarized Light */
+  --vscode-bg: #fdf6e3;
+  --vscode-sidebar-bg: #eee8d5;
+  --vscode-activity-bar-bg: #eee8d5;
+  --vscode-status-bar-bg: #eee8d5;
+  --vscode-text: #657b83;
+  --vscode-border: #93a1a1;
+  /* base1 */
+  --vscode-accent: #2aa198;
+  /* cyan */
+  --vscode-editor-bg: #fdf6e3;
+  --vscode-tab-active-bg: #fdf6e3;
+  --vscode-tab-inactive-bg: #eee8d5;
+  --vscode-hover-bg: #93a1a140;
+  /* transparent base1 */
+  --vscode-tree-indentGuidesStroke: #93a1a1;
+  --vscode-input-background: #eee8d5;
+  --vscode-input-foreground: #657b83;
+  --vscode-input-border: #93a1a1;
+  --vscode-button-background: #2aa198;
+  --vscode-button-foreground: #fdf6e3;
+  --vscode-button-hoverBackground: #268bd2;
+  /* blue */
+  --vscode-descriptionForeground: #93a1a1;
+  --vscode-list-hover-bg: #eee8d5;
+  --vscode-activity-bar-active-border: #2aa198;
+  --vscode-activity-bar-inactive-foreground: #93a1a1;
+  --vscode-activity-bar-foreground: #586e75;
+  /* base01 */
+}
+
+[data-theme="github-light"] {
+  /* GitHub Light */
+  --vscode-bg: #ffffff;
+  --vscode-sidebar-bg: #f6f8fa;
+  --vscode-activity-bar-bg: #f6f8fa;
+  --vscode-status-bar-bg: #ffffff;
+  --vscode-text: #24292f;
+  --vscode-border: #d0d7de;
+  --vscode-accent: #0969da;
+  --vscode-editor-bg: #ffffff;
+  --vscode-tab-active-bg: #ffffff;
+  --vscode-tab-inactive-bg: #f6f8fa;
+  --vscode-hover-bg: #f3f4f6;
+  --vscode-tree-indentGuidesStroke: #d0d7de;
+  --vscode-input-background: #ffffff;
+  --vscode-input-foreground: #24292f;
+  --vscode-input-border: #d0d7de;
+  --vscode-button-background: #1f883d;
+  --vscode-button-foreground: #ffffff;
+  --vscode-button-hoverBackground: #1a7f37;
+  --vscode-descriptionForeground: #57606a;
+  --vscode-list-hover-bg: #f6f8fa;
+  --vscode-activity-bar-active-border: #fd8c73;
+  --vscode-activity-bar-inactive-foreground: #57606a;
+  --vscode-activity-bar-foreground: #24292f;
+}
+
+[data-theme="nord"] {
+  /* Nord */
+  --vscode-bg: #2e3440;
+  --vscode-sidebar-bg: #2e3440;
+  --vscode-activity-bar-bg: #2e3440;
+  --vscode-status-bar-bg: #3b4252;
+  --vscode-text: #d8dee9;
+  --vscode-border: #3b4252;
+  --vscode-accent: #88c0d0;
+  --vscode-editor-bg: #2e3440;
+  --vscode-tab-active-bg: #2e3440;
+  --vscode-tab-inactive-bg: #2e3440;
+  --vscode-hover-bg: #3b4252;
+  --vscode-tree-indentGuidesStroke: #3b4252;
+  --vscode-input-background: #3b4252;
+  --vscode-input-foreground: #d8dee9;
+  --vscode-input-border: #3b4252;
+  --vscode-button-background: #88c0d0;
+  --vscode-button-foreground: #2e3440;
+  --vscode-button-hoverBackground: #81a1c1;
+  --vscode-descriptionForeground: #81a1c1;
+  --vscode-list-hover-bg: #3b4252;
+  --vscode-activity-bar-active-border: #88c0d0;
+  --vscode-activity-bar-inactive-foreground: #d8dee966;
+  --vscode-activity-bar-foreground: #d8dee9;
+}
+
+[data-theme="solarized-dark"] {
+  /* Solarized Dark */
+  --vscode-bg: #002b36;
+  --vscode-sidebar-bg: #002b36;
+  --vscode-activity-bar-bg: #002b36;
+  --vscode-status-bar-bg: #00212b;
+  --vscode-text: #839496;
+  --vscode-border: #073642;
+  --vscode-accent: #2aa198;
+  --vscode-editor-bg: #002b36;
+  --vscode-tab-active-bg: #002b36;
+  --vscode-tab-inactive-bg: #00212b;
+  --vscode-hover-bg: #073642;
+  --vscode-tree-indentGuidesStroke: #073642;
+  --vscode-input-background: #073642;
+  --vscode-input-foreground: #839496;
+  --vscode-input-border: #073642;
+  --vscode-button-background: #2aa198;
+  --vscode-button-foreground: #002b36;
+  --vscode-button-hoverBackground: #93a1a1;
+  --vscode-descriptionForeground: #586e75;
+  --vscode-list-hover-bg: #073642;
+  --vscode-activity-bar-active-border: #2aa198;
+  --vscode-activity-bar-inactive-foreground: #586e75;
+  --vscode-activity-bar-foreground: #839496;
+}
+
+[data-theme="one-dark-pro"] {
+  /* One Dark Pro */
+  --vscode-bg: #282c34;
+  --vscode-sidebar-bg: #21252b;
+  --vscode-activity-bar-bg: #282c34;
+  --vscode-status-bar-bg: #21252b;
+  --vscode-text: #abb2bf;
+  --vscode-border: #181a1f;
+  --vscode-accent: #61afef;
+  --vscode-editor-bg: #282c34;
+  --vscode-tab-active-bg: #282c34;
+  --vscode-tab-inactive-bg: #21252b;
+  --vscode-hover-bg: #2c313a;
+  --vscode-tree-indentGuidesStroke: #3b4048;
+  --vscode-input-background: #3b4048;
+  --vscode-input-foreground: #abb2bf;
+  --vscode-input-border: #181a1f;
+  --vscode-button-background: #61afef;
+  --vscode-button-foreground: #282c34;
+  --vscode-button-hoverBackground: #4d78cc;
+  --vscode-descriptionForeground: #5c6370;
+  --vscode-list-hover-bg: #2c313a;
+  --vscode-activity-bar-active-border: #61afef;
+  --vscode-activity-bar-inactive-foreground: #5c6370;
+  --vscode-activity-bar-foreground: #abb2bf;
+}
+
+[data-theme="github-dark"] {
+  /* GitHub Dark */
+  --vscode-bg: #0d1117;
+  --vscode-sidebar-bg: #010409;
+  --vscode-activity-bar-bg: #010409;
+  --vscode-status-bar-bg: #0d1117;
+  --vscode-text: #c9d1d9;
+  --vscode-border: #30363d;
+  --vscode-accent: #58a6ff;
+  --vscode-editor-bg: #0d1117;
+  --vscode-tab-active-bg: #0d1117;
+  --vscode-tab-inactive-bg: #010409;
+  --vscode-hover-bg: #161b22;
+  --vscode-tree-indentGuidesStroke: #30363d;
+  --vscode-input-background: #0d1117;
+  --vscode-input-foreground: #c9d1d9;
+  --vscode-input-border: #30363d;
+  --vscode-button-background: #238636;
+  --vscode-button-foreground: #ffffff;
+  --vscode-button-hoverBackground: #2ea043;
+  --vscode-descriptionForeground: #8b949e;
+  --vscode-list-hover-bg: #161b22;
+  --vscode-activity-bar-active-border: #f78166;
+  --vscode-activity-bar-inactive-foreground: #8b949e;
+  --vscode-activity-bar-foreground: #c9d1d9;
+}
+
+[data-theme="synthwave-84"] {
+  /* Synthwave '84 */
+  --vscode-bg: #262335;
+  --vscode-sidebar-bg: #241b2f;
+  --vscode-activity-bar-bg: #262335;
+  --vscode-status-bar-bg: #262335;
+  --vscode-text: #ffffff;
+  --vscode-border: #241b2f;
+  --vscode-accent: #ff7edb;
+  --vscode-editor-bg: #262335;
+  --vscode-tab-active-bg: #262335;
+  --vscode-tab-inactive-bg: #241b2f;
+  --vscode-hover-bg: #34294f;
+  --vscode-tree-indentGuidesStroke: #34294f;
+  --vscode-input-background: #2a2139;
+  --vscode-input-foreground: #ffffff;
+  --vscode-input-border: #2a2139;
+  --vscode-button-background: #ff7edb;
+  --vscode-button-foreground: #262335;
+  --vscode-button-hoverBackground: #ff9ce6;
+  --vscode-descriptionForeground: #848bbd;
+  --vscode-list-hover-bg: #34294f;
+  --vscode-activity-bar-active-border: #36f9f6;
+  --vscode-activity-bar-inactive-foreground: #848bbd;
+  --vscode-activity-bar-foreground: #ffffff;
+}
+
+[data-theme="night-owl"] {
+  /* Night Owl */
+  --vscode-bg: #011627;
+  --vscode-sidebar-bg: #011627;
+  --vscode-activity-bar-bg: #011627;
+  --vscode-status-bar-bg: #011627;
+  --vscode-text: #d6deeb;
+  --vscode-border: #5f7e97;
+  --vscode-accent: #82aaff;
+  --vscode-editor-bg: #011627;
+  --vscode-tab-active-bg: #011627;
+  --vscode-tab-inactive-bg: #0b2942;
+  --vscode-hover-bg: #5f7e97;
+  --vscode-tree-indentGuidesStroke: #5f7e97;
+  --vscode-input-background: #0b253a;
+  --vscode-input-foreground: #d6deeb;
+  --vscode-input-border: #5f7e97;
+  --vscode-button-background: #82aaff;
+  --vscode-button-foreground: #ffffff;
+  --vscode-button-hoverBackground: #5f7e97;
+  --vscode-descriptionForeground: #5f7e97;
+  --vscode-list-hover-bg: #010e1a;
+  --vscode-activity-bar-active-border: #82aaff;
+  --vscode-activity-bar-inactive-foreground: #5f7e97;
+  --vscode-activity-bar-foreground: #d6deeb;
+}
+
+[data-theme="cobalt2"] {
+  /* Cobalt2 */
+  --vscode-bg: #193549;
+  --vscode-sidebar-bg: #15232d;
+  --vscode-activity-bar-bg: #0d3a58;
+  --vscode-status-bar-bg: #0d3a58;
+  --vscode-text: #ffffff;
+  --vscode-border: #0d3a58;
+  --vscode-accent: #ffc600;
+  --vscode-editor-bg: #193549;
+  --vscode-tab-active-bg: #193549;
+  --vscode-tab-inactive-bg: #15232d;
+  --vscode-hover-bg: #1f4662;
+  --vscode-tree-indentGuidesStroke: #1f4662;
+  --vscode-input-background: #1f4662;
+  --vscode-input-foreground: #ffffff;
+  --vscode-input-border: #1f4662;
+  --vscode-button-background: #ffc600;
+  --vscode-button-foreground: #15232d;
+  --vscode-button-hoverBackground: #ffe680;
+  --vscode-descriptionForeground: #0088ff;
+  --vscode-list-hover-bg: #1f4662;
+  --vscode-activity-bar-active-border: #ffc600;
+  --vscode-activity-bar-inactive-foreground: #0088ff;
+  --vscode-activity-bar-foreground: #ffffff;
+}
+
+[data-theme="gruvbox-dark"] {
+  /* Gruvbox Dark */
+  --vscode-bg: #282828;
+  --vscode-sidebar-bg: #282828;
+  --vscode-activity-bar-bg: #282828;
+  --vscode-status-bar-bg: #3c3836;
+  --vscode-text: #ebdbb2;
+  --vscode-border: #3c3836;
+  --vscode-accent: #fb4934;
+  /* Gruvbox Red */
+  --vscode-editor-bg: #282828;
+  --vscode-tab-active-bg: #282828;
+  --vscode-tab-inactive-bg: #1d2021;
+  --vscode-hover-bg: #3c3836;
+  --vscode-tree-indentGuidesStroke: #3c3836;
+  --vscode-input-background: #3c3836;
+  --vscode-input-foreground: #ebdbb2;
+  --vscode-input-border: #3c3836;
+  --vscode-button-background: #fb4934;
+  --vscode-button-foreground: #282828;
+  --vscode-button-hoverBackground: #fe8019;
+  /* Gruvbox Orange */
+  --vscode-descriptionForeground: #a89984;
+  --vscode-list-hover-bg: #3c3836;
+  --vscode-activity-bar-active-border: #fb4934;
+  --vscode-activity-bar-inactive-foreground: #a89984;
+  --vscode-activity-bar-foreground: #ebdbb2;
+}
+
 body {
   background-color: var(--vscode-bg);
   /* Fonts */

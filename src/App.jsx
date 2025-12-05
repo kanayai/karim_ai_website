@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Layout from './components/Layout';
 import Editor from './components/Editor';
+import { themes } from './constants/themes';
 import './App.css';
 
 function App() {
@@ -29,11 +30,10 @@ function App() {
 
   const toggleTheme = () => {
     setTheme(prev => {
-      // Circle through themes if toggled: dark -> light -> catppuccin -> tokyo-night
-      const themes = ['dark', 'light', 'catppuccin', 'tokyo-night'];
-      const currentIndex = themes.indexOf(prev);
+      // Circle through themes if toggled
+      const currentIndex = themes.findIndex(t => t.id === prev);
       const nextIndex = (currentIndex + 1) % themes.length;
-      return themes[nextIndex];
+      return themes[nextIndex].id;
     });
   };
 
