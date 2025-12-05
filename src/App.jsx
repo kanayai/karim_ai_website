@@ -6,7 +6,12 @@ import './App.css';
 function App() {
   const [openFiles, setOpenFiles] = useState(['Welcome']);
   const [activeFile, setActiveFile] = useState('Welcome');
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') || 'dark';
+    }
+    return 'dark';
+  });
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
     // Initialize based on window width
     if (typeof window !== 'undefined') {
@@ -19,10 +24,17 @@ function App() {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+    setTheme(prev => {
+      // Circle through themes if toggled: dark -> light -> catppuccin -> tokyo-night
+      const themes = ['dark', 'light', 'catppuccin', 'tokyo-night'];
+      const currentIndex = themes.indexOf(prev);
+      const nextIndex = (currentIndex + 1) % themes.length;
+      return themes[nextIndex];
+    });
   };
 
   const toggleSidebar = () => {
@@ -74,6 +86,7 @@ function App() {
       setActiveFile={handleOpenFile}
       theme={theme}
       toggleTheme={toggleTheme}
+      setTheme={setTheme}
       isSidebarOpen={isSidebarOpen}
       toggleSidebar={toggleSidebar}
       simpleMode={simpleMode}

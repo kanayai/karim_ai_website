@@ -28,6 +28,7 @@
   --vscode-activity-bar-foreground: #ffffff;
 }
 
+
 [data-theme="light"] {
   --vscode-bg: #ffffff;
   --vscode-sidebar-bg: #ffffff;
@@ -53,6 +54,62 @@
   --vscode-activity-bar-active-border: #007acc;
   --vscode-activity-bar-inactive-foreground: #999999;
   --vscode-activity-bar-foreground: #333333;
+}
+
+[data-theme="catppuccin"] {
+  /* Catppuccin Mocha */
+  --vscode-bg: #1e1e2e;
+  --vscode-sidebar-bg: #181825;
+  --vscode-activity-bar-bg: #11111b;
+  --vscode-status-bar-bg: #cba6f7;
+  /* Mauve */
+  --vscode-text: #cdd6f4;
+  --vscode-border: #313244;
+  --vscode-accent: #cba6f7;
+  --vscode-editor-bg: #1e1e2e;
+  --vscode-tab-active-bg: #1e1e2e;
+  --vscode-tab-inactive-bg: #181825;
+  --vscode-hover-bg: #313244;
+  --vscode-tree-indentGuidesStroke: #45475a;
+  --vscode-input-background: #313244;
+  --vscode-input-foreground: #cdd6f4;
+  --vscode-input-border: #45475a;
+  --vscode-button-background: #cba6f7;
+  --vscode-button-foreground: #1e1e2e;
+  --vscode-button-hoverBackground: #b4befe;
+  --vscode-descriptionForeground: #a6adc8;
+  --vscode-list-hover-bg: #313244;
+  --vscode-activity-bar-active-border: #cba6f7;
+  --vscode-activity-bar-inactive-foreground: #6c7086;
+  --vscode-activity-bar-foreground: #cdd6f4;
+}
+
+[data-theme="tokyo-night"] {
+  /* Tokyo Night */
+  --vscode-bg: #1a1b26;
+  --vscode-sidebar-bg: #16161e;
+  --vscode-activity-bar-bg: #15161e;
+  --vscode-status-bar-bg: #7aa2f7;
+  --vscode-text: #a9b1d6;
+  --vscode-border: #292e42;
+  /* slightly lighter than bg for borders */
+  --vscode-accent: #7aa2f7;
+  --vscode-editor-bg: #1a1b26;
+  --vscode-tab-active-bg: #1a1b26;
+  --vscode-tab-inactive-bg: #16161e;
+  --vscode-hover-bg: #292e42;
+  --vscode-tree-indentGuidesStroke: #292e42;
+  --vscode-input-background: #1f2335;
+  --vscode-input-foreground: #a9b1d6;
+  --vscode-input-border: #292e42;
+  --vscode-button-background: #7aa2f7;
+  --vscode-button-foreground: #15161e;
+  --vscode-button-hoverBackground: #bb9af7;
+  --vscode-descriptionForeground: #565f89;
+  --vscode-list-hover-bg: #292e42;
+  --vscode-activity-bar-active-border: #7aa2f7;
+  --vscode-activity-bar-inactive-foreground: #565f89;
+  --vscode-activity-bar-foreground: #a9b1d6;
 }
 
 body {

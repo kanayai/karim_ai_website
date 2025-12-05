@@ -6,7 +6,7 @@ import CommandPalette from './CommandPalette';
 import TitleBar from './TitleBar';
 import Terminal from './Terminal';
 
-const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, isSidebarOpen, toggleSidebar, simpleMode, toggleSimpleMode }) => {
+const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, setTheme, isSidebarOpen, toggleSidebar, simpleMode, toggleSimpleMode }) => {
     const [isPaletteOpen, setIsPaletteOpen] = useState(false);
     const [isTerminalOpen, setIsTerminalOpen] = useState(false); // Default closed
     const [activeView, setActiveView] = useState('explorer');
@@ -58,6 +58,7 @@ const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, isSid
                         setActiveFile={setActiveFile}
                         theme={theme}
                         toggleTheme={toggleTheme}
+                        setTheme={setTheme}
                         onSearchClick={() => setIsPaletteOpen(true)}
                     />
                 )}

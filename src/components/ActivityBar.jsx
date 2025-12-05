@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { VscFiles, VscSearch, VscGitMerge, VscDebugAlt, VscExtensions, VscGithub, VscAccount, VscSettingsGear, VscColorMode } from 'react-icons/vsc';
 
-const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, theme, toggleTheme, onSearchClick }) => {
+const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, theme, toggleTheme, setTheme, onSearchClick }) => {
     const [showAccountsMenu, setShowAccountsMenu] = useState(false);
     const [showSettingsMenu, setShowSettingsMenu] = useState(false);
+    const [showThemeSubmenu, setShowThemeSubmenu] = useState(false);
     const { t, i18n } = useTranslation();
 
     useEffect(() => {
         const handleClickOutside = () => {
             setShowAccountsMenu(false);
             setShowSettingsMenu(false);
+            setShowThemeSubmenu(false);
         };
 
         window.addEventListener('click', handleClickOutside);
@@ -42,6 +44,15 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
             {children}
         </div>
     );
+
+    const themes = [
+        { id: 'dark', label: 'Dark (VS Code)' },
+        { id: 'light', label: 'Light' },
+        { id: 'catppuccin', label: 'Catppuccin' },
+        { id: 'tokyo-night', label: 'Tokyo Night' }
+    ];
+
+    const currentThemeLabel = themes.find(t => t.id === theme)?.label || 'Dark';
 
     return (
         <div className="d-flex flex-column justify-content-between align-items-center py-2 activity-bar"
@@ -83,6 +94,7 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
                     <IconWrapper onClick={(e) => {
                         e.stopPropagation();
                         setShowAccountsMenu(!showAccountsMenu);
+                        setShowSettingsMenu(false);
                     }} title="Accounts">
                         <VscAccount />
                     </IconWrapper>
@@ -128,6 +140,7 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
                     <IconWrapper onClick={(e) => {
                         e.stopPropagation();
                         setShowSettingsMenu(prev => !prev);
+                        setShowAccountsMenu(false);
                     }} title="Settings">
                         <VscSettingsGear />
                     </IconWrapper>
@@ -142,7 +155,7 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
                                 border: '1px solid var(--vscode-border)',
                                 boxShadow: '0 4px 10px rgba(0,0,0,0.4)',
                                 zIndex: 1000,
-                                minWidth: '200px',
+                                minWidth: '220px',
                                 padding: '5px 0',
                                 borderRadius: '5px',
                                 color: 'var(--vscode-text)'
@@ -161,19 +174,44 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
                                 <span style={{ fontSize: '11px', opacity: 0.7 }}>⇧⌘P</span>
                             </div>
                             <div style={{ height: '1px', backgroundColor: 'var(--vscode-border)', margin: '4px 0' }}></div>
+
+                            {/* Theme Selection */}
                             <div
                                 className="px-3 py-2 d-flex align-items-center justify-content-between"
                                 style={{ cursor: 'pointer', fontSize: '13px', transition: 'background 0.2s' }}
                                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--vscode-hover-bg)'}
                                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                                onClick={() => {
-                                    toggleTheme();
-                                    setShowSettingsMenu(false);
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setShowThemeSubmenu(prev => !prev);
                                 }}
                             >
                                 <span>Color Theme</span>
-                                <span style={{ fontSize: '11px', opacity: 0.7 }}>{theme === 'dark' ? 'Dark' : 'Light'}</span>
+                                <span style={{ fontSize: '11px', opacity: 0.7 }}>{currentThemeLabel} ›</span>
                             </div>
+
+                            {showThemeSubmenu && (
+                                <div style={{ backgroundColor: 'rgba(0,0,0,0.2)', padding: '4px 0' }}>
+                                    {themes.map(tOption => (
+                                        <div
+                                            key={tOption.id}
+                                            className="px-4 py-1 d-flex align-items-center justify-content-between"
+                                            style={{ cursor: 'pointer', fontSize: '12px', transition: 'background 0.2s' }}
+                                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--vscode-hover-bg)'}
+                                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                                            onClick={() => {
+                                                setTheme(tOption.id);
+                                                setShowSettingsMenu(false);
+                                                setShowThemeSubmenu(false);
+                                            }}
+                                        >
+                                            <span>{tOption.label}</span>
+                                            {theme === tOption.id && <span>✓</span>}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
                             <div style={{ height: '1px', backgroundColor: 'var(--vscode-border)', margin: '4px 0' }}></div>
                             <div className="px-3 py-2" style={{ fontWeight: 'bold', fontSize: '12px', opacity: 0.8 }}>
                                 Language
