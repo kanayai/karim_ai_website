@@ -355,16 +355,24 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
 
                                 // Sync Giscus Theme
                                 const giscusTheme = isDark ? 'dark_high_contrast' : 'light';
-                                const iframeWindow = iframe.contentWindow;
-                                if (iframeWindow) {
-                                    iframeWindow.postMessage({
-                                        giscus: {
-                                            setConfig: {
-                                                theme: giscusTheme
+
+                                // Giscus loads asynchronously inside the iframe. We need to wait for it.
+                                const checkForGiscus = setInterval(() => {
+                                    const giscusFrame = iframe.contentDocument.querySelector('iframe.giscus-frame');
+                                    if (giscusFrame && giscusFrame.contentWindow) {
+                                        giscusFrame.contentWindow.postMessage({
+                                            giscus: {
+                                                setConfig: {
+                                                    theme: giscusTheme
+                                                }
                                             }
-                                        }
-                                    }, 'https://giscus.app');
-                                }
+                                        }, 'https://giscus.app');
+                                        clearInterval(checkForGiscus);
+                                    }
+                                }, 500);
+
+                                // Clear interval after 10 seconds to avoid infinite loop if Giscus never loads
+                                setTimeout(() => clearInterval(checkForGiscus), 10000);
                             }
                         }}
                     />
