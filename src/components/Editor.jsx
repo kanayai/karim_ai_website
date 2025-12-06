@@ -484,7 +484,8 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
                             className="d-flex align-items-center px-3 gap-2"
                             style={{
                                 backgroundColor: activeFile === file ? 'var(--vscode-editor-bg)' : 'var(--vscode-tab-inactive-bg)',
-                                borderTop: activeFile === file ? '1px solid var(--vscode-accent)' : '1px solid transparent',
+                                borderTop: activeFile === file ? '2px solid transparent' : '1px solid transparent', // Make transparent to show gradient
+                                borderImage: activeFile === file ? 'var(--primary-gradient) 1' : 'none', // Gradient border
                                 borderRight: '1px solid var(--vscode-border)',
                                 color: activeFile === file ? 'var(--vscode-text)' : '#969696',
                                 cursor: 'pointer',
@@ -531,7 +532,7 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
                     height: '22px',
                     minHeight: '22px',
                     flexShrink: 0,
-                    backgroundColor: 'var(--vscode-editor-bg)',
+                    background: 'linear-gradient(to right, rgba(100, 108, 255, 0.05), transparent)', // Subtle gradient
                     borderBottom: '1px solid var(--vscode-border)', // Optional: subtle separator
                     fontSize: '13px',
                     color: '#858585', // Dimmed text color
@@ -563,7 +564,15 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
             )}
 
             {/* Content Area */}
-            <div className="flex-grow-1" style={{ overflow: 'hidden' }}>
+            <div
+                key={activeFile}
+                className="flex-grow-1"
+                style={{
+                    position: 'relative',
+                    overflow: 'hidden',
+                    animation: 'fadeSlideIn 0.3s ease-out forwards'
+                }}
+            >
                 {renderContent()}
             </div>
         </div>

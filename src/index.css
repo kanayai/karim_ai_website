@@ -3,6 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
 
+  --primary-gradient: linear-gradient(135deg, #646cff 0%, #9442fe 100%);
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
@@ -11,6 +12,13 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.gradient-text {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 a {
@@ -50,6 +58,10 @@ button {
 
 button:hover {
   border-color: #646cff;
+  background-image: var(--primary-gradient);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  color: white;
 }
 
 button:focus,
@@ -81,4 +93,34 @@ button:focus-visible {
   .command-palette-trigger {
     width: 500px;
   }
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.blinking-cursor {
+  animation: blink 1s step-end infinite;
+  color: var(--vscode-accent, #646cff);
+  margin-left: 2px;
 }

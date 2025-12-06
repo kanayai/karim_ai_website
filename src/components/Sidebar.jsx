@@ -94,7 +94,7 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
                 className={`py-1 d-flex align-items-center gap-2 ${activeFile === item.name ? 'active-file' : ''}`}
                 style={{
                     cursor: 'pointer',
-                    backgroundColor: activeFile === item.name ? 'var(--vscode-hover-bg)' : 'transparent',
+                    backgroundColor: activeFile === item.name ? 'var(--vscode-active-item-gradient)' : 'transparent',
                     color: 'var(--vscode-text)',
                     paddingLeft: '10px',
                     marginLeft: '4px'
@@ -108,7 +108,14 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
     };
 
     return (
-        <div className="d-flex flex-column sidebar-content" style={{ backgroundColor: 'var(--vscode-sidebar-bg)', borderRight: '1px solid var(--vscode-border)', height: '100%', overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
+        <div className="d-flex flex-column sidebar-content" style={{
+            background: `var(--vscode-sidebar-gradient)`,
+            backdropFilter: 'blur(10px)',
+            borderRight: '1px solid var(--vscode-border)',
+            height: '100%',
+            overflowY: 'auto',
+            WebkitOverflowScrolling: 'touch'
+        }}>
             {activeView === 'explorer' ? (
                 <>
                     <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>{t('sidebar.explorer')}</div>

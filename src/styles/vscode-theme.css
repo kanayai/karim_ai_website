@@ -175,8 +175,8 @@
 [data-theme="nord"] {
   /* Nord */
   --vscode-bg: #2e3440;
-  --vscode-sidebar-bg: #2e3440;
-  --vscode-activity-bar-bg: #2e3440;
+  --vscode-sidebar-bg: rgba(46, 52, 64, 0.85);
+  --vscode-activity-bar-bg: rgba(46, 52, 64, 0.9);
   --vscode-status-bar-bg: #3b4252;
   --vscode-text: #d8dee9;
   --vscode-border: #3b4252;
@@ -197,6 +197,10 @@
   --vscode-activity-bar-active-border: #88c0d0;
   --vscode-activity-bar-inactive-foreground: #d8dee966;
   --vscode-activity-bar-foreground: #d8dee9;
+  /* Gradients */
+  --vscode-sidebar-gradient: linear-gradient(to bottom, #2e3440 0%, #292e39 100%);
+  --vscode-titlebar-gradient: linear-gradient(to right, #2e3440 0%, #3b4252 100%);
+  --vscode-active-item-gradient: linear-gradient(90deg, rgba(136, 192, 208, 0.1) 0%, rgba(136, 192, 208, 0.02) 100%);
 }
 
 [data-theme="solarized-dark"] {
@@ -438,4 +442,11 @@ body {
   .command-palette-input {
     font-size: 16px !important;
   }
+}
+
+:root {
+  /* Gradient Fallbacks */
+  --vscode-sidebar-gradient: var(--vscode-sidebar-bg);
+  --vscode-titlebar-gradient: var(--vscode-activity-bar-bg);
+  --vscode-active-item-gradient: var(--vscode-hover-bg);
 }

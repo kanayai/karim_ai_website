@@ -54,6 +54,7 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
                 width: '48px',
                 minWidth: '48px',
                 backgroundColor: 'var(--vscode-activity-bar-bg)',
+                backdropFilter: 'blur(10px)',
                 borderRight: '1px solid var(--vscode-border)',
                 zIndex: 101,
                 height: '100%'

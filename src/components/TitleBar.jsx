@@ -7,6 +7,7 @@ const TitleBar = ({ onSearchClick, toggleSidebar, simpleMode, toggleSimpleMode }
             style={{
                 height: '35px',
                 flexShrink: 0,
+                background: 'var(--vscode-titlebar-gradient)',
                 backgroundColor: 'var(--vscode-activity-bar-bg)',
                 borderBottom: '1px solid var(--vscode-border)',
                 userSelect: 'none'

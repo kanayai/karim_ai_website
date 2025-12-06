@@ -4,6 +4,22 @@ import { useTranslation } from 'react-i18next';
 
 const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode }) => {
     const { t } = useTranslation();
+    const [displayText, setDisplayText] = React.useState('');
+    const fullText = t('welcome.title');
+
+    React.useEffect(() => {
+        let index = 0;
+        setDisplayText('');
+        const intervalId = setInterval(() => {
+            setDisplayText((prev) => fullText.slice(0, index + 1));
+            index++;
+            if (index === fullText.length) {
+                clearInterval(intervalId);
+            }
+        }, 100); // 100ms per character
+
+        return () => clearInterval(intervalId);
+    }, [fullText]);
 
     const startItems = [
         {
@@ -49,7 +65,10 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode }) => {
                 <div className="mb-5">
                     <div className="d-flex flex-column align-items-start gap-3 mb-2">
                         <img src="/images/blackboard.png" alt="Logo" style={{ width: '100%', maxWidth: '300px', height: 'auto', objectFit: 'contain' }} />
-                        <h1 style={{ fontSize: '36px', fontWeight: '300' }}>{t('welcome.title')}</h1>
+                        <h1 style={{ fontSize: '36px', fontWeight: '300' }}>
+                            {displayText}
+                            <span className="blinking-cursor">|</span>
+                        </h1>
                     </div>
                     <p style={{ fontSize: '18px', opacity: 0.8, fontWeight: '300' }}>
                         {t('welcome.subtitle')}
