@@ -5,21 +5,40 @@ import { useTranslation } from 'react-i18next';
 const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode }) => {
     const { t } = useTranslation();
     const [displayText, setDisplayText] = React.useState('');
-    const fullText = t('welcome.title');
 
     React.useEffect(() => {
-        let index = 0;
-        setDisplayText('');
-        const intervalId = setInterval(() => {
-            setDisplayText((prev) => fullText.slice(0, index + 1));
-            index++;
-            if (index === fullText.length) {
-                clearInterval(intervalId);
-            }
-        }, 100); // 100ms per character
+        const typeSequence = async () => {
+            const initialText = "Karim Anaya-Izquierdo";
+            const finalText = "Karim AI";
 
-        return () => clearInterval(intervalId);
-    }, [fullText]);
+            // 1. Type full name
+            for (let i = 0; i <= initialText.length; i++) {
+                setDisplayText(initialText.slice(0, i));
+                await new Promise(r => setTimeout(r, 100));
+            }
+
+            // 2. Pause
+            await new Promise(r => setTimeout(r, 1000));
+
+            // 3. Backspace to "Karim "
+            for (let i = initialText.length; i >= "Karim ".length; i--) {
+                setDisplayText(initialText.slice(0, i));
+                await new Promise(r => setTimeout(r, 50));
+            }
+
+            // 4. Type "AI"
+            const suffix = "AI";
+            const base = "Karim ";
+            for (let i = 1; i <= suffix.length; i++) {
+                setDisplayText(base + suffix.slice(0, i));
+                await new Promise(r => setTimeout(r, 150));
+            }
+        };
+
+        typeSequence();
+
+        return () => { }; // Cleanup not strictly necessary for this simple effect, but good practice usually involves flags
+    }, []);
 
     const startItems = [
         {
