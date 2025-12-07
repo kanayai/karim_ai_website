@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,7 +44,9 @@
             gap: 15px;
         }
 
-        h1 i { color: var(--accent-blue); }
+        h1 i {
+            color: var(--accent-blue);
+        }
 
         .projects-grid {
             display: grid;
@@ -70,15 +72,31 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--accent-blue), var(--accent-teal));
-            opacity: 0.8;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 60px 60px 0 0;
+            border-color: #3794ff transparent transparent transparent;
+            z-index: 1;
+        }
+
+        /* Icon overlay for the corner */
+        .project-card::after {
+            content: "\f0c3";
+            /* Project diagram icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            color: white;
+            z-index: 2;
+            font-size: 14px;
         }
 
         .project-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             border-color: var(--border-color);
         }
 
@@ -160,13 +178,35 @@
             .projects-grid {
                 grid-template-columns: 1fr;
             }
-            body { padding: 20px; }
+
+            body {
+                padding: 20px;
+            }
         }
     </style>
     <script>
-        (function() {
+        (function () {
             const params = new URLSearchParams(window.location.search);
             const theme = params.get("theme");
+
+            // GitHub Dark (Default)
+            if (theme === "github-dark" || !theme || theme === 'dark') {
+                document.documentElement.style.setProperty("--bg-color", "#0d1117");
+                document.documentElement.style.setProperty("--card-bg", "#161b22");
+                document.documentElement.style.setProperty("--text-primary", "#c9d1d9");
+                document.documentElement.style.setProperty("--text-secondary", "#8b949e");
+                document.documentElement.style.setProperty("--border-color", "#30363d");
+                document.documentElement.style.setProperty("--hover-bg", "#21262d");
+                document.documentElement.style.setProperty("--accent-blue", "#58a6ff");
+                document.documentElement.style.setProperty("--accent-teal", "#56d364");
+            }
+            // VS Code Dark
+            else if (theme === "vscode-dark") {
+                document.documentElement.style.setProperty("--bg-color", "#1e1e1e");
+                document.documentElement.style.setProperty("--card-bg", "#252526");
+                // Other defaults remain
+            }
+
             if (theme === "light") {
                 document.documentElement.style.setProperty("--bg-color", "#ffffff");
                 document.documentElement.style.setProperty("--card-bg", "#ffffff");
@@ -180,6 +220,7 @@
         })();
     </script>
 </head>
+
 <body>
     <div class="container">
         <h1><i class="fas fa-flask"></i> Research Projects</h1>
@@ -192,26 +233,35 @@
                     <i class="fas fa-project-diagram project-icon"></i>
                 </div>
                 <div class="project-title">GKN Prosperity Partnership</div>
-                <div class="project-desc">A major collaborative research partnership between the University of Bath and GKN Aerospace, funded by the EPSRC. The project, often referred to as 'Fingerprint', focuses on advancing sustainable aerospace technologies including Hydrogen Storage, Composite Structures, and Propulsion Systems.</div>
+                <div class="project-desc">A major collaborative research partnership between the University of Bath and
+                    GKN Aerospace, funded by the EPSRC. The project, often referred to as 'Fingerprint', focuses on
+                    advancing sustainable aerospace technologies including Hydrogen Storage, Composite Structures, and
+                    Propulsion Systems.</div>
                 <div class="tags">
-                    <span class="tag">Aerospace</span><span class="tag">Composites</span><span class="tag">Sustainability</span><span class="tag">EPSRC</span>
+                    <span class="tag">Aerospace</span><span class="tag">Composites</span><span
+                        class="tag">Sustainability</span><span class="tag">EPSRC</span>
                 </div>
                 <div class="project-footer">
-                    <a href="https://researchportal.bath.ac.uk/en/projects/gkn-prosperity-partnership/" target="_blank" class="btn-view">
+                    <a href="https://researchportal.bath.ac.uk/en/projects/gkn-prosperity-partnership/" target="_blank"
+                        class="btn-view">
                         Visit Project Website <i class="fas fa-external-link-alt"></i>
                     </a>
                 </div>
             </div>
-  
+
             <div class="project-card">
                 <div class="project-header">
                     <span class="project-role">Co-Investigator</span>
                     <i class="fas fa-project-diagram project-icon"></i>
                 </div>
                 <div class="project-title">CerTest <U+2013> Certification for Design</div>
-                <div class="project-desc">Developing new approaches to enable lighter, more cost and fuel-efficient composite aero-structures. CerTest addresses the challenges hindering step-changes in future engineering design by reshaping the testing pyramid to reduce empiricism and enable a new integrated approach.</div>
+                <div class="project-desc">Developing new approaches to enable lighter, more cost and fuel-efficient
+                    composite aero-structures. CerTest addresses the challenges hindering step-changes in future
+                    engineering design by reshaping the testing pyramid to reduce empiricism and enable a new integrated
+                    approach.</div>
                 <div class="tags">
-                    <span class="tag">Composites</span><span class="tag">Testing Pyramid</span><span class="tag">Aero-structures</span><span class="tag">EPSRC</span>
+                    <span class="tag">Composites</span><span class="tag">Testing Pyramid</span><span
+                        class="tag">Aero-structures</span><span class="tag">EPSRC</span>
                 </div>
                 <div class="project-footer">
                     <a href="https://www.composites-certest.com" target="_blank" class="btn-view">
@@ -219,9 +269,9 @@
                     </a>
                 </div>
             </div>
-  
+
         </div>
     </div>
 </body>
-</html>
 
+</html>

@@ -1,9 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import publicationsData from '../../data/publications.json';
+import SearchBar from './SearchBar';
 
 const RCodeViewer = ({ fileName }) => {
     const [consoleHeight, setConsoleHeight] = useState(60); // percentage
     const [isDragging, setIsDragging] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedYear, setSelectedYear] = useState('all');
+
+    // Extract unique years for filter
+    const years = useMemo(() => {
+        const uniqueYears = [...new Set(publicationsData.map(p => p.year))].sort((a, b) => b - a);
+        return [
+            { label: 'All Years', value: 'all' },
+            ...uniqueYears.map(year => ({ label: year.toString(), value: year.toString() }))
+        ];
+    }, []);
+
+    // Filter publications based on search and year
+    const filteredPublications = useMemo(() => {
+        return publicationsData.filter(pub => {
+            const matchesSearch = searchTerm === '' ||
+                pub.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                pub.authors.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                pub.journal.toLowerCase().includes(searchTerm.toLowerCase());
+
+            const matchesYear = selectedYear === 'all' || pub.year.toString() === selectedYear;
+
+            return matchesSearch && matchesYear;
+        });
+    }, [searchTerm, selectedYear]);
 
     // The R code to display in the editor
     // The R code to display in the editor
@@ -52,7 +78,7 @@ publications_df`;
 
     // Convert publications to tibble format
     const createTibble = () => {
-        const tibbleData = publicationsData.map(pub => ({
+        const tibbleData = filteredPublications.map(pub => ({
             year: pub.year,
             title: pub.title.length > 60 ? pub.title.substring(0, 60) + '...' : pub.title,
             authors: pub.authors.length > 40 ? pub.authors.substring(0, 40) + '...' : pub.authors,
@@ -151,6 +177,17 @@ publications_df`;
                 backgroundColor: 'var(--vscode-bg)',
                 color: 'var(--vscode-text)'
             }}>
+                {/* Search Bar */}
+                <div className="px-3 pt-3">
+                    <SearchBar
+                        placeholder="Search publications by title, author, or journal..."
+                        onSearch={setSearchTerm}
+                        filters={years}
+                        selectedFilter={selectedYear}
+                        onFilterChange={setSelectedYear}
+                    />
+                </div>
+
                 {/* Terminal header */}
                 <div className="px-3 py-1 d-flex align-items-center justify-content-between" style={{
                     backgroundColor: 'var(--vscode-bg)',
@@ -159,7 +196,9 @@ publications_df`;
                 }}>
                     <div className="d-flex align-items-center gap-2">
                         <span style={{ fontWeight: 'bold' }}>R Console</span>
-                        <span style={{ opacity: 0.6, fontSize: '11px' }}>Output</span>
+                        <span style={{ opacity: 0.6, fontSize: '11px' }}>
+                            Output ({numRows} publication{numRows !== 1 ? 's' : ''})
+                        </span>
                     </div>
                 </div>
 
