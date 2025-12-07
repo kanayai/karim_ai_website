@@ -11,6 +11,9 @@ import MusicPlayer from './MusicPlayer';
 import LatexPlayground from './LatexPlayground';
 import CitationGenerator from './CitationGenerator';
 import DataVizGallery from './DataVizGallery';
+import MarkdownViewer from './MarkdownViewer';
+import LicenseViewer from './LicenseViewer';
+import GitIgnoreViewer from './GitIgnoreViewer';
 import { VscClose, VscCloseAll, VscChevronRight, VscLaw, VscGame, VscCode, VscGitMerge, VscRadioTower, VscPaintcan, VscSymbolKeyword, VscQuote, VscGraph } from 'react-icons/vsc';
 import { FaMarkdown, FaPython, FaJs, FaReact, FaHtml5 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
@@ -244,13 +247,29 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
             );
         }
 
-        // Use CodeViewer for MD, CSS, JSON, TXT, and .gitignore
-        if (activeFile.endsWith('.md') || activeFile.endsWith('.css') || activeFile.endsWith('.json') || activeFile.endsWith('.txt') || activeFile === '.gitignore') {
+        // Specific Viewers for README, LICENSE, .gitignore
+        if (activeFile.endsWith('README.md')) {
+            const content = fileContent[activeFile] || `Content for ${activeFile} not found.`;
+            return <MarkdownViewer content={content} />;
+        }
+
+        if (activeFile.endsWith('LICENSE.txt')) {
+            const content = fileContent[activeFile] || `Content for ${activeFile} not found.`;
+            return <LicenseViewer content={content} />;
+        }
+
+        if (activeFile === '.gitignore') {
+            const content = fileContent[activeFile] || `Content for ${activeFile} not found.`;
+            return <GitIgnoreViewer content={content} />;
+        }
+
+        // Use CodeViewer for MD (other than README), CSS, JSON, TXT
+        if (activeFile.endsWith('.md') || activeFile.endsWith('.css') || activeFile.endsWith('.json') || activeFile.endsWith('.txt')) {
             const content = fileContent[activeFile] || `Content for ${activeFile} not found.`;
             let language = 'markdown';
             if (activeFile.endsWith('.css')) language = 'css';
             if (activeFile.endsWith('.json')) language = 'json';
-            if (activeFile.endsWith('.txt') || activeFile === '.gitignore') language = 'plaintext';
+            if (activeFile.endsWith('.txt')) language = 'plaintext';
 
             return <CodeViewer content={content} language={language} />;
         }

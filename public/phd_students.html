@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,22 +42,62 @@
         }
 
         .extension-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
         }
 
         .extension-item {
             display: flex;
-            align-items: flex-start;
-            padding: 10px;
+            flex-direction: column;
+            /* Stack content vertically in card */
+            padding: 25px;
             cursor: pointer;
-            border-radius: 4px;
-            transition: background-color 0.1s;
+            border-radius: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid var(--vscode-list-hover-bg);
+            /* subtle border */
+            position: relative;
+            overflow: hidden;
+            background-color: var(--vscode-list-hover-bg);
+            /* Default card bg */
+            height: 100%;
+            /* Uniform height */
         }
 
         .extension-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             background-color: var(--vscode-list-hover-bg);
+            /* Maintain bg on hover */
+        }
+
+        /* Blue Top-Left Corner Accent */
+        .extension-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 60px 60px 0 0;
+            border-color: #3794ff transparent transparent transparent;
+            z-index: 1;
+        }
+
+        /* Icon overlay for the corner */
+        .extension-item::after {
+            content: "\f19d";
+            /* Graduation Cap Icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            color: white;
+            z-index: 2;
+            font-size: 14px;
         }
 
         .icon-container {
@@ -77,7 +117,8 @@
 
         .content {
             flex-grow: 1;
-            min-width: 0; /* Prevents text overflow issues */
+            min-width: 0;
+            /* Prevents text overflow issues */
         }
 
         .header {
@@ -166,14 +207,17 @@
             .extension-item {
                 flex-direction: column;
             }
+
             .icon-container {
                 margin-bottom: 10px;
             }
+
             .actions {
                 margin-left: 0;
                 margin-top: 10px;
                 width: 100%;
             }
+
             .btn-install {
                 width: 100%;
                 text-align: center;
@@ -181,13 +225,33 @@
         }
     </style>
     <script>
-        (function() {
+        (function () {
             const params = new URLSearchParams(window.location.search);
             const theme = params.get("theme");
+
+            // GitHub Dark (Default)
+            if (theme === "github-dark" || !theme || theme === 'dark') {
+                document.documentElement.style.setProperty("--vscode-editor-bg", "#0d1117");
+                document.documentElement.style.setProperty("--vscode-foreground", "#c9d1d9");
+                document.documentElement.style.setProperty("--vscode-list-hover-bg", "#161b22"); // Card BG
+                document.documentElement.style.setProperty("--vscode-button-background", "#238636");
+                document.documentElement.style.setProperty("--vscode-button-foreground", "#ffffff");
+                document.documentElement.style.setProperty("--vscode-button-hoverBackground", "#2ea043");
+                document.documentElement.style.setProperty("--vscode-descriptionForeground", "#8b949e");
+                document.documentElement.style.setProperty("--vscode-textLink-foreground", "#58a6ff");
+            }
+            // VS Code Dark
+            else if (theme === "vscode-dark") {
+                // Default variables are already VS Code Dark, no change needed usually, 
+                // but good to be explicit if defaults change.
+                document.documentElement.style.setProperty("--vscode-editor-bg", "#1e1e1e");
+                // ... (other defaults)
+            }
+
             if (theme === "light") {
                 document.documentElement.style.setProperty("--vscode-editor-bg", "#ffffff");
                 document.documentElement.style.setProperty("--vscode-foreground", "#333333");
-                document.documentElement.style.setProperty("--vscode-list-hover-bg", "#f0f0f0");
+                document.documentElement.style.setProperty("--vscode-list-hover-bg", "#f3f4f6");
                 document.documentElement.style.setProperty("--vscode-button-background", "#007acc");
                 document.documentElement.style.setProperty("--vscode-button-foreground", "#ffffff");
                 document.documentElement.style.setProperty("--vscode-button-hoverBackground", "#0062a3");
@@ -197,6 +261,7 @@
         })();
     </script>
 </head>
+
 <body>
     <div class="container">
         <h1>PhD Students</h1>
@@ -218,14 +283,16 @@
                         <i class="fas fa-university"></i> Mathematical Sciences • Karim Anaya-Izquierdo
                     </div>
                     <div class="tags">
-                        <span class="tag">Time-to-Event</span><span class="tag">Survival Analysis</span><span class="tag">Statistics</span>
+                        <span class="tag">Time-to-Event</span><span class="tag">Survival Analysis</span><span
+                            class="tag">Statistics</span>
                     </div>
                 </div>
                 <div class="actions">
-                    <a href="https://researchportal.bath.ac.uk/en/studentTheses/modelling-techniques-for-time-to-event-data-analysis" target="_blank" class="btn-install">View Thesis</a>
+                    <a href="https://researchportal.bath.ac.uk/en/studentTheses/modelling-techniques-for-time-to-event-data-analysis"
+                        target="_blank" class="btn-install">View Thesis</a>
                 </div>
             </div>
-  
+
             <div class="extension-item">
                 <div class="icon-container">
                     <i class="fas fa-graduation-cap"></i>
@@ -242,14 +309,16 @@
                         <i class="fas fa-university"></i> Mathematical Sciences (SAMBa) • Karim Anaya-Izquierdo
                     </div>
                     <div class="tags">
-                        <span class="tag">MCMC</span><span class="tag">Geometry</span><span class="tag">SAMBa</span><span class="tag">Statistics</span>
+                        <span class="tag">MCMC</span><span class="tag">Geometry</span><span
+                            class="tag">SAMBa</span><span class="tag">Statistics</span>
                     </div>
                 </div>
                 <div class="actions">
-                    <a href="https://researchportal.bath.ac.uk/en/studentTheses/geometric-markov-chain-monte-carlo" target="_blank" class="btn-install">View Thesis</a>
+                    <a href="https://researchportal.bath.ac.uk/en/studentTheses/geometric-markov-chain-monte-carlo"
+                        target="_blank" class="btn-install">View Thesis</a>
                 </div>
             </div>
-  
+
             <div class="extension-item">
                 <div class="icon-container">
                     <i class="fas fa-graduation-cap"></i>
@@ -261,21 +330,25 @@
                             <span class="version">v1.0.0</span>
                         </div>
                     </div>
-                    <div class="description">Impact Damage Modelling of Composite Laminates Using Statistical Methods to Assess Strength Reduction for Rapid Design</div>
+                    <div class="description">Impact Damage Modelling of Composite Laminates Using Statistical Methods to
+                        Assess Strength Reduction for Rapid Design</div>
                     <div class="publisher">
-                        <i class="fas fa-university"></i> Mechanical Engineering (SAMBa) • Andrew Rhead, Karim Anaya-Izquierdo
+                        <i class="fas fa-university"></i> Mechanical Engineering (SAMBa) • Andrew Rhead, Karim
+                        Anaya-Izquierdo
                     </div>
                     <div class="tags">
-                        <span class="tag">Composites</span><span class="tag">Impact Damage</span><span class="tag">Statistical Modelling</span><span class="tag">SAMBa</span>
+                        <span class="tag">Composites</span><span class="tag">Impact Damage</span><span
+                            class="tag">Statistical Modelling</span><span class="tag">SAMBa</span>
                     </div>
                 </div>
                 <div class="actions">
-                    <a href="https://researchportal.bath.ac.uk/en/studentTheses/impact-damage-modelling-of-composite-laminates-using-statistical-" target="_blank" class="btn-install">View Thesis</a>
+                    <a href="https://researchportal.bath.ac.uk/en/studentTheses/impact-damage-modelling-of-composite-laminates-using-statistical-"
+                        target="_blank" class="btn-install">View Thesis</a>
                 </div>
             </div>
-  
+
         </div>
     </div>
 </body>
-</html>
 
+</html>

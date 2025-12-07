@@ -49,8 +49,39 @@
             background-color: #f8f9fa;
             border: 1px solid #e9ecef;
             border-radius: 8px;
-            padding: 20px;
+            padding: 25px;
+            /* Increased padding */
             margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Blue Top-Left Corner Accent */
+        .contact-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 60px 60px 0 0;
+            border-color: #3794ff transparent transparent transparent;
+            z-index: 1;
+        }
+
+        /* Icon overlay for the corner */
+        .contact-card::after {
+            content: "\F1D6";
+            /* VS Code 'book' icon or similar generic star */
+            font-family: "bootstrap-icons";
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            color: white;
+            z-index: 2;
+            font-size: 14px;
         }
 
         .contact-item {
@@ -88,23 +119,27 @@
             background-color: #1e1e1e;
             color: #d4d4d4;
         }
-        
+
         /* GitHub Dark Support */
         body.github-dark {
             background-color: #0d1117;
             color: #c9d1d9;
         }
+
         body.github-dark h1 {
             color: #ffffff;
             border-bottom-color: #30363d;
         }
+
         body.github-dark .contact-card {
             background-color: #0d1117;
             border-color: #30363d;
         }
+
         body.github-dark .contact-item i {
             color: #8b949e;
         }
+
         body.github-dark a {
             color: #58a6ff;
         }
