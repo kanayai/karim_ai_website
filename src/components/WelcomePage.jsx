@@ -7,37 +7,50 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode }) => {
     const [displayText, setDisplayText] = React.useState('');
 
     React.useEffect(() => {
+        let isMounted = true;
+
         const typeSequence = async () => {
             const initialText = "Karim Anaya-Izquierdo";
-            const finalText = "Karim AI";
 
-            // 1. Type full name
-            for (let i = 0; i <= initialText.length; i++) {
-                setDisplayText(initialText.slice(0, i));
-                await new Promise(r => setTimeout(r, 100));
-            }
+            while (isMounted) {
+                setDisplayText("");
 
-            // 2. Pause
-            await new Promise(r => setTimeout(r, 1000));
+                // 1. Type full name
+                for (let i = 0; i <= initialText.length; i++) {
+                    if (!isMounted) return;
+                    setDisplayText(initialText.slice(0, i));
+                    await new Promise(r => setTimeout(r, 100));
+                }
 
-            // 3. Backspace to "Karim "
-            for (let i = initialText.length; i >= "Karim ".length; i--) {
-                setDisplayText(initialText.slice(0, i));
-                await new Promise(r => setTimeout(r, 50));
-            }
+                // 2. Pause
+                if (!isMounted) return;
+                await new Promise(r => setTimeout(r, 1000));
 
-            // 4. Type "AI"
-            const suffix = "AI";
-            const base = "Karim ";
-            for (let i = 1; i <= suffix.length; i++) {
-                setDisplayText(base + suffix.slice(0, i));
-                await new Promise(r => setTimeout(r, 150));
+                // 3. Backspace to "Karim "
+                for (let i = initialText.length; i >= "Karim ".length; i--) {
+                    if (!isMounted) return;
+                    setDisplayText(initialText.slice(0, i));
+                    await new Promise(r => setTimeout(r, 50));
+                }
+
+                // 4. Type "AI"
+                const suffix = "AI";
+                const base = "Karim ";
+                for (let i = 1; i <= suffix.length; i++) {
+                    if (!isMounted) return;
+                    setDisplayText(base + suffix.slice(0, i));
+                    await new Promise(r => setTimeout(r, 150));
+                }
+
+                // 5. Final Pause before restarting
+                if (!isMounted) return;
+                await new Promise(r => setTimeout(r, 3000));
             }
         };
 
         typeSequence();
 
-        return () => { }; // Cleanup not strictly necessary for this simple effect, but good practice usually involves flags
+        return () => { isMounted = false; };
     }, []);
 
     const startItems = [
