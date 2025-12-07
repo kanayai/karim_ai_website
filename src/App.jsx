@@ -9,10 +9,17 @@ function App() {
   const [activeFile, setActiveFile] = useState('Welcome');
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') || 'nord';
+      return localStorage.getItem('theme') || 'github-dark';
     }
-    return 'nord';
+    return 'github-dark';
   });
+  // Use useLayoutEffect to update the DOM synchronously before browser paint/iframe load
+  React.useLayoutEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', theme);
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+  }, [theme]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
     // Initialize based on window width
     if (typeof window !== 'undefined') {
@@ -23,10 +30,6 @@ function App() {
   // Simple Mode state: Default to false
   const [simpleMode, setSimpleMode] = useState(false);
 
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
 
   const toggleTheme = () => {
     setTheme(prev => {
