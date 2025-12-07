@@ -12,9 +12,9 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
     const getLocalizedPath = (baseName) => {
         const supportedLangs = ['es', 'fr', 'pt'];
         if (supportedLangs.includes(lang) && (baseName === 'contact.html' || baseName === 'about_me.html')) {
-            return `/${baseName.replace('.html', `.${lang}.html`)}`;
+            return `/${baseName.replace('.html', `.${lang}.html`)}?theme=${theme}`;
         }
-        return `/${baseName}`;
+        return `/${baseName}?theme=${theme}`;
     };
 
     if (activeFile === 'index.html') src = '/blog/index.html';

@@ -9,7 +9,13 @@ function App() {
   const [activeFile, setActiveFile] = useState('Welcome');
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') || 'github-dark';
+      const savedTheme = localStorage.getItem('theme');
+      // Migration: 'dark' used to be VS Code Dark, now we want to default to GitHub Dark for it
+      // or effectively "reset" old users to the new default.
+      if (savedTheme === 'dark' || !savedTheme) {
+        return 'github-dark';
+      }
+      return savedTheme;
     }
     return 'github-dark';
   });

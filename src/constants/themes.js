@@ -1,6 +1,6 @@
 export const themes = [
     { id: 'github-dark', label: 'GitHub Dark' },
-    { id: 'dark', label: 'Dark (VS Code)' },
+    { id: 'vscode-dark', label: 'Dark (VS Code)' },
     { id: 'light', label: 'Light (VS Code)' },
     { id: 'catppuccin', label: 'Catppuccin Mocha' },
     { id: 'monokai', label: 'Monokai' },

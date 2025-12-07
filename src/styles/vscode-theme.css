@@ -27,7 +27,7 @@
   --vscode-activity-bar-foreground: #c9d1d9;
 }
 
-[data-theme="dark"] {
+[data-theme="vscode-dark"] {
   /* Dark (VS Code) */
   --vscode-bg: #1e1e1e;
   --vscode-sidebar-bg: #252526;

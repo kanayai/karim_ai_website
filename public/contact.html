@@ -83,9 +83,30 @@
         }
 
         /* VS Code Dark Theme Support */
+        /* VS Code Dark Theme Support */
         body.dark-theme {
             background-color: #1e1e1e;
             color: #d4d4d4;
+        }
+        
+        /* GitHub Dark Support */
+        body.github-dark {
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+        body.github-dark h1 {
+            color: #ffffff;
+            border-bottom-color: #30363d;
+        }
+        body.github-dark .contact-card {
+            background-color: #0d1117;
+            border-color: #30363d;
+        }
+        body.github-dark .contact-item i {
+            color: #8b949e;
+        }
+        body.github-dark a {
+            color: #58a6ff;
         }
 
         body.dark-theme h1 {
@@ -185,14 +206,18 @@
 
     <script>
         // Apply theme based on query parameter
+        // Apply theme based on query parameter
         const urlParams = new URLSearchParams(window.location.search);
         const theme = urlParams.get('theme');
-        if (theme === 'dark') {
+        if (theme === 'vscode-dark' || theme === 'dark') {
             document.body.classList.add('dark-theme');
-            document.body.classList.remove('light-theme');
+            document.body.classList.remove('light-theme', 'github-dark');
+        } else if (theme === 'github-dark') {
+            document.body.classList.add('github-dark');
+            document.body.classList.remove('light-theme', 'dark-theme');
         } else if (theme === 'light') {
             document.body.classList.add('light-theme');
-            document.body.classList.remove('dark-theme');
+            document.body.classList.remove('dark-theme', 'github-dark');
         }
     </script>
 </body>
