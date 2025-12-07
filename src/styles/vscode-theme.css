@@ -1,7 +1,34 @@
 @import "./contact.css";
 
 :root {
-  /* Dark Theme (Default - VS Code Dark+) */
+  /* GitHub Dark (Default) */
+  --vscode-bg: #0d1117;
+  --vscode-sidebar-bg: #010409;
+  --vscode-activity-bar-bg: #010409;
+  --vscode-status-bar-bg: #0d1117;
+  --vscode-text: #c9d1d9;
+  --vscode-border: #30363d;
+  --vscode-accent: #58a6ff;
+  --vscode-editor-bg: #0d1117;
+  --vscode-tab-active-bg: #0d1117;
+  --vscode-tab-inactive-bg: #010409;
+  --vscode-hover-bg: #161b22;
+  --vscode-tree-indentGuidesStroke: #30363d;
+  --vscode-input-background: #0d1117;
+  --vscode-input-foreground: #c9d1d9;
+  --vscode-input-border: #30363d;
+  --vscode-button-background: #238636;
+  --vscode-button-foreground: #ffffff;
+  --vscode-button-hoverBackground: #2ea043;
+  --vscode-descriptionForeground: #8b949e;
+  --vscode-list-hover-bg: #161b22;
+  --vscode-activity-bar-active-border: #f78166;
+  --vscode-activity-bar-inactive-foreground: #8b949e;
+  --vscode-activity-bar-foreground: #c9d1d9;
+}
+
+[data-theme="dark"] {
+  /* Dark (VS Code) */
   --vscode-bg: #1e1e1e;
   --vscode-sidebar-bg: #252526;
   --vscode-activity-bar-bg: #333333;
