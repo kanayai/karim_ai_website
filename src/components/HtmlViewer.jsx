@@ -21,6 +21,7 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
     else if (activeFile === 'anscombe_quartet.html') src = '/blog/posts/anscombe_quartet.html';
     else if (activeFile === 'git-vs-onedrive.html') src = '/blog/posts/git-vs-onedrive.html';
     else if (activeFile === 'academic_workflow.html') src = '/blog/posts/academic_workflow.html';
+    else if (activeFile === 'reproducibility_guide.html') src = '/blog/posts/reproducibility_guide.html';
     else if (activeFile === 'first-post.html') src = '/blog/posts/first-post.html';
     else if (activeFile === 'projects.html') src = '/projects.html';
     else if (activeFile === 'certest.html') src = '/certest.html';

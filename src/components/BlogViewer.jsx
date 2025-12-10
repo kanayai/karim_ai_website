@@ -6,6 +6,13 @@ const BlogViewer = ({ setActiveFile }) => {
 
     const posts = [
         {
+            id: 'reproducibility_guide.html',
+            title: 'Methodological Rigor: A Reproducibility Guide',
+            date: '10/12/2025',
+            description: 'A guide on how to ensure reproducibility in computational science, focusing on git, logging, and data tracking.',
+            tags: ['reproducibility', 'workflow', 'data-science', 'python']
+        },
+        {
             id: 'git-vs-onedrive.html',
             title: 'Git vs OneDrive',
             date: '28/11/2025',
