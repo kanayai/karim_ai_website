@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="A guide on how to manage data science projects using both Git and OneDrive effectively.">
+<meta name="dcterms.date" content="2025-10-12">
 
-<title>Git vs.&nbsp;OneDrive: The Data Scientist’s Guide – Karim's Blog</title>
+<title>Methodological Rigor: A Reproducibility Guide for Computational Science – Karim’s Blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -87,9 +87,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -107,19 +104,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-decision-matrix-what-goes-where" id="toc-the-decision-matrix-what-goes-where" class="nav-link active" data-scroll-target="#the-decision-matrix-what-goes-where">1. The Decision Matrix: What Goes Where?</a></li>
-  <li><a href="#the-mirrored-workflow-recommended" id="toc-the-mirrored-workflow-recommended" class="nav-link" data-scroll-target="#the-mirrored-workflow-recommended">2. The “Mirrored” Workflow (Recommended)</a>
+  <li><a href="#the-gold-standard-of-provenance" id="toc-the-gold-standard-of-provenance" class="nav-link active" data-scroll-target="#the-gold-standard-of-provenance">1. The “Gold Standard” of Provenance</a>
   <ul class="collapse">
-  <li><a href="#how-to-link-them-safely-macwinlinux-safe" id="toc-how-to-link-them-safely-macwinlinux-safe" class="nav-link" data-scroll-target="#how-to-link-them-safely-macwinlinux-safe">How to link them safely (Mac/Win/Linux safe)</a></li>
+  <li><a href="#git-commit-tracking" id="toc-git-commit-tracking" class="nav-link" data-scroll-target="#git-commit-tracking">Git Commit Tracking</a></li>
+  <li><a href="#configuration-logging" id="toc-configuration-logging" class="nav-link" data-scroll-target="#configuration-logging">Configuration Logging</a></li>
   </ul></li>
-  <li><a href="#the-danger-zone-git-inside-onedrive" id="toc-the-danger-zone-git-inside-onedrive" class="nav-link" data-scroll-target="#the-danger-zone-git-inside-onedrive">3. The Danger Zone: Git INSIDE OneDrive</a></li>
-  <li><a href="#how-to-fix-it-moving-out-of-onedrive" id="toc-how-to-fix-it-moving-out-of-onedrive" class="nav-link" data-scroll-target="#how-to-fix-it-moving-out-of-onedrive">4. How to Fix It (Moving Out of OneDrive)</a>
+  <li><a href="#taming-randomness" id="toc-taming-randomness" class="nav-link" data-scroll-target="#taming-randomness">2. Taming Randomness</a>
   <ul class="collapse">
-  <li><a href="#step-0-create-a-safe-projects-folder" id="toc-step-0-create-a-safe-projects-folder" class="nav-link" data-scroll-target="#step-0-create-a-safe-projects-folder">Step 0: Create a Safe “Projects” Folder</a></li>
-  <li><a href="#step-1-on-your-primary-computer" id="toc-step-1-on-your-primary-computer" class="nav-link" data-scroll-target="#step-1-on-your-primary-computer">Step 1: On Your Primary Computer</a></li>
-  <li><a href="#step-2-on-your-secondary-computer" id="toc-step-2-on-your-secondary-computer" class="nav-link" data-scroll-target="#step-2-on-your-secondary-computer">Step 2: On Your Secondary Computer</a></li>
+  <li><a href="#the-seed-problem" id="toc-the-seed-problem" class="nav-link" data-scroll-target="#the-seed-problem">The Seed Problem</a></li>
+  <li><a href="#the-jaxnumpyro-solution" id="toc-the-jaxnumpyro-solution" class="nav-link" data-scroll-target="#the-jaxnumpyro-solution">The JAX/NumPyro Solution</a></li>
+  <li><a href="#other-solutions" id="toc-other-solutions" class="nav-link" data-scroll-target="#other-solutions">Other Solutions</a></li>
   </ul></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#data-hygiene-preprocessing-as-code" id="toc-data-hygiene-preprocessing-as-code" class="nav-link" data-scroll-target="#data-hygiene-preprocessing-as-code">3. Data Hygiene: Preprocessing as Code</a></li>
+  <li><a href="#environment-sanity" id="toc-environment-sanity" class="nav-link" data-scroll-target="#environment-sanity">4. Environment Sanity</a></li>
+  <li><a href="#the-reproduction-recipe" id="toc-the-reproduction-recipe" class="nav-link" data-scroll-target="#the-reproduction-recipe">5. The “Reproduction Recipe”</a></li>
+  <li><a href="#summary-toward-open-science" id="toc-summary-toward-open-science" class="nav-link" data-scroll-target="#summary-toward-open-science">Summary: Toward “Open Science”</a></li>
   </ul>
 </nav>
     </div>
@@ -128,19 +127,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Git vs.&nbsp;OneDrive: The Data Scientist’s Guide</h1>
-  <div class="quarto-categories">
-    <div class="quarto-category">git</div>
-    <div class="quarto-category">workflow</div>
-    <div class="quarto-category">data-science</div>
-  </div>
-  </div>
-
-<div>
-  <div class="description">
-    A guide on how to manage data science projects using both Git and OneDrive effectively.
-  </div>
+<h1 class="title">Methodological Rigor: A Reproducibility Guide for Computational Science</h1>
 </div>
+
 
 
 <div class="quarto-title-meta">
@@ -149,7 +138,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">28/11/2025</p>
+      <p class="date">10/12/2025</p>
     </div>
   </div>
   
@@ -161,172 +150,117 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><span class="read-time">Read Time: ~8 Minutes</span></p>
-<p>As Data Scientists using <strong>Mac, Windows, or Linux</strong>, we live in two worlds. We deal with massive datasets (perfect for Cloud Storage) and version-dependent code (perfect for Git).</p>
-<p>Deciding where to store a project can be confusing. Make the wrong choice, and you end up with corrupted repositories or lost versions. This guide breaks down exactly where your files belong.</p>
-<section id="the-decision-matrix-what-goes-where" class="level2">
-<h2 class="anchored" data-anchor-id="the-decision-matrix-what-goes-where">1. The Decision Matrix: What Goes Where?</h2>
-<p>The fundamental difference is simple: <strong>OneDrive syncs the “Now”</strong> (making folders identical across devices), while <strong>GitHub tracks the “History”</strong> (how a file evolved line-by-line).</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>🧪 The “Notepad Test” (Rule of Thumb)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Open your file in a basic text editor (Notepad/TextEdit).</p>
+<p>As research enters the age of “Scientific Machine Learning,” the boundary between <strong>code</strong> and <strong>theory</strong> is blurring. We treat our scripts as lab notebooks, but unlike a physical notebook, code mutates.</p>
+<p><strong>The Scenario:</strong> It is six months after your conference submission, or perhaps two weeks before your <strong>thesis defense</strong>. - <strong>The PI:</strong> “Can you regenerate Figure 3b with slightly thicker linewidths?” - <strong>The Student:</strong> Panic. The code has evolved. The parameters used for Chapter 4 are lost. The random seed is forgotten.</p>
+<p>Or consider the <strong>“10-Year Test”</strong>: A decade from now, a researcher (or your future self) asks: <em>“In Table 6d of your 2025 paper, the variance seems surprisingly low. How exactly was that derived?”</em> Without a snapshot of the code and parameters, that question is unanswerable.</p>
+<p>This post outlines a concrete <strong>“Gold Standard” for Reproducibility</strong> in academic data science, tailored for students and researchers working with stochastic simulations (MCMC, Molecular Dynamics).</p>
+<section id="the-gold-standard-of-provenance" class="level2">
+<h2 class="anchored" data-anchor-id="the-gold-standard-of-provenance">1. The “Gold Standard” of Provenance</h2>
+<p>Reproducibility isn’t just about saving your code. It’s about linking a specific <em>result</em> to the specific <em>state</em> of the code that produced it.</p>
+<section id="git-commit-tracking" class="level3">
+<h3 class="anchored" data-anchor-id="git-commit-tracking">Git Commit Tracking</h3>
+<p>This is the single most important step. Your outputs should know where they came from.</p>
+<p><strong>Bad Practice:</strong> Naming folders <code>results_final_final_v2</code>.</p>
+<p><strong>Best Practice:</strong> Automatically logging the Git commit hash with every output.</p>
+<p>In Python, you can grab this dynamically:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_git_hash():</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> subprocess.check_output([<span class="st">'git'</span>, <span class="st">'rev-parse'</span>, <span class="st">'HEAD'</span>]).decode(<span class="st">'ascii'</span>).strip()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>R users can achieve the same:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>get_git_hash <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">system</span>(<span class="st">"git rev-parse HEAD"</span>, <span class="at">intern =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When my analysis script runs, it writes a <code>config_log.md</code> file into the results folder that says: &gt; “This result was generated using code version <code>a1b2c3d</code>.”</p>
+<blockquote class="blockquote">
+<p><strong>New to Version Control?</strong> Do not rely on local backups. Publishing code to a remote repository is standard practice for Open Science. If you are new to GitHub, start with the <a href="https://guides.github.com/activities/hello-world/">GitHub Hello World Guide</a> or <a href="https://docs.gitlab.com/ee/gitlab-basics/">GitLab Basics</a>.</p>
+</blockquote>
+</section>
+<section id="configuration-logging" class="level3">
+<h3 class="anchored" data-anchor-id="configuration-logging">Configuration Logging</h3>
+<p>Code defines logic; configuration defines parameters. Both change.</p>
+<p>Never hardcode parameters (like material constants or hyperparameters) inside your functions. Isolate them in a <code>config</code> object (dictionary or JSON) and <strong>dump this entire config</strong> to your log file alongside the results.</p>
+</section>
+</section>
+<section id="taming-randomness" class="level2">
+<h2 class="anchored" data-anchor-id="taming-randomness">2. Taming Randomness</h2>
+<p>Stochastic simulations (like MCMC or Molecular Dynamics) are notorious for “it worked once.”</p>
+<section id="the-seed-problem" class="level3">
+<h3 class="anchored" data-anchor-id="the-seed-problem">The Seed Problem</h3>
+<p>Computers cannot generate “true” random numbers. They use <strong>Pseudo-Random Number Generators (PRNGs)</strong>, which are essentially reading from a fixed, pre-calculated list of numbers. The “seed” tells the computer which page of that book to start reading from. - <strong>Seed 0</strong>: Starts at page 0 (Sequence: 0.12, 0.88…) - <strong>Seed 999</strong>: Starts at page 999 (Sequence: 0.76, 0.02…)</p>
+<p>If you don’t fix the seed, the computer picks a random page based on the current time (nanoseconds). This means your simulation takes a completely different “random walk” every time you run it, making digit-for-digit reproducibility impossible.</p>
+<p><strong>The “Hidden Seed” Trap:</strong> A common mistake is hardcoding the seed deep in a script where it’s invisible to your logs.</p>
 <ul>
-<li>Can you read it? (Python script, Markdown, CSV) → <strong>Use GitHub.</strong></li>
-<li>Does it look like alien gibberish? (PDF, Excel, .pkl, .exe) → <strong>Use OneDrive.</strong></li>
-</ul>
-</div>
-</div>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Feature</th>
-<th style="text-align: left;">OneDrive / Dropbox</th>
-<th style="text-align: left;">GitHub / GitLab</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><strong>Best For</strong></td>
-<td style="text-align: left;">Final Results, Documents, Images</td>
-<td style="text-align: left;">Source Code, Configs, Text</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>File Types</strong></td>
-<td style="text-align: left;">Binary (.docx, .pdf, .jpg, .zip)</td>
-<td style="text-align: left;">Plain Text (.py, .R, .md, .tex)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>Data Size</strong></td>
-<td style="text-align: left;">Great for Large Data (&gt;100MB)</td>
-<td style="text-align: left;">Poor for large files (Keep repo &lt; 1GB)</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>Conflict Handling</strong></td>
-<td style="text-align: left;">Creates “Conflicted Copy” files</td>
-<td style="text-align: left;">Manual line-by-line merge</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="the-mirrored-workflow-recommended" class="level2">
-<h2 class="anchored" data-anchor-id="the-mirrored-workflow-recommended">2. The “Mirrored” Workflow (Recommended)</h2>
-<p>For research and data science, you shouldn’t choose one or the other. <strong>You need both, but they must remain separate.</strong></p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    Git["💻 Local Folder (Git)
-    ~/Projects/analysis
-    (Scripts, Reports, Configs)"] 
-    
-    Cloud["☁️ Cloud Storage
-    ~/OneDrive/Data
-    (Raw CSVs, Large Zips, Final PDFs)"]
-
-    Git &lt;--&gt;|"Linked via Code"| Cloud
-
-    style Git stroke:#2563eb,stroke-width:2px,fill:#fff,color:#333
-    style Cloud stroke:#f59e0b,stroke-width:2px,fill:#fff,color:#333
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<section id="how-to-link-them-safely-macwinlinux-safe" class="level3">
-<h3 class="anchored" data-anchor-id="how-to-link-them-safely-macwinlinux-safe">How to link them safely (Mac/Win/Linux safe)</h3>
-<p>Use code that detects your OS automatically so you don’t have to change paths when switching from Mac to Windows.</p>
-<p><strong>R Example:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># path.expand("~") finds C:/Users/Name (Win) or /Users/Name (Mac)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">path.expand</span>(<span class="st">"~"</span>), <span class="st">"OneDrive"</span>, <span class="st">"Research"</span>, <span class="st">"data.csv"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(data_path)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Python Example:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Path.home() is the universal way to find the user folder</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>data_path <span class="op">=</span> Path.home() <span class="op">/</span> <span class="st">"OneDrive"</span> <span class="op">/</span> <span class="st">"Research"</span> <span class="op">/</span> <span class="st">"data.csv"</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(data_path)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="the-danger-zone-git-inside-onedrive" class="level2">
-<h2 class="anchored" data-anchor-id="the-danger-zone-git-inside-onedrive">3. The Danger Zone: Git INSIDE OneDrive</h2>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>⚠️ CRITICAL WARNING
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Never initialize a Git repository <em>inside</em> a synced OneDrive/Dropbox/iCloud folder.</p>
-</div>
-</div>
-<p>Why? Sync clients (OneDrive) and Version Control (Git) fight over the hidden <code>.git</code> folder. This leads to:</p>
-<ul>
-<li><strong>Repo Corruption:</strong> OneDrive may “sync” a file lock that Git needs.</li>
-<li><strong>Conflicted Copies:</strong> You will end up with files named <code>script.py (Computer Name Conflicted Copy)</code>.</li>
+<li><strong>Bad (Hidden):</strong> <code>rng_key = random.PRNGKey(0)</code> inside <code>main.py</code>. Your log just says “Model A ran”, but doesn’t say <em>how</em>.</li>
+<li><strong>Good (Visible):</strong> <code>config = {"seed": 0, ...}</code>. Your script reads <code>config['seed']</code>, and your log dumps the entire config. Now the seed is explicitly recorded forever.</li>
 </ul>
 </section>
-<section id="how-to-fix-it-moving-out-of-onedrive" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-fix-it-moving-out-of-onedrive">4. How to Fix It (Moving Out of OneDrive)</h2>
-<p>If your project is currently stuck in OneDrive, follow these steps. <strong>Do NOT move it to “Documents”</strong> (as Documents often auto-syncs to Cloud too).</p>
-<section id="step-0-create-a-safe-projects-folder" class="level3">
-<h3 class="anchored" data-anchor-id="step-0-create-a-safe-projects-folder">Step 0: Create a Safe “Projects” Folder</h3>
-<ul>
-<li><strong>🍎 macOS:</strong> Create <code>/Users/name/Projects</code> (Do not put in Documents!)</li>
-<li><strong>🪟 Windows:</strong> Create <code>C:\Users\name\Projects</code> (Do not put in Documents!)</li>
-<li><strong>🐧 Linux:</strong> Create <code>/home/name/Projects</code> (Safe anywhere in ~)</li>
-</ul>
+<section id="the-jaxnumpyro-solution" class="level3">
+<h3 class="anchored" data-anchor-id="the-jaxnumpyro-solution">The JAX/NumPyro Solution</h3>
+<p>Modern frameworks like JAX use <strong>explicit key passing</strong>. You don’t set a state; you split a key.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rng_key <span class="op">=</span> random.PRNGKey(<span class="dv">0</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>rng_key, subkey <span class="op">=</span> random.split(rng_key)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> run_simulation(subkey)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="step-1-on-your-primary-computer" class="level3">
-<h3 class="anchored" data-anchor-id="step-1-on-your-primary-computer">Step 1: On Your Primary Computer</h3>
+<section id="other-solutions" class="level3">
+<h3 class="anchored" data-anchor-id="other-solutions">Other Solutions</h3>
+<p>If you aren’t using JAX, you can still achieve this. - <strong>NumPy (Modern)</strong>: Use <code>numpy.random.Generator</code>. Pass the <code>rng</code> object explicitly to functions, rather than relying on <code>np.random</code>. <code>python     rng = np.random.default_rng(seed=42)     val = rng.normal()</code> - <strong>Rule of Thumb</strong>: Avoid global state. Explicitly pass your source of randomness.</p>
+<section id="for-r-users" class="level4">
+<h4 class="anchored" data-anchor-id="for-r-users">For R Users</h4>
+<p>R relies heavily on global state (<code>set.seed()</code>). To maintain rigor: - <strong>Script-Level</strong>: Call <code>set.seed(123)</code> at the very top of your main script. - <strong>Function-Level</strong>: Use <code>withr::with_seed()</code> to isolate randomness within functions. <code>r     withr::with_seed(42, {       run_simulation()     })</code></p>
+</section>
+</section>
+</section>
+<section id="data-hygiene-preprocessing-as-code" class="level2">
+<h2 class="anchored" data-anchor-id="data-hygiene-preprocessing-as-code">3. Data Hygiene: Preprocessing as Code</h2>
+<p>A common trap is manual data manipulation.</p>
+<p><strong>Scenario:</strong> You have experimental data. You open Excel, delete the rows where the load is negative, truncate the data at 10mm extension because “it looked noisy,” and save it as <code>clean_data.csv</code>.</p>
+<p><strong>The Problem:</strong> That logic is now lost. No one (including you) knows exactly <em>how</em> the data was cleaned.</p>
+<p><strong>The Solution:</strong> Preprocessing as Code.</p>
 <ol type="1">
-<li><p><strong>Move the Folder:</strong> Drag your project folder <strong>OUT</strong> of OneDrive and into your new <code>Projects</code> folder.</p></li>
-<li><p><strong>Verify:</strong> Open your terminal (Git Bash on Windows).</p>
-<pre class="text"><code>cd ~/Projects/my-project
-git status</code></pre></li>
-<li><p><strong>Cleanup:</strong> Check OneDrive. If a copy remains there, delete it to stop the sync confusion.</p></li>
+<li><p><strong>Load Raw</strong>: Always load the untouched original file.</p></li>
+<li><p><strong>Filter in Code</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Explicit filtering</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> data[data[<span class="st">'load'</span>] <span class="op">&gt;</span> <span class="dv">0</span>]  <span class="co"># Remove negatives</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> data[data[<span class="st">'extension'</span>] <span class="op">&lt;</span> max_limit]  <span class="co"># Truncate</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    ```</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="op">*</span>R (tidyverse) equivalent:<span class="op">*</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>```r</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>data <span class="op">&lt;-</span> raw_data <span class="op">%&gt;%</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="bu">filter</span>(load <span class="op">&gt;</span> <span class="dv">0</span>, extension <span class="op">&lt;</span> max_limit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>Split Logic</strong>: If you analyze “Shear” vs “Normal” data, writing logic to split them based on column names or clean rules is better than manually moving files into folders.</p></li>
 </ol>
 </section>
-<section id="step-2-on-your-secondary-computer" class="level3">
-<h3 class="anchored" data-anchor-id="step-2-on-your-secondary-computer">Step 2: On Your Secondary Computer</h3>
-<p>Do not try to “fix” the existing folder on your second computer. It’s faster to start fresh.</p>
+<section id="environment-sanity" class="level2">
+<h2 class="anchored" data-anchor-id="environment-sanity">4. Environment Sanity</h2>
+<p>Finally, your code lives in an ecosystem. Python 3.9 might round a float differently than Python 3.11.</p>
+<p>Use dependency management tools that support <strong>lockfiles</strong>. - <strong><code>uv</code></strong> (current favorite): extremely fast, strictly locks dependencies. - <strong><code>poetry</code></strong>: reliable standard.</p>
+<p><strong>For R Users:</strong> - <strong><code>renv</code></strong>: The standard for R dependency management. It creates an <code>renv.lock</code> file that serves the exact same purpose.</p>
+<p>A <code>uv.lock</code> or <code>poetry.lock</code> file ensures that <code>numpy==1.24.3</code> is used today, tomorrow, and by the person trying to replicate your work next year.</p>
+</section>
+<section id="the-reproduction-recipe" class="level2">
+<h2 class="anchored" data-anchor-id="the-reproduction-recipe">5. The “Reproduction Recipe”</h2>
+<p>Once you have these pillars in place, how does someone (or you) actually reproduce the work?</p>
 <ol type="1">
-<li><p><strong>Let OneDrive Sync:</strong> Wait for OneDrive to update. It should automatically remove the old folder.</p></li>
-<li><p><strong>Clone Fresh:</strong> Download a clean connection to GitHub in your safe local folder.</p>
-<pre class="text"><code>cd ~/Projects
-git clone https://github.com/yourname/my-project.git</code></pre></li>
+<li><strong>Checkout the Code</strong>: Use the Git Hash logged in your results. <code>git checkout &lt;commit_hash&gt;</code></li>
+<li><strong>Restore the Environment</strong>: Use your lockfile. <code>uv sync</code></li>
+<li><strong>Load the Config</strong>: Take the JSON dump from your <code>config_log.md</code> and use it as the input.</li>
+<li><strong>Run</strong>: Execute the script.</li>
 </ol>
+<p>Because you controlled the Code (Git), Parameters (Config), Randomness (Seeds), and Environment (Lockfile), you will get the exact same table 6d.</p>
 </section>
-</section>
-<section id="summary" class="level2">
-<h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<ul>
-<li><strong>Code</strong> lives in <strong>~/Projects</strong> (Git).</li>
-<li><strong>Data</strong> lives in <strong>~/OneDrive</strong> (Cloud).</li>
-<li><strong>Never</strong> put Git inside OneDrive or Documents (if synced).</li>
-</ul>
-<div class="footer-note">
-<pre><code>This post was created with the help of Gemini.</code></pre>
-</div>
+<section id="summary-toward-open-science" class="level2">
+<h2 class="anchored" data-anchor-id="summary-toward-open-science">Summary: Toward “Open Science”</h2>
+<p>Reproducibility is defensive research. You are defending your future self against confusion—and ensuring you can graduate without a last-minute crisis.</p>
+<ol type="1">
+<li><strong>Log the Commit Hash</strong> (Version Control).</li>
+<li><strong>Dump the Config</strong> (Parameter Tracking).</li>
+<li><strong>Log the Seed</strong> (Stochastic Determinism).</li>
+<li><strong>Codify Data Compiling</strong> (Transparent Methodologies).</li>
+<li><strong>Lock your Environment</strong> (Dependency Rigor).</li>
+</ol>
+<p>Implementing these steps moves your work from “runnable scripts” to <strong>robust, citeable scientific artifacts</strong>—the kind that get papers accepted and theses approved.</p>
 
 
 </section>

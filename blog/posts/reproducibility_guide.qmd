@@ -1,0 +1,165 @@
+---
+title: "Methodological Rigor: A Reproducibility Guide for Computational Science"
+date: 2025-12-10
+format: html
+---
+
+As research enters the age of "Scientific Machine Learning," the boundary between **code** and **theory** is blurring. We treat our scripts as lab notebooks, but unlike a physical notebook, code mutates.
+
+**The Scenario:**
+It is six months after your conference submission, or perhaps two weeks before your **thesis defense**.
+-   **The PI:** "Can you regenerate Figure 3b with slightly thicker linewidths?"
+-   **The Student:** Panic. The code has evolved. The parameters used for Chapter 4 are lost. The random seed is forgotten.
+
+Or consider the **"10-Year Test"**: A decade from now, a researcher (or your future self) asks: *"In Table 6d of your 2025 paper, the variance seems surprisingly low. How exactly was that derived?"* Without a snapshot of the code and parameters, that question is unanswerable.
+
+This post outlines a concrete **"Gold Standard" for Reproducibility** in academic data science, tailored for students and researchers working with stochastic simulations (MCMC, Molecular Dynamics).
+
+## 1. The "Gold Standard" of Provenance
+
+Reproducibility isn't just about saving your code. It's about linking a specific *result* to the specific *state* of the code that produced it.
+
+### Git Commit Tracking
+This is the single most important step. Your outputs should know where they came from.
+
+**Bad Practice:**
+Naming folders `results_final_final_v2`.
+
+**Best Practice:**
+Automatically logging the Git commit hash with every output.
+
+In Python, you can grab this dynamically:
+
+```python
+import subprocess
+
+def get_git_hash():
+    return subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode('ascii').strip()
+```
+
+R users can achieve the same:
+```r
+get_git_hash <- function() {
+  system("git rev-parse HEAD", intern = TRUE)
+}
+```
+
+When my analysis script runs, it writes a `config_log.md` file into the results folder that says:
+> "This result was generated using code version `a1b2c3d`."
+
+> **New to Version Control?**
+> Do not rely on local backups. Publishing code to a remote repository is standard practice for Open Science.
+> If you are new to GitHub, start with the [GitHub Hello World Guide](https://guides.github.com/activities/hello-world/) or [GitLab Basics](https://docs.gitlab.com/ee/gitlab-basics/).
+
+### Configuration Logging
+Code defines logic; configuration defines parameters. Both change.
+
+Never hardcode parameters (like material constants or hyperparameters) inside your functions. Isolate them in a `config` object (dictionary or JSON) and **dump this entire config** to your log file alongside the results.
+
+## 2. Taming Randomness
+
+Stochastic simulations (like MCMC or Molecular Dynamics) are notorious for "it worked once."
+
+### The Seed Problem
+Computers cannot generate "true" random numbers. They use **Pseudo-Random Number Generators (PRNGs)**, which are essentially reading from a fixed, pre-calculated list of numbers. The "seed" tells the computer which page of that book to start reading from.
+-   **Seed 0**: Starts at page 0 (Sequence: 0.12, 0.88...)
+-   **Seed 999**: Starts at page 999 (Sequence: 0.76, 0.02...)
+
+If you don't fix the seed, the computer picks a random page based on the current time (nanoseconds). This means your simulation takes a completely different "random walk" every time you run it, making digit-for-digit reproducibility impossible.
+
+**The "Hidden Seed" Trap:**
+A common mistake is hardcoding the seed deep in a script where it's invisible to your logs.
+
+*   **Bad (Hidden):** `rng_key = random.PRNGKey(0)` inside `main.py`. Your log just says "Model A ran", but doesn't say *how*.
+*   **Good (Visible):** `config = {"seed": 0, ...}`. Your script reads `config['seed']`, and your log dumps the entire config. Now the seed is explicitly recorded forever.
+
+### The JAX/NumPyro Solution
+Modern frameworks like JAX use **explicit key passing**. You don't set a state; you split a key.
+
+```python
+rng_key = random.PRNGKey(0)
+rng_key, subkey = random.split(rng_key)
+result = run_simulation(subkey)
+```
+
+### Other Solutions
+If you aren't using JAX, you can still achieve this.
+-   **NumPy (Modern)**: Use `numpy.random.Generator`. Pass the `rng` object explicitly to functions, rather than relying on `np.random`.
+    ```python
+    rng = np.random.default_rng(seed=42)
+    val = rng.normal()
+    ```
+-   **Rule of Thumb**: Avoid global state. Explicitly pass your source of randomness.
+
+#### For R Users
+R relies heavily on global state (`set.seed()`). To maintain rigor:
+-   **Script-Level**: Call `set.seed(123)` at the very top of your main script.
+-   **Function-Level**: Use `withr::with_seed()` to isolate randomness within functions.
+    ```r
+    withr::with_seed(42, {
+      run_simulation()
+    })
+    ```
+
+## 3. Data Hygiene: Preprocessing as Code
+
+A common trap is manual data manipulation.
+
+**Scenario:** You have experimental data. You open Excel, delete the rows where the load is negative, truncate the data at 10mm extension because "it looked noisy," and save it as `clean_data.csv`.
+
+**The Problem:** That logic is now lost. No one (including you) knows exactly *how* the data was cleaned.
+
+**The Solution:** Preprocessing as Code.
+
+1.  **Load Raw**: Always load the untouched original file.
+2.  **Filter in Code**:
+    ```python
+    # Explicit filtering
+    data = data[data['load'] > 0]  # Remove negatives
+    data = data[data['extension'] < max_limit]  # Truncate
+    ```
+
+    *R (tidyverse) equivalent:*
+    ```r
+    data <- raw_data %>%
+      filter(load > 0, extension < max_limit)
+    ```
+3.  **Split Logic**: If you analyze "Shear" vs "Normal" data, writing logic to split them based on column names or clean rules is better than manually moving files into folders.
+
+## 4. Environment Sanity
+
+Finally, your code lives in an ecosystem. Python 3.9 might round a float differently than Python 3.11.
+
+Use dependency management tools that support **lockfiles**.
+-   **`uv`** (current favorite): extremely fast, strictly locks dependencies.
+-   **`poetry`**: reliable standard.
+
+**For R Users:**
+-   **`renv`**: The standard for R dependency management. It creates an `renv.lock` file that serves the exact same purpose.
+
+A `uv.lock` or `poetry.lock` file ensures that `numpy==1.24.3` is used today, tomorrow, and by the person trying to replicate your work next year.
+
+## 5. The "Reproduction Recipe"
+
+Once you have these pillars in place, how does someone (or you) actually reproduce the work?
+
+1.  **Checkout the Code**: Use the Git Hash logged in your results.
+    `git checkout <commit_hash>`
+2.  **Restore the Environment**: Use your lockfile.
+    `uv sync`
+3.  **Load the Config**: Take the JSON dump from your `config_log.md` and use it as the input.
+4.  **Run**: Execute the script.
+
+Because you controlled the Code (Git), Parameters (Config), Randomness (Seeds), and Environment (Lockfile), you will get the exact same table 6d.
+
+## Summary: Toward "Open Science"
+
+Reproducibility is defensive research. You are defending your future self against confusion—and ensuring you can graduate without a last-minute crisis.
+
+1.  **Log the Commit Hash** (Version Control).
+2.  **Dump the Config** (Parameter Tracking).
+3.  **Log the Seed** (Stochastic Determinism).
+4.  **Codify Data Compiling** (Transparent Methodologies).
+5.  **Lock your Environment** (Dependency Rigor).
+
+Implementing these steps moves your work from "runnable scripts" to **robust, citeable scientific artifacts**—the kind that get papers accepted and theses approved.
