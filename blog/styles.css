@@ -16,12 +16,27 @@ h3 {
     color: #ffffff;
 }
 
-code {
-    background-color: #2d2d2d;
-    color: #ce9178;
+
+/* Code Blocks */
+pre,
+code,
+pre>code {
+    background-color: #2d2d2d !important;
+    color: #e0e0e0 !important;
+    border: none;
 }
 
-pre {
-    background-color: #1e1e1e;
-    border: 1px solid #333;
+/* Ensure code inside sentences (backticks) also looks good */
+:not(pre)>code {
+    background-color: #3e3e3e !important;
+    color: #ce9178 !important;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+/* Quarto/Pandoc specific overrides for syntax highlighting containers */
+div.sourceCode,
+pre.sourceCode {
+    background-color: #2d2d2d !important;
+    color: #e0e0e0 !important;
 }

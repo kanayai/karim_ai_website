@@ -1,6 +1,8 @@
 ---
-title: "Methodological Rigor: A Reproducibility Guide for Computational Science"
+title: "A Reproducibility Guide"
 date: 2025-12-10
+categories: [reproducibility, academic, python, r]
+description: "A comprehensive guide to ensuring methodological rigor and reproducibility in computational science."
 format: html
 ---
 
