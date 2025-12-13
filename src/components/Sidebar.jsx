@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { VscChevronRight, VscChevronDown, VscEllipsis, VscCode, VscRadioTower, VscSourceControl, VscLaw, VscPaintcan, VscSymbolKeyword, VscQuote, VscGraph } from 'react-icons/vsc';
 import { FaReact, FaJs, FaMarkdown, FaPython, FaHtml5 } from 'react-icons/fa';
 
@@ -7,6 +7,32 @@ import { useTranslation } from 'react-i18next';
 const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
     const [expandedFolders, setExpandedFolders] = useState({});
     const { t } = useTranslation();
+
+    // File to folder path mapping for auto-expand
+    const fileToFolderPath = {
+        'Welcome': ['Home'],
+        'publications.R': ['Research'],
+        'phd_students.html': ['Research'],
+        'certest.html': ['Research', 'Projects'],
+        'gkn_prosperity.html': ['Research', 'Projects'],
+        'current_courses.ipynb': ['Teaching'],
+        'previous_courses.ipynb': ['Teaching'],
+        'blog.html': ['Blog'],
+    };
+
+    // Auto-expand folders when activeFile changes
+    useEffect(() => {
+        if (activeFile && fileToFolderPath[activeFile]) {
+            const foldersToExpand = fileToFolderPath[activeFile];
+            setExpandedFolders(prev => {
+                const newState = { ...prev };
+                foldersToExpand.forEach(folder => {
+                    newState[folder] = true;
+                });
+                return newState;
+            });
+        }
+    }, [activeFile]);
 
     const toggleFolder = (folderName) => {
         setExpandedFolders(prev => ({ ...prev, [folderName]: !prev[folderName] }));
@@ -59,12 +85,30 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
     ];
 
     const renderItem = (item) => {
+        // Keyboard handler for folder/file items
+        const handleKeyDown = (e, isFolder = false) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                if (isFolder) {
+                    toggleFolder(item.name);
+                } else {
+                    setActiveFile(item.name);
+                }
+            } else if (e.key === 'ArrowRight' && isFolder && !expandedFolders[item.name]) {
+                e.preventDefault();
+                toggleFolder(item.name);
+            } else if (e.key === 'ArrowLeft' && isFolder && expandedFolders[item.name]) {
+                e.preventDefault();
+                toggleFolder(item.name);
+            }
+        };
+
         if (item.type === 'folder') {
             const isExpanded = expandedFolders[item.name];
             return (
                 <div key={item.name}>
                     <div
-                        className="px-2 py-1 d-flex align-items-center gap-1"
+                        className="px-2 py-1 d-flex align-items-center gap-1 sidebar-item"
                         style={{
                             cursor: 'pointer',
                             color: 'var(--vscode-text)',
@@ -72,6 +116,10 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
                             fontWeight: 'bold'
                         }}
                         onClick={() => toggleFolder(item.name)}
+                        onKeyDown={(e) => handleKeyDown(e, true)}
+                        tabIndex={0}
+                        role="treeitem"
+                        aria-expanded={isExpanded}
                     >
                         {isExpanded ? <VscChevronDown /> : <VscChevronRight />}
                         <span style={{ fontSize: '13px' }}>{item.name}</span>
@@ -91,7 +139,7 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
         return (
             <div
                 key={item.name}
-                className={`py-1 d-flex align-items-center gap-2 ${activeFile === item.name ? 'active-file' : ''}`}
+                className={`py-1 d-flex align-items-center gap-2 sidebar-item ${activeFile === item.name ? 'active-file' : ''}`}
                 style={{
                     cursor: 'pointer',
                     backgroundColor: activeFile === item.name ? 'var(--vscode-active-item-gradient)' : 'transparent',
@@ -100,6 +148,9 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
                     marginLeft: '4px'
                 }}
                 onClick={() => setActiveFile(item.name)}
+                onKeyDown={(e) => handleKeyDown(e, false)}
+                tabIndex={0}
+                role="treeitem"
             >
                 {item.icon}
                 <span style={{ fontSize: '13px' }}>{item.name}</span>

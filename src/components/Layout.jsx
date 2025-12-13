@@ -5,6 +5,7 @@ import Statusbar from './Statusbar';
 import CommandPalette from './CommandPalette';
 import TitleBar from './TitleBar';
 import Terminal from './Terminal';
+import OnboardingTip from './OnboardingTip';
 
 const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, setTheme, isSidebarOpen, toggleSidebar, simpleMode, toggleSimpleMode }) => {
     const [isPaletteOpen, setIsPaletteOpen] = useState(false);
@@ -35,6 +36,7 @@ const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, setTh
                 onClose={() => setIsPaletteOpen(false)}
                 onNavigate={setActiveFile}
             />
+            <OnboardingTip />
             <TitleBar
                 onSearchClick={() => setIsPaletteOpen(true)}
                 toggleSidebar={toggleSidebar}

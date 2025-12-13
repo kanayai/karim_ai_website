@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next';
 
 import BlogViewer from './BlogViewer';
 
-const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme, setTheme, simpleMode, toggleSimpleMode }) => {
+const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme, setTheme, simpleMode, toggleSimpleMode, recentFiles }) => {
     const { i18n } = useTranslation();
 
     const getIcon = (filename) => {
@@ -174,7 +174,7 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
         }
 
         if (activeFile === 'Welcome') {
-            return <WelcomePage onNavigate={setActiveFile} simpleMode={simpleMode} toggleSimpleMode={toggleSimpleMode} />;
+            return <WelcomePage onNavigate={setActiveFile} simpleMode={simpleMode} toggleSimpleMode={toggleSimpleMode} recentFiles={recentFiles} />;
         }
 
         if (activeFile === 'blog.html') {

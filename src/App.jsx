@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Layout from './components/Layout';
 import Editor from './components/Editor';
 import { themes } from './constants/themes';
+import { useRecentFiles } from './hooks/useRecentFiles';
 import './App.css';
 
 function App() {
@@ -36,6 +37,9 @@ function App() {
   // Simple Mode state: Default to false
   const [simpleMode, setSimpleMode] = useState(false);
 
+  // Recent files tracking
+  const { recentFiles, addRecentFile } = useRecentFiles();
+
 
   const toggleTheme = () => {
     setTheme(prev => {
@@ -63,6 +67,8 @@ function App() {
       setOpenFiles(prev => [...prev, fileName]);
     }
     setActiveFile(fileName);
+    // Track recent files
+    addRecentFile(fileName);
     // On mobile, close sidebar after selecting a file
     if (window.innerWidth <= 768) {
       setIsSidebarOpen(false);
@@ -111,6 +117,7 @@ function App() {
         setTheme={setTheme}
         simpleMode={simpleMode}
         toggleSimpleMode={toggleSimpleMode}
+        recentFiles={recentFiles}
       />
     </Layout>
   );

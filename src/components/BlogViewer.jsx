@@ -10,28 +10,32 @@ const BlogViewer = ({ setActiveFile }) => {
             title: 'Methodological Rigor: A Reproducibility Guide',
             date: '10/12/2025',
             description: 'A guide on how to ensure reproducibility in computational science, focusing on git, logging, and data tracking.',
-            tags: ['reproducibility', 'workflow', 'data-science', 'python']
+            tags: ['reproducibility', 'workflow', 'data-science', 'python'],
+            readingTime: 8 // ~1600 words
         },
         {
             id: 'git-vs-onedrive.html',
             title: 'Git vs OneDrive',
             date: '28/11/2025',
             description: 'Why you should use Git instead of OneDrive for version control.',
-            tags: ['git', 'version-control', 'productivity']
+            tags: ['git', 'version-control', 'productivity'],
+            readingTime: 4 // ~800 words
         },
         {
             id: 'academic_workflow.html',
             title: 'The Academic Workflow',
             date: '28/11/2025',
             description: 'A master guide to managing Teaching, Research, and Code across multiple computers.',
-            tags: ['workflow', 'academic', 'git', 'onedrive']
+            tags: ['workflow', 'academic', 'git', 'onedrive'],
+            readingTime: 12 // ~2400 words
         },
         {
             id: 'anscombe_quartet.html',
             title: "Anscombe's Quartet",
             date: '24/11/2025',
             description: 'The importance of visualizing data before analyzing it.',
-            tags: ['statistics', 'visualization', 'r']
+            tags: ['statistics', 'visualization', 'r'],
+            readingTime: 5 // ~1000 words
         }
     ];
 
@@ -93,7 +97,19 @@ const BlogViewer = ({ setActiveFile }) => {
                             <div className="d-flex justify-content-between align-items-start mb-2">
                                 <h3 className="m-0" style={{ color: 'var(--vscode-text-link-foreground, #3794ff)', fontSize: '1.1rem' }}>{post.title}</h3>
                             </div>
-                            <span className="mb-2 d-block" style={{ fontSize: '12px', opacity: 0.7 }}>{post.date}</span>
+                            <div className="d-flex align-items-center gap-2 mb-2">
+                                <span style={{ fontSize: '12px', opacity: 0.7 }}>{post.date}</span>
+                                <span style={{
+                                    fontSize: '11px',
+                                    backgroundColor: 'var(--vscode-accent)',
+                                    color: 'var(--vscode-button-foreground, #fff)',
+                                    padding: '2px 8px',
+                                    borderRadius: '10px',
+                                    fontWeight: '500'
+                                }}>
+                                    {post.readingTime} min read
+                                </span>
+                            </div>
                             <p className="mb-3 flex-grow-1" style={{ opacity: 0.9, fontSize: '0.9rem' }}>{post.description}</p>
                             <div className="d-flex gap-2 flex-wrap mt-auto">
                                 {post.tags.map(tag => (

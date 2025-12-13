@@ -1,8 +1,9 @@
 import React from 'react';
 import { VscBook, VscPreview, VscProject, VscAccount, VscRepo, VscNewFile, VscFolderOpened } from 'react-icons/vsc';
 import { useTranslation } from 'react-i18next';
+import { formatRelativeTime } from '../hooks/useRecentFiles';
 
-const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode }) => {
+const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [] }) => {
     const { t } = useTranslation();
     const [displayText, setDisplayText] = React.useState('');
 
@@ -80,11 +81,21 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode }) => {
         }
     ];
 
-    const recentItems = [
-        { name: 'phd_students.html', path: 'Research/phd_students.html', action: () => onNavigate('phd_students.html') },
-        { name: 'current_courses.ipynb', path: 'Teaching/current_courses.ipynb', action: () => onNavigate('current_courses.ipynb') },
-        { name: 'gkn_prosperity.html', path: 'Research/Projects/gkn_prosperity.html', action: () => onNavigate('gkn_prosperity.html') },
+    // Default recent items (shown when no history)
+    const defaultRecentItems = [
+        { name: 'phd_students.html', path: 'Research/phd_students.html' },
+        { name: 'current_courses.ipynb', path: 'Teaching/current_courses.ipynb' },
+        { name: 'gkn_prosperity.html', path: 'Research/Projects/gkn_prosperity.html' },
     ];
+
+    // Use dynamic recent files if available, otherwise fall back to defaults
+    const displayRecentItems = recentFiles.length > 0
+        ? recentFiles.map(f => ({
+            name: f.name,
+            path: f.name,
+            timestamp: f.timestamp
+        }))
+        : defaultRecentItems;
 
     return (
         <div className="h-100 w-100 p-3 p-md-5" style={{
@@ -136,24 +147,26 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode }) => {
                     <div className="col-md-5">
                         <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px' }}>{t('welcome.recent')}</h2>
                         <div className="d-flex flex-column gap-1">
-                            {recentItems.map((item, index) => (
+                            {displayRecentItems.map((item, index) => (
                                 <div
-                                    key={index}
+                                    key={item.name + index}
                                     className="d-flex align-items-center gap-2 py-1 px-2 rounded"
                                     style={{ cursor: 'pointer' }}
-                                    onClick={item.action}
+                                    onClick={() => onNavigate(item.name)}
                                     onMouseEnter={(e) => {
                                         e.currentTarget.style.backgroundColor = 'var(--vscode-list-hover-bg)';
-                                        e.currentTarget.querySelector('.path').style.color = 'var(--vscode-text)';
+                                        const pathEl = e.currentTarget.querySelector('.path');
+                                        if (pathEl) pathEl.style.color = 'var(--vscode-text)';
                                     }}
                                     onMouseLeave={(e) => {
                                         e.currentTarget.style.backgroundColor = 'transparent';
-                                        e.currentTarget.querySelector('.path').style.color = 'var(--vscode-descriptionForeground)';
+                                        const pathEl = e.currentTarget.querySelector('.path');
+                                        if (pathEl) pathEl.style.color = 'var(--vscode-descriptionForeground)';
                                     }}
                                 >
                                     <span style={{ color: '#3794ff' }}>{item.name}</span>
                                     <span className="path" style={{ fontSize: '12px', color: 'var(--vscode-descriptionForeground)', marginLeft: 'auto' }}>
-                                        {item.path}
+                                        {item.timestamp ? formatRelativeTime(item.timestamp) : item.path}
                                     </span>
                                 </div>
                             ))}
