@@ -8,14 +8,14 @@ This document tracks potential enhancements for the Karim AI website. Ideas are 
 - [x] Blue corner accents on all card-based pages
 - [x] Mobile responsiveness improvements (touch targets, responsive grids, hamburger menu)
 - [x] GitHub Dark as default theme with migration logic
+- [x] Enhanced Search Functionality (fuzzy matching, categorization, tag filtering)
 
 ## High Impact, Quick Wins
 
 ### Visual Enhancements
-- [ ] **Enhanced Search Functionality**
-  - Command palette improvements (fuzzy matching, better categorization)
-  - Blog post search/filter by tags
-  - Global site-wide search
+- [ ] **Global Site-Wide Search**
+  - Extend fuzzy search beyond command palette
+  - Unified search across all content types
   
 - [ ] **Visual Theme Toggle**
   - Add visible theme switcher in UI (not just command palette)
@@ -124,4 +124,4 @@ This document tracks potential enhancements for the Karim AI website. Ideas are 
 
 ---
 
-*Last Updated: 2025-12-07*
+*Last Updated: 2025-12-15*
