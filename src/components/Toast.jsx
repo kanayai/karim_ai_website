@@ -23,14 +23,14 @@ const Toast = ({ id, message, type = 'info', duration = 3000, onClose }) => {
 
     return (
         <div
-            className={`toast toast-${type}`}
+            className={`vscode-toast vscode-toast-${type}`}
             role="status"
             aria-live={type === 'error' ? 'assertive' : 'polite'}
         >
-            <div className="toast-icon">{icon}</div>
-            <div className="toast-message">{message}</div>
+            <div className="vscode-toast-icon">{icon}</div>
+            <div className="vscode-toast-message">{message}</div>
             <button
-                className="toast-close"
+                className="vscode-toast-close"
                 onClick={() => onClose(id)}
                 aria-label="Close notification"
             >

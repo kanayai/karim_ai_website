@@ -49,7 +49,7 @@ export const ToastProvider = ({ children }) => {
     return (
         <ToastContext.Provider value={{ addToast, showSuccess, showInfo, showWarning, showError }}>
             {children}
-            <div className="toast-container" style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 10000 }}>
+            <div className="vscode-toast-container" style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 10000 }}>
                 {console.log('🍞 Rendering toast container with', toasts.length, 'toasts')}
                 {toasts.map(toast => {
                     console.log('🍞 Rendering toast:', toast);
