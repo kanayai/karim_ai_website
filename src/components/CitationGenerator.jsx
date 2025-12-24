@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { VscQuote, VscCopy, VscCheck } from 'react-icons/vsc';
+import { useToast } from '../contexts/ToastContext';
 
 const CitationGenerator = () => {
+    const toast = useToast();
     const [doi, setDoi] = useState('');
     const [citation, setCitation] = useState('');
     const [loading, setLoading] = useState(false);
@@ -50,8 +52,10 @@ const CitationGenerator = () => {
             bibtex += `}`;
 
             setCitation(bibtex);
+            toast.showSuccess('Citation generated successfully');
         } catch (err) {
             setError(err.message);
+            toast.showError('Failed to generate citation');
         } finally {
             setLoading(false);
         }
@@ -60,6 +64,7 @@ const CitationGenerator = () => {
     const copyToClipboard = () => {
         navigator.clipboard.writeText(citation);
         setCopied(true);
+        toast.showSuccess('Citation copied to clipboard');
         setTimeout(() => setCopied(false), 2000);
     };
 

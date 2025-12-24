@@ -3,9 +3,10 @@ import Layout from './components/Layout';
 import Editor from './components/Editor';
 import { themes } from './constants/themes';
 import { useRecentFiles } from './hooks/useRecentFiles';
+import { ToastProvider, useToast } from './contexts/ToastContext';
 import './App.css';
 
-function App() {
+function AppContent() {
   const [openFiles, setOpenFiles] = useState(['Welcome']);
   const [activeFile, setActiveFile] = useState('Welcome');
   const [theme, setTheme] = useState(() => {
@@ -40,6 +41,20 @@ function App() {
   // Recent files tracking
   const { recentFiles, addRecentFile } = useRecentFiles();
 
+  // Toast notifications
+  const toast = useToast();
+
+  // Track previous theme for toast notification
+  const prevThemeRef = React.useRef(theme);
+  useEffect(() => {
+    if (prevThemeRef.current !== theme) {
+      const currentTheme = themes.find(t => t.id === theme);
+      if (currentTheme && prevThemeRef.current) {
+        toast.showSuccess(`Theme changed to ${currentTheme.name}`);
+      }
+      prevThemeRef.current = theme;
+    }
+  }, [theme, toast]);
 
   const toggleTheme = () => {
     setTheme(prev => {
@@ -55,7 +70,14 @@ function App() {
   };
 
   const toggleSimpleMode = () => {
-    setSimpleMode(prev => !prev);
+    setSimpleMode(prev => {
+      const newValue = !prev;
+      // Use setTimeout to defer toast to after state update
+      setTimeout(() => {
+        toast.showInfo(newValue ? 'Simple mode enabled' : 'Simple mode disabled');
+      }, 0);
+      return newValue;
+    });
     // If entering simple mode, ensure sidebar is closed on mobile to avoid clutter
     if (!simpleMode && window.innerWidth <= 768) {
       // Optional: logic to close sidebar if needed
@@ -63,7 +85,8 @@ function App() {
   };
 
   const handleOpenFile = (fileName) => {
-    if (!openFiles.includes(fileName)) {
+    const isNewFile = !openFiles.includes(fileName);
+    if (isNewFile) {
       setOpenFiles(prev => [...prev, fileName]);
     }
     setActiveFile(fileName);
@@ -88,11 +111,22 @@ function App() {
         setActiveFile(newOpenFiles[newOpenFiles.length - 1]);
       }
     }
+    // Defer toast to avoid render phase update
+    setTimeout(() => {
+      toast.showInfo(`Closed ${fileName}`);
+    }, 0);
   };
 
   const handleCloseAllFiles = () => {
+    const closedCount = openFiles.length;
     setOpenFiles(['Welcome']);
     setActiveFile('Welcome');
+    if (closedCount > 1) {
+      // Defer toast to avoid render phase update
+      setTimeout(() => {
+        toast.showInfo(`Closed ${closedCount} files`);
+      }, 0);
+    }
   };
 
   return (
@@ -120,6 +154,14 @@ function App() {
         recentFiles={recentFiles}
       />
     </Layout>
+  );
+}
+
+function App() {
+  return (
+    <ToastProvider>
+      <AppContent />
+    </ToastProvider>
   );
 }
 
