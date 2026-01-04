@@ -163,52 +163,10 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [
                         </div>
                     </div>
 
-                    {/* Recent Section */}
+                    {/* Right Column - Themes, Recent, Help */}
                     <div className="col-md-5">
-                        <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px' }}>{t('welcome.recent')}</h2>
-                        <div className="d-flex flex-column gap-1">
-                            {displayRecentItems.map((item, index) => (
-                                <div
-                                    key={item.name + index}
-                                    className="d-flex align-items-center gap-2 py-1 px-2 rounded"
-                                    style={{ cursor: 'pointer' }}
-                                    onClick={() => onNavigate(item.name)}
-                                    onMouseEnter={(e) => {
-                                        e.currentTarget.style.backgroundColor = 'var(--vscode-list-hover-bg)';
-                                        const pathEl = e.currentTarget.querySelector('.path');
-                                        if (pathEl) pathEl.style.color = 'var(--vscode-text)';
-                                    }}
-                                    onMouseLeave={(e) => {
-                                        e.currentTarget.style.backgroundColor = 'transparent';
-                                        const pathEl = e.currentTarget.querySelector('.path');
-                                        if (pathEl) pathEl.style.color = 'var(--vscode-descriptionForeground)';
-                                    }}
-                                >
-                                    <span style={{ color: '#3794ff' }}>{item.name}</span>
-                                    <span className="path" style={{ fontSize: '12px', color: 'var(--vscode-descriptionForeground)', marginLeft: 'auto' }}>
-                                        {item.timestamp ? formatRelativeTime(item.timestamp) : item.path}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="mt-5">
-                            <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px' }}>{t('welcome.help')}</h2>
-                            <div className="d-flex flex-column gap-2">
-                                <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
-                                    <a href="https://github.com/kanayai/karim_ai_website" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>{t('welcome.github_repo')}</a>
-                                </div>
-                                <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
-                                    <a href="https://researchportal.bath.ac.uk/en/persons/karim-anaya-izquierdo/" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>{t('welcome.research_portal')}</a>
-                                </div>
-                                <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
-                                    <a href="https://github.com/kanayai/karim_ai_website/issues/new" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>{t('welcome.report_issue')}</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Theme Showcase */}
-                        <div className="mt-5">
+                        {/* Theme Showcase - Moved to top for visibility */}
+                        <div className="mb-4">
                             <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                 <VscColorMode size={20} />
                                 {t('welcome.themes', 'Themes')}
@@ -249,6 +207,49 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [
                             <p style={{ fontSize: '12px', opacity: 0.6, marginTop: '8px' }}>
                                 {t('welcome.theme_hint', 'Click to preview • Changes apply instantly')}
                             </p>
+                        </div>
+
+                        {/* Recent Section */}
+                        <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px' }}>{t('welcome.recent')}</h2>
+                        <div className="d-flex flex-column gap-1">
+                            {displayRecentItems.map((item, index) => (
+                                <div
+                                    key={item.name + index}
+                                    className="d-flex align-items-center gap-2 py-1 px-2 rounded"
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => onNavigate(item.name)}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.backgroundColor = 'var(--vscode-list-hover-bg)';
+                                        const pathEl = e.currentTarget.querySelector('.path');
+                                        if (pathEl) pathEl.style.color = 'var(--vscode-text)';
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.backgroundColor = 'transparent';
+                                        const pathEl = e.currentTarget.querySelector('.path');
+                                        if (pathEl) pathEl.style.color = 'var(--vscode-descriptionForeground)';
+                                    }}
+                                >
+                                    <span style={{ color: '#3794ff' }}>{item.name}</span>
+                                    <span className="path" style={{ fontSize: '12px', color: 'var(--vscode-descriptionForeground)', marginLeft: 'auto' }}>
+                                        {item.timestamp ? formatRelativeTime(item.timestamp) : item.path}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="mt-5">
+                            <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px' }}>{t('welcome.help')}</h2>
+                            <div className="d-flex flex-column gap-2">
+                                <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
+                                    <a href="https://github.com/kanayai/karim_ai_website" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>{t('welcome.github_repo')}</a>
+                                </div>
+                                <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
+                                    <a href="https://researchportal.bath.ac.uk/en/persons/karim-anaya-izquierdo/" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>{t('welcome.research_portal')}</a>
+                                </div>
+                                <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
+                                    <a href="https://github.com/kanayai/karim_ai_website/issues/new" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>{t('welcome.report_issue')}</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
