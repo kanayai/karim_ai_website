@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { VscChevronRight } from 'react-icons/vsc';
 
+import { blogPosts } from '../constants/blogData';
+
 const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
     const srcRef = useRef('');
 
@@ -31,6 +33,7 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
     else if (activeFile === 'contact.html') src = getLocalizedPath('contact.html');
 
     const isBlogPost = src.includes('/blog/posts/');
+    const activePost = blogPosts.find(p => p.id === activeFile);
 
     // Function to inject styles into iframe
     const injectStyles = (iframe) => {
@@ -206,6 +209,11 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
                         <VscChevronRight style={{ transform: 'rotate(180deg)' }} />
                         Back to Blog
                     </button>
+                    {activePost && (
+                        <span style={{ fontSize: '11px', opacity: 0.7, marginLeft: 'auto' }}>
+                            {activePost.readingTime} min read
+                        </span>
+                    )}
                 </div>
             )}
             <iframe

@@ -2,10 +2,22 @@ import React, { useState, useEffect, useRef } from 'react';
 import { VscSearch, VscArrowRight, VscHome, VscFile, VscBook, VscExtensions } from 'react-icons/vsc';
 import Fuse from 'fuse.js';
 
+import { blogPosts } from '../constants/blogData';
+
 const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
     const [query, setQuery] = useState('');
     const [selectedIndex, setSelectedIndex] = useState(0);
     const inputRef = useRef(null);
+
+    // Convert blog posts to command palette format
+    const blogFiles = blogPosts.map(post => ({
+        name: post.title,
+        path: post.id,
+        category: 'Blog',
+        icon: 'book',
+        description: post.description,
+        tags: post.tags
+    }));
 
     // Categorized file structure
     const files = [
@@ -24,23 +36,23 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
         { name: 'gkn_prosperity.html', path: 'gkn_prosperity.html', category: 'Content', icon: 'file' },
 
         // Blog
-        { name: 'index.html (Blog)', path: 'index.html', category: 'Blog', icon: 'book' },
-        { name: 'academic_workflow.html', path: 'academic_workflow.html', category: 'Blog', icon: 'book' },
-        { name: 'git-vs-onedrive.html', path: 'git-vs-onedrive.html', category: 'Blog', icon: 'book' },
-        { name: 'reproducibility_guide.html', path: 'reproducibility_guide.html', category: 'Blog', icon: 'book' },
-        { name: 'anscombe_quartet.html', path: 'anscombe_quartet.html', category: 'Blog', icon: 'book' },
+        ...blogFiles,
 
         // Extensions
         { name: 'git-graph', path: 'git-graph', category: 'Extensions', icon: 'extensions' },
         { name: 'lofi-radio', path: 'lofi-radio', category: 'Extensions', icon: 'extensions' },
         { name: 'retro_game.exe', path: 'retro_game.exe', category: 'Extensions', icon: 'extensions' },
-        { name: 'anscombe_quartet.html', path: 'anscombe_quartet.html', category: 'Extensions', icon: 'extensions' },
         { name: 'LICENSE.txt', path: 'LICENSE.txt', category: 'Extensions', icon: 'file' },
     ];
 
     // Configure Fuse.js for fuzzy search
     const fuse = new Fuse(files, {
-        keys: ['name', 'category'],
+        keys: [
+            { name: 'name', weight: 2 },
+            { name: 'description', weight: 1.5 },
+            { name: 'tags', weight: 1 },
+            { name: 'category', weight: 0.5 }
+        ],
         threshold: 0.4, // 0 = perfect match, 1 = match anything
         ignoreLocation: true,
         includeMatches: true, // For highlighting

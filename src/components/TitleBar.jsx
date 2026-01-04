@@ -1,7 +1,7 @@
 import React from 'react';
-import { VscArrowLeft, VscArrowRight, VscSearch, VscLayoutSidebarLeft, VscLayoutSidebarRight, VscLayoutPanel, VscMenu, VscBook } from 'react-icons/vsc';
+import { VscArrowLeft, VscArrowRight, VscSearch, VscLayoutSidebarLeft, VscLayoutSidebarRight, VscLayoutPanel, VscMenu, VscBook, VscColorMode } from 'react-icons/vsc';
 
-const TitleBar = ({ onSearchClick, toggleSidebar, simpleMode, toggleSimpleMode }) => {
+const TitleBar = ({ onSearchClick, toggleSidebar, simpleMode, toggleSimpleMode, theme, toggleTheme }) => {
     return (
         <div className="d-flex align-items-center justify-content-between px-2 title-bar"
             style={{
@@ -69,8 +69,19 @@ const TitleBar = ({ onSearchClick, toggleSidebar, simpleMode, toggleSimpleMode }
                 </div>
             </div>
 
-            {/* Right: Layout Controls */}
+            {/* Right: Layout Controls & Theme Toggle */}
             <div className="d-flex gap-3 align-items-center">
+                <div
+                    onClick={toggleTheme}
+                    style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                    title={`Switch to ${theme?.includes('light') ? 'Dark' : 'Light'} Mode`}
+                >
+                    {theme?.includes('light') ? (
+                        <VscColorMode size={16} color="var(--vscode-text)" />
+                    ) : (
+                        <VscColorMode size={16} color="var(--vscode-text)" />
+                    )}
+                </div>
                 {!simpleMode && (
                     <>
                         <VscLayoutSidebarLeft size={16} color="var(--vscode-text)" style={{ cursor: 'pointer' }} />

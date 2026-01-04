@@ -42,6 +42,8 @@ const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, setTh
                 toggleSidebar={toggleSidebar}
                 simpleMode={simpleMode}
                 toggleSimpleMode={toggleSimpleMode}
+                theme={theme}
+                toggleTheme={toggleTheme}
             />
             <div className={`main-container ${simpleMode ? 'simple-mode' : ''}`} style={{ position: 'relative' }}>
                 {/* Activity Bar - Always visible unless in Simple Mode */}
