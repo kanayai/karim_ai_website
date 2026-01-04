@@ -44,8 +44,8 @@ karim_ai_website/
 │   │   ├── NotebookViewer.jsx # Renders Jupyter Notebook-style content
 │   │   ├── RCodeViewer.jsx  # Renders R code & output
 │   │   ├── RetroGame.jsx    # Snake game accessible via Extensions view
-│   │   ├── CommandPalette.jsx # Cmd+Shift+P search functionality
-│   │   ├── TitleBar.jsx     # Navigation controls & command palette trigger
+│   │   ├── CommandPalette.jsx # Cmd+Shift+P search functionality (files + blog posts)
+│   │   ├── TitleBar.jsx     # Navigation, theme toggle & command palette trigger
 │   │   ├── Statusbar.jsx    # Dynamic status bar
 │   │   └── Terminal.jsx     # Collapsible terminal panel
 │   ├── styles/
@@ -216,6 +216,9 @@ The site uses CSS variables to handle theming.
     - **Git Graph**: Visualizes career timeline as a commit graph (Source Control icon).
     - **GitHub Link**: Direct link to the repository via the GitHub icon in the Activity Bar.
     - **Lo-Fi Radio**: Embedded music player for focus.
+    - **Unified Search**: Command Palette now indexes blog posts with deep content search.
+    - **Reading Time**: Blog posts display estimated reading time.
+    - **Visual Theme Toggle**: One-click theme switching from the Title Bar.
 
 ---
 

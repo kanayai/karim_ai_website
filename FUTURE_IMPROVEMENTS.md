@@ -9,6 +9,8 @@ This document tracks potential enhancements for the Karim AI website. Ideas are 
 - [x] Mobile responsiveness improvements (touch targets, responsive grids, hamburger menu)
 - [x] GitHub Dark as default theme with migration logic
 - [x] Enhanced Search Functionality (fuzzy matching, categorization, tag filtering)
+- [x] Unified Site-Wide Search (Blog content integration)
+- [x] Visual Theme Toggle (TitleBar icon)
 
 ## High Impact, Quick Wins
 
