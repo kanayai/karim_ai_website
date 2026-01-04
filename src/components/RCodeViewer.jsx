@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import publicationsData from '../../data/publications.json';
+import { VscCopy, VscCheck, VscCloudDownload } from 'react-icons/vsc';
+import { useToast } from '../contexts/ToastContext';
 
 const RCodeViewer = ({ fileName }) => {
     const [consoleHeight, setConsoleHeight] = useState(60); // percentage
     const [isDragging, setIsDragging] = useState(false);
+    const [copiedIndex, setCopiedIndex] = useState(null);
+    const toast = useToast();
 
     // The R code to display in the editor
     // The R code to display in the editor
@@ -86,6 +90,53 @@ publications_df`;
         setIsDragging(false);
     };
 
+    // Generate BibTeX entry for a publication
+    const generateBibTeX = (pub, index) => {
+        const year = pub.year || 'n.d.';
+        const title = pub.title || 'Untitled';
+        const authors = pub.authors || '';
+        const journal = pub.journal || '';
+        const doi = pub.doi || '';
+        const citationKey = `${authors.split(',')[0].toLowerCase().replace(/\s+/g, '')}${year}`;
+
+        return `@article{${citationKey},
+  title = {${title}},
+  author = {${authors}},
+  journal = {${journal}},
+  year = {${year}}${doi ? `,\n  doi = {${doi}}` : ''}
+}`;
+    };
+
+    // Export all publications as BibTeX
+    const exportAllBibTeX = () => {
+        const allBibTeX = publicationsData
+            .map((pub, index) => generateBibTeX(pub, index))
+            .join('\n\n');
+
+        const blob = new Blob([allBibTeX], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'publications.bib';
+        link.click();
+        URL.revokeObjectURL(url);
+
+        toast.showSuccess(`Exported ${publicationsData.length} publications to BibTeX`);
+    };
+
+    // Copy individual citation to clipboard
+    const copyCitation = async (pub, index) => {
+        const citation = generateBibTeX(pub, index);
+        try {
+            await navigator.clipboard.writeText(citation);
+            setCopiedIndex(index);
+            toast.showSuccess('Citation copied to clipboard');
+            setTimeout(() => setCopiedIndex(null), 2000);
+        } catch (err) {
+            toast.showError('Failed to copy citation');
+        }
+    };
+
     return (
         <div
             className="d-flex flex-column h-100"
@@ -161,6 +212,33 @@ publications_df`;
                         <span style={{ fontWeight: 'bold' }}>R Console</span>
                         <span style={{ opacity: 0.6, fontSize: '11px' }}>Output</span>
                     </div>
+                    <button
+                        onClick={exportAllBibTeX}
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            padding: '4px 12px',
+                            backgroundColor: 'var(--vscode-button-secondary-bg)',
+                            border: '1px solid var(--vscode-border)',
+                            borderRadius: '4px',
+                            color: 'var(--vscode-text)',
+                            cursor: 'pointer',
+                            fontSize: '12px',
+                            transition: 'all 0.2s'
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = 'var(--vscode-button-hover-bg)';
+                            e.currentTarget.style.borderColor = 'var(--vscode-accent)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = 'var(--vscode-button-secondary-bg)';
+                            e.currentTarget.style.borderColor = 'var(--vscode-border)';
+                        }}
+                    >
+                        <VscCloudDownload size={14} />
+                        Export BibTeX
+                    </button>
                 </div>
 
                 {/* Console output */}
@@ -214,6 +292,12 @@ publications_df`;
                                         fontWeight: 'bold',
                                         color: '#4EC9B0'
                                     }}>journal</th>
+                                    <th style={{
+                                        textAlign: 'center',
+                                        padding: '8px 12px',
+                                        fontWeight: 'bold',
+                                        color: '#4EC9B0'
+                                    }}>actions</th>
                                 </tr>
                                 <tr style={{ borderBottom: '1px solid var(--vscode-border)' }}>
                                     <th style={{
@@ -256,27 +340,29 @@ publications_df`;
                                         fontStyle: 'italic',
                                         fontSize: '11px'
                                     }}>&lt;chr&gt;</th>
+                                    <th style={{
+                                        textAlign: 'center',
+                                        padding: '4px 12px',
+                                        fontWeight: 'normal',
+                                        color: '#858585',
+                                        fontStyle: 'italic',
+                                        fontSize: '11px'
+                                    }}>&lt;fn&gt;</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {tibbleData.map((row, idx) => (
                                     <tr
                                         key={idx}
-                                        onClick={() => row.url && window.open(row.url, '_blank')}
                                         style={{
                                             backgroundColor: idx % 2 === 0 ? 'transparent' : 'rgba(128, 128, 128, 0.05)',
-                                            cursor: row.url ? 'pointer' : 'default',
                                             transition: 'background-color 0.2s'
                                         }}
                                         onMouseEnter={(e) => {
-                                            if (row.url) {
-                                                e.currentTarget.style.backgroundColor = 'rgba(79, 201, 176, 0.15)';
-                                            }
+                                            e.currentTarget.style.backgroundColor = 'rgba(79, 201, 176, 0.15)';
                                         }}
                                         onMouseLeave={(e) => {
-                                            if (row.url) {
-                                                e.currentTarget.style.backgroundColor = idx % 2 === 0 ? 'transparent' : 'rgba(128, 128, 128, 0.05)';
-                                            }
+                                            e.currentTarget.style.backgroundColor = idx % 2 === 0 ? 'transparent' : 'rgba(128, 128, 128, 0.05)';
                                         }}
                                     >
                                         <td style={{
@@ -289,14 +375,19 @@ publications_df`;
                                             padding: '6px 12px',
                                             color: '#CE9178'
                                         }}>{row.year}</td>
-                                        <td style={{
-                                            padding: '6px 12px',
-                                            color: '#CE9178',
-                                            maxWidth: '300px',
-                                            overflow: 'hidden',
-                                            textOverflow: 'ellipsis',
-                                            whiteSpace: 'nowrap'
-                                        }}>{row.title}</td>
+                                        <td
+                                            onClick={() => row.url && window.open(row.url, '_blank')}
+                                            style={{
+                                                padding: '6px 12px',
+                                                color: '#CE9178',
+                                                maxWidth: '300px',
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                                whiteSpace: 'nowrap',
+                                                cursor: row.url ? 'pointer' : 'default',
+                                                textDecoration: row.url ? 'underline' : 'none'
+                                            }}
+                                        >{row.title}</td>
                                         <td style={{
                                             padding: '6px 12px',
                                             color: '#CE9178',
@@ -313,6 +404,39 @@ publications_df`;
                                             textOverflow: 'ellipsis',
                                             whiteSpace: 'nowrap'
                                         }}>{row.journal}</td>
+                                        <td style={{
+                                            padding: '6px 12px',
+                                            textAlign: 'center'
+                                        }}>
+                                            <button
+                                                onClick={() => copyCitation(publicationsData[idx], idx)}
+                                                style={{
+                                                    backgroundColor: 'transparent',
+                                                    border: '1px solid var(--vscode-border)',
+                                                    borderRadius: '4px',
+                                                    padding: '4px 8px',
+                                                    cursor: 'pointer',
+                                                    color: copiedIndex === idx ? '#4EC9B0' : 'var(--vscode-text)',
+                                                    display: 'inline-flex',
+                                                    alignItems: 'center',
+                                                    gap: '4px',
+                                                    fontSize: '11px',
+                                                    transition: 'all 0.2s'
+                                                }}
+                                                title="Copy BibTeX citation"
+                                                onMouseEnter={(e) => {
+                                                    e.currentTarget.style.borderColor = 'var(--vscode-accent)';
+                                                    e.currentTarget.style.backgroundColor = 'var(--vscode-hover-bg)';
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    e.currentTarget.style.borderColor = 'var(--vscode-border)';
+                                                    e.currentTarget.style.backgroundColor = 'transparent';
+                                                }}
+                                            >
+                                                {copiedIndex === idx ? <VscCheck size={12} /> : <VscCopy size={12} />}
+                                                {copiedIndex === idx ? 'Copied!' : 'Copy'}
+                                            </button>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

@@ -31,6 +31,18 @@ a:hover {
   color: #535bf2;
 }
 
+/* Enhanced focus indicators for accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--vscode-accent, #646cff);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 body {
   margin: 0;
   display: flex;
@@ -67,6 +79,30 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  width: 100%;
+}
+
+.spinner {
+  border: 3px solid var(--vscode-border);
+  border-top-color: var(--vscode-accent);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (prefers-color-scheme: light) {
@@ -123,6 +159,23 @@ button:focus-visible {
   animation: blink 1s step-end infinite;
   color: var(--vscode-accent, #646cff);
   margin-left: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .blinking-cursor {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 /* Mobile Responsiveness Improvements */
@@ -248,4 +301,22 @@ button:focus-visible {
   .activity-bar {
     padding: 4px 0 !important;
   }
+}
+
+/* Skip to main content link for accessibility */
+.skip-to-main {
+  position: absolute;
+  left: -9999px;
+  z-index: 999;
+}
+
+.skip-to-main:focus {
+  left: 50%;
+  transform: translateX(-50%);
+  top: 10px;
+  padding: 10px 20px;
+  background-color: var(--vscode-accent);
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
 }

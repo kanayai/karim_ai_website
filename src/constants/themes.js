@@ -1,14 +1,14 @@
 export const themes = [
-    { id: 'github-dark', label: 'GitHub Dark' },
-    { id: 'vscode-dark', label: 'Dark (VS Code)' },
-    { id: 'light', label: 'Light (VS Code)' },
-    { id: 'catppuccin', label: 'Catppuccin Mocha' },
-    { id: 'monokai', label: 'Monokai' },
-    { id: 'nord', label: 'Nord' },
-    { id: 'solarized-dark', label: 'Solarized Dark' },
-    { id: 'solarized-light', label: 'Solarized Light' },
-    { id: 'one-dark-pro', label: 'One Dark Pro' },
-    { id: 'github-light', label: 'GitHub Light' },
-    { id: 'synthwave-84', label: "Synthwave '84" },
-    { id: 'gruvbox-dark', label: 'Gruvbox Dark' }
+    { id: 'github-dark', name: 'GitHub Dark' },
+    { id: 'vscode-dark', name: 'Dark (VS Code)' },
+    { id: 'light', name: 'Light (VS Code)' },
+    { id: 'catppuccin', name: 'Catppuccin Mocha' },
+    { id: 'monokai', name: 'Monokai' },
+    { id: 'nord', name: 'Nord' },
+    { id: 'solarized-dark', name: 'Solarized Dark' },
+    { id: 'solarized-light', name: 'Solarized Light' },
+    { id: 'one-dark-pro', name: 'One Dark Pro' },
+    { id: 'github-light', name: 'GitHub Light' },
+    { id: 'synthwave-84', name: "Synthwave '84" },
+    { id: 'gruvbox-dark', name: 'Gruvbox Dark' }
 ];

@@ -174,7 +174,7 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
         }
 
         if (activeFile === 'Welcome') {
-            return <WelcomePage onNavigate={setActiveFile} simpleMode={simpleMode} toggleSimpleMode={toggleSimpleMode} recentFiles={recentFiles} />;
+            return <WelcomePage onNavigate={setActiveFile} simpleMode={simpleMode} toggleSimpleMode={toggleSimpleMode} recentFiles={recentFiles} theme={theme} setTheme={setTheme} />;
         }
 
         if (activeFile === 'blog.html') {

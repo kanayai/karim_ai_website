@@ -1,19 +1,34 @@
 import React from 'react';
-import { VscBook, VscPreview, VscProject, VscAccount, VscRepo, VscNewFile, VscFolderOpened } from 'react-icons/vsc';
+import { VscBook, VscPreview, VscProject, VscAccount, VscRepo, VscNewFile, VscFolderOpened, VscColorMode } from 'react-icons/vsc';
 import { useTranslation } from 'react-i18next';
 import { formatRelativeTime } from '../hooks/useRecentFiles';
+import { themes } from '../constants/themes';
 
-const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [] }) => {
+const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [], theme, setTheme }) => {
     const { t } = useTranslation();
     const [displayText, setDisplayText] = React.useState('');
+    const [loopCount, setLoopCount] = React.useState(0);
+    const MAX_LOOPS = 3;
+
+    // Check for reduced motion preference
+    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     React.useEffect(() => {
         let isMounted = true;
 
         const typeSequence = async () => {
             const initialText = "Karim Anaya-Izquierdo";
+            const finalText = "Karim AI";
 
-            while (isMounted) {
+            // If user prefers reduced motion, just show final text
+            if (prefersReducedMotion) {
+                setDisplayText(finalText);
+                setLoopCount(MAX_LOOPS);
+                return;
+            }
+
+            let currentLoop = 0;
+            while (isMounted && currentLoop < MAX_LOOPS) {
                 setDisplayText("");
 
                 // 1. Type full name
@@ -43,9 +58,14 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [
                     await new Promise(r => setTimeout(r, 150));
                 }
 
-                // 5. Final Pause before restarting
+                currentLoop++;
+                setLoopCount(currentLoop);
+
+                // 5. Pause before next loop (or stay on final if last loop)
                 if (!isMounted) return;
-                await new Promise(r => setTimeout(r, 3000));
+                if (currentLoop < MAX_LOOPS) {
+                    await new Promise(r => setTimeout(r, 3000));
+                }
             }
         };
 
@@ -110,7 +130,7 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [
                         <img src="/images/blackboard.png" alt="Logo" style={{ width: '100%', maxWidth: '300px', height: 'auto', objectFit: 'contain' }} />
                         <h1 style={{ fontSize: '36px', fontWeight: '300' }}>
                             {displayText}
-                            <span className="blinking-cursor">|</span>
+                            {loopCount < MAX_LOOPS && <span className="blinking-cursor">|</span>}
                         </h1>
                     </div>
                     <p style={{ fontSize: '18px', opacity: 0.8, fontWeight: '300' }}>
@@ -185,6 +205,50 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [
                                     <a href="https://github.com/kanayai/karim_ai_website/issues/new" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>{t('welcome.report_issue')}</a>
                                 </div>
                             </div>
+                        </div>
+
+                        {/* Theme Showcase */}
+                        <div className="mt-5">
+                            <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <VscColorMode size={20} />
+                                {t('welcome.themes', 'Themes')}
+                            </h2>
+                            <div className="d-flex flex-wrap gap-2">
+                                {themes.map((themeItem) => (
+                                    <button
+                                        key={themeItem.id}
+                                        onClick={() => setTheme && setTheme(themeItem.id)}
+                                        style={{
+                                            padding: '8px 12px',
+                                            borderRadius: '4px',
+                                            border: theme === themeItem.id ? '2px solid var(--vscode-accent)' : '1px solid var(--vscode-border)',
+                                            backgroundColor: theme === themeItem.id ? 'var(--vscode-list-active-selection-bg)' : 'var(--vscode-button-secondary-bg)',
+                                            color: theme === themeItem.id ? 'var(--vscode-list-active-selection-foreground)' : 'var(--vscode-text)',
+                                            cursor: 'pointer',
+                                            fontSize: '13px',
+                                            transition: 'all 0.2s',
+                                            fontWeight: theme === themeItem.id ? '500' : '400'
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            if (theme !== themeItem.id) {
+                                                e.currentTarget.style.borderColor = 'var(--vscode-accent)';
+                                                e.currentTarget.style.backgroundColor = 'var(--vscode-list-hover-bg)';
+                                            }
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            if (theme !== themeItem.id) {
+                                                e.currentTarget.style.borderColor = 'var(--vscode-border)';
+                                                e.currentTarget.style.backgroundColor = 'var(--vscode-button-secondary-bg)';
+                                            }
+                                        }}
+                                    >
+                                        {themeItem.name}
+                                    </button>
+                                ))}
+                            </div>
+                            <p style={{ fontSize: '12px', opacity: 0.6, marginTop: '8px' }}>
+                                {t('welcome.theme_hint', 'Click to preview • Changes apply instantly')}
+                            </p>
                         </div>
                     </div>
                 </div>
