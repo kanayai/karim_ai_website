@@ -32,7 +32,7 @@ This document tracks potential enhancements for the Karim AI website. Ideas are 
   - Sort/group options (by year, topic, citation count)
 
 - [ ] **Blog Improvements**
-  - Reading time estimates
+  - [x] Reading time estimates
   - Table of contents for long posts
   - Related posts suggestions
   - RSS feed generation
