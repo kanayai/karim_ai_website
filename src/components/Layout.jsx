@@ -6,9 +6,8 @@ import CommandPalette from './CommandPalette';
 import TitleBar from './TitleBar';
 import Terminal from './Terminal';
 import OnboardingTip from './OnboardingTip';
-import RestrictedModeBanner from './RestrictedModeBanner';
 
-const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, setTheme, isSidebarOpen, toggleSidebar, simpleMode, toggleSimpleMode, isRestricted, onManageTrust }) => {
+const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, setTheme, isSidebarOpen, toggleSidebar, simpleMode, toggleSimpleMode }) => {
     const [isPaletteOpen, setIsPaletteOpen] = useState(false);
     const [isTerminalOpen, setIsTerminalOpen] = useState(false); // Default closed
     const [activeView, setActiveView] = useState('explorer');
@@ -46,7 +45,6 @@ const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, setTh
                 theme={theme}
                 toggleTheme={toggleTheme}
             />
-            {isRestricted && <RestrictedModeBanner onManage={onManageTrust} />}
             <div className={`main-container ${simpleMode ? 'simple-mode' : ''}`} style={{ position: 'relative' }}>
                 {/* Activity Bar - Always visible unless in Simple Mode */}
                 {!simpleMode && (

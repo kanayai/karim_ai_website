@@ -5,33 +5,11 @@ import { themes } from './constants/themes';
 import { useRecentFiles } from './hooks/useRecentFiles';
 import { ToastProvider, useToast } from './contexts/ToastContext';
 import './App.css';
-import TrustModal from './components/TrustModal';
+import WelcomeBanner from './components/WelcomeBanner';
 
 function AppContent() {
   const [openFiles, setOpenFiles] = useState(['Welcome']);
   const [activeFile, setActiveFile] = useState('Welcome');
-
-  // Trust State
-  const [trustState, setTrustState] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('trust_state') || 'unknown';
-    }
-    return 'unknown';
-  });
-
-  const handleTrust = () => {
-    localStorage.setItem('trust_state', 'trusted');
-    setTrustState('trusted');
-  };
-
-  const handleDistrust = () => {
-    localStorage.setItem('trust_state', 'untrusted');
-    setTrustState('untrusted');
-  };
-
-  const handleManageTrust = () => {
-    setTrustState('unknown');
-  };
 
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -155,6 +133,7 @@ function AppContent() {
 
   return (
     <>
+      <WelcomeBanner onSimpleModeClick={toggleSimpleMode} />
       <Layout
         activeFile={activeFile}
         setActiveFile={handleOpenFile}
@@ -165,8 +144,6 @@ function AppContent() {
         toggleSidebar={toggleSidebar}
         simpleMode={simpleMode}
         toggleSimpleMode={toggleSimpleMode}
-        isRestricted={trustState === 'untrusted'}
-        onManageTrust={handleManageTrust}
       >
         <Editor
           activeFile={activeFile}
@@ -181,9 +158,6 @@ function AppContent() {
           recentFiles={recentFiles}
         />
       </Layout>
-      {trustState === 'unknown' && (
-        <TrustModal onTrust={handleTrust} onDistrust={handleDistrust} />
-      )}
     </>
   );
 }
