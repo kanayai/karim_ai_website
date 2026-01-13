@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { VscClose } from 'react-icons/vsc';
+import { VscShield } from 'react-icons/vsc';
 
 const STORAGE_KEY = 'karim-ai-welcome-dismissed';
+
+// Keyhole SVG icon matching VS Code's workspace trust dialog
+const KeyholeIcon = () => (
+    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Shield shape background */}
+        <path
+            d="M40 4L8 16V36C8 54.8 21.6 72.4 40 76C58.4 72.4 72 54.8 72 36V16L40 4Z"
+            fill="var(--vscode-accent, #0078d4)"
+        />
+        {/* Keyhole */}
+        <circle cx="40" cy="32" r="10" fill="#1e1e1e" />
+        <path d="M34 38L32 56H48L46 38H34Z" fill="#1e1e1e" />
+    </svg>
+);
 
 const WelcomeBanner = ({ onSimpleModeClick }) => {
     const [isVisible, setIsVisible] = useState(false);
@@ -11,7 +25,7 @@ const WelcomeBanner = ({ onSimpleModeClick }) => {
         const dismissed = localStorage.getItem(STORAGE_KEY);
         if (!dismissed) {
             // Small delay for better UX
-            const timer = setTimeout(() => setIsVisible(true), 500);
+            const timer = setTimeout(() => setIsVisible(true), 300);
             return () => clearTimeout(timer);
         }
     }, []);
@@ -21,7 +35,12 @@ const WelcomeBanner = ({ onSimpleModeClick }) => {
         setTimeout(() => {
             setIsVisible(false);
             localStorage.setItem(STORAGE_KEY, 'true');
-        }, 300);
+        }, 250);
+    };
+
+    const handleSimpleMode = () => {
+        if (onSimpleModeClick) onSimpleModeClick();
+        handleDismiss();
     };
 
     if (!isVisible) return null;
@@ -30,77 +49,141 @@ const WelcomeBanner = ({ onSimpleModeClick }) => {
         <div
             style={{
                 position: 'fixed',
-                top: '50px',
-                left: '50%',
-                transform: `translateX(-50%) ${isAnimatingOut ? 'translateY(-10px)' : 'translateY(0)'}`,
-                zIndex: 1000,
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                zIndex: 10000,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
                 opacity: isAnimatingOut ? 0 : 1,
-                transition: 'all 0.3s ease-out',
-                animation: !isAnimatingOut ? 'fadeSlideIn 0.4s ease-out' : 'none',
-                maxWidth: '500px',
-                width: '90%'
+                transition: 'opacity 0.25s ease-out',
+                padding: '20px'
             }}
+            onClick={handleDismiss}
         >
             <div
+                onClick={(e) => e.stopPropagation()}
                 style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '12px',
-                    padding: '14px 16px',
-                    backgroundColor: 'var(--vscode-notifications-bg)',
-                    border: '1px solid var(--vscode-notifications-border)',
+                    backgroundColor: 'var(--vscode-editor-bg, #1e1e1e)',
+                    border: '1px solid var(--vscode-panel-border, #454545)',
                     borderRadius: '6px',
-                    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.3)',
-                    color: 'var(--vscode-notifications-foreground)',
-                    fontSize: '13px'
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
+                    maxWidth: '500px',
+                    width: '100%',
+                    overflow: 'hidden',
+                    transform: isAnimatingOut ? 'scale(0.95)' : 'scale(1)',
+                    transition: 'transform 0.25s ease-out'
                 }}
             >
-                <span style={{ fontSize: '20px', flexShrink: 0 }}>👋</span>
-                <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 600, marginBottom: '4px' }}>
-                        Welcome to Karim's Portfolio!
-                    </div>
-                    <div style={{ opacity: 0.85, lineHeight: 1.5 }}>
-                        This site is designed to look like VS Code. Explore using the sidebar, or{' '}
-                        <button
-                            onClick={() => {
-                                if (onSimpleModeClick) onSimpleModeClick();
-                                handleDismiss();
-                            }}
-                            style={{
-                                background: 'none',
-                                border: 'none',
-                                color: 'var(--vscode-accent)',
-                                cursor: 'pointer',
-                                padding: 0,
-                                textDecoration: 'underline',
-                                fontSize: 'inherit'
-                            }}
-                        >
-                            switch to Simple Mode
-                        </button>{' '}
-                        for a cleaner view.
-                    </div>
-                </div>
-                <button
-                    onClick={handleDismiss}
+                {/* Header with keyhole icon */}
+                <div
                     style={{
-                        background: 'transparent',
-                        border: 'none',
-                        color: 'var(--vscode-descriptionForeground)',
-                        cursor: 'pointer',
-                        padding: '4px',
-                        borderRadius: '3px',
                         display: 'flex',
+                        flexDirection: 'column',
                         alignItems: 'center',
-                        opacity: 0.7,
-                        flexShrink: 0
+                        padding: '40px 32px 24px',
+                        textAlign: 'center'
                     }}
-                    title="Dismiss"
-                    aria-label="Dismiss welcome message"
                 >
-                    <VscClose size={16} />
-                </button>
+                    <KeyholeIcon />
+                    <h2
+                        style={{
+                            fontSize: '18px',
+                            fontWeight: 400,
+                            color: 'var(--vscode-foreground, #cccccc)',
+                            margin: '24px 0 12px 0',
+                            lineHeight: 1.4
+                        }}
+                    >
+                        Do you trust the authors of this portfolio?
+                    </h2>
+                    <p
+                        style={{
+                            fontSize: '13px',
+                            color: 'var(--vscode-descriptionForeground, #8b8b8b)',
+                            margin: 0,
+                            lineHeight: 1.6,
+                            maxWidth: '400px'
+                        }}
+                    >
+                        This site is designed to look like VS Code. You can explore using the
+                        sidebar on the left, or switch to a simplified view if you prefer.
+                    </p>
+                </div>
+
+                {/* Side-by-side Trust Buttons */}
+                <div
+                    style={{
+                        display: 'flex',
+                        gap: '12px',
+                        padding: '0 32px 32px',
+                        justifyContent: 'center'
+                    }}
+                >
+                    <button
+                        onClick={handleSimpleMode}
+                        style={{
+                            flex: 1,
+                            maxWidth: '180px',
+                            padding: '8px 16px',
+                            fontSize: '13px',
+                            fontWeight: 400,
+                            backgroundColor: 'transparent',
+                            color: 'var(--vscode-foreground, #cccccc)',
+                            border: '1px solid var(--vscode-panel-border, #454545)',
+                            borderRadius: '2px',
+                            cursor: 'pointer',
+                            transition: 'background-color 0.1s ease'
+                        }}
+                        onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--vscode-list-hover-bg, #2a2d2e)'}
+                        onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                    >
+                        No, browse safely
+                    </button>
+                    <button
+                        onClick={handleDismiss}
+                        style={{
+                            flex: 1,
+                            maxWidth: '180px',
+                            padding: '8px 16px',
+                            fontSize: '13px',
+                            fontWeight: 400,
+                            backgroundColor: 'var(--vscode-accent, #0078d4)',
+                            color: '#ffffff',
+                            border: 'none',
+                            borderRadius: '2px',
+                            cursor: 'pointer',
+                            transition: 'background-color 0.1s ease'
+                        }}
+                        onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--vscode-accent-hover, #005a9e)'}
+                        onMouseLeave={(e) => e.target.style.backgroundColor = 'var(--vscode-accent, #0078d4)'}
+                    >
+                        Yes, I trust the authors
+                    </button>
+                </div>
+
+                {/* Learn more link */}
+                <div
+                    style={{
+                        borderTop: '1px solid var(--vscode-panel-border, #454545)',
+                        padding: '12px 32px',
+                        textAlign: 'center'
+                    }}
+                >
+                    <span
+                        style={{
+                            fontSize: '12px',
+                            color: 'var(--vscode-textLink-foreground, #3794ff)',
+                            cursor: 'pointer'
+                        }}
+                        onClick={handleDismiss}
+                    >
+                        Learn more about workspace trust
+                    </span>
+                </div>
             </div>
         </div>
     );
