@@ -5,10 +5,34 @@ import { themes } from './constants/themes';
 import { useRecentFiles } from './hooks/useRecentFiles';
 import { ToastProvider, useToast } from './contexts/ToastContext';
 import './App.css';
+import TrustModal from './components/TrustModal';
 
 function AppContent() {
   const [openFiles, setOpenFiles] = useState(['Welcome']);
   const [activeFile, setActiveFile] = useState('Welcome');
+
+  // Trust State
+  const [trustState, setTrustState] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('trust_state') || 'unknown';
+    }
+    return 'unknown';
+  });
+
+  const handleTrust = () => {
+    localStorage.setItem('trust_state', 'trusted');
+    setTrustState('trusted');
+  };
+
+  const handleDistrust = () => {
+    localStorage.setItem('trust_state', 'untrusted');
+    setTrustState('untrusted');
+  };
+
+  const handleManageTrust = () => {
+    setTrustState('unknown');
+  };
+
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('theme');
@@ -130,30 +154,37 @@ function AppContent() {
   };
 
   return (
-    <Layout
-      activeFile={activeFile}
-      setActiveFile={handleOpenFile}
-      theme={theme}
-      toggleTheme={toggleTheme}
-      setTheme={setTheme}
-      isSidebarOpen={isSidebarOpen}
-      toggleSidebar={toggleSidebar}
-      simpleMode={simpleMode}
-      toggleSimpleMode={toggleSimpleMode}
-    >
-      <Editor
+    <>
+      <Layout
         activeFile={activeFile}
-        openFiles={openFiles}
-        setActiveFile={setActiveFile}
-        onCloseFile={handleCloseFile}
-        onCloseAllFiles={handleCloseAllFiles}
+        setActiveFile={handleOpenFile}
         theme={theme}
+        toggleTheme={toggleTheme}
         setTheme={setTheme}
+        isSidebarOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
         simpleMode={simpleMode}
         toggleSimpleMode={toggleSimpleMode}
-        recentFiles={recentFiles}
-      />
-    </Layout>
+        isRestricted={trustState === 'untrusted'}
+        onManageTrust={handleManageTrust}
+      >
+        <Editor
+          activeFile={activeFile}
+          openFiles={openFiles}
+          setActiveFile={setActiveFile}
+          onCloseFile={handleCloseFile}
+          onCloseAllFiles={handleCloseAllFiles}
+          theme={theme}
+          setTheme={setTheme}
+          simpleMode={simpleMode}
+          toggleSimpleMode={toggleSimpleMode}
+          recentFiles={recentFiles}
+        />
+      </Layout>
+      {trustState === 'unknown' && (
+        <TrustModal onTrust={handleTrust} onDistrust={handleDistrust} />
+      )}
+    </>
   );
 }
 
