@@ -2,7 +2,7 @@ import React from 'react';
 import { VscArrowLeft, VscArrowRight, VscSearch, VscLayoutSidebarLeft, VscLayoutSidebarRight, VscLayoutPanel, VscMenu, VscColorMode, VscChromeMinimize, VscChromeMaximize, VscChromeClose } from 'react-icons/vsc';
 
 const TitleBar = ({ onSearchClick, toggleSidebar, simpleMode, toggleSimpleMode, theme, toggleTheme }) => {
-    const commandLabel = simpleMode ? 'Search' : 'Search';
+    const menuItems = ['File', 'Edit', 'Selection', 'View', 'Go', 'Run', 'Terminal', 'Help'];
 
     return (
         <div className="title-bar d-flex align-items-center justify-content-between px-2" data-tauri-drag-region="">
@@ -34,7 +34,12 @@ const TitleBar = ({ onSearchClick, toggleSidebar, simpleMode, toggleSimpleMode, 
                         </span>
                     </>
                 )}
-                <span className="titlebar-app-name">karim_ai_website</span>
+                <div className="d-none d-lg-flex align-items-center titlebar-menubar">
+                    {menuItems.map((item) => (
+                        <span key={item} className="titlebar-menu-item">{item}</span>
+                    ))}
+                </div>
+                <span className="d-lg-none titlebar-app-name">karim_ai_website</span>
             </div>
 
             <div className="titlebar-center">
@@ -60,7 +65,7 @@ const TitleBar = ({ onSearchClick, toggleSidebar, simpleMode, toggleSimpleMode, 
                     }}
                 >
                     <VscSearch size={14} className="me-2" />
-                    <span className="titlebar-command-label">{commandLabel}</span>
+                    <span className="titlebar-command-label">Search</span>
                     <span className="titlebar-command-shortcut d-none d-md-inline">⇧⌘P</span>
                 </div>
                 <span className="titlebar-window-title d-none d-lg-inline">karim_ai_website - Visual Studio Code</span>

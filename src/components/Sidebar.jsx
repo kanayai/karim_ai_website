@@ -177,6 +177,7 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
                     <div className="explorer-section-header px-2 py-1 d-flex align-items-center gap-1">
                         <VscChevronDown size={14} />
                         <span>OPEN EDITORS</span>
+                        <VscEllipsis size={14} className="ms-auto explorer-section-action" />
                     </div>
                     <div className="d-flex flex-column explorer-open-editors">
                         {openEditors.map((file) => (
@@ -200,6 +201,7 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
                     <div className="explorer-section-header px-2 py-1 d-flex align-items-center gap-1">
                         <VscChevronDown size={14} />
                         <span>KARIM_AI_WEBSITE</span>
+                        <VscEllipsis size={14} className="ms-auto explorer-section-action" />
                     </div>
                     <div className="d-flex flex-column explorer-tree">
                         {structure.map(item => renderItem(item))}

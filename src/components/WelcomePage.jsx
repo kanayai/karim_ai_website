@@ -1,12 +1,18 @@
 import React from 'react';
-import { VscBook, VscPreview, VscProject, VscAccount, VscCode, VscExtensions } from 'react-icons/vsc';
+import { VscBook, VscPreview, VscProject, VscAccount, VscCode, VscExtensions, VscFolderOpened } from 'react-icons/vsc';
 import { useTranslation } from 'react-i18next';
 import { formatRelativeTime } from '../hooks/useRecentFiles';
 
-const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [] }) => {
+const WelcomePage = ({ onNavigate, recentFiles = [] }) => {
     const { t } = useTranslation();
 
     const startItems = [
+        {
+            icon: <VscFolderOpened size={20} color="#c5c5c5" />,
+            title: 'Open Folder',
+            description: 'Browse the workspace structure in the Explorer.',
+            action: () => onNavigate('Welcome')
+        },
         {
             icon: <VscBook size={20} color="#3794ff" />,
             title: t('welcome.view_publications'),
@@ -55,36 +61,28 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [
             color: 'var(--vscode-text)',
             overflowY: 'auto'
         }}>
-            <div style={{ maxWidth: '1120px', margin: '0 auto' }}>
+            <div className="welcome-shell" style={{ maxWidth: '1180px', margin: '0 auto' }}>
                 <div className="row g-4 align-items-start">
-                    <div className="col-lg-5">
-                        <div className="d-flex flex-column align-items-start">
-                            <img src="/images/blackboard.png" alt="Logo" style={{ width: '100%', maxWidth: '340px', height: 'auto', objectFit: 'contain', marginBottom: '20px' }} />
-                            <div style={{ fontSize: '34px', fontWeight: 300, marginBottom: '8px' }}>Get Started</div>
-                            <div style={{ fontSize: '14px', color: 'var(--vscode-descriptionForeground)', maxWidth: '540px', lineHeight: '1.6', marginBottom: '22px' }}>
+                    <div className="col-lg-5 col-xl-4">
+                        <div className="d-flex flex-column align-items-start welcome-hero">
+                            <img src="/images/blackboard.png" alt="Logo" className="welcome-hero-image" />
+                            <div className="welcome-title">Get Started</div>
+                            <div className="welcome-subtitle">
                                 {t('welcome.subtitle')}
                             </div>
 
-                            <div className="d-flex flex-column gap-1 w-100" style={{ maxWidth: '560px' }}>
+                            <div className="d-flex flex-column gap-1 w-100 welcome-start-list">
                                 {startItems.map((item, index) => (
                                     <div
                                         key={index}
-                                        className="d-flex align-items-start gap-3 px-2 py-2 rounded start-item"
-                                        style={{ cursor: 'pointer', transition: 'background-color 0.12s', border: '1px solid transparent' }}
+                                        className="d-flex align-items-start gap-3 px-2 py-2 start-item"
+                                        style={{ cursor: 'pointer' }}
                                         onClick={item.action}
-                                        onMouseEnter={(e) => {
-                                            e.currentTarget.style.backgroundColor = 'var(--vscode-list-hover-bg)';
-                                            e.currentTarget.style.borderColor = 'var(--vscode-border)';
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            e.currentTarget.style.backgroundColor = 'transparent';
-                                            e.currentTarget.style.borderColor = 'transparent';
-                                        }}
                                     >
                                         <div className="mt-1">{item.icon}</div>
                                         <div>
-                                            <div style={{ color: 'var(--vscode-accent)', marginBottom: '2px', fontSize: '14px' }}>{item.title}</div>
-                                            <div style={{ fontSize: '12px', color: 'var(--vscode-descriptionForeground)' }}>{item.description}</div>
+                                            <div className="welcome-link-title">{item.title}</div>
+                                            <div className="welcome-link-description">{item.description}</div>
                                         </div>
                                     </div>
                                 ))}
@@ -92,30 +90,20 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [
                         </div>
                     </div>
 
-                    <div className="col-lg-7">
+                    <div className="col-lg-7 col-xl-8">
                         <div className="row g-4">
                             <div className="col-md-6">
-                                <h2 style={{ fontSize: '18px', fontWeight: '400', marginBottom: '12px' }}>Recent</h2>
-                                <div className="d-flex flex-column gap-1">
+                                <h2 className="welcome-section-title">Recent</h2>
+                                <div className="d-flex flex-column gap-1 welcome-section-list">
                                     {displayRecentItems.map((item, index) => (
                                         <div
                                             key={item.name + index}
-                                            className="d-flex align-items-center gap-2 py-1 px-2 rounded"
+                                            className="d-flex align-items-center gap-2 py-1 px-2 welcome-list-row"
                                             style={{ cursor: 'pointer' }}
                                             onClick={() => onNavigate(item.name)}
-                                            onMouseEnter={(e) => {
-                                                e.currentTarget.style.backgroundColor = 'var(--vscode-list-hover-bg)';
-                                                const pathEl = e.currentTarget.querySelector('.path');
-                                                if (pathEl) pathEl.style.color = 'var(--vscode-text)';
-                                            }}
-                                            onMouseLeave={(e) => {
-                                                e.currentTarget.style.backgroundColor = 'transparent';
-                                                const pathEl = e.currentTarget.querySelector('.path');
-                                                if (pathEl) pathEl.style.color = 'var(--vscode-descriptionForeground)';
-                                            }}
                                         >
-                                            <span style={{ color: 'var(--vscode-accent)', fontSize: '13px' }}>{item.name}</span>
-                                            <span className="path" style={{ fontSize: '12px', color: 'var(--vscode-descriptionForeground)', marginLeft: 'auto' }}>
+                                            <span className="welcome-link-title">{item.name}</span>
+                                            <span className="path welcome-link-description ms-auto">
                                                 {item.timestamp ? formatRelativeTime(item.timestamp) : item.path}
                                             </span>
                                         </div>
@@ -124,43 +112,43 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [
                             </div>
 
                             <div className="col-md-6">
-                                <h2 style={{ fontSize: '18px', fontWeight: '400', marginBottom: '12px' }}>Walkthroughs</h2>
-                                <div className="d-flex flex-column gap-1">
-                                    <div className="d-flex align-items-start gap-2 px-2 py-2 rounded start-item" style={{ cursor: 'pointer' }} onClick={() => onNavigate('README.md')}>
+                                <h2 className="welcome-section-title">Walkthroughs</h2>
+                                <div className="d-flex flex-column gap-1 welcome-section-list">
+                                    <div className="d-flex align-items-start gap-2 px-2 py-2 start-item" style={{ cursor: 'pointer' }} onClick={() => onNavigate('README.md')}>
                                         <VscCode size={18} style={{ marginTop: '2px', color: 'var(--vscode-accent)' }} />
                                         <div>
-                                            <div style={{ fontSize: '13px', color: 'var(--vscode-accent)' }}>Open Workspace README</div>
-                                            <div style={{ fontSize: '12px', color: 'var(--vscode-descriptionForeground)' }}>View the main project guide in editor preview.</div>
+                                            <div className="welcome-link-title">Open Workspace README</div>
+                                            <div className="welcome-link-description">View the main project guide in editor preview.</div>
                                         </div>
                                     </div>
-                                    <div className="d-flex align-items-start gap-2 px-2 py-2 rounded start-item" style={{ cursor: 'pointer' }} onClick={() => onNavigate('git-graph')}>
+                                    <div className="d-flex align-items-start gap-2 px-2 py-2 start-item" style={{ cursor: 'pointer' }} onClick={() => onNavigate('git-graph')}>
                                         <VscExtensions size={18} style={{ marginTop: '2px', color: 'var(--vscode-accent)' }} />
                                         <div>
-                                            <div style={{ fontSize: '13px', color: 'var(--vscode-accent)' }}>Explore Career Timeline</div>
-                                            <div style={{ fontSize: '12px', color: 'var(--vscode-descriptionForeground)' }}>Open the Git Graph style view from the activity bar.</div>
+                                            <div className="welcome-link-title">Explore Career Timeline</div>
+                                            <div className="welcome-link-description">Open the Git Graph style view from the activity bar.</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="col-md-6">
-                                <h2 style={{ fontSize: '18px', fontWeight: '400', marginBottom: '12px' }}>Help</h2>
-                                <div className="d-flex flex-column gap-2">
+                                <h2 className="welcome-section-title">Help</h2>
+                                <div className="d-flex flex-column gap-2 welcome-section-list">
                                     <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
-                                        <a href="https://github.com/kanayai/karim_ai_website" target="_blank" rel="noreferrer" style={{ color: 'var(--vscode-accent)', textDecoration: 'none' }}>{t('welcome.github_repo')}</a>
+                                        <a href="https://github.com/kanayai/karim_ai_website" target="_blank" rel="noreferrer" className="welcome-help-link">{t('welcome.github_repo')}</a>
                                     </div>
                                     <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
-                                        <a href="https://researchportal.bath.ac.uk/en/persons/karim-anaya-izquierdo/" target="_blank" rel="noreferrer" style={{ color: 'var(--vscode-accent)', textDecoration: 'none' }}>{t('welcome.research_portal')}</a>
+                                        <a href="https://researchportal.bath.ac.uk/en/persons/karim-anaya-izquierdo/" target="_blank" rel="noreferrer" className="welcome-help-link">{t('welcome.research_portal')}</a>
                                     </div>
                                     <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
-                                        <a href="https://github.com/kanayai/karim_ai_website/issues/new" target="_blank" rel="noreferrer" style={{ color: 'var(--vscode-accent)', textDecoration: 'none' }}>{t('welcome.report_issue')}</a>
+                                        <a href="https://github.com/kanayai/karim_ai_website/issues/new" target="_blank" rel="noreferrer" className="welcome-help-link">{t('welcome.report_issue')}</a>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="col-md-6">
-                                <h2 style={{ fontSize: '18px', fontWeight: '400', marginBottom: '12px' }}>Tips</h2>
-                                <div className="d-flex flex-column gap-2" style={{ fontSize: '13px', color: 'var(--vscode-descriptionForeground)' }}>
+                                <h2 className="welcome-section-title">Tips</h2>
+                                <div className="d-flex flex-column gap-2 welcome-section-list" style={{ fontSize: '13px', color: 'var(--vscode-descriptionForeground)' }}>
                                     <div>Use the Activity Bar to switch between Explorer, Search, Git Graph, Debug, and Extensions.</div>
                                     <div>Press <span style={{ color: 'var(--vscode-text)' }}>Shift+Cmd+P</span> to open Quick Open.</div>
                                     <div>Use the status bar to toggle the integrated terminal and change language.</div>

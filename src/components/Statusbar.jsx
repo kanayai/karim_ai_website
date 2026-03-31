@@ -60,7 +60,7 @@ const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal, simpleMode, tog
                     title={simpleMode ? "Exit Reader Mode" : "Enter Reader Mode"}
                 >
                     <VscBook />
-                    <span>{simpleMode ? "IDE Mode" : "Reader Mode"}</span>
+                    <span>{simpleMode ? "IDE" : "Reader"}</span>
                 </div>
 
                 {!simpleMode && (
