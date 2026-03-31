@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import publicationsData from '../../data/publications.json';
+import publicationsRSource from '../../data/publications.R?raw';
 import { VscCopy, VscCheck, VscCloudDownload } from 'react-icons/vsc';
 import { useToast } from '../contexts/ToastContext';
 
@@ -9,19 +10,7 @@ const RCodeViewer = ({ fileName }) => {
     const [copiedIndex, setCopiedIndex] = useState(null);
     const toast = useToast();
 
-    // The R code to display in the editor
-    // The R code to display in the editor
-    const rCode = `library(tidyverse)
-library(jsonlite)
-
-publications_df <- fromJSON("data/publications.json")
-
-publications_df <- publications_df %>%
-  select(year, title, authors, journal) %>%
-  arrange(desc(year)) %>%
-  as_tibble()
-
-publications_df`;
+    const rCode = publicationsRSource;
 
     // Simple R syntax highlighter
     const highlightRCode = (code) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { VscSearch, VscArrowRight, VscHome, VscFile, VscBook, VscExtensions } from 'react-icons/vsc';
+import { VscSearch, VscArrowRight, VscHome, VscFile, VscBook, VscExtensions, VscCode } from 'react-icons/vsc';
 import Fuse from 'fuse.js';
 
 import { blogPosts } from '../constants/blogData';
@@ -45,8 +45,15 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
         { name: 'LICENSE.txt', path: 'LICENSE.txt', category: 'Extensions', icon: 'file' },
     ];
 
+    const commandActions = [
+        { name: 'View: Toggle Terminal', path: '__toggle_terminal__', category: 'Commands', icon: 'command', description: 'Show or hide the integrated terminal', tags: ['terminal', 'panel', 'view'] },
+        { name: 'View: Toggle Primary Side Bar', path: '__toggle_sidebar__', category: 'Commands', icon: 'command', description: 'Collapse or reveal the explorer sidebar', tags: ['sidebar', 'explorer', 'view'] },
+    ];
+
     // Configure Fuse.js for fuzzy search
-    const fuse = new Fuse(files, {
+    const searchableItems = [...commandActions, ...files];
+
+    const fuse = new Fuse(searchableItems, {
         keys: [
             { name: 'name', weight: 2 },
             { name: 'description', weight: 1.5 },
@@ -61,7 +68,7 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
     // Get filtered results
     const getFilteredFiles = () => {
         if (!query.trim()) {
-            return files;
+            return searchableItems;
         }
         const results = fuse.search(query);
         return results.map(result => ({
@@ -82,7 +89,7 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
         return acc;
     }, {});
 
-    const categoryOrder = ['Navigation', 'Content', 'Blog', 'Extensions', 'Other'];
+    const categoryOrder = ['Commands', 'Navigation', 'Content', 'Blog', 'Extensions', 'Other'];
     const sortedCategories = categoryOrder.filter(cat => groupedFiles[cat]);
 
     useEffect(() => {
@@ -102,7 +109,12 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
             setSelectedIndex(prev => (prev - 1 + filteredFiles.length) % filteredFiles.length);
         } else if (e.key === 'Enter') {
             if (filteredFiles.length > 0) {
-                onNavigate(filteredFiles[selectedIndex].path);
+                const target = filteredFiles[selectedIndex].path;
+                if (target.startsWith('__')) {
+                    window.dispatchEvent(new CustomEvent(target));
+                } else {
+                    onNavigate(target);
+                }
                 onClose();
             }
         } else if (e.key === 'Escape') {
@@ -116,6 +128,7 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
             case 'home': return <VscHome />;
             case 'book': return <VscBook />;
             case 'extensions': return <VscExtensions />;
+            case 'command': return <VscCode />;
             default: return <VscFile />;
         }
     };
@@ -171,25 +184,15 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
 
     return (
         <div
-            className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center pt-5"
-            style={{ backgroundColor: 'rgba(0,0,0,0.4)', zIndex: 1000 }}
+            className="command-palette-overlay position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center pt-5"
             onClick={onClose}
         >
             <div
-                className="rounded shadow-lg d-flex flex-column"
-                style={{
-                    width: '1000px',
-                    maxWidth: '90%',
-                    maxHeight: '500px',
-                    backgroundColor: 'var(--vscode-sidebar-bg)',
-                    border: '1px solid var(--vscode-accent)',
-                    color: 'var(--vscode-text)'
-                }}
+                className="command-palette-panel rounded shadow-lg d-flex flex-column"
                 onClick={e => e.stopPropagation()}
             >
-                {/* Search Input */}
-                <div className="p-2 border-bottom border-secondary">
-                    <div className="input-group input-group-sm">
+                <div className="command-palette-header p-2">
+                    <div className="input-group input-group-sm command-palette-searchgroup">
                         <span className="input-group-text bg-transparent border-0 text-white">
                             <VscSearch />
                         </span>
@@ -197,17 +200,17 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
                             ref={inputRef}
                             type="text"
                             className="form-control bg-transparent border-0 text-white shadow-none command-palette-input"
-                            placeholder="search site (fuzzy matching enabled)"
+                            placeholder="Type the name of a file, command, or blog post"
                             value={query}
                             onChange={e => setQuery(e.target.value)}
                             onKeyDown={handleKeyDown}
                             style={{ color: 'var(--vscode-text)' }}
                         />
+                        <span className="command-palette-scope">Quick Open</span>
                     </div>
                 </div>
 
-                {/* Results */}
-                <div className="overflow-auto p-1" style={{ flex: 1 }}>
+                <div className="overflow-auto p-1 command-palette-results" style={{ flex: 1 }}>
                     {sortedCategories.map(category => {
                         const categoryFiles = groupedFiles[category];
 
@@ -215,14 +218,7 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
                             <div key={category} className="mb-2">
                                 {/* Category Header */}
                                 <div
-                                    className="px-3 py-1"
-                                    style={{
-                                        fontSize: '11px',
-                                        opacity: 0.6,
-                                        fontWeight: '600',
-                                        textTransform: 'uppercase',
-                                        letterSpacing: '0.5px'
-                                    }}
+                                    className="command-palette-category px-3 py-1"
                                 >
                                     {category}
                                 </div>
@@ -235,28 +231,35 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
                                     return (
                                         <div
                                             key={`${category}-${file.name}`}
-                                            className={`px-3 py-2 rounded mx-1 ${isSelected ? 'bg-primary text-white' : ''}`}
-                                            style={{
-                                                cursor: 'pointer',
-                                                backgroundColor: isSelected ? 'var(--vscode-accent)' : 'transparent',
-                                                transition: 'background-color 0.1s'
-                                            }}
+                                            className={`command-palette-item px-3 py-2 rounded mx-1 ${isSelected ? 'selected' : ''}`}
                                             onClick={() => {
-                                                onNavigate(file.path);
+                                                if (file.path.startsWith('__')) {
+                                                    window.dispatchEvent(new CustomEvent(file.path));
+                                                } else {
+                                                    onNavigate(file.path);
+                                                }
                                                 onClose();
                                             }}
                                             onMouseEnter={() => setSelectedIndex(currentGlobalIndex)}
                                         >
-                                            <div className="d-flex align-items-center justify-content-between">
-                                                <div className="d-flex align-items-center gap-2">
-                                                    <span style={{ opacity: 0.7, fontSize: '14px' }}>
+                                            <div className="d-flex align-items-start justify-content-between gap-3">
+                                                <div className="d-flex align-items-start gap-2">
+                                                    <span className="command-palette-item-icon">
                                                         {getIcon(file.icon)}
                                                     </span>
-                                                    <span>
-                                                        {query ? highlightMatch(file.name, file.matches) : file.name}
-                                                    </span>
+                                                    <div className="d-flex flex-column">
+                                                        <span className="command-palette-item-title">
+                                                            {query ? highlightMatch(file.name, file.matches) : file.name}
+                                                        </span>
+                                                        {file.description && (
+                                                            <span className="command-palette-item-description">{file.description}</span>
+                                                        )}
+                                                    </div>
                                                 </div>
-                                                <VscArrowRight style={{ opacity: 0.5 }} />
+                                                <div className="d-flex flex-column align-items-end">
+                                                    <span className="command-palette-item-meta">{file.category}</span>
+                                                    <VscArrowRight className="command-palette-item-arrow" />
+                                                </div>
                                             </div>
                                         </div>
                                     );
@@ -275,18 +278,10 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
                     )}
                 </div>
 
-                {/* Footer hint */}
-                <div
-                    className="px-3 py-2 border-top"
-                    style={{
-                        fontSize: '11px',
-                        opacity: 0.5,
-                        borderTopColor: 'var(--vscode-border) !important'
-                    }}
-                >
-                    <span className="me-3">↑↓ to navigate</span>
-                    <span className="me-3">↵ to select</span>
-                    <span>ESC to close</span>
+                <div className="command-palette-footer px-3 py-2">
+                    <span className="command-palette-hint me-2">↑↓ Navigate</span>
+                    <span className="command-palette-hint me-2">↵ Open</span>
+                    <span className="command-palette-hint">ESC Close</span>
                 </div>
             </div>
         </div>

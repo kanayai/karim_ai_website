@@ -108,7 +108,7 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
             return (
                 <div key={item.name}>
                     <div
-                        className="px-2 py-1 d-flex align-items-center gap-1 sidebar-item"
+                        className="px-2 py-1 d-flex align-items-center gap-1 sidebar-item sidebar-folder-row"
                         style={{
                             cursor: 'pointer',
                             color: 'var(--vscode-text)',
@@ -139,7 +139,7 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
         return (
             <div
                 key={item.name}
-                className={`py-1 d-flex align-items-center gap-2 sidebar-item ${activeFile === item.name ? 'active-file' : ''}`}
+                className={`py-1 d-flex align-items-center gap-2 sidebar-item sidebar-file-row ${activeFile === item.name ? 'active-file' : ''}`}
                 style={{
                     cursor: 'pointer',
                     backgroundColor: activeFile === item.name ? 'var(--vscode-active-item-gradient)' : 'transparent',
@@ -170,8 +170,8 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
             {activeView === 'explorer' ? (
                 <>
                     <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>{t('sidebar.explorer')}</div>
-                    <div className="d-flex flex-column">
-                        <div className="px-2 py-1 d-flex align-items-center" style={{ fontWeight: 'bold', cursor: 'pointer', color: 'var(--vscode-text)' }}>
+                    <div className="d-flex flex-column explorer-tree">
+                        <div className="px-2 py-1 d-flex align-items-center sidebar-root-header" style={{ fontWeight: 'bold', cursor: 'pointer', color: 'var(--vscode-text)' }}>
                             <VscChevronDown className="me-1" /> Karim AI
                             <VscEllipsis className="ms-auto" />
                         </div>

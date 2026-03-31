@@ -19,9 +19,58 @@ import { FaMarkdown, FaPython, FaJs, FaReact, FaHtml5 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
 import BlogViewer from './BlogViewer';
+import readmeContent from '../../README.md?raw';
+import licenseContent from '../../LICENSE.txt?raw';
+import gitignoreContent from '../../.gitignore?raw';
+import projectsContent from '../../projects.md?raw';
+import phdStudentsContent from '../../phd_students.md?raw';
+import aboutMeContent from '../../about_me.md?raw';
+import welcomeContent from '../../welcome.md?raw';
+import quartoGuideContent from '../../QUARTO_GUIDE.md?raw';
+import syncInstructionsContent from '../../SYNC_INSTRUCTIONS.md?raw';
+import futureImprovementsContent from '../../FUTURE_IMPROVEMENTS.md?raw';
+import websiteDocumentationContent from '../../WEBSITE_DOCUMENTATION.md?raw';
 
 const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme, setTheme, simpleMode, toggleSimpleMode, recentFiles }) => {
     const { i18n } = useTranslation();
+
+    const workspaceFileContent = {
+        'README.md': readmeContent,
+        'LICENSE.txt': licenseContent,
+        '.gitignore': gitignoreContent,
+        'projects.md': projectsContent,
+        'phd_students.md': phdStudentsContent,
+        'about_me.md': aboutMeContent,
+        'welcome.md': welcomeContent,
+        'QUARTO_GUIDE.md': quartoGuideContent,
+        'SYNC_INSTRUCTIONS.md': syncInstructionsContent,
+        'FUTURE_IMPROVEMENTS.md': futureImprovementsContent,
+        'WEBSITE_DOCUMENTATION.md': websiteDocumentationContent,
+    };
+
+    const workspacePaths = {
+        'Welcome': ['home'],
+        'publications.R': ['data'],
+        'current_courses.ipynb': ['notebooks'],
+        'previous_courses.ipynb': ['notebooks'],
+        'about_me.html': ['public'],
+        'contact.html': ['public'],
+        'projects.html': ['public'],
+        'phd_students.html': ['public'],
+        'certest.html': ['public'],
+        'gkn_prosperity.html': ['public'],
+        'blog.html': ['public', 'blog'],
+        'academic_workflow.html': ['public', 'blog', 'posts'],
+        'anscombe_quartet.html': ['public', 'blog', 'posts'],
+        'git-vs-onedrive.html': ['public', 'blog', 'posts'],
+        'reproducibility_guide.html': ['public', 'blog', 'posts'],
+        'git-graph': ['extensions'],
+        'lofi-radio': ['extensions'],
+        'retro_game.exe': ['extensions'],
+        'LaTeX': ['extensions'],
+        'cite-gen': ['extensions'],
+        'data-viz': ['extensions'],
+    };
 
     const getIcon = (filename) => {
         if (filename === 'Welcome') return <img src="/images/Bath_Crest.png" alt="Welcome" style={{ width: '16px', height: '16px' }} />;
@@ -41,125 +90,6 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
         if (filename === 'cite-gen') return <VscQuote color="#ce9178" />;
         if (filename === 'data-viz') return <VscGraph color="#b5cea8" />;
         return null;
-    };
-
-    // Mock content for files that don't exist on disk
-    const fileContent = {
-
-        'projects.md': `# Research Projects
-
-## CerTest – Certification for Design: Reshaping the Testing Pyramid
-**Website:** [composites-certest.com](https://www.composites-certest.com)
-
-CerTest develops new approaches to enable lighter, more cost and fuel-efficient composite aero-structures. It addresses the challenges that are hindering step-changes in future engineering design by reshaping the testing pyramid.
-
-The project combines world-class expertise from the Universities of Bristol, Bath, Southampton, and Exeter. It aims to reduce empiricism and enable a new integrated approach to design and validation at hitherto unattainable levels of fidelity and design freedom.
-
-**Key Research Challenges:**
-1.  Multi-scale Performance Modelling
-2.  Features and Damage Characterisation
-3.  Data-Rich High Fidelity Structural Characterisation
-4.  Integration & Methodology Validation
-
-## GKN Prosperity Partnership
-**Website:** [GKN Prosperity Partnership](https://researchportal.bath.ac.uk/en/projects/gkn-prosperity-partnership)
-
-This is a major collaborative research partnership between the University of Bath and GKN Aerospace, funded by the EPSRC.
-
-**Focus Areas:**
-The project, often referred to as "Fingerprint", focuses on advancing sustainable aerospace technologies. Key research areas include:
-*   **Hydrogen Storage**: Developing solutions for future zero-emission aircraft.
-*   **Composite Structures**: Investigating tank boundaries, monocoque structures, and composite parts.
-*   **Propulsion Systems**: Researching next-generation propulsion integration.
-*   **Material Science**: Advancing functional and structural composite materials.
-
-The partnership brings together expertise from the Departments of Mechanical Engineering, Chemical Engineering, Chemistry, and Mathematical Sciences to solve complex engineering challenges.
-`,
-        'phd_students.md': `# PhD Students
-
-## Alice Davis
-**Thesis:** Modelling techniques for time-to-event data analysis  
-**Department:** Mathematical Sciences  
-**Supervisor:** Karim Anaya-Izquierdo  
-**Link:** [View Thesis](https://researchportal.bath.ac.uk/en/studentTheses/modelling-techniques-for-time-to-event-data-analysis)
-
----
-
-## Thomas Pennington
-**Thesis:** Geometric Markov Chain Monte Carlo  
-**Department:** Mathematical Sciences  
-**Programme:** EPSRC Centre for Doctoral Training in Statistical Applied Mathematics (SAMBa)  
-**Supervisor:** Karim Anaya-Izquierdo  
-**Link:** [View Thesis](https://researchportal.bath.ac.uk/en/studentTheses/geometric-markov-chain-monte-carlo)
-
----
-
-## James Evans
-**Thesis:** Impact Damage Modelling of Composite Laminates Using Statistical Methods to Assess Strength Reduction for Rapid Design  
-**Department:** Mechanical Engineering  
-**Programme:** EPSRC Centre for Doctoral Training in Statistical Applied Mathematics (SAMBa)  
-**Supervisors:** Andrew Rhead, Karim Anaya-Izquierdo  
-**Link:** [View Thesis](https://researchportal.bath.ac.uk/en/studentTheses/impact-damage-modelling-of-composite-laminates-using-statistical-)
-`,
-
-        'LICENSE.txt': `MIT License
-        
-Copyright (c) 2025 Karim Anaya-Izquierdo
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.`,
-
-        '.gitignore': `# Mac
-.DS_Store
-
-# VS Code
-.vscode/
-*.code-workspace
-
-# R
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
-
-# Quarto
-/_site/
-/.quarto/
-
-# LaTeX
-*.aux
-*.log
-*.out
-*.pdf
-*.synctex.gz
-*.fls
-*.fdb_latexmk
-
-# Node
-node_modules/
-dist/
-.env`,
-
-        'README.md': `# Karim AI Portfolio Website
-
-A personal academic portfolio website designed to mimic the Visual Studio Code interface. It features a React-based frontend, R-generated content for research data, and a Quarto-powered blog.
-
-**Note:** This is a summary of the project's README. For full documentation including installation instructions, project structure, and component guides, please visit the [GitHub Repository](https://github.com/kanayai/karim_ai_website).`,
     };
 
     const renderContent = () => {
@@ -249,23 +179,23 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
 
         // Specific Viewers for README, LICENSE, .gitignore
         if (activeFile.endsWith('README.md')) {
-            const content = fileContent[activeFile] || `Content for ${activeFile} not found.`;
+            const content = workspaceFileContent[activeFile] || `Content for ${activeFile} not found.`;
             return <MarkdownViewer content={content} />;
         }
 
         if (activeFile.endsWith('LICENSE.txt')) {
-            const content = fileContent[activeFile] || `Content for ${activeFile} not found.`;
+            const content = workspaceFileContent[activeFile] || `Content for ${activeFile} not found.`;
             return <LicenseViewer content={content} />;
         }
 
         if (activeFile === '.gitignore') {
-            const content = fileContent[activeFile] || `Content for ${activeFile} not found.`;
+            const content = workspaceFileContent[activeFile] || `Content for ${activeFile} not found.`;
             return <GitIgnoreViewer content={content} />;
         }
 
         // Use CodeViewer for MD (other than README), CSS, JSON, TXT
         if (activeFile.endsWith('.md') || activeFile.endsWith('.css') || activeFile.endsWith('.json') || activeFile.endsWith('.txt')) {
-            const content = fileContent[activeFile] || `Content for ${activeFile} not found.`;
+            const content = workspaceFileContent[activeFile] || `Content for ${activeFile} not found in the current workspace map.`;
             let language = 'markdown';
             if (activeFile.endsWith('.css')) language = 'css';
             if (activeFile.endsWith('.json')) language = 'json';
@@ -278,40 +208,28 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
         return (
             <div className="p-4" style={{ color: 'var(--vscode-text)', maxWidth: '800px', overflowY: 'auto', height: '100%' }}>
                 <h1>{activeFile}</h1>
-                <p className="mt-4">This is a placeholder for the content of <code>{activeFile}</code>.</p>
-                <p>Content will be loaded dynamically here.</p>
+                <p className="mt-4">This view does not have a dedicated renderer yet.</p>
+                <p>The shell is treating it like a workspace file, but there is no specific content adapter for <code>{activeFile}</code> yet.</p>
                 <hr style={{ borderColor: 'var(--vscode-border)' }} />
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Next realism step: add a file-backed loader or a specialized viewer for this file type.</p>
             </div>
         );
     };
 
     return (
-        <div className="d-flex flex-column flex-grow-1" style={{ backgroundColor: 'var(--vscode-editor-bg)', overflow: 'hidden' }}>
-            {/* Tabs */}
-            <div className="d-flex align-items-center" style={{ backgroundColor: 'var(--vscode-bg)', overflowX: 'auto', height: '35px', minHeight: '35px', flexShrink: 0 }}>
-                <div className="d-flex" style={{ flexGrow: 1, overflowX: 'auto', height: '100%' }}>
+        <div className="d-flex flex-column flex-grow-1 editor-shell" style={{ backgroundColor: 'var(--vscode-editor-bg)', overflow: 'hidden' }}>
+            <div className="editor-tabs d-flex align-items-center">
+                <div className="d-flex editor-tabs-scroll" style={{ flexGrow: 1, overflowX: 'auto', height: '100%' }}>
                     {openFiles.map(file => (
                         <div
                             key={file}
-                            className="d-flex align-items-center px-3 gap-2"
-                            style={{
-                                backgroundColor: activeFile === file ? 'var(--vscode-editor-bg)' : 'var(--vscode-tab-inactive-bg)',
-                                borderTop: activeFile === file ? '2px solid transparent' : '1px solid transparent', // Make transparent to show gradient
-                                borderImage: activeFile === file ? 'var(--primary-gradient) 1' : 'none', // Gradient border
-                                borderRight: '1px solid var(--vscode-border)',
-                                color: activeFile === file ? 'var(--vscode-text)' : '#969696',
-                                cursor: 'pointer',
-                                minWidth: '120px',
-                                height: '100%'
-                            }}
+                            className={`tab-item d-flex align-items-center px-3 gap-2 ${activeFile === file ? 'active' : ''}`}
                             onClick={() => setActiveFile(file)}
                         >
                             {getIcon(file)}
-                            <span style={{ fontSize: '13px' }}>{file}</span>
+                            <span className="tab-item-label">{file}</span>
                             <div
-                                className="ms-auto d-flex align-items-center justify-content-center rounded hover-bg"
-                                style={{ width: '20px', height: '20px' }}
+                                className="tab-close-button ms-auto d-flex align-items-center justify-content-center rounded hover-bg"
                                 onClick={(e) => onCloseFile(e, file)}
                             >
                                 <VscClose size={16} />
@@ -319,17 +237,9 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
                         </div>
                     ))}
                 </div>
-                {/* Close All Button */}
                 {openFiles.length > 0 && (
                     <div
-                        className="d-flex align-items-center justify-content-center px-2 h-100"
-                        style={{
-                            cursor: 'pointer',
-                            color: 'var(--vscode-text)',
-                            borderLeft: '1px solid var(--vscode-border)',
-                            minWidth: 'fit-content',
-                            paddingRight: '8px'
-                        }}
+                        className="editor-close-all d-flex align-items-center justify-content-center px-2 h-100"
                         onClick={onCloseAllFiles}
                         title="Close All Files"
                     >
@@ -339,36 +249,21 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
                 )}
             </div>
 
-            {/* Breadcrumbs */}
             {activeFile && (
-                <div className="d-flex align-items-center px-3" style={{
-                    height: '22px',
-                    minHeight: '22px',
-                    flexShrink: 0,
-                    background: 'linear-gradient(to right, rgba(100, 108, 255, 0.05), transparent)', // Subtle gradient
-                    borderBottom: '1px solid var(--vscode-border)', // Optional: subtle separator
-                    fontSize: '13px',
-                    color: '#858585', // Dimmed text color
-                    userSelect: 'none'
-                }}>
-                    <span style={{ cursor: 'pointer' }}>karim_ai</span>
-                    <VscChevronRight className="mx-1" size={14} />
+                <div className="editor-breadcrumbs d-flex align-items-center px-3">
+                    <span style={{ cursor: 'pointer' }}>karim_ai_website</span>
                     {(() => {
-                        let path = [];
-                        if (activeFile === 'Welcome') path = [];
-                        else if (activeFile.includes('blog')) path = ['blog']; // Simplified logic
-                        else if (activeFile.endsWith('.R') || activeFile.endsWith('.json')) path = ['data'];
-                        else if (activeFile.endsWith('.html')) path = ['public'];
-                        else if (activeFile.endsWith('.ipynb')) path = ['notebooks'];
+                        const path = workspacePaths[activeFile] || [];
 
                         return (
                             <>
                                 {path.map((folder, i) => (
                                     <React.Fragment key={folder}>
-                                        <span style={{ cursor: 'pointer' }}>{folder}</span>
                                         <VscChevronRight className="mx-1" size={14} />
+                                        <span style={{ cursor: 'pointer' }}>{folder}</span>
                                     </React.Fragment>
                                 ))}
+                                {activeFile !== 'Welcome' && <VscChevronRight className="mx-1" size={14} />}
                                 <span style={{ color: 'var(--vscode-text)', cursor: 'pointer' }}>{activeFile}</span>
                             </>
                         );
@@ -376,10 +271,9 @@ A personal academic portfolio website designed to mimic the Visual Studio Code i
                 </div>
             )}
 
-            {/* Content Area */}
             <div
                 key={activeFile}
-                className="flex-grow-1"
+                className="flex-grow-1 editor-content-frame"
                 style={{
                     position: 'relative',
                     overflow: 'hidden',

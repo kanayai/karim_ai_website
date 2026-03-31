@@ -30,15 +30,7 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
 
     const IconWrapper = ({ children, onClick, active, title }) => (
         <div
-            className="d-flex justify-content-center align-items-center py-3"
-            style={{
-                width: '100%',
-                cursor: 'pointer',
-                borderLeft: active ? '2px solid var(--vscode-activity-bar-active-border)' : '2px solid transparent',
-                color: active ? 'var(--vscode-activity-bar-foreground)' : 'var(--vscode-activity-bar-inactive-foreground)',
-                fontSize: '20px',
-                lineHeight: '1'
-            }}
+            className={`activity-bar-icon d-flex justify-content-center align-items-center ${active ? 'active' : ''}`}
             onClick={onClick}
             title={title}
         >
@@ -49,16 +41,7 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
     const currentThemeLabel = themes.find(t => t.id === theme)?.label || 'Dark';
 
     return (
-        <div className="d-flex flex-column justify-content-between align-items-center py-2 activity-bar"
-            style={{
-                width: '48px',
-                minWidth: '48px',
-                backgroundColor: 'var(--vscode-activity-bar-bg)',
-                backdropFilter: 'blur(10px)',
-                borderRight: '1px solid var(--vscode-border)',
-                zIndex: 101,
-                height: '100%'
-            }}>
+        <div className="d-flex flex-column justify-content-between align-items-center py-2 activity-bar">
             <div className="d-flex flex-column gap-0" style={{ width: '100%' }}>
                 <IconWrapper active={activeView === 'explorer'} onClick={() => setActiveView('explorer')} title={t('sidebar.explorer')}>
                     <VscFiles />

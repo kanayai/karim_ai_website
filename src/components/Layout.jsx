@@ -11,6 +11,8 @@ const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, setTh
     const [isPaletteOpen, setIsPaletteOpen] = useState(false);
     const [isTerminalOpen, setIsTerminalOpen] = useState(false); // Default closed
     const [activeView, setActiveView] = useState('explorer');
+    const [sidebarWidth, setSidebarWidth] = useState(280);
+    const [terminalHeight, setTerminalHeight] = useState(220);
 
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -28,6 +30,49 @@ const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, setTh
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, []);
+
+    useEffect(() => {
+        const handleToggleSidebar = () => toggleSidebar();
+        const handleToggleTerminal = () => setIsTerminalOpen(prev => !prev);
+
+        window.addEventListener('__toggle_sidebar__', handleToggleSidebar);
+        window.addEventListener('__toggle_terminal__', handleToggleTerminal);
+
+        return () => {
+            window.removeEventListener('__toggle_sidebar__', handleToggleSidebar);
+            window.removeEventListener('__toggle_terminal__', handleToggleTerminal);
+        };
+    }, [toggleSidebar]);
+
+    const startSidebarResize = () => {
+        const handlePointerMove = (event) => {
+            const nextWidth = Math.max(220, Math.min(480, event.clientX - 48));
+            setSidebarWidth(nextWidth);
+        };
+
+        const stopResize = () => {
+            window.removeEventListener('pointermove', handlePointerMove);
+            window.removeEventListener('pointerup', stopResize);
+        };
+
+        window.addEventListener('pointermove', handlePointerMove);
+        window.addEventListener('pointerup', stopResize);
+    };
+
+    const startTerminalResize = () => {
+        const handlePointerMove = (event) => {
+            const nextHeight = Math.max(140, Math.min(420, window.innerHeight - event.clientY - 22));
+            setTerminalHeight(nextHeight);
+        };
+
+        const stopResize = () => {
+            window.removeEventListener('pointermove', handlePointerMove);
+            window.removeEventListener('pointerup', stopResize);
+        };
+
+        window.addEventListener('pointermove', handlePointerMove);
+        window.addEventListener('pointerup', stopResize);
+    };
 
     return (
         <div className="vscode-app">
@@ -69,12 +114,22 @@ const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, setTh
 
                 {/* Sidebar - Collapsible */}
                 {!simpleMode && (
-                    <div className={`sidebar-container ${isSidebarOpen ? 'open' : 'closed'}`}>
+                    <div
+                        className={`sidebar-container ${isSidebarOpen ? 'open' : 'closed'}`}
+                        style={{ width: isSidebarOpen ? `${sidebarWidth}px` : 0 }}
+                    >
                         <Sidebar
                             activeFile={activeFile}
                             setActiveFile={setActiveFile}
                             activeView={activeView}
                             setActiveView={setActiveView}
+                        />
+                        <div
+                            className="sidebar-resizer d-none d-md-block"
+                            onPointerDown={startSidebarResize}
+                            role="separator"
+                            aria-orientation="vertical"
+                            aria-label="Resize sidebar"
                         />
                     </div>
                 )}
@@ -89,8 +144,21 @@ const Layout = ({ children, activeFile, setActiveFile, theme, toggleTheme, setTh
 
                 <div className="d-flex flex-column flex-grow-1" style={{ overflow: 'hidden' }}>
                     {children}
-                    {/* Hide Terminal in Simple Mode */}
-                    {!simpleMode && isTerminalOpen && <Terminal onClose={() => setIsTerminalOpen(false)} />}
+                    {!simpleMode && isTerminalOpen && (
+                        <>
+                            <div
+                                className="panel-resizer d-none d-md-block"
+                                onPointerDown={startTerminalResize}
+                                role="separator"
+                                aria-orientation="horizontal"
+                                aria-label="Resize terminal panel"
+                            />
+                            <Terminal
+                                onClose={() => setIsTerminalOpen(false)}
+                                height={terminalHeight}
+                            />
+                        </>
+                    )}
                 </div>
             </div>
             {/* Statusbar - Always visible now, but simplified in Simple Mode */}

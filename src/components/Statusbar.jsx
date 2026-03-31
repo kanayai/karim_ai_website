@@ -4,6 +4,18 @@ import { useTranslation } from 'react-i18next';
 
 const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal, simpleMode, toggleSimpleMode }) => {
     const { t, i18n } = useTranslation();
+    const cursorPosition = React.useMemo(() => {
+        if (!activeFile || activeFile === 'Welcome') {
+            return { line: 1, column: 1 };
+        }
+
+        const charTotal = activeFile.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
+
+        return {
+            line: (charTotal % 180) + 1,
+            column: (activeFile.length * 3 % 120) + 1
+        };
+    }, [activeFile]);
 
     const getLanguage = (filename) => {
         if (!filename) return t('statusbar.plain_text');
@@ -26,14 +38,7 @@ const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal, simpleMode, tog
     };
 
     return (
-        <div className={`d-flex justify-content-between align-items-center px-2 flex-shrink-0 status-bar ${simpleMode ? 'simple-mode' : ''}`}
-            style={{
-                backgroundColor: 'var(--vscode-status-bar-bg)',
-                color: '#ffffff',
-                height: '22px',
-                fontSize: '12px',
-                userSelect: 'none'
-            }}>
+        <div className={`d-flex justify-content-between align-items-center px-2 flex-shrink-0 status-bar ${simpleMode ? 'simple-mode' : ''}`}>
             <div className="d-flex align-items-center gap-3">
                 <div className="d-flex align-items-center gap-1">
                     <VscSourceControl />
@@ -72,7 +77,7 @@ const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal, simpleMode, tog
                 {!simpleMode && (
                     <>
                         <div className="d-flex align-items-center gap-1 d-none d-md-flex">
-                            <span style={{ minWidth: '80px', textAlign: 'right' }}>Ln {Math.floor(Math.random() * 100) + 1}, Col {Math.floor(Math.random() * 50) + 1}</span>
+                            <span style={{ minWidth: '92px', textAlign: 'right' }}>Ln {cursorPosition.line}, Col {cursorPosition.column}</span>
                         </div>
                         <div className="d-flex align-items-center gap-1 d-none d-md-flex">
                             <span>UTF-8</span>

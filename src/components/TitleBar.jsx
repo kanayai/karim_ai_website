@@ -1,92 +1,97 @@
 import React from 'react';
-import { VscArrowLeft, VscArrowRight, VscSearch, VscLayoutSidebarLeft, VscLayoutSidebarRight, VscLayoutPanel, VscMenu, VscBook, VscColorMode } from 'react-icons/vsc';
+import { VscArrowLeft, VscArrowRight, VscSearch, VscLayoutSidebarLeft, VscLayoutSidebarRight, VscLayoutPanel, VscMenu, VscColorMode, VscChromeMinimize, VscChromeMaximize, VscChromeClose } from 'react-icons/vsc';
 
 const TitleBar = ({ onSearchClick, toggleSidebar, simpleMode, toggleSimpleMode, theme, toggleTheme }) => {
-    return (
-        <div className="d-flex align-items-center justify-content-between px-2 title-bar"
-            style={{
-                height: '35px',
-                flexShrink: 0,
-                background: 'var(--vscode-titlebar-gradient)',
-                backgroundColor: 'var(--vscode-activity-bar-bg)',
-                borderBottom: '1px solid var(--vscode-border)',
-                userSelect: 'none'
-            }}>
+    const commandLabel = simpleMode ? 'Search portfolio' : 'Search files, commands, and posts';
 
-            {/* Left: Menu (Mobile only) - Hide in Simple Mode if desired, or keep for basic nav */}
-            <div className="d-flex align-items-center">
+    return (
+        <div className="title-bar d-flex align-items-center justify-content-between px-2" data-tauri-drag-region="">
+            <div className="d-flex align-items-center titlebar-left">
+                <div className="titlebar-window-controls d-none d-md-flex" aria-hidden="true">
+                    <span className="titlebar-window-button">
+                        <VscChromeMinimize size={14} />
+                    </span>
+                    <span className="titlebar-window-button">
+                        <VscChromeMaximize size={12} />
+                    </span>
+                    <span className="titlebar-window-button close">
+                        <VscChromeClose size={13} />
+                    </span>
+                </div>
+
                 {!simpleMode && (
                     <>
                         <VscMenu
-                            className="d-md-none"
+                            className="d-md-none titlebar-icon-button"
                             size={18}
-                            color="var(--vscode-text)"
-                            style={{ cursor: 'pointer' }}
                             onClick={toggleSidebar}
                         />
                         <span
-                            className="d-md-none ms-2"
-                            style={{
-                                fontSize: '12px',
-                                color: 'var(--vscode-text)',
-                                cursor: 'pointer'
-                            }}
+                            className="d-md-none ms-2 titlebar-caption"
                             onClick={toggleSidebar}
                         >
                             Menu
                         </span>
                     </>
                 )}
-                {simpleMode && (
-                    <span style={{ fontSize: '13px', fontWeight: 'bold', color: 'var(--vscode-text)' }}>Karim AI</span>
-                )}
+                <span className="titlebar-app-name">karim_ai_website</span>
             </div>
 
-            {/* Center: Navigation Controls & Search */}
-            <div className="position-absolute start-50 translate-middle-x d-flex align-items-center gap-3">
-                <div className="d-flex gap-2 align-items-center">
-                    <VscArrowLeft className="nav-icon" size={16} color="var(--vscode-text)" style={{ opacity: 0.6, cursor: 'not-allowed' }} />
-                    <VscArrowRight className="nav-icon" size={16} color="var(--vscode-text)" style={{ opacity: 0.6, cursor: 'not-allowed' }} />
+            <div className="titlebar-center">
+                <div className="d-flex gap-1 align-items-center">
+                    <button className="titlebar-icon-button nav-icon" type="button" aria-label="Back" disabled>
+                        <VscArrowLeft size={16} />
+                    </button>
+                    <button className="titlebar-icon-button nav-icon" type="button" aria-label="Forward" disabled>
+                        <VscArrowRight size={16} />
+                    </button>
                 </div>
 
-                {/* Search / Command Palette Trigger */}
                 <div
-                    className="command-palette-trigger d-flex align-items-center px-2 rounded"
-                    style={{
-                        backgroundColor: 'var(--vscode-bg)',
-                        border: '1px solid var(--vscode-border)',
-                        height: '24px',
-                        width: '400px',
-                        maxWidth: '50vw',
-                        cursor: 'pointer',
-                        color: 'var(--vscode-text)',
-                        opacity: 0.8
-                    }}
+                    className="command-palette-trigger titlebar-command d-flex align-items-center px-2 rounded"
                     onClick={onSearchClick}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            onSearchClick();
+                        }
+                    }}
                 >
                     <VscSearch size={14} className="me-2" />
-                    <span style={{ fontSize: '12px' }}>{simpleMode ? 'search...' : 'search site'}</span>
+                    <span className="titlebar-command-label">{commandLabel}</span>
+                    <span className="titlebar-command-shortcut d-none d-md-inline">⇧⌘P</span>
                 </div>
             </div>
 
-            {/* Right: Layout Controls & Theme Toggle */}
-            <div className="d-flex gap-3 align-items-center">
+            <div className="d-flex gap-1 align-items-center titlebar-right">
                 <div
                     onClick={toggleTheme}
-                    style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                    className="titlebar-icon-button"
                     title={`Switch to ${theme?.includes('light') ? 'Dark' : 'Light'} Mode`}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            toggleTheme();
+                        }
+                    }}
                 >
-                    {theme?.includes('light') ? (
-                        <VscColorMode size={16} color="var(--vscode-text)" />
-                    ) : (
-                        <VscColorMode size={16} color="var(--vscode-text)" />
-                    )}
+                    <VscColorMode size={16} />
                 </div>
                 {!simpleMode && (
                     <>
-                        <VscLayoutSidebarLeft size={16} color="var(--vscode-text)" style={{ cursor: 'pointer' }} />
-                        <VscLayoutPanel size={16} color="var(--vscode-text)" style={{ cursor: 'pointer' }} />
-                        <VscLayoutSidebarRight size={16} color="var(--vscode-text)" style={{ cursor: 'pointer' }} />
+                        <div className="titlebar-icon-button" title="Toggle Primary Side Bar" role="button" tabIndex={0} onClick={toggleSidebar}>
+                            <VscLayoutSidebarLeft size={16} />
+                        </div>
+                        <div className="titlebar-icon-button" title={simpleMode ? 'Exit Reader Mode' : 'Enter Reader Mode'} role="button" tabIndex={0} onClick={toggleSimpleMode}>
+                            <VscLayoutPanel size={16} />
+                        </div>
+                        <div className="titlebar-icon-button" title="Secondary Side Bar" aria-hidden="true">
+                            <VscLayoutSidebarRight size={16} />
+                        </div>
                     </>
                 )}
             </div>

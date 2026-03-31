@@ -1,95 +1,93 @@
 import React from 'react';
-import { VscClose, VscTrash, VscSplitHorizontal, VscAdd } from 'react-icons/vsc';
+import { VscChevronDown, VscClose, VscTrash, VscSplitHorizontal, VscAdd, VscEllipsis } from 'react-icons/vsc';
 
-const Terminal = ({ onClose }) => {
+const Terminal = ({ onClose, height = 220 }) => {
     return (
-        <div className="terminal-panel" style={{
-            backgroundColor: 'var(--vscode-editor-bg)',
-            borderTop: '1px solid var(--vscode-border)',
-            display: 'flex',
-            flexDirection: 'column',
-            fontFamily: 'Menlo, Monaco, "Courier New", monospace',
-            fontSize: '12px',
-            color: 'var(--vscode-text)'
-        }}>
-            {/* Terminal Header */}
-            <div className="d-flex align-items-center justify-content-between px-3 py-1" style={{
-                backgroundColor: 'var(--vscode-bg)',
-                borderBottom: '1px solid var(--vscode-border)',
-                textTransform: 'uppercase',
-                fontSize: '11px',
-                letterSpacing: '0.5px'
-            }}>
-                <div className="d-flex gap-3">
-                    <span style={{ borderBottom: '1px solid var(--vscode-text)', paddingBottom: '2px' }}>Terminal</span>
-                    <span style={{ opacity: 0.5, cursor: 'pointer' }}>Output</span>
-                    <span style={{ opacity: 0.5, cursor: 'pointer' }}>Debug Console</span>
-                    <span style={{ opacity: 0.5, cursor: 'pointer' }}>Problems</span>
+        <div className="terminal-panel" style={{ height }}>
+            <div className="terminal-header d-flex align-items-center justify-content-between px-3 py-1">
+                <div className="d-flex gap-3 align-items-center">
+                    <span className="terminal-tab active">Terminal</span>
+                    <span className="terminal-tab">Problems</span>
+                    <span className="terminal-tab">Output</span>
+                    <span className="terminal-tab">Debug Console</span>
+                    <span className="terminal-tab">Ports</span>
                 </div>
-                <VscClose
-                    style={{ cursor: 'pointer' }}
-                    size={16}
-                    onClick={onClose}
-                    title="Close Panel"
-                />
+                <div className="d-flex align-items-center gap-1 terminal-actions">
+                    <button className="terminal-icon-button" type="button" title="Split Terminal">
+                        <VscSplitHorizontal size={14} />
+                    </button>
+                    <button className="terminal-icon-button" type="button" title="More Actions">
+                        <VscEllipsis size={14} />
+                    </button>
+                    <button className="terminal-icon-button" type="button" title="Close Panel" onClick={onClose}>
+                        <VscClose size={16} />
+                    </button>
+                </div>
             </div>
 
-            {/* Terminal Content */}
-            {/* Terminal Content & Selector */}
-            <div className="d-flex flex-grow-1" style={{ overflow: 'hidden' }}>
-                <div className="flex-grow-1 p-3" style={{ overflowY: 'auto' }}>
-                    <div style={{ marginBottom: '4px', color: '#4EC9B0' }}>Ready on http://localhost:5173</div>
-                    <div style={{ marginTop: '10px' }}>
-                        <span style={{ color: '#98C379' }}>➜</span> <span style={{ color: '#61AFEF' }}>~</span> <span style={{ opacity: 0.8 }}>npm run dev</span>
+            <div className="d-flex flex-grow-1 terminal-body" style={{ overflow: 'hidden' }}>
+                <div className="flex-grow-1 terminal-console">
+                    <div className="terminal-toolbar d-flex align-items-center justify-content-between px-3 py-2">
+                        <div className="d-flex align-items-center gap-2">
+                            <button className="terminal-dropdown" type="button">
+                                1: zsh <VscChevronDown size={13} />
+                            </button>
+                            <button className="terminal-icon-button" type="button" title="New Terminal">
+                                <VscAdd size={13} />
+                            </button>
+                            <button className="terminal-icon-button" type="button" title="Split Terminal">
+                                <VscSplitHorizontal size={13} />
+                            </button>
+                            <button className="terminal-icon-button" type="button" title="Kill Terminal">
+                                <VscTrash size={13} />
+                            </button>
+                        </div>
+                        <span className="terminal-shell-label">bash integration ready</span>
                     </div>
-                    <div style={{ marginTop: '4px' }}>
-                        <span style={{ color: '#98C379' }}>➜</span> <span style={{ color: '#61AFEF' }}>~</span> <span className="blinking-cursor">_</span>
+
+                    <div className="terminal-output px-3 py-2">
+                        <div className="terminal-line terminal-info">Ready in 184ms on http://localhost:5173</div>
+                        <div className="terminal-line terminal-dim">watching for file changes...</div>
+                        <div className="terminal-line">
+                            <span className="terminal-prompt-mark">➜</span>
+                            <span className="terminal-prompt-path"> karim_ai_website </span>
+                            <span className="terminal-command">npm run dev</span>
+                        </div>
+                        <div className="terminal-line">
+                            <span className="terminal-prompt-mark">➜</span>
+                            <span className="terminal-prompt-path"> karim_ai_website </span>
+                            <span className="terminal-command muted">press ^C to stop</span>
+                        </div>
+                        <div className="terminal-line">
+                            <span className="terminal-prompt-mark">➜</span>
+                            <span className="terminal-prompt-path"> karim_ai_website </span>
+                            <span className="blinking-cursor"> </span>
+                        </div>
                     </div>
                 </div>
 
-                {/* Mock Terminal Selector */}
-                <div className="d-flex flex-column" style={{
-                    width: '150px',
-                    borderLeft: '1px solid var(--vscode-border)',
-                    backgroundColor: 'var(--vscode-sidebar-bg)',
-                    fontSize: '11px'
-                }}>
-                    <div className="d-flex align-items-center justify-content-between px-2 py-1" style={{ backgroundColor: 'var(--vscode-list-hover-bg)', cursor: 'pointer' }}>
+                <div className="d-none d-md-flex flex-column terminal-sessions">
+                    <div className="terminal-sessions-header px-2 py-1">TERMINALS</div>
+                    <div className="terminal-session-row active d-flex align-items-center justify-content-between px-2 py-1">
                         <div className="d-flex align-items-center gap-2">
-                            <span style={{ color: 'var(--vscode-text)' }}>1: zsh</span>
+                            <span className="terminal-session-dot" />
+                            <span>1: zsh</span>
                         </div>
                         <div className="d-flex gap-2">
                             <VscSplitHorizontal size={12} />
                             <VscTrash size={12} />
                         </div>
                     </div>
-                    <div className="d-flex align-items-center px-2 py-1 gap-2" style={{ cursor: 'pointer', opacity: 0.7 }}>
-                        <span style={{ color: 'var(--vscode-text)' }}>2: node</span>
+                    <div className="terminal-session-row d-flex align-items-center px-2 py-1 gap-2">
+                        <span className="terminal-session-dot idle" />
+                        <span>2: node</span>
                     </div>
-                    <div className="d-flex align-items-center px-2 py-1 gap-2" style={{ cursor: 'pointer', opacity: 0.7 }}>
+                    <div className="terminal-session-row d-flex align-items-center px-2 py-1 gap-2">
                         <VscAdd size={12} />
+                        <span>New Terminal</span>
                     </div>
                 </div>
             </div>
-            <style>
-                {`
-                    .terminal-panel {
-                        height: 200px;
-                    }
-                    @media (max-width: 768px) {
-                        .terminal-panel {
-                            height: 120px;
-                        }
-                    }
-                    .blinking-cursor {
-                        animation: blink 1s step-end infinite;
-                    }
-                    @keyframes blink {
-                        0%, 100% { opacity: 1; }
-                        50% { opacity: 0; }
-                    }
-                `}
-            </style>
         </div>
     );
 };
