@@ -63,33 +63,35 @@ const MarkdownViewer = ({ content }) => {
 
     return (
         <div className="d-flex flex-column h-100" style={{ backgroundColor: 'var(--vscode-editor-bg)', color: 'var(--vscode-text)', position: 'relative' }}>
-            <div className="d-flex justify-content-end p-2 border-bottom" style={{ borderColor: 'var(--vscode-border)', backgroundColor: 'var(--vscode-bg)' }}>
-                <div className="btn-group" role="group">
-                    <button
-                        type="button"
-                        className={`btn btn-sm ${viewMode === 'preview' ? 'active' : ''}`}
-                        style={{
-                            backgroundColor: viewMode === 'preview' ? 'var(--vscode-button-background)' : 'transparent',
-                            color: viewMode === 'preview' ? 'var(--vscode-button-foreground)' : 'var(--vscode-text)',
-                            border: '1px solid var(--vscode-border)'
-                        }}
-                        onClick={() => setViewMode('preview')}
-                    >
-                        <VscEye className="me-1" /> Preview
-                    </button>
-                    <button
-                        type="button"
-                        className={`btn btn-sm ${viewMode === 'code' ? 'active' : ''}`}
-                        style={{
-                            backgroundColor: viewMode === 'code' ? 'var(--vscode-button-background)' : 'transparent',
-                            color: viewMode === 'code' ? 'var(--vscode-button-foreground)' : 'var(--vscode-text)',
-                            border: '1px solid var(--vscode-border)'
-                        }}
-                        onClick={() => setViewMode('code')}
-                    >
-                        <VscCode className="me-1" /> Code
-                    </button>
-                </div>
+            <div className="d-flex align-items-center gap-2 px-3 border-bottom" style={{ minHeight: '35px', borderColor: 'var(--vscode-border)', backgroundColor: 'var(--vscode-bg)' }}>
+                <button
+                    type="button"
+                    style={{
+                        border: 'none',
+                        background: 'transparent',
+                        color: viewMode === 'preview' ? 'var(--vscode-text)' : 'var(--vscode-descriptionForeground)',
+                        borderBottom: viewMode === 'preview' ? '1px solid var(--vscode-accent)' : '1px solid transparent',
+                        borderRadius: 0,
+                        padding: '8px 0'
+                    }}
+                    onClick={() => setViewMode('preview')}
+                >
+                    <VscEye className="me-1" /> Preview
+                </button>
+                <button
+                    type="button"
+                    style={{
+                        border: 'none',
+                        background: 'transparent',
+                        color: viewMode === 'code' ? 'var(--vscode-text)' : 'var(--vscode-descriptionForeground)',
+                        borderBottom: viewMode === 'code' ? '1px solid var(--vscode-accent)' : '1px solid transparent',
+                        borderRadius: 0,
+                        padding: '8px 0'
+                    }}
+                    onClick={() => setViewMode('code')}
+                >
+                    <VscCode className="me-1" /> Source
+                </button>
             </div>
 
             <div className="flex-grow-1" style={{ overflow: 'auto', position: 'relative' }}>

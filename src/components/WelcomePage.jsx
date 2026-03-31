@@ -1,10 +1,9 @@
 import React from 'react';
-import { VscBook, VscPreview, VscProject, VscAccount, VscColorMode, VscCode, VscExtensions } from 'react-icons/vsc';
+import { VscBook, VscPreview, VscProject, VscAccount, VscCode, VscExtensions } from 'react-icons/vsc';
 import { useTranslation } from 'react-i18next';
 import { formatRelativeTime } from '../hooks/useRecentFiles';
-import { themes } from '../constants/themes';
 
-const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [], theme, setTheme }) => {
+const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [] }) => {
     const { t } = useTranslation();
 
     const startItems = [
@@ -145,37 +144,6 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [
                             </div>
 
                             <div className="col-md-6">
-                                <h2 style={{ fontSize: '18px', fontWeight: '400', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <VscColorMode size={18} />
-                                    Customize
-                                </h2>
-                                <div className="d-flex flex-wrap gap-2">
-                                    {themes.slice(0, 6).map((themeItem) => (
-                                        <button
-                                            key={themeItem.id}
-                                            onClick={() => setTheme && setTheme(themeItem.id)}
-                                            style={{
-                                                padding: '6px 10px',
-                                                borderRadius: '2px',
-                                                border: theme === themeItem.id ? '1px solid var(--vscode-accent)' : '1px solid var(--vscode-border)',
-                                                backgroundColor: theme === themeItem.id ? 'var(--vscode-list-hover-bg)' : 'transparent',
-                                                color: 'var(--vscode-text)',
-                                                cursor: 'pointer',
-                                                fontSize: '12px',
-                                                transition: 'all 0.12s',
-                                                fontWeight: theme === themeItem.id ? '500' : '400'
-                                            }}
-                                        >
-                                            {themeItem.name}
-                                        </button>
-                                    ))}
-                                </div>
-                                <p style={{ fontSize: '11px', color: 'var(--vscode-descriptionForeground)', marginTop: '8px' }}>
-                                    Choose a color theme. Changes apply instantly.
-                                </p>
-                            </div>
-
-                            <div className="col-md-6">
                                 <h2 style={{ fontSize: '18px', fontWeight: '400', marginBottom: '12px' }}>Help</h2>
                                 <div className="d-flex flex-column gap-2">
                                     <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
@@ -187,6 +155,15 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [
                                     <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
                                         <a href="https://github.com/kanayai/karim_ai_website/issues/new" target="_blank" rel="noreferrer" style={{ color: 'var(--vscode-accent)', textDecoration: 'none' }}>{t('welcome.report_issue')}</a>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-6">
+                                <h2 style={{ fontSize: '18px', fontWeight: '400', marginBottom: '12px' }}>Tips</h2>
+                                <div className="d-flex flex-column gap-2" style={{ fontSize: '13px', color: 'var(--vscode-descriptionForeground)' }}>
+                                    <div>Use the Activity Bar to switch between Explorer, Search, Git Graph, Debug, and Extensions.</div>
+                                    <div>Press <span style={{ color: 'var(--vscode-text)' }}>Shift+Cmd+P</span> to open Quick Open.</div>
+                                    <div>Use the status bar to toggle the integrated terminal and change language.</div>
                                 </div>
                             </div>
                         </div>
