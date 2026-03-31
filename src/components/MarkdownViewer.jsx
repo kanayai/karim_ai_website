@@ -3,47 +3,41 @@ import { VscEye, VscCode } from 'react-icons/vsc';
 import CodeViewer from './CodeViewer';
 
 const MarkdownViewer = ({ content }) => {
-    const [viewMode, setViewMode] = useState('preview'); // 'preview' or 'code'
+    const [viewMode, setViewMode] = useState('preview');
 
     const renderMarkdown = (text) => {
-        // Simple parser for the specific README content structure we have
         const lines = text.split('\n');
         return lines.map((line, index) => {
-            // Headers
             if (line.startsWith('# ')) {
-                return <h1 key={index} className="fade-in" style={{
-                    background: 'linear-gradient(90deg, #ff8a00, #e52e71)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    marginBottom: '1rem',
-                    fontWeight: '800'
-                }}>{line.replace('# ', '')}</h1>;
+                return <h1 key={index} style={{ fontSize: '28px', fontWeight: 600, margin: '0 0 18px', color: 'var(--vscode-text)' }}>{line.replace('# ', '')}</h1>;
             }
             if (line.startsWith('## ')) {
-                return <h2 key={index} className="fade-in-delayed" style={{
-                    color: 'var(--vscode-text)',
-                    borderBottom: '1px solid var(--vscode-accent)',
-                    paddingBottom: '5px',
-                    marginTop: '1.5rem',
-                    display: 'inline-block'
-                }}>{line.replace('## ', '')}</h2>;
+                return <h2 key={index} style={{ color: 'var(--vscode-text)', fontSize: '20px', margin: '28px 0 10px' }}>{line.replace('## ', '')}</h2>;
+            }
+            if (line.startsWith('### ')) {
+                return <h3 key={index} style={{ color: 'var(--vscode-text)', fontSize: '16px', margin: '22px 0 8px' }}>{line.replace('### ', '')}</h3>;
+            }
+            if (line.trim() === '---') {
+                return <hr key={index} style={{ borderColor: 'var(--vscode-border)', margin: '20px 0' }} />;
+            }
+            if (/^\d+\.\s/.test(line)) {
+                return <div key={index} style={{ marginBottom: '6px', lineHeight: '1.7', color: 'var(--vscode-text)' }}>{line}</div>;
+            }
+            if (line.startsWith('* ') || line.startsWith('- ')) {
+                return <div key={index} style={{ marginBottom: '6px', lineHeight: '1.7', color: 'var(--vscode-text)' }}>{line}</div>;
             }
 
-            // Bold
-            let formattedLine = line;
-            // Links [text](url) - Simple regex for single link per line
             const linkMatch = line.match(/\[(.*?)\]\((.*?)\)/);
             if (linkMatch) {
                 const [full, text, url] = linkMatch;
                 const parts = line.split(full);
                 return (
-                    <p key={index} style={{ marginBottom: '0.8rem', lineHeight: '1.6' }}>
+                    <p key={index} style={{ marginBottom: '0.8rem', lineHeight: '1.7', color: 'var(--vscode-text)' }}>
                         {parts[0]}
                         <a href={url} target="_blank" rel="noopener noreferrer" style={{
                             color: 'var(--vscode-accent)',
                             textDecoration: 'none',
-                            fontWeight: 'bold',
-                            borderBottom: '1px dashed var(--vscode-accent)'
+                            textDecorationLine: 'underline'
                         }}>
                             {text}
                         </a>
@@ -52,25 +46,23 @@ const MarkdownViewer = ({ content }) => {
                 );
             }
 
-            // Bold **text**
             if (line.includes('**')) {
                 const parts = line.split('**');
                 return (
-                    <p key={index} style={{ marginBottom: '0.8rem', lineHeight: '1.6' }}>
-                        {parts.map((Part, i) => (i % 2 === 1 ? <strong key={i} style={{ color: 'var(--vscode-foreground)', fontWeight: 'bold' }}>{Part}</strong> : Part))}
+                    <p key={index} style={{ marginBottom: '0.8rem', lineHeight: '1.7', color: 'var(--vscode-text)' }}>
+                        {parts.map((part, i) => (i % 2 === 1 ? <strong key={i} style={{ color: 'var(--vscode-text)', fontWeight: 600 }}>{part}</strong> : part))}
                     </p>
                 );
             }
 
             if (line.trim() === '') return <br key={index} />;
 
-            return <p key={index} style={{ marginBottom: '0.8rem', lineHeight: '1.6', opacity: 0.9 }}>{line}</p>;
+            return <p key={index} style={{ marginBottom: '0.8rem', lineHeight: '1.7', color: 'var(--vscode-text)' }}>{line}</p>;
         });
     };
 
     return (
         <div className="d-flex flex-column h-100" style={{ backgroundColor: 'var(--vscode-editor-bg)', color: 'var(--vscode-text)', position: 'relative' }}>
-            {/* Toolbar */}
             <div className="d-flex justify-content-end p-2 border-bottom" style={{ borderColor: 'var(--vscode-border)', backgroundColor: 'var(--vscode-bg)' }}>
                 <div className="btn-group" role="group">
                     <button
@@ -100,11 +92,10 @@ const MarkdownViewer = ({ content }) => {
                 </div>
             </div>
 
-            {/* Content */}
             <div className="flex-grow-1" style={{ overflow: 'auto', position: 'relative' }}>
                 {viewMode === 'preview' ? (
-                    <div className="p-5" style={{ maxWidth: '900px', margin: '0 auto', fontFamily: 'var(--vscode-font-family)' }}>
-                        <div className="markdown-body">
+                    <div style={{ maxWidth: '980px', margin: '0 auto', padding: '24px 32px', fontFamily: '"Segoe UI", system-ui, sans-serif' }}>
+                        <div className="markdown-body" style={{ color: 'var(--vscode-text)' }}>
                             {renderMarkdown(content)}
                         </div>
                     </div>
@@ -112,12 +103,6 @@ const MarkdownViewer = ({ content }) => {
                     <CodeViewer content={content} language="markdown" />
                 )}
             </div>
-
-            <style>{`
-                .fade-in { animation: fadeIn 0.5s ease-out forwards; opacity: 0; }
-                .fade-in-delayed { animation: fadeIn 0.5s ease-out 0.2s forwards; opacity: 0; }
-                @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-            `}</style>
         </div>
     );
 };

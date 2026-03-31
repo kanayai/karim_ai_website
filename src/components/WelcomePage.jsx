@@ -1,78 +1,11 @@
 import React from 'react';
-import { VscBook, VscPreview, VscProject, VscAccount, VscRepo, VscNewFile, VscFolderOpened, VscColorMode } from 'react-icons/vsc';
+import { VscBook, VscPreview, VscProject, VscAccount, VscColorMode } from 'react-icons/vsc';
 import { useTranslation } from 'react-i18next';
 import { formatRelativeTime } from '../hooks/useRecentFiles';
 import { themes } from '../constants/themes';
 
 const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [], theme, setTheme }) => {
     const { t } = useTranslation();
-    const [displayText, setDisplayText] = React.useState('');
-    const [loopCount, setLoopCount] = React.useState(0);
-    const MAX_LOOPS = 3;
-
-    // Check for reduced motion preference
-    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    React.useEffect(() => {
-        let isMounted = true;
-
-        const typeSequence = async () => {
-            const initialText = "Karim Anaya-Izquierdo";
-            const finalText = "Karim AI";
-
-            // If user prefers reduced motion, just show final text
-            if (prefersReducedMotion) {
-                setDisplayText(finalText);
-                setLoopCount(MAX_LOOPS);
-                return;
-            }
-
-            let currentLoop = 0;
-            while (isMounted && currentLoop < MAX_LOOPS) {
-                setDisplayText("");
-
-                // 1. Type full name
-                for (let i = 0; i <= initialText.length; i++) {
-                    if (!isMounted) return;
-                    setDisplayText(initialText.slice(0, i));
-                    await new Promise(r => setTimeout(r, 100));
-                }
-
-                // 2. Pause
-                if (!isMounted) return;
-                await new Promise(r => setTimeout(r, 1000));
-
-                // 3. Backspace to "Karim "
-                for (let i = initialText.length; i >= "Karim ".length; i--) {
-                    if (!isMounted) return;
-                    setDisplayText(initialText.slice(0, i));
-                    await new Promise(r => setTimeout(r, 50));
-                }
-
-                // 4. Type "AI"
-                const suffix = "AI";
-                const base = "Karim ";
-                for (let i = 1; i <= suffix.length; i++) {
-                    if (!isMounted) return;
-                    setDisplayText(base + suffix.slice(0, i));
-                    await new Promise(r => setTimeout(r, 150));
-                }
-
-                currentLoop++;
-                setLoopCount(currentLoop);
-
-                // 5. Pause before next loop (or stay on final if last loop)
-                if (!isMounted) return;
-                if (currentLoop < MAX_LOOPS) {
-                    await new Promise(r => setTimeout(r, 3000));
-                }
-            }
-        };
-
-        typeSequence();
-
-        return () => { isMounted = false; };
-    }, []);
 
     const startItems = [
         {
@@ -118,73 +51,72 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [
         : defaultRecentItems;
 
     return (
-        <div className="h-100 w-100 p-3 p-md-5" style={{
+        <div className="h-100 w-100 p-3 p-md-4" style={{
             backgroundColor: 'var(--vscode-editor-bg)',
             color: 'var(--vscode-text)',
             overflowY: 'auto'
         }}>
-            <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-                {/* Header */}
-                <div className="mb-5">
-                    <div className="d-flex flex-column align-items-start gap-3 mb-2">
-                        <img src="/images/blackboard.png" alt="Logo" style={{ width: '100%', maxWidth: '300px', height: 'auto', objectFit: 'contain' }} />
-                        <h1 style={{ fontSize: '36px', fontWeight: '300' }}>
-                            {displayText}
-                            {loopCount < MAX_LOOPS && <span className="blinking-cursor">|</span>}
-                        </h1>
+            <div style={{ maxWidth: '980px', margin: '0 auto' }}>
+                <div className="d-flex align-items-center gap-3 mb-4 pb-3" style={{ borderBottom: '1px solid var(--vscode-border)' }}>
+                    <img src="/images/blackboard.png" alt="Logo" style={{ width: '48px', height: '48px', objectFit: 'contain' }} />
+                    <div>
+                        <div style={{ fontSize: '28px', fontWeight: 300 }}>Get Started</div>
+                        <div style={{ fontSize: '13px', color: 'var(--vscode-descriptionForeground)' }}>karim_ai_website</div>
                     </div>
-                    <p style={{ fontSize: '18px', opacity: 0.8, fontWeight: '300' }}>
-                        {t('welcome.subtitle')}
-                    </p>
-
                 </div>
 
                 <div className="row">
-                    {/* Start Section */}
                     <div className="col-md-7 mb-4">
-                        <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px' }}>{t('welcome.start')}</h2>
-                        <div className="d-flex flex-column gap-2">
+                        <div style={{ fontSize: '13px', color: 'var(--vscode-descriptionForeground)', marginBottom: '16px' }}>
+                            {t('welcome.subtitle')}
+                        </div>
+                        <h2 style={{ fontSize: '18px', fontWeight: '400', marginBottom: '12px' }}>{t('welcome.start')}</h2>
+                        <div className="d-flex flex-column gap-1">
                             {startItems.map((item, index) => (
                                 <div
                                     key={index}
-                                    className="d-flex align-items-start gap-3 p-2 rounded start-item"
-                                    style={{ cursor: 'pointer', transition: 'background-color 0.2s' }}
+                                    className="d-flex align-items-start gap-3 px-2 py-2 rounded start-item"
+                                    style={{ cursor: 'pointer', transition: 'background-color 0.12s', border: '1px solid transparent' }}
                                     onClick={item.action}
-                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--vscode-list-hover-bg)'}
-                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.backgroundColor = 'var(--vscode-list-hover-bg)';
+                                        e.currentTarget.style.borderColor = 'var(--vscode-border)';
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.backgroundColor = 'transparent';
+                                        e.currentTarget.style.borderColor = 'transparent';
+                                    }}
                                 >
                                     <div className="mt-1">{item.icon}</div>
                                     <div>
-                                        <div style={{ color: '#3794ff', marginBottom: '2px' }}>{item.title}</div>
-                                        <div style={{ fontSize: '13px', opacity: 0.7 }}>{item.description}</div>
+                                        <div style={{ color: 'var(--vscode-accent)', marginBottom: '2px', fontSize: '13px' }}>{item.title}</div>
+                                        <div style={{ fontSize: '12px', color: 'var(--vscode-descriptionForeground)' }}>{item.description}</div>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                    {/* Right Column - Themes, Recent, Help */}
                     <div className="col-md-5">
-                        {/* Theme Showcase - Moved to top for visibility */}
                         <div className="mb-4">
-                            <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <VscColorMode size={20} />
-                                {t('welcome.themes', 'Themes')}
+                            <h2 style={{ fontSize: '18px', fontWeight: '400', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <VscColorMode size={18} />
+                                Customize
                             </h2>
                             <div className="d-flex flex-wrap gap-2">
-                                {themes.map((themeItem) => (
+                                {themes.slice(0, 6).map((themeItem) => (
                                     <button
                                         key={themeItem.id}
                                         onClick={() => setTheme && setTheme(themeItem.id)}
                                         style={{
-                                            padding: '8px 12px',
+                                            padding: '6px 10px',
                                             borderRadius: '4px',
                                             border: theme === themeItem.id ? '2px solid var(--vscode-accent)' : '1px solid var(--vscode-border)',
-                                            backgroundColor: theme === themeItem.id ? 'var(--vscode-list-active-selection-bg)' : 'var(--vscode-button-secondary-bg)',
-                                            color: theme === themeItem.id ? 'var(--vscode-list-active-selection-foreground)' : 'var(--vscode-text)',
+                                            backgroundColor: theme === themeItem.id ? 'var(--vscode-list-hover-bg)' : 'transparent',
+                                            color: 'var(--vscode-text)',
                                             cursor: 'pointer',
-                                            fontSize: '13px',
-                                            transition: 'all 0.2s',
+                                            fontSize: '12px',
+                                            transition: 'all 0.12s',
                                             fontWeight: theme === themeItem.id ? '500' : '400'
                                         }}
                                         onMouseEnter={(e) => {
@@ -204,13 +136,12 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [
                                     </button>
                                 ))}
                             </div>
-                            <p style={{ fontSize: '12px', opacity: 0.6, marginTop: '8px' }}>
-                                {t('welcome.theme_hint', 'Click to preview • Changes apply instantly')}
+                            <p style={{ fontSize: '11px', color: 'var(--vscode-descriptionForeground)', marginTop: '8px' }}>
+                                Click to preview. Changes apply instantly.
                             </p>
                         </div>
 
-                        {/* Recent Section */}
-                        <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px' }}>{t('welcome.recent')}</h2>
+                        <h2 style={{ fontSize: '18px', fontWeight: '400', marginBottom: '12px' }}>{t('welcome.recent')}</h2>
                         <div className="d-flex flex-column gap-1">
                             {displayRecentItems.map((item, index) => (
                                 <div
@@ -229,7 +160,7 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [
                                         if (pathEl) pathEl.style.color = 'var(--vscode-descriptionForeground)';
                                     }}
                                 >
-                                    <span style={{ color: '#3794ff' }}>{item.name}</span>
+                                    <span style={{ color: 'var(--vscode-accent)', fontSize: '13px' }}>{item.name}</span>
                                     <span className="path" style={{ fontSize: '12px', color: 'var(--vscode-descriptionForeground)', marginLeft: 'auto' }}>
                                         {item.timestamp ? formatRelativeTime(item.timestamp) : item.path}
                                     </span>
@@ -238,16 +169,16 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [
                         </div>
 
                         <div className="mt-5">
-                            <h2 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '16px' }}>{t('welcome.help')}</h2>
+                            <h2 style={{ fontSize: '18px', fontWeight: '400', marginBottom: '12px' }}>{t('welcome.help')}</h2>
                             <div className="d-flex flex-column gap-2">
                                 <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
-                                    <a href="https://github.com/kanayai/karim_ai_website" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>{t('welcome.github_repo')}</a>
+                                    <a href="https://github.com/kanayai/karim_ai_website" target="_blank" rel="noreferrer" style={{ color: 'var(--vscode-accent)', textDecoration: 'none' }}>{t('welcome.github_repo')}</a>
                                 </div>
                                 <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
-                                    <a href="https://researchportal.bath.ac.uk/en/persons/karim-anaya-izquierdo/" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>{t('welcome.research_portal')}</a>
+                                    <a href="https://researchportal.bath.ac.uk/en/persons/karim-anaya-izquierdo/" target="_blank" rel="noreferrer" style={{ color: 'var(--vscode-accent)', textDecoration: 'none' }}>{t('welcome.research_portal')}</a>
                                 </div>
                                 <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
-                                    <a href="https://github.com/kanayai/karim_ai_website/issues/new" target="_blank" rel="noreferrer" style={{ color: '#3794ff', textDecoration: 'none' }}>{t('welcome.report_issue')}</a>
+                                    <a href="https://github.com/kanayai/karim_ai_website/issues/new" target="_blank" rel="noreferrer" style={{ color: 'var(--vscode-accent)', textDecoration: 'none' }}>{t('welcome.report_issue')}</a>
                                 </div>
                             </div>
                         </div>
