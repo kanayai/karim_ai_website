@@ -14,14 +14,12 @@ function AppContent() {
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('theme');
-      // Migration: 'dark' used to be VS Code Dark, now we want to default to GitHub Dark for it
-      // or effectively "reset" old users to the new default.
       if (savedTheme === 'dark' || !savedTheme) {
-        return 'github-dark';
+        return 'vscode-dark';
       }
       return savedTheme;
     }
-    return 'github-dark';
+    return 'vscode-dark';
   });
   // Use useLayoutEffect to update the DOM synchronously before browser paint/iframe load
   React.useLayoutEffect(() => {

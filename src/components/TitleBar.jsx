@@ -2,7 +2,7 @@ import React from 'react';
 import { VscArrowLeft, VscArrowRight, VscSearch, VscLayoutSidebarLeft, VscLayoutSidebarRight, VscLayoutPanel, VscMenu, VscColorMode, VscChromeMinimize, VscChromeMaximize, VscChromeClose } from 'react-icons/vsc';
 
 const TitleBar = ({ onSearchClick, toggleSidebar, simpleMode, toggleSimpleMode, theme, toggleTheme }) => {
-    const commandLabel = simpleMode ? 'Search portfolio' : 'Search files, commands, and posts';
+    const commandLabel = simpleMode ? 'Search' : 'Search';
 
     return (
         <div className="title-bar d-flex align-items-center justify-content-between px-2" data-tauri-drag-region="">

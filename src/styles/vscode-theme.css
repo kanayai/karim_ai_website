@@ -473,7 +473,8 @@ body {
 }
 
 .active-file {
-  box-shadow: inset 2px 0 0 var(--vscode-accent);
+  box-shadow: inset 1px 0 0 var(--vscode-accent);
+  background: color-mix(in srgb, var(--vscode-list-hover-bg) 65%, transparent 35%);
 }
 
 .explorer-tree {
@@ -506,12 +507,13 @@ body {
   color: var(--vscode-descriptionForeground);
   cursor: pointer;
   flex-shrink: 0;
+  padding-top: 1px;
 }
 
 .tab-item.active {
   background: var(--vscode-tab-active-bg);
   color: var(--vscode-text);
-  border-top-color: var(--vscode-accent);
+  border-top-color: #ffffff;
 }
 
 .tab-item:not(.active) {
@@ -541,7 +543,7 @@ body {
 }
 
 .editor-tabs {
-  background: color-mix(in srgb, var(--vscode-tab-inactive-bg) 82%, var(--vscode-bg) 18%);
+  background: var(--vscode-tab-inactive-bg);
   overflow: hidden;
   height: 35px;
   min-height: 35px;
@@ -575,7 +577,7 @@ body {
   height: 24px;
   min-height: 24px;
   flex-shrink: 0;
-  background: color-mix(in srgb, var(--vscode-editor-bg) 88%, var(--vscode-hover-bg) 12%);
+  background: var(--vscode-editor-bg);
   border-bottom: 1px solid var(--vscode-border);
   font-size: 11px;
   color: var(--vscode-descriptionForeground);
@@ -600,8 +602,8 @@ body {
 }
 
 .title-bar {
-  height: 30px;
-  min-height: 30px;
+  height: 35px;
+  min-height: 35px;
   flex-shrink: 0;
   background: var(--vscode-titlebar-gradient);
   background-color: var(--vscode-activity-bar-bg);
@@ -700,7 +702,7 @@ body {
 }
 
 .titlebar-command {
-  height: 22px;
+  height: 24px;
   border: 1px solid var(--vscode-input-border);
   background: color-mix(in srgb, var(--vscode-input-background) 92%, var(--vscode-hover-bg) 8%);
   color: var(--vscode-descriptionForeground);
@@ -718,6 +720,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  min-width: 60px;
 }
 
 .titlebar-command-shortcut {
@@ -760,9 +763,13 @@ body {
   background: var(--vscode-status-bar-bg);
   color: #ffffff;
   height: 22px;
-  font-size: 12px;
+  font-size: 11px;
   user-select: none;
   border-top: 1px solid color-mix(in srgb, var(--vscode-status-bar-bg) 75%, black 25%);
+}
+
+.vscode-welcome-page .start-item:hover {
+  background: var(--vscode-list-hover-bg);
 }
 
 .hover-bg {
