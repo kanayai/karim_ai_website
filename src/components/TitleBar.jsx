@@ -63,6 +63,7 @@ const TitleBar = ({ onSearchClick, toggleSidebar, simpleMode, toggleSimpleMode, 
                     <span className="titlebar-command-label">{commandLabel}</span>
                     <span className="titlebar-command-shortcut d-none d-md-inline">⇧⌘P</span>
                 </div>
+                <span className="titlebar-window-title d-none d-lg-inline">karim_ai_website - Visual Studio Code</span>
             </div>
 
             <div className="d-flex gap-1 align-items-center titlebar-right">

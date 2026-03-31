@@ -60,13 +60,13 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [
                 <div className="row g-4 align-items-start">
                     <div className="col-lg-5">
                         <div className="d-flex flex-column align-items-start">
-                            <img src="/images/blackboard.png" alt="Logo" style={{ width: '100%', maxWidth: '280px', height: 'auto', objectFit: 'contain', marginBottom: '20px' }} />
+                            <img src="/images/blackboard.png" alt="Logo" style={{ width: '100%', maxWidth: '340px', height: 'auto', objectFit: 'contain', marginBottom: '20px' }} />
                             <div style={{ fontSize: '34px', fontWeight: 300, marginBottom: '8px' }}>Get Started</div>
                             <div style={{ fontSize: '14px', color: 'var(--vscode-descriptionForeground)', maxWidth: '540px', lineHeight: '1.6', marginBottom: '22px' }}>
                                 {t('welcome.subtitle')}
                             </div>
 
-                            <div className="d-flex flex-column gap-1 w-100" style={{ maxWidth: '520px' }}>
+                            <div className="d-flex flex-column gap-1 w-100" style={{ maxWidth: '560px' }}>
                                 {startItems.map((item, index) => (
                                     <div
                                         key={index}
@@ -96,7 +96,7 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [
                     <div className="col-lg-7">
                         <div className="row g-4">
                             <div className="col-md-6">
-                                <h2 style={{ fontSize: '18px', fontWeight: '400', marginBottom: '12px' }}>{t('welcome.recent')}</h2>
+                                <h2 style={{ fontSize: '18px', fontWeight: '400', marginBottom: '12px' }}>Recent</h2>
                                 <div className="d-flex flex-column gap-1">
                                     {displayRecentItems.map((item, index) => (
                                         <div
@@ -176,7 +176,7 @@ const WelcomePage = ({ onNavigate, simpleMode, toggleSimpleMode, recentFiles = [
                             </div>
 
                             <div className="col-md-6">
-                                <h2 style={{ fontSize: '18px', fontWeight: '400', marginBottom: '12px' }}>{t('welcome.help')}</h2>
+                                <h2 style={{ fontSize: '18px', fontWeight: '400', marginBottom: '12px' }}>Help</h2>
                                 <div className="d-flex flex-column gap-2">
                                     <div className="d-flex align-items-center gap-2" style={{ fontSize: '13px' }}>
                                         <a href="https://github.com/kanayai/karim_ai_website" target="_blank" rel="noreferrer" style={{ color: 'var(--vscode-accent)', textDecoration: 'none' }}>{t('welcome.github_repo')}</a>

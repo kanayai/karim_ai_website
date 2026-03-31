@@ -84,6 +84,10 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
         { name: 'README.md', icon: <FaMarkdown color="#519aba" />, type: 'markdown' },
     ];
 
+    const openEditors = activeFile && activeFile !== 'Welcome'
+        ? ['Welcome', activeFile]
+        : ['Welcome'];
+
     const renderItem = (item) => {
         // Keyboard handler for folder/file items
         const handleKeyDown = (e, isFolder = false) => {
@@ -169,12 +173,35 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
         }}>
             {activeView === 'explorer' ? (
                 <>
-                    <div className="px-3 py-2 text-uppercase" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>{t('sidebar.explorer')}</div>
+                    <div className="px-3 py-2 text-uppercase explorer-pane-title" style={{ fontSize: '11px', fontWeight: 'normal', color: 'var(--vscode-text)' }}>{t('sidebar.explorer')}</div>
+                    <div className="explorer-section-header px-2 py-1 d-flex align-items-center gap-1">
+                        <VscChevronDown size={14} />
+                        <span>OPEN EDITORS</span>
+                    </div>
+                    <div className="d-flex flex-column explorer-open-editors">
+                        {openEditors.map((file) => (
+                            <div
+                                key={file}
+                                className={`py-1 d-flex align-items-center gap-2 sidebar-item sidebar-file-row ${activeFile === file ? 'active-file' : ''}`}
+                                style={{
+                                    cursor: 'pointer',
+                                    color: 'var(--vscode-text)',
+                                    paddingLeft: '24px',
+                                    paddingRight: '10px'
+                                }}
+                                onClick={() => setActiveFile(file)}
+                            >
+                                {file === 'Welcome' ? <img src="/images/Bath_Crest.png" alt="Welcome" style={{ width: '14px', height: '14px' }} /> : null}
+                                {file !== 'Welcome' && (file.endsWith('.html') ? <VscCode color="#e34c26" /> : file.endsWith('.R') ? <span style={{ color: '#276dc3', fontWeight: 'bold', fontSize: '10px' }}>R</span> : null)}
+                                <span style={{ fontSize: '12px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{file}</span>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="explorer-section-header px-2 py-1 d-flex align-items-center gap-1">
+                        <VscChevronDown size={14} />
+                        <span>KARIM_AI_WEBSITE</span>
+                    </div>
                     <div className="d-flex flex-column explorer-tree">
-                        <div className="px-2 py-1 d-flex align-items-center sidebar-root-header" style={{ fontWeight: 'bold', cursor: 'pointer', color: 'var(--vscode-text)' }}>
-                            <VscChevronDown className="me-1" /> Karim AI
-                            <VscEllipsis className="ms-auto" />
-                        </div>
                         {structure.map(item => renderItem(item))}
                     </div>
 

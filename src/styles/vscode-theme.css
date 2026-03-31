@@ -472,6 +472,22 @@ body {
   font-size: 11px;
 }
 
+.explorer-pane-title {
+  letter-spacing: 0.03em;
+}
+
+.explorer-section-header {
+  min-height: 22px;
+  font-size: 11px;
+  color: var(--vscode-text);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.explorer-open-editors {
+  margin-bottom: 6px;
+}
+
 .active-file {
   box-shadow: inset 1px 0 0 var(--vscode-accent);
   background: color-mix(in srgb, var(--vscode-list-hover-bg) 65%, transparent 35%);
@@ -630,7 +646,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 12px;
   pointer-events: none;
 }
 
@@ -729,6 +745,16 @@ body {
   color: var(--vscode-descriptionForeground);
 }
 
+.titlebar-window-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 9px;
+  font-size: 12px;
+  color: var(--vscode-descriptionForeground);
+  pointer-events: none;
+}
+
 .activity-bar {
   width: 48px;
   min-width: 48px;
@@ -770,6 +796,10 @@ body {
 
 .vscode-welcome-page .start-item:hover {
   background: var(--vscode-list-hover-bg);
+}
+
+.vscode-welcome-page a:hover {
+  text-decoration: underline !important;
 }
 
 .hover-bg {
