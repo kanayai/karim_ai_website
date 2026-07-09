@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Layout from './components/Layout';
 import Editor from './components/Editor';
+import TerminalLayout from './components/TerminalLayout';
+import GitHubLayout from './components/GitHubLayout';
+import PyPILayout from './components/PyPILayout';
 import { themes } from './constants/themes';
 import { useRecentFiles } from './hooks/useRecentFiles';
 import { ToastProvider, useToast } from './contexts/ToastContext';
@@ -78,10 +81,6 @@ function AppContent() {
       }, 0);
       return newValue;
     });
-    // If entering simple mode, ensure sidebar is closed on mobile to avoid clutter
-    if (!simpleMode && window.innerWidth <= 768) {
-      // Optional: logic to close sidebar if needed
-    }
   };
 
   const handleOpenFile = (fileName) => {
@@ -129,6 +128,77 @@ function AppContent() {
     }
   };
 
+  // Determine layout type based on activeFile
+  const getLayoutType = (file) => {
+    if (file === 'Welcome') return 'terminal';
+    if (['projects.html', 'publications.html', 'phd_students.html', 'publications.R', 'git-graph'].includes(file)) {
+      return 'github';
+    }
+    if (['current_courses.ipynb', 'previous_courses.ipynb'].includes(file)) {
+      return 'pypi';
+    }
+    return 'vscode'; // Default VS Code theme
+  };
+
+  const layoutType = getLayoutType(activeFile);
+
+  if (layoutType === 'terminal') {
+    return (
+      <TerminalLayout
+        activeFile={activeFile}
+        setActiveFile={handleOpenFile}
+        theme={theme}
+        toggleTheme={toggleTheme}
+        setTheme={setTheme}
+      />
+    );
+  }
+
+  if (layoutType === 'github') {
+    return (
+      <GitHubLayout
+        activeFile={activeFile}
+        setActiveFile={handleOpenFile}
+      >
+        <Editor
+          activeFile={activeFile}
+          openFiles={openFiles}
+          setActiveFile={handleOpenFile}
+          onCloseFile={handleCloseFile}
+          onCloseAllFiles={handleCloseAllFiles}
+          theme={theme}
+          setTheme={setTheme}
+          simpleMode={simpleMode}
+          toggleSimpleMode={toggleSimpleMode}
+          recentFiles={recentFiles}
+        />
+      </GitHubLayout>
+    );
+  }
+
+  if (layoutType === 'pypi') {
+    return (
+      <PyPILayout
+        activeFile={activeFile}
+        setActiveFile={handleOpenFile}
+      >
+        <Editor
+          activeFile={activeFile}
+          openFiles={openFiles}
+          setActiveFile={handleOpenFile}
+          onCloseFile={handleCloseFile}
+          onCloseAllFiles={handleCloseAllFiles}
+          theme={theme}
+          setTheme={setTheme}
+          simpleMode={simpleMode}
+          toggleSimpleMode={toggleSimpleMode}
+          recentFiles={recentFiles}
+        />
+      </PyPILayout>
+    );
+  }
+
+  // Default VS Code layout
   return (
     <>
       <WelcomeBanner onSimpleModeClick={toggleSimpleMode} />
@@ -146,7 +216,7 @@ function AppContent() {
         <Editor
           activeFile={activeFile}
           openFiles={openFiles}
-          setActiveFile={setActiveFile}
+          setActiveFile={handleOpenFile}
           onCloseFile={handleCloseFile}
           onCloseAllFiles={handleCloseAllFiles}
           theme={theme}
