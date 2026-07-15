@@ -1,113 +1,183 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './TerminalLayout.css';
 
-const TerminalLayout = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
+const ASCII_LOGO = `
+██╗  ██╗    █████╗ ██╗    ██████╗ ███████╗
+██║ ██╔╝   ██╔══██╗██║   ██╔═══██╗██╔════╝
+█████╔╝    ███████║██║   ██║   ██║███████╗
+██╔═██╗    ██╔══██║██║   ██║   ██║╚════██║
+██║  ██╗██╗██║  ██║██║   ╚██████╔╝███████║
+╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝    ╚═════╝ ╚══════╝
+`;
+
+const PAGES = {
+    about: { file: 'about_me.md', desc: 'biography, education, CV (VS Code layout)' },
+    research: { file: 'projects.html', desc: 'publications & active projects (GitHub layout)' },
+    teaching: { file: 'current_courses.ipynb', desc: 'current & past courses (PyPI layout)' },
+    blog: { file: 'blog.html', desc: 'the Quarto blog' },
+};
+
+const CONTACT_LINKS = [
+    { label: 'Email ', text: 'kai21@bath.ac.uk', href: 'mailto:kai21@bath.ac.uk' },
+    { label: 'ORCID ', text: 'orcid.org/0000-0001-9718-5256', href: 'https://orcid.org/0000-0001-9718-5256' },
+    { label: 'GitHub', text: 'github.com/kanayai', href: 'https://github.com/kanayai' },
+    { label: 'Bath  ', text: 'researchportal.bath.ac.uk', href: 'https://researchportal.bath.ac.uk/en/persons/karim-anaya-izquierdo' },
+];
+
+const COMMAND_NAMES = [
+    'help', 'about', 'research', 'teaching', 'blog', 'contact', 'whoami',
+    'ls', 'open', 'theme', 'fastfetch', 'history', 'date', 'echo', 'clear',
+];
+
+const bathUptime = () => {
+    const start = new Date(2013, 8, 1); // September 2013, University of Bath
+    const now = new Date();
+    let months = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+    const years = Math.floor(months / 12);
+    months = months % 12;
+    return `${years} years, ${months} months`;
+};
+
+const QUICK_COMMANDS = ['about', 'research', 'teaching', 'blog', 'contact', 'help'];
+
+const TerminalLayout = ({ setActiveFile, theme, toggleTheme }) => {
     const [history, setHistory] = useState([
-        { text: 'Type "help" to see list of available commands.', type: 'info' },
-        { text: 'Welcome to K.A.I. O.S. (Karim Anaya-Izquierdo Operating System)', type: 'success' },
+        { text: 'Welcome to K.AI OS — the personal site of Karim Anaya-Izquierdo.', type: 'success' },
+        { text: 'Type "help" or tap a command below to explore.', type: 'info' },
         { text: 'Logged in as guest@karim-anaya.io', type: 'dim' },
     ]);
     const [input, setInput] = useState('');
+    const [cmdHistory, setCmdHistory] = useState([]);
+    const [histIndex, setHistIndex] = useState(-1);
     const inputRef = useRef(null);
-    const containerRef = useRef(null);
-
-    const asciiLogo = `
-██╗  ██╗    █████╗ ██╗     ██████╗ ███████╗
-██║ ██╔╝   ██╔══██╗██║    ██╔═══██╗██╔════╝
-█████╔╝    ███████║██║    ██║   ██║███████╗
-██╔═██╗    ██╔══██║██║    ██║   ██║╚════██║
-██║  ██╗██╗██║  ██║██║    ╚██████╔╝███████║
-╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝     ╚═════╝ ╚══════╝
-`;
+    const bodyRef = useRef(null);
 
     useEffect(() => {
-        if (inputRef.current) {
+        // Autofocus only on desktop: on mobile it forces the keyboard open on load
+        if (inputRef.current && window.innerWidth > 768) {
             inputRef.current.focus();
         }
     }, []);
 
     useEffect(() => {
-        if (containerRef.current) {
-            containerRef.current.scrollTop = containerRef.current.scrollHeight;
+        if (bodyRef.current) {
+            bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
         }
     }, [history]);
 
-    const handleContainerClick = () => {
-        if (inputRef.current) {
-            inputRef.current.focus();
-        }
+    const handleContainerClick = (e) => {
+        if (e.target.closest('a, button')) return;
+        if (window.getSelection && String(window.getSelection())) return;
+        inputRef.current?.focus();
+    };
+
+    const print = useCallback((lines) => {
+        setHistory(prev => [...prev, ...lines]);
+    }, []);
+
+    const openPage = (name) => {
+        print([{ text: `Opening ${name} …`, type: 'success' }]);
+        setTimeout(() => setActiveFile(PAGES[name].file), 500);
     };
 
     const runCommand = (cmdText) => {
-        const trimmed = cmdText.trim().toLowerCase();
-        const parts = trimmed.split(' ');
-        const mainCommand = parts[0];
+        const raw = cmdText.trim();
+        const parts = raw.split(/\s+/);
+        const cmd = (parts[0] || '').toLowerCase();
+        const args = parts.slice(1);
 
-        setHistory(prev => [...prev, { text: `guest@karim-anaya.io ~ % ${cmdText}`, type: 'prompt' }]);
+        print([{ text: raw, type: 'echo-prompt' }]);
+        if (!raw) return;
+        setCmdHistory(prev => [...prev, raw]);
+        setHistIndex(-1);
 
-        if (!trimmed) return;
-
-        switch (mainCommand) {
+        switch (cmd) {
             case 'help':
-                setHistory(prev => [
-                    ...prev,
+                print([
                     { text: 'Available commands:', type: 'success' },
-                    { text: '  about      - View biographical details, education, CV (opens VS Code layout)', type: 'info' },
-                    { text: '  research   - View publications, active projects (opens GitHub layout)', type: 'info' },
-                    { text: '  teaching   - View current and past courses (opens PyPI layout)', type: 'info' },
-                    { text: '  blog       - Open the Quarto blog', type: 'info' },
-                    { text: '  theme      - Toggle website visual theme', type: 'info' },
-                    { text: '  fastfetch  - Show system and profile stats', type: 'info' },
-                    { text: '  clear      - Clear the screen', type: 'info' }
+                    { text: '  about       open biography, education and CV', type: 'info' },
+                    { text: '  research    open publications and active projects', type: 'info' },
+                    { text: '  teaching    open current and past courses', type: 'info' },
+                    { text: '  blog        open the blog', type: 'info' },
+                    { text: '  contact     email, ORCID, GitHub, university profile', type: 'info' },
+                    { text: '  whoami      one-line introduction', type: 'info' },
+                    { text: '  ls          list available pages', type: 'info' },
+                    { text: '  theme       toggle the visual theme', type: 'info' },
+                    { text: '  fastfetch   show profile stats', type: 'info' },
+                    { text: '  clear       clear the screen', type: 'info' },
+                    { text: 'Tips: Tab autocompletes, ↑/↓ recall previous commands.', type: 'dim' },
                 ]);
                 break;
-            case 'about':
-            case 'cv':
-            case 'bio':
-                setHistory(prev => [...prev, { text: 'Loading profile in VS Code environment...', type: 'success' }]);
-                setTimeout(() => setActiveFile('about_me.md'), 600);
+            case 'about': case 'cv': case 'bio':
+                openPage('about');
                 break;
-            case 'research':
-            case 'publications':
-            case 'projects':
-                setHistory(prev => [...prev, { text: 'Loading repository files in GitHub environment...', type: 'success' }]);
-                setTimeout(() => setActiveFile('projects.html'), 600);
+            case 'research': case 'publications': case 'projects':
+                openPage('research');
                 break;
-            case 'teaching':
-            case 'courses':
-                setHistory(prev => [...prev, { text: 'Loading package installation in PyPI environment...', type: 'success' }]);
-                setTimeout(() => setActiveFile('current_courses.ipynb'), 600);
+            case 'teaching': case 'courses':
+                openPage('teaching');
                 break;
             case 'blog':
-                setHistory(prev => [...prev, { text: 'Opening blog view...', type: 'success' }]);
-                setTimeout(() => setActiveFile('blog.html'), 600);
+                openPage('blog');
+                break;
+            case 'contact':
+                print([
+                    { text: 'Reach me at:', type: 'success' },
+                    ...CONTACT_LINKS.map(l => ({ label: `  ${l.label}  `, text: l.text, href: l.href, type: 'link' })),
+                ]);
+                break;
+            case 'whoami':
+                print([
+                    { text: 'Karim Anaya-Izquierdo — Senior Lecturer in Statistics, University of Bath.', type: 'info' },
+                    { text: 'Information geometry · survival analysis · spatial epidemiology · Bayesian methods.', type: 'dim' },
+                ]);
+                break;
+            case 'ls':
+                print(Object.entries(PAGES).map(([name, p]) => (
+                    { text: `  ${name.padEnd(10)} ${p.desc}`, type: 'info' }
+                )));
+                break;
+            case 'open':
+                if (args[0] && PAGES[args[0].toLowerCase()]) {
+                    openPage(args[0].toLowerCase());
+                } else {
+                    print([{ text: `usage: open <${Object.keys(PAGES).join('|')}>`, type: 'error' }]);
+                }
                 break;
             case 'theme':
                 toggleTheme();
-                setHistory(prev => [...prev, { text: 'Theme toggled successfully.', type: 'success' }]);
+                print([{ text: 'Theme toggled.', type: 'success' }]);
+                break;
+            case 'fastfetch': case 'neofetch':
+                print([
+                    { text: 'karim@kai-os', type: 'success' },
+                    { text: '------------', type: 'dim' },
+                    { text: `Role:      Senior Lecturer in Statistics`, type: 'info' },
+                    { text: `Host:      University of Bath, Dept of Mathematical Sciences`, type: 'info' },
+                    { text: `Uptime:    ${bathUptime()} at Bath`, type: 'info' },
+                    { text: `Research:  information geometry · UQ · survival · spatial epi`, type: 'info' },
+                    { text: `Stack:     R (tidyverse) · Python · Quarto · LaTeX`, type: 'info' },
+                    { text: `Shell:     zsh 5.9 · Terminal: Ghostty (Web App)`, type: 'info' },
+                    { text: `Theme:     ${theme}`, type: 'info' },
+                ]);
+                break;
+            case 'history':
+                print(cmdHistory.map((c, i) => ({ text: `  ${String(i + 1).padStart(3)}  ${c}`, type: 'dim' })));
+                break;
+            case 'date':
+                print([{ text: new Date().toString(), type: 'info' }]);
+                break;
+            case 'echo':
+                print([{ text: args.join(' '), type: 'info' }]);
+                break;
+            case 'sudo':
+                print([{ text: 'guest is not in the sudoers file. This incident will be reported.', type: 'error' }]);
                 break;
             case 'clear':
                 setHistory([]);
                 break;
-            case 'fastfetch':
-            case 'neofetch':
-                setHistory(prev => [
-                    ...prev,
-                    { text: 'Refreshing system metrics...', type: 'success' },
-                    { text: 'OS: macOS Sequoia 15.0', type: 'info' },
-                    { text: 'Host: Karim\'s Portfolio Computer', type: 'info' },
-                    { text: 'Kernel: Darwin 24.0.0', type: 'info' },
-                    { text: 'Shell: zsh 5.9', type: 'info' },
-                    { text: 'Terminal: Ghostty (Web Edition)', type: 'info' },
-                    { text: `Theme: ${theme}`, type: 'info' },
-                    { text: 'AI Agent: Gemini Antigravity', type: 'info' }
-                ]);
-                break;
             default:
-                setHistory(prev => [
-                    ...prev,
-                    { text: `zsh: command not found: ${mainCommand}. Type "help" for a list of commands.`, type: 'error' }
-                ]);
+                print([{ text: `zsh: command not found: ${cmd} — type "help" for a list of commands.`, type: 'error' }]);
         }
     };
 
@@ -117,69 +187,146 @@ const TerminalLayout = ({ activeFile, setActiveFile, theme, toggleTheme }) => {
         setInput('');
     };
 
-    return (
-        <div className="terminal-layout-wrapper" onClick={handleContainerClick}>
-            <div className="crt-overlay" />
-            <div className="terminal-layout-header d-flex align-items-center justify-content-between px-3 py-2">
-                <div className="d-flex align-items-center gap-2">
-                    <span className="dot dot-red" />
-                    <span className="dot dot-yellow" />
-                    <span className="dot dot-green" />
-                    <span className="ms-2 terminal-window-title">zsh — guest@karim-anaya.io (Ghostty) (Active File: {activeFile})</span>
-                </div>
-                <div className="d-flex gap-3 align-items-center terminal-nav-links">
-                    <button className="nav-btn" onClick={() => runCommand('about')}>About</button>
-                    <button className="nav-btn" onClick={() => runCommand('research')}>Research</button>
-                    <button className="nav-btn" onClick={() => runCommand('teaching')}>Teaching</button>
-                    <button className="nav-btn" onClick={() => runCommand('theme')}>Toggle Theme</button>
-                </div>
-            </div>
+    const handleKeyDown = (e) => {
+        if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (!cmdHistory.length) return;
+            const next = histIndex < 0 ? cmdHistory.length - 1 : Math.max(0, histIndex - 1);
+            setHistIndex(next);
+            setInput(cmdHistory[next]);
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (histIndex < 0) return;
+            const next = histIndex + 1;
+            if (next >= cmdHistory.length) {
+                setHistIndex(-1);
+                setInput('');
+            } else {
+                setHistIndex(next);
+                setInput(cmdHistory[next]);
+            }
+        } else if (e.key === 'Tab') {
+            e.preventDefault();
+            const stem = input.trim().toLowerCase();
+            if (!stem) return;
+            const matches = COMMAND_NAMES.filter(c => c.startsWith(stem));
+            if (matches.length === 1) {
+                setInput(matches[0] + ' ');
+            } else if (matches.length > 1) {
+                print([{ text: matches.join('   '), type: 'dim' }]);
+            }
+        }
+    };
 
-            <div className="terminal-layout-body p-3 p-md-4" ref={containerRef}>
-                <div className="row g-4 align-items-start mb-4">
-                    <div className="col-xl-6 col-lg-7">
-                        <pre className="ascii-logo text-warning">{asciiLogo}</pre>
+    const renderLine = (line, idx) => {
+        if (line.type === 'echo-prompt') {
+            return (
+                <div key={idx} className="terminal-output-line type-echo">
+                    <span className="echo-user">guest</span>
+                    <span className="echo-at">@</span>
+                    <span className="echo-host">karim-anaya.io</span>
+                    <span className="echo-dir"> ~</span>
+                    <span className="echo-chevron"> ❯ </span>
+                    {line.text}
+                </div>
+            );
+        }
+        if (line.type === 'link') {
+            return (
+                <div key={idx} className="terminal-output-line type-info">
+                    {line.label}
+                    <a className="terminal-link" href={line.href} target="_blank" rel="noreferrer">{line.text}</a>
+                </div>
+            );
+        }
+        return (
+            <div key={idx} className={`terminal-output-line type-${line.type}`}>
+                {line.text}
+            </div>
+        );
+    };
+
+    return (
+        <div className="terminal-backdrop">
+            <div className="terminal-window" onClick={handleContainerClick}>
+                <div className="crt-overlay" />
+                <header className="terminal-layout-header">
+                    <div className="traffic-lights">
+                        <span className="dot dot-red" />
+                        <span className="dot dot-yellow" />
+                        <span className="dot dot-green" />
                     </div>
-                    <div className="col-xl-6 col-lg-5">
-                        <div className="fastfetch-block p-3 rounded">
-                            <div className="fastfetch-title text-success">karim@kai-os</div>
-                            <div className="fastfetch-divider">----------------------</div>
-                            <div className="d-flex flex-column gap-1 fastfetch-list">
-                                <div><span className="ff-key">OS:</span> <span className="ff-val">macOS Sequoia 15.0</span></div>
-                                <div><span className="ff-key">Host:</span> <span className="ff-val">Karim's Mac Hub</span></div>
-                                <div><span className="ff-key">Kernel:</span> <span className="ff-val">Darwin 24.0.0</span></div>
-                                <div><span className="ff-key">Uptime:</span> <span className="ff-val">9 days, 4 hours, 12 mins</span></div>
-                                <div><span className="ff-key">Shell:</span> <span className="ff-val">zsh 5.9</span></div>
-                                <div><span className="ff-key">Terminal:</span> <span className="ff-val">Ghostty (Web App)</span></div>
-                                <div><span className="ff-key">AI System:</span> <span className="ff-val">Gemini Antigravity</span></div>
-                                <div><span className="ff-key">Active Page:</span> <span className="ff-val text-warning">Welcome (Terminal Layout)</span></div>
+                    <span className="terminal-window-title">guest@karim-anaya.io — zsh</span>
+                    <nav className="terminal-nav-links">
+                        <button className="nav-btn" onClick={() => runCommand('about')}>About</button>
+                        <button className="nav-btn" onClick={() => runCommand('research')}>Research</button>
+                        <button className="nav-btn" onClick={() => runCommand('teaching')}>Teaching</button>
+                        <button className="nav-btn" onClick={() => runCommand('theme')}>Theme</button>
+                    </nav>
+                </header>
+
+                <div className="terminal-layout-body" ref={bodyRef}>
+                    <div className="terminal-hero">
+                        <pre className="ascii-logo" aria-label="K.AI OS">{ASCII_LOGO}</pre>
+                        <div className="fastfetch-block">
+                            <div className="fastfetch-title">karim@kai-os</div>
+                            <div className="fastfetch-divider" />
+                            <dl className="fastfetch-list">
+                                <div><dt>Name</dt><dd>Karim Anaya-Izquierdo</dd></div>
+                                <div><dt>Role</dt><dd>Senior Lecturer in Statistics</dd></div>
+                                <div><dt>Host</dt><dd>University of Bath — Mathematical Sciences</dd></div>
+                                <div><dt>Uptime</dt><dd>{bathUptime()} at Bath</dd></div>
+                                <div><dt>Research</dt><dd>info geometry · UQ · survival · spatial epi</dd></div>
+                                <div><dt>Stack</dt><dd>R (tidyverse) · Python · Quarto · LaTeX</dd></div>
+                                <div><dt>Shell</dt><dd>zsh 5.9 · Ghostty (Web App)</dd></div>
+                                <div><dt>Page</dt><dd className="ff-accent">Welcome (Terminal Layout)</dd></div>
+                            </dl>
+                            <div className="fastfetch-palette" aria-hidden="true">
+                                {['#0c0c0c', '#ff5f56', '#4af626', '#ffb000', '#00b0ff', '#c678dd', '#56b6c2', '#dcdcdc'].map(c => (
+                                    <span key={c} style={{ backgroundColor: c }} />
+                                ))}
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="history-console d-flex flex-column gap-1 mb-3">
-                    {history.map((line, idx) => (
-                        <div key={idx} className={`terminal-output-line type-${line.type}`}>
-                            {line.text}
+                    <div className="history-console">
+                        {history.map(renderLine)}
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="terminal-input-line">
+                        <div className="prompt-meta">
+                            <span className="echo-user">guest</span>
+                            <span className="echo-at">@</span>
+                            <span className="echo-host">karim-anaya.io</span>
+                            <span className="echo-dir"> ~</span>
+                            <span className="prompt-branch"> ⎇ main</span>
                         </div>
-                    ))}
-                </div>
+                        <div className="prompt-entry">
+                            <span className="echo-chevron">❯</span>
+                            <input
+                                type="text"
+                                ref={inputRef}
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                                className="terminal-command-input"
+                                aria-label="Terminal command input"
+                                autoComplete="off"
+                                autoCapitalize="off"
+                                spellCheck="false"
+                                enterKeyHint="go"
+                            />
+                        </div>
+                    </form>
 
-                <form onSubmit={handleSubmit} className="d-flex align-items-center terminal-input-line">
-                    <span className="terminal-prompt">guest@karim-anaya.io ~ % </span>
-                    <input
-                        type="text"
-                        ref={inputRef}
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        className="flex-grow-1 terminal-command-input"
-                        autoComplete="off"
-                        autoCapitalize="off"
-                        spellCheck="false"
-                        autoFocus
-                    />
-                </form>
+                    <div className="quick-commands" role="toolbar" aria-label="Quick commands">
+                        {QUICK_COMMANDS.map(c => (
+                            <button key={c} className="chip" onClick={() => runCommand(c)}>{c}</button>
+                        ))}
+                        <button className="chip chip-alt" onClick={() => runCommand('theme')}>theme</button>
+                        <button className="chip chip-alt" onClick={() => runCommand('clear')}>clear</button>
+                    </div>
+                </div>
             </div>
         </div>
     );

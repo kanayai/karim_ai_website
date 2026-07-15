@@ -2,6 +2,28 @@ import React from 'react';
 import { VscPlay, VscEllipsis } from 'react-icons/vsc';
 import publicationsData from '../../data/publications.json';
 
+// Single-pass tokeniser: strings first, then keywords on word boundaries,
+// so matches never re-process each other's output
+const PY_TOKEN = /('[^']*'|"[^"]*")|\b(import|from|as|def|return|for|in|if|else|while|lambda|True|False|None)\b/g;
+
+const highlightPython = (text) => {
+    const out = [];
+    let last = 0;
+    let m;
+    PY_TOKEN.lastIndex = 0;
+    while ((m = PY_TOKEN.exec(text)) !== null) {
+        if (m.index > last) out.push(text.slice(last, m.index));
+        out.push(
+            m[1]
+                ? <span key={m.index} style={{ color: '#CE9178' }}>{m[1]}</span>
+                : <span key={m.index} style={{ color: '#C586C0' }}>{m[2]}</span>
+        );
+        last = m.index + m[0].length;
+    }
+    if (last < text.length) out.push(text.slice(last));
+    return out;
+};
+
 const NotebookViewer = ({ fileName }) => {
     const publicationsNotebook = publicationsData.map((pub, index) => ({
         type: 'code',
@@ -154,13 +176,7 @@ const NotebookViewer = ({ fileName }) => {
                                                         {line.type === 'comment' ? (
                                                             <span style={{ color: '#6A9955' }}>{line.text}</span>
                                                         ) : (
-                                                            <span dangerouslySetInnerHTML={{
-                                                                __html: line.text
-                                                                    .replace('import', '<span style="color: #C586C0">import</span>')
-                                                                    .replace('as', '<span style="color: #C586C0">as</span>')
-                                                                    .replace(/'([^']*)'/g, '<span style="color: #CE9178">\'$1\'</span>')
-                                                                    .replace(/"([^"]*)"/g, '<span style="color: #CE9178">"$1"</span>')
-                                                            }} />
+                                                            <span>{highlightPython(line.text)}</span>
                                                         )}
                                                     </div>
                                                 ))}

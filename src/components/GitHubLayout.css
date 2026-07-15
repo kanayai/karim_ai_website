@@ -3,7 +3,7 @@
   color: #c9d1d9;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -230,6 +230,18 @@
 
 .commit-message {
   color: #c9d1d9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.repo-file-header > div {
+  min-width: 0;
+}
+
+.commit-date {
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .commit-date {
@@ -247,6 +259,7 @@
   font-size: 14px;
   cursor: pointer;
   background-color: #0d1117;
+  gap: 12px;
 }
 
 .file-row:last-child {
@@ -286,6 +299,9 @@
 .file-age {
   color: #8b949e;
   font-size: 13px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: auto;
 }
 
 /* Repo Render Area */
@@ -431,4 +447,31 @@
 .issue-meta {
   color: #8b949e;
   font-size: 12px;
+}
+
+/* Mobile */
+@media (max-width: 767.98px) {
+  /* Name + age only, like GitHub's own mobile file list */
+  .file-commit-msg { display: none; }
+
+  .file-row { min-height: 44px; }
+
+  .repo-nav-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+
+  .repo-nav-tabs::-webkit-scrollbar { display: none; }
+
+  .repo-tab-item {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .repo-title-area { font-size: 18px; }
+
+  .repo-stats-buttons .repo-stat-btn { padding: 3px 8px; }
 }
