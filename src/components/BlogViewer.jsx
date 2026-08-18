@@ -38,6 +38,33 @@ const promptPresets = [
     },
 ];
 
+const modelModes = [
+    {
+        id: 'fast',
+        label: 'Fast Search',
+        badge: 'Low reasoning',
+        prefix: 'Fast search',
+    },
+    {
+        id: 'deep',
+        label: 'Deep Search',
+        badge: 'High reasoning',
+        prefix: 'Deep search',
+    },
+    {
+        id: 'frontier',
+        label: 'Frontier',
+        badge: 'Best match',
+        prefix: 'Frontier mode',
+    },
+    {
+        id: 'local',
+        label: 'Local Index',
+        badge: 'On-site only',
+        prefix: 'Local index',
+    },
+];
+
 const formatTags = (tags) => tags.map(tag => `#${tag}`).join(' ');
 
 const BlogViewer = ({ setActiveFile }) => {
@@ -46,6 +73,7 @@ const BlogViewer = ({ setActiveFile }) => {
     const [generatedPosts, setGeneratedPosts] = useState(null);
     const [activePrompt, setActivePrompt] = useState(null);
     const [hasInteracted, setHasInteracted] = useState(false);
+    const [selectedModel, setSelectedModel] = useState(modelModes[1].id);
 
     useEffect(() => {
         let isMounted = true;
@@ -139,10 +167,11 @@ const BlogViewer = ({ setActiveFile }) => {
     }, [fuse, posts, searchTerm, selectedTags]);
 
     const visiblePosts = filteredPosts;
+    const modelMode = modelModes.find(mode => mode.id === selectedModel) || modelModes[1];
     const hasActiveFilters = Boolean(searchTerm.trim() || selectedTags.length > 0);
     const userPrompt = searchTerm.trim() || activePrompt?.label || "Browse Karim's blog";
     const assistantReply = hasActiveFilters
-        ? `I found ${filteredPosts.length} ${filteredPosts.length === 1 ? 'note' : 'notes'} matching ${searchTerm.trim() ? `"${searchTerm.trim()}"` : 'your selected tags'}${selectedTags.length ? ` (${formatTags(selectedTags)})` : ''}.`
+        ? `${modelMode.prefix}: I found ${filteredPosts.length} ${filteredPosts.length === 1 ? 'post' : 'posts'} matching ${searchTerm.trim() ? `"${searchTerm.trim()}"` : 'your selected tags'}${selectedTags.length ? ` (${formatTags(selectedTags)})` : ''}.`
         : activePrompt?.reply || 'Choose a prompt, search the blog, or open one of the matching posts.';
 
     const applyPrompt = (prompt) => {
@@ -219,13 +248,23 @@ const BlogViewer = ({ setActiveFile }) => {
                         <div className="ai-home-prompt-footer">
                             <div className="ai-home-model-pill">
                                 <VscSparkle />
-                                <span>Blog search</span>
+                                <span>{modelMode.badge}</span>
                             </div>
                             {hasActiveFilters && (
                                 <button type="button" className="ai-home-clear" onClick={resetBlog} aria-label="Clear blog search">
                                     <VscChromeClose />
                                 </button>
                             )}
+                            <label className="ai-model-select" aria-label="Blog search mode">
+                                <select
+                                    value={selectedModel}
+                                    onChange={(event) => setSelectedModel(event.target.value)}
+                                >
+                                    {modelModes.map(mode => (
+                                        <option key={mode.id} value={mode.id}>{mode.label}</option>
+                                    ))}
+                                </select>
+                            </label>
                             <button type="submit" className="ai-home-send">
                                 <VscSend />
                                 <span>Search</span>
@@ -267,7 +306,7 @@ const BlogViewer = ({ setActiveFile }) => {
 
                         <div className="ai-note-strip">
                             <div className="ai-note-strip-header">
-                                <span>Recommended notes</span>
+                                <span>Recommended posts</span>
                                 <span>{visiblePosts.length} shown</span>
                             </div>
                             <div className="ai-note-list">
