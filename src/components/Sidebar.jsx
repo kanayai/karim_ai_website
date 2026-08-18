@@ -1,38 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { VscChevronRight, VscChevronDown, VscEllipsis, VscCode, VscRadioTower, VscSourceControl, VscLaw, VscPaintcan, VscSymbolKeyword, VscQuote, VscGraph } from 'react-icons/vsc';
 import { FaReact, FaJs, FaMarkdown, FaPython, FaHtml5 } from 'react-icons/fa';
 
 import { useTranslation } from 'react-i18next';
 
-const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
+const fileToFolderPath = {
+    'Welcome': ['Home'],
+    'publications.html': ['Research'],
+    'publications.R': ['Research'],
+    'phd_students.html': ['Research'],
+    'certest.html': ['Research', 'Projects'],
+    'gkn_prosperity.html': ['Research', 'Projects'],
+    'current_courses.ipynb': ['Teaching'],
+    'previous_courses.ipynb': ['Teaching'],
+    'blog.html': ['Blog'],
+};
+
+const Sidebar = ({ activeFile, setActiveFile, activeView }) => {
     const [expandedFolders, setExpandedFolders] = useState({});
     const { t } = useTranslation();
-
-    // File to folder path mapping for auto-expand
-    const fileToFolderPath = {
-        'Welcome': ['Home'],
-        'publications.R': ['Research'],
-        'phd_students.html': ['Research'],
-        'certest.html': ['Research', 'Projects'],
-        'gkn_prosperity.html': ['Research', 'Projects'],
-        'current_courses.ipynb': ['Teaching'],
-        'previous_courses.ipynb': ['Teaching'],
-        'blog.html': ['Blog'],
+    const activeFolders = fileToFolderPath[activeFile] || [];
+    const effectiveExpandedFolders = {
+        ...expandedFolders,
+        ...Object.fromEntries(activeFolders.map(folder => [folder, true])),
     };
-
-    // Auto-expand folders when activeFile changes
-    useEffect(() => {
-        if (activeFile && fileToFolderPath[activeFile]) {
-            const foldersToExpand = fileToFolderPath[activeFile];
-            setExpandedFolders(prev => {
-                const newState = { ...prev };
-                foldersToExpand.forEach(folder => {
-                    newState[folder] = true;
-                });
-                return newState;
-            });
-        }
-    }, [activeFile]);
 
     const toggleFolder = (folderName) => {
         setExpandedFolders(prev => ({ ...prev, [folderName]: !prev[folderName] }));
@@ -59,6 +50,7 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
                     ]
                 },
                 { name: 'phd_students.html', icon: <VscCode color="#e44d26" />, type: 'html', path: '/phd_students.html' },
+                { name: 'publications.html', icon: <VscCode color="#e44d26" />, type: 'html', path: '/publications.html' },
                 { name: 'publications.R', icon: <span style={{ color: '#276dc3', fontWeight: 'bold', fontSize: '10px' }}>R</span>, type: 'r' },
             ]
         },
@@ -108,7 +100,7 @@ const Sidebar = ({ activeFile, setActiveFile, activeView, setActiveView }) => {
         };
 
         if (item.type === 'folder') {
-            const isExpanded = expandedFolders[item.name];
+            const isExpanded = effectiveExpandedFolders[item.name];
             return (
                 <div key={item.name}>
                     <div

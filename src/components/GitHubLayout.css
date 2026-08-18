@@ -322,6 +322,15 @@
 
 .render-frame-container {
   background-color: #0d1117;
+  display: flex;
+  height: clamp(640px, 72dvh, 900px);
+  min-height: 0;
+}
+
+.render-frame-container > .editor-shell {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
 }
 
 /* Sidebar Section */
@@ -474,4 +483,17 @@
   .repo-title-area { font-size: 18px; }
 
   .repo-stats-buttons .repo-stat-btn { padding: 3px 8px; }
+
+  .repo-render-area {
+    margin-left: -12px;
+    margin-right: -12px;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0 !important;
+  }
+
+  .render-frame-container {
+    height: calc(100dvh - 210px);
+    min-height: 520px;
+  }
 }

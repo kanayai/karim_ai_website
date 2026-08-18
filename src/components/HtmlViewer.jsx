@@ -1,11 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { VscChevronRight } from 'react-icons/vsc';
 
 import { blogPosts } from '../constants/blogData';
 
 const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
-    const srcRef = useRef('');
-
     // Construct path logic
     let src = '';
     const lang = i18n.language;
@@ -26,6 +24,7 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
     else if (activeFile === 'reproducibility_guide.html') src = '/blog/posts/reproducibility_guide.html';
     else if (activeFile === 'first-post.html') src = '/blog/posts/first-post.html';
     else if (activeFile === 'projects.html') src = '/projects.html';
+    else if (activeFile === 'publications.html') src = '/publications.html';
     else if (activeFile === 'certest.html') src = '/certest.html';
     else if (activeFile === 'gkn_prosperity.html') src = '/gkn_prosperity.html';
     else if (activeFile === 'phd_students.html') src = '/phd_students.html';
@@ -36,7 +35,7 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
     const activePost = blogPosts.find(p => p.id === activeFile);
 
     // Function to inject styles into iframe
-    const injectStyles = (iframe) => {
+    const injectStyles = useCallback((iframe) => {
         if (!iframe) return;
         const doc = iframe.contentDocument;
         if (!doc) return;
@@ -177,7 +176,7 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
 
         // Clear interval after 10 seconds to avoid infinite loop if Giscus never loads
         setTimeout(() => clearInterval(checkForGiscus), 10000);
-    };
+    }, [theme]);
 
     const iframeRef = useRef(null);
 
@@ -186,12 +185,12 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
         if (iframeRef.current) {
             injectStyles(iframeRef.current);
         }
-    }, [theme]);
+    }, [injectStyles]);
 
     return (
         <div className="d-flex flex-column h-100" style={{ backgroundColor: 'var(--vscode-editor-bg)' }}>
             {isBlogPost && (
-                <div className="p-2 border-bottom" style={{ borderColor: 'var(--vscode-border)' }}>
+                <div className="blog-post-toolbar p-2 border-bottom" style={{ borderColor: 'var(--vscode-border)' }}>
                     <button
                         className="btn btn-sm"
                         onClick={() => setActiveFile('blog.html')}
@@ -210,9 +209,10 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
                         Back to Blog
                     </button>
                     {activePost && (
-                        <span style={{ fontSize: '11px', opacity: 0.7, marginLeft: 'auto' }}>
-                            {activePost.readingTime} min read
-                        </span>
+                        <div className="blog-post-toolbar-meta">
+                            <span>{activePost.title}</span>
+                            <span>{activePost.readingTime} min read</span>
+                        </div>
                     )}
                 </div>
             )}

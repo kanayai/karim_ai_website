@@ -9,6 +9,7 @@ import { useRecentFiles } from './hooks/useRecentFiles';
 import { ToastProvider, useToast } from './contexts/ToastContext';
 import './App.css';
 import WelcomeBanner from './components/WelcomeBanner';
+import MobileNav from './components/MobileNav';
 
 function AppContent() {
   const [openFiles, setOpenFiles] = useState(['Welcome']);
@@ -156,45 +157,51 @@ function AppContent() {
 
   if (layoutType === 'github') {
     return (
-      <GitHubLayout
-        activeFile={activeFile}
-        setActiveFile={handleOpenFile}
-      >
-        <Editor
+      <>
+        <GitHubLayout
           activeFile={activeFile}
-          openFiles={openFiles}
           setActiveFile={handleOpenFile}
-          onCloseFile={handleCloseFile}
-          onCloseAllFiles={handleCloseAllFiles}
-          theme={theme}
-          setTheme={setTheme}
-          simpleMode={simpleMode}
-          toggleSimpleMode={toggleSimpleMode}
-          recentFiles={recentFiles}
-        />
-      </GitHubLayout>
+        >
+          <Editor
+            activeFile={activeFile}
+            openFiles={openFiles}
+            setActiveFile={handleOpenFile}
+            onCloseFile={handleCloseFile}
+            onCloseAllFiles={handleCloseAllFiles}
+            theme={theme}
+            setTheme={setTheme}
+            simpleMode={simpleMode}
+            toggleSimpleMode={toggleSimpleMode}
+            recentFiles={recentFiles}
+          />
+        </GitHubLayout>
+        <MobileNav activeFile={activeFile} onNavigate={handleOpenFile} />
+      </>
     );
   }
 
   if (layoutType === 'pypi') {
     return (
-      <PyPILayout
-        activeFile={activeFile}
-        setActiveFile={handleOpenFile}
-      >
-        <Editor
+      <>
+        <PyPILayout
           activeFile={activeFile}
-          openFiles={openFiles}
           setActiveFile={handleOpenFile}
-          onCloseFile={handleCloseFile}
-          onCloseAllFiles={handleCloseAllFiles}
-          theme={theme}
-          setTheme={setTheme}
-          simpleMode={simpleMode}
-          toggleSimpleMode={toggleSimpleMode}
-          recentFiles={recentFiles}
-        />
-      </PyPILayout>
+        >
+          <Editor
+            activeFile={activeFile}
+            openFiles={openFiles}
+            setActiveFile={handleOpenFile}
+            onCloseFile={handleCloseFile}
+            onCloseAllFiles={handleCloseAllFiles}
+            theme={theme}
+            setTheme={setTheme}
+            simpleMode={simpleMode}
+            toggleSimpleMode={toggleSimpleMode}
+            recentFiles={recentFiles}
+          />
+        </PyPILayout>
+        <MobileNav activeFile={activeFile} onNavigate={handleOpenFile} />
+      </>
     );
   }
 
@@ -226,6 +233,7 @@ function AppContent() {
           recentFiles={recentFiles}
         />
       </Layout>
+      <MobileNav activeFile={activeFile} onNavigate={handleOpenFile} />
     </>
   );
 }

@@ -1,16 +1,6 @@
-import React from 'react';
-import NotebookViewer from './NotebookViewer';
+import React, { Suspense, lazy } from 'react';
 import CodeViewer from './CodeViewer';
-import RCodeViewer from './RCodeViewer';
 import WelcomePage from './WelcomePage';
-import HtmlViewer from './HtmlViewer';
-import RetroGame from './RetroGame';
-import GitGraph from './GitGraph';
-import MusicPlayer from './MusicPlayer';
-
-import LatexPlayground from './LatexPlayground';
-import CitationGenerator from './CitationGenerator';
-import DataVizGallery from './DataVizGallery';
 import MarkdownViewer from './MarkdownViewer';
 import LicenseViewer from './LicenseViewer';
 import GitIgnoreViewer from './GitIgnoreViewer';
@@ -30,6 +20,16 @@ import quartoGuideContent from '../../QUARTO_GUIDE.md?raw';
 import syncInstructionsContent from '../../SYNC_INSTRUCTIONS.md?raw';
 import futureImprovementsContent from '../../FUTURE_IMPROVEMENTS.md?raw';
 import websiteDocumentationContent from '../../WEBSITE_DOCUMENTATION.md?raw';
+
+const NotebookViewer = lazy(() => import('./NotebookViewer'));
+const RCodeViewer = lazy(() => import('./RCodeViewer'));
+const HtmlViewer = lazy(() => import('./HtmlViewer'));
+const RetroGame = lazy(() => import('./RetroGame'));
+const GitGraph = lazy(() => import('./GitGraph'));
+const MusicPlayer = lazy(() => import('./MusicPlayer'));
+const LatexPlayground = lazy(() => import('./LatexPlayground'));
+const CitationGenerator = lazy(() => import('./CitationGenerator'));
+const DataVizGallery = lazy(() => import('./DataVizGallery'));
 
 const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme, setTheme, simpleMode, toggleSimpleMode, recentFiles }) => {
     const { i18n } = useTranslation();
@@ -257,7 +257,7 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
 
                         return (
                             <>
-                                {path.map((folder, i) => (
+                                {path.map((folder) => (
                                     <React.Fragment key={folder}>
                                         <VscChevronRight className="mx-1" size={14} />
                                         <span style={{ cursor: 'pointer' }}>{folder}</span>
@@ -280,7 +280,9 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
                     animation: 'fadeSlideIn 0.3s ease-out forwards'
                 }}
             >
-                {renderContent()}
+                <Suspense fallback={<div className="loading-spinner"><div className="spinner" /></div>}>
+                    {renderContent()}
+                </Suspense>
             </div>
         </div>
     );

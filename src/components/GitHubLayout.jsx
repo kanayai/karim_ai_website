@@ -147,7 +147,7 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                                 <div className="render-title-bar px-3 py-2 rounded-top border-bottom">
                                     <VscFile size={16} /> <strong>{activeFile}</strong>
                                 </div>
-                                <div className="render-frame-container" style={{ height: '550px' }}>
+                                <div className="render-frame-container">
                                     {children}
                                 </div>
                             </div>

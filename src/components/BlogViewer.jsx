@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { VscSearch, VscClose } from 'react-icons/vsc';
 import Fuse from 'fuse.js';
 import { blogPosts } from '../constants/blogData';
@@ -6,11 +6,73 @@ import { blogPosts } from '../constants/blogData';
 const BlogViewer = ({ setActiveFile }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
+    const [generatedPosts, setGeneratedPosts] = useState(null);
 
-    const posts = blogPosts;
+    useEffect(() => {
+        let isMounted = true;
+
+        const loadGeneratedMetadata = async () => {
+            try {
+                const [listingResponse, searchResponse] = await Promise.all([
+                    fetch('/blog/listings.json'),
+                    fetch('/blog/search.json'),
+                ]);
+                if (!listingResponse.ok || !searchResponse.ok) return;
+
+                const [listingData, searchData] = await Promise.all([
+                    listingResponse.json(),
+                    searchResponse.json(),
+                ]);
+
+                const listedHrefs = listingData?.[0]?.items || [];
+                const rootEntries = searchData.filter(item =>
+                    item.href?.startsWith('posts/') &&
+                    !item.href.includes('#') &&
+                    !item.section
+                );
+                const searchByFile = new Map(rootEntries.map(item => [
+                    item.href.replace('posts/', ''),
+                    item,
+                ]));
+                const fallbackByFile = new Map(blogPosts.map(post => [post.id, post]));
+
+                const mergedPosts = listedHrefs.map(href => {
+                    const id = href.replace('/posts/', '').replace('posts/', '');
+                    const generated = searchByFile.get(id);
+                    const fallback = fallbackByFile.get(id);
+                    const excerpt = generated?.text?.split('\n').find(Boolean);
+
+                    return {
+                        ...(fallback || {
+                            id,
+                            date: '',
+                            tags: [],
+                            readingTime: 5,
+                        }),
+                        id,
+                        title: generated?.title || fallback?.title || id,
+                        description: fallback?.description || excerpt || '',
+                    };
+                });
+
+                if (isMounted && mergedPosts.length > 0) {
+                    setGeneratedPosts(mergedPosts);
+                }
+            } catch {
+                // Keep the local fallback; the generated Quarto JSON may not exist in dev yet.
+            }
+        };
+
+        loadGeneratedMetadata();
+        return () => {
+            isMounted = false;
+        };
+    }, []);
+
+    const posts = generatedPosts || blogPosts;
 
     // Configure Fuse.js for fuzzy search
-    const fuse = new Fuse(posts, {
+    const fuse = useMemo(() => new Fuse(posts, {
         keys: [
             { name: 'title', weight: 2 },
             { name: 'description', weight: 1.5 },
@@ -19,7 +81,7 @@ const BlogViewer = ({ setActiveFile }) => {
         threshold: 0.4,
         ignoreLocation: true,
         includeMatches: true,
-    });
+    }), [posts]);
 
     // Get all unique tags
     const allTags = [...new Set(posts.flatMap(post => post.tags))].sort();
@@ -67,11 +129,17 @@ const BlogViewer = ({ setActiveFile }) => {
     const hasActiveFilters = searchTerm.trim() || selectedTags.length > 0;
 
     return (
-        <div className="p-4" style={{ color: 'var(--vscode-text)', maxWidth: '800px', height: '100%', overflowY: 'auto' }}>
-            <h1 className="mb-4">Blog Posts</h1>
+        <div className="blog-viewer" style={{ color: 'var(--vscode-text)', maxWidth: '920px', height: '100%', overflowY: 'auto' }}>
+            <div className="blog-viewer-header">
+                <div>
+                    <div className="blog-viewer-kicker">Journal</div>
+                    <h1 className="mb-2">Blog Posts</h1>
+                </div>
+                <div className="blog-viewer-count">{posts.length} posts</div>
+            </div>
 
             {/* Search Input */}
-            <div className="d-flex align-items-center mb-3" style={{
+            <div className="d-flex align-items-center mb-3 blog-search-box" style={{
                 backgroundColor: 'var(--vscode-input-background)',
                 border: '1px solid var(--vscode-input-border)',
                 padding: '8px 12px',
@@ -81,7 +149,7 @@ const BlogViewer = ({ setActiveFile }) => {
                 <VscSearch className="me-2" style={{ color: 'var(--vscode-input-foreground)' }} />
                 <input
                     type="text"
-                    placeholder="Search posts (fuzzy matching enabled)..."
+                    placeholder="Search posts"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     style={{
@@ -93,11 +161,9 @@ const BlogViewer = ({ setActiveFile }) => {
                     }}
                 />
                 {searchTerm && (
-                    <VscClose
-                        className="ms-2"
-                        style={{ cursor: 'pointer', opacity: 0.7 }}
-                        onClick={() => setSearchTerm('')}
-                    />
+                    <button type="button" className="blog-icon-button ms-2" onClick={() => setSearchTerm('')} aria-label="Clear search">
+                        <VscClose />
+                    </button>
                 )}
             </div>
 
@@ -113,6 +179,7 @@ const BlogViewer = ({ setActiveFile }) => {
                             <span
                                 key={tag}
                                 onClick={() => toggleTag(tag)}
+                                className="blog-tag"
                                 style={{
                                     fontSize: '11px',
                                     backgroundColor: isSelected
@@ -160,6 +227,8 @@ const BlogViewer = ({ setActiveFile }) => {
                 </div>
                 {hasActiveFilters && (
                     <button
+                        type="button"
+                        className="blog-clear-button"
                         onClick={clearFilters}
                         style={{
                             fontSize: '11px',
@@ -190,7 +259,7 @@ const BlogViewer = ({ setActiveFile }) => {
                 {filteredPosts.map(post => (
                     <div key={post.id} className="col-12 col-md-6">
                         <div
-                            className="p-3 h-100 d-flex flex-column"
+                            className="p-3 h-100 d-flex flex-column blog-post-card"
                             style={{
                                 backgroundColor: 'var(--vscode-editor-bg)',
                                 border: '1px solid var(--vscode-border)',
@@ -231,6 +300,7 @@ const BlogViewer = ({ setActiveFile }) => {
                                     return (
                                         <span
                                             key={tag}
+                                            className="blog-tag small"
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 toggleTag(tag);
