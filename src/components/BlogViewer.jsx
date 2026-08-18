@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
     VscBook,
     VscChromeClose,
-    VscHistory,
     VscNewFile,
     VscRobot,
     VscSearch,
@@ -139,7 +138,7 @@ const BlogViewer = ({ setActiveFile }) => {
         return filtered;
     }, [fuse, posts, searchTerm, selectedTags]);
 
-    const visiblePosts = hasInteracted ? filteredPosts : posts.slice(0, 3);
+    const visiblePosts = filteredPosts;
     const hasActiveFilters = Boolean(searchTerm.trim() || selectedTags.length > 0);
     const userPrompt = searchTerm.trim() || activePrompt?.label || "Browse Karim's journal";
     const assistantReply = hasActiveFilters
@@ -189,9 +188,6 @@ const BlogViewer = ({ setActiveFile }) => {
                 <button type="button" className="ai-rail-button" onClick={() => applyPrompt(promptPresets[0])} aria-label="Suggested reading">
                     <VscSparkle />
                 </button>
-                <button type="button" className="ai-rail-button" onClick={() => setHasInteracted(true)} aria-label="Recent journal notes">
-                    <VscHistory />
-                </button>
             </aside>
 
             <main className={`ai-home-main ${hasInteracted ? 'conversation-open' : ''}`}>
@@ -199,7 +195,7 @@ const BlogViewer = ({ setActiveFile }) => {
                     <div className="ai-home-intro">
                         <div className="ai-home-kicker">Journal Agent</div>
                         <h1>Ask Karim's Journal</h1>
-                        <p>Search the notes, tap a suggested prompt, or open a recent entry.</p>
+                        <p>Search the notes or tap a suggested prompt.</p>
                     </div>
 
                     <form className="ai-home-prompt" onSubmit={handleSubmit}>
@@ -241,84 +237,82 @@ const BlogViewer = ({ setActiveFile }) => {
                     )}
                 </section>
 
-                <section className="ai-conversation" aria-live="polite">
-                    {hasInteracted && (
-                        <>
-                            <div className="ai-turn ai-turn-user">
-                                <div className="ai-turn-avatar">K</div>
-                                <div className="ai-turn-content">
-                                    <div className="ai-turn-name">Visitor</div>
-                                    <p>{userPrompt}</p>
-                                </div>
+                {hasInteracted && (
+                    <section className="ai-conversation" aria-live="polite">
+                        <div className="ai-turn ai-turn-user">
+                            <div className="ai-turn-avatar">K</div>
+                            <div className="ai-turn-content">
+                                <div className="ai-turn-name">Visitor</div>
+                                <p>{userPrompt}</p>
                             </div>
-
-                            <div className="ai-turn ai-turn-assistant">
-                                <div className="ai-turn-avatar">
-                                    <VscSparkle />
-                                </div>
-                                <div className="ai-turn-content">
-                                    <div className="ai-turn-name">Journal Agent</div>
-                                    <p>{assistantReply}</p>
-                                </div>
-                            </div>
-                        </>
-                    )}
-
-                    <div className="ai-note-strip">
-                        <div className="ai-note-strip-header">
-                            <span>{hasInteracted ? 'Recommended notes' : 'Recent notes'}</span>
-                            <span>{visiblePosts.length} shown</span>
                         </div>
-                        <div className="ai-note-list">
-                            {visiblePosts.map(post => (
-                                <article key={post.id} className="ai-note-card">
-                                    <button type="button" className="ai-note-main" onClick={() => setActiveFile(post.id)}>
-                                        <span className="ai-note-meta">{post.date} / {post.readingTime} min read</span>
-                                        <strong>{post.title}</strong>
-                                        <span>{post.description}</span>
-                                    </button>
-                                    <div className="ai-note-tags">
-                                        {post.tags.map(tag => (
-                                            <button
-                                                key={tag}
-                                                type="button"
-                                                className={selectedTags.includes(tag) ? 'active' : ''}
-                                                onClick={() => toggleTag(tag)}
-                                            >
-                                                #{tag}
-                                            </button>
-                                        ))}
-                                    </div>
-                                    <button type="button" className="ai-note-open" onClick={() => setActiveFile(post.id)}>
-                                        <VscBook />
-                                        <span>Open</span>
-                                    </button>
-                                </article>
+
+                        <div className="ai-turn ai-turn-assistant">
+                            <div className="ai-turn-avatar">
+                                <VscSparkle />
+                            </div>
+                            <div className="ai-turn-content">
+                                <div className="ai-turn-name">Journal Agent</div>
+                                <p>{assistantReply}</p>
+                            </div>
+                        </div>
+
+                        <div className="ai-note-strip">
+                            <div className="ai-note-strip-header">
+                                <span>Recommended notes</span>
+                                <span>{visiblePosts.length} shown</span>
+                            </div>
+                            <div className="ai-note-list">
+                                {visiblePosts.map(post => (
+                                    <article key={post.id} className="ai-note-card">
+                                        <button type="button" className="ai-note-main" onClick={() => setActiveFile(post.id)}>
+                                            <span className="ai-note-meta">{post.date} / {post.readingTime} min read</span>
+                                            <strong>{post.title}</strong>
+                                            <span>{post.description}</span>
+                                        </button>
+                                        <div className="ai-note-tags">
+                                            {post.tags.map(tag => (
+                                                <button
+                                                    key={tag}
+                                                    type="button"
+                                                    className={selectedTags.includes(tag) ? 'active' : ''}
+                                                    onClick={() => toggleTag(tag)}
+                                                >
+                                                    #{tag}
+                                                </button>
+                                            ))}
+                                        </div>
+                                        <button type="button" className="ai-note-open" onClick={() => setActiveFile(post.id)}>
+                                            <VscBook />
+                                            <span>Open</span>
+                                        </button>
+                                    </article>
+                                ))}
+                            </div>
+
+                            {filteredPosts.length === 0 && (
+                                <div className="ai-no-results">
+                                    <VscSearch />
+                                    <span>No matching notes yet.</span>
+                                    <button type="button" onClick={resetJournal}>Reset</button>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="ai-mobile-tags" aria-label="Journal tags">
+                            {allTags.map(tag => (
+                                <button
+                                    key={tag}
+                                    type="button"
+                                    className={selectedTags.includes(tag) ? 'active' : ''}
+                                    onClick={() => toggleTag(tag)}
+                                >
+                                    #{tag}
+                                </button>
                             ))}
                         </div>
-
-                        {hasInteracted && filteredPosts.length === 0 && (
-                            <div className="ai-no-results">
-                                <VscSearch />
-                                <span>No matching notes yet.</span>
-                                <button type="button" onClick={resetJournal}>Reset</button>
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="ai-mobile-tags" aria-label="Journal tags">
-                        {allTags.map(tag => (
-                            <button
-                                key={tag}
-                                type="button"
-                                className={selectedTags.includes(tag) ? 'active' : ''}
-                                onClick={() => toggleTag(tag)}
-                            >
-                                #{tag}
-                            </button>
-                        ))}
-                    </div>
-                </section>
+                    </section>
+                )}
             </main>
         </div>
     );

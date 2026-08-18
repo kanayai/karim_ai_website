@@ -1506,15 +1506,30 @@ body {
 }
 
 .journal-standalone-shell {
+  --journal-bg: #000000;
+  --journal-surface: #0b0b0b;
+  --journal-soft: #161616;
+  --journal-text: #ffffff;
+  --journal-muted: #a1a1aa;
+  --journal-border: #27272a;
   width: 100vw;
   height: 100dvh;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   overflow: hidden;
-  background:
-    radial-gradient(circle at top left, color-mix(in srgb, var(--vscode-accent) 18%, transparent), transparent 34rem),
-    var(--vscode-bg);
-  color: var(--vscode-text);
+  background: var(--journal-bg);
+  color: var(--journal-text);
+}
+
+[data-theme="light"] .journal-standalone-shell,
+[data-theme="github-light"] .journal-standalone-shell,
+[data-theme="solarized-light"] .journal-standalone-shell {
+  --journal-bg: #ffffff;
+  --journal-surface: #ffffff;
+  --journal-soft: #fafafa;
+  --journal-text: #111111;
+  --journal-muted: #6b7280;
+  --journal-border: #e5e7eb;
 }
 
 .journal-standalone-topbar {
@@ -1524,8 +1539,8 @@ body {
   justify-content: space-between;
   gap: 14px;
   padding: 10px 18px;
-  border-bottom: 1px solid var(--vscode-border);
-  background: color-mix(in srgb, var(--vscode-sidebar-bg) 86%, transparent);
+  border-bottom: 1px solid var(--journal-border);
+  background: var(--journal-bg);
   backdrop-filter: blur(16px);
 }
 
@@ -1538,10 +1553,10 @@ body {
 .journal-standalone-topbar button {
   min-height: 38px;
   padding: 8px 12px;
-  border: 1px solid var(--vscode-border);
+  border: 1px solid var(--journal-border);
   border-radius: 8px;
-  background: color-mix(in srgb, var(--vscode-editor-bg) 86%, transparent);
-  color: var(--vscode-text);
+  background: var(--journal-surface);
+  color: var(--journal-text);
   font: inherit;
   font-size: 13px;
   cursor: pointer;
@@ -1549,7 +1564,7 @@ body {
 
 .journal-standalone-topbar button:hover {
   border-color: var(--vscode-accent);
-  background: var(--vscode-hover-bg);
+  background: var(--journal-soft);
 }
 
 .journal-standalone-content {
@@ -1570,7 +1585,7 @@ body {
 
 .journal-standalone-content.reader-mode > div {
   overflow: hidden;
-  border: 1px solid var(--vscode-border);
+  border: 1px solid var(--journal-border);
   border-radius: 8px;
 }
 
@@ -2052,14 +2067,17 @@ body {
 }
 
 .ai-home {
-  --ai-surface: color-mix(in srgb, var(--vscode-editor-bg) 94%, var(--vscode-hover-bg));
-  --ai-soft: color-mix(in srgb, var(--vscode-hover-bg) 76%, transparent);
+  --ai-surface: var(--journal-surface, #000000);
+  --ai-soft: var(--journal-soft, #111111);
+  --ai-text: var(--journal-text, var(--vscode-text));
+  --ai-muted: var(--journal-muted, var(--vscode-descriptionForeground));
+  --ai-border: var(--journal-border, var(--vscode-border));
   width: 100%;
   height: 100%;
   display: grid;
   grid-template-columns: 64px minmax(0, 1fr);
   overflow: hidden;
-  color: var(--vscode-text);
+  color: var(--ai-text);
 }
 
 .ai-home-rail {
@@ -2068,8 +2086,8 @@ body {
   align-items: center;
   gap: 10px;
   padding: 14px 10px;
-  border-right: 1px solid var(--vscode-border);
-  background: color-mix(in srgb, var(--vscode-sidebar-bg) 86%, transparent);
+  border-right: 1px solid var(--ai-border);
+  background: var(--journal-bg, var(--vscode-bg));
 }
 
 .ai-home-mark,
@@ -2085,22 +2103,22 @@ body {
 
 .ai-home-mark {
   margin-bottom: 8px;
-  background: var(--vscode-text);
-  color: var(--vscode-editor-bg);
+  background: var(--ai-text);
+  color: var(--journal-bg, var(--vscode-editor-bg));
 }
 
 .ai-rail-button {
   border: 1px solid transparent;
   background: transparent;
-  color: var(--vscode-descriptionForeground);
+  color: var(--ai-muted);
   cursor: pointer;
 }
 
 .ai-rail-button:hover,
 .ai-rail-button.active {
-  border-color: var(--vscode-border);
+  border-color: var(--ai-border);
   background: var(--ai-soft);
-  color: var(--vscode-text);
+  color: var(--ai-text);
 }
 
 .ai-home-main {
@@ -2128,7 +2146,7 @@ body {
 
 .ai-home-kicker {
   margin-bottom: 12px;
-  color: var(--vscode-descriptionForeground);
+  color: var(--ai-muted);
   font-size: 12px;
   font-weight: 750;
   letter-spacing: 0.08em;
@@ -2137,7 +2155,7 @@ body {
 
 .ai-home-intro h1 {
   margin: 0;
-  color: var(--vscode-text);
+  color: var(--ai-text);
   font-size: clamp(2.4rem, 7vw, 5rem);
   line-height: 1;
   letter-spacing: 0;
@@ -2146,15 +2164,15 @@ body {
 .ai-home-intro p {
   max-width: 54ch;
   margin: 16px auto 0;
-  color: var(--vscode-descriptionForeground);
+  color: var(--ai-muted);
   font-size: 1rem;
 }
 
 .ai-home-prompt {
   margin: clamp(22px, 5vw, 36px) auto 0;
-  border: 1px solid var(--vscode-border);
+  border: 1px solid var(--ai-border);
   border-radius: 18px;
-  background: var(--vscode-editor-bg);
+  background: var(--ai-surface);
   box-shadow: 0 18px 70px rgba(0, 0, 0, 0.18);
   overflow: hidden;
 }
@@ -2167,7 +2185,7 @@ body {
   border: 0;
   outline: 0;
   background: transparent;
-  color: var(--vscode-input-foreground);
+  color: var(--ai-text);
   font: inherit;
   font-size: 1.05rem;
   line-height: 1.45;
@@ -2198,15 +2216,15 @@ body {
   align-items: center;
   gap: 8px;
   padding: 7px 12px;
-  border: 1px solid var(--vscode-border);
-  color: var(--vscode-descriptionForeground);
+  border: 1px solid var(--ai-border);
+  color: var(--ai-muted);
   font-size: 13px;
 }
 
 .ai-home-clear,
 .ai-home-send {
   min-height: 40px;
-  border: 1px solid var(--vscode-border);
+  border: 1px solid var(--ai-border);
   cursor: pointer;
 }
 
@@ -2214,7 +2232,7 @@ body {
   width: 40px;
   margin-left: auto;
   background: transparent;
-  color: var(--vscode-text);
+  color: var(--ai-text);
 }
 
 .ai-home-send {
@@ -2222,8 +2240,8 @@ body {
   align-items: center;
   gap: 8px;
   padding: 8px 15px;
-  background: var(--vscode-text);
-  color: var(--vscode-editor-bg);
+  background: var(--ai-text);
+  color: var(--journal-bg, var(--vscode-editor-bg));
   font-weight: 750;
 }
 
@@ -2241,9 +2259,9 @@ body {
 .ai-suggestion-grid button {
   min-height: 112px;
   padding: 15px;
-  border: 1px solid var(--vscode-border);
+  border: 1px solid var(--ai-border);
   background: var(--ai-surface);
-  color: var(--vscode-text);
+  color: var(--ai-text);
   text-align: left;
   cursor: pointer;
 }
@@ -2262,7 +2280,7 @@ body {
 .ai-suggestion-grid small {
   display: block;
   margin-top: 8px;
-  color: var(--vscode-descriptionForeground);
+  color: var(--ai-muted);
   line-height: 1.4;
 }
 
@@ -2280,27 +2298,27 @@ body {
 }
 
 .ai-turn-avatar {
-  border: 1px solid var(--vscode-border);
+  border: 1px solid var(--ai-border);
   background: var(--ai-soft);
-  color: var(--vscode-text);
+  color: var(--ai-text);
   font-weight: 800;
 }
 
 .ai-turn-assistant .ai-turn-avatar {
-  background: var(--vscode-text);
-  color: var(--vscode-editor-bg);
+  background: var(--ai-text);
+  color: var(--journal-bg, var(--vscode-editor-bg));
 }
 
 .ai-turn-content {
   padding: 14px 16px;
-  border: 1px solid var(--vscode-border);
+  border: 1px solid var(--ai-border);
   border-radius: 14px;
   background: var(--ai-surface);
 }
 
 .ai-turn-name {
   margin-bottom: 4px;
-  color: var(--vscode-descriptionForeground);
+  color: var(--ai-muted);
   font-size: 12px;
   font-weight: 750;
   text-transform: uppercase;
@@ -2319,7 +2337,7 @@ body {
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 10px;
-  color: var(--vscode-descriptionForeground);
+  color: var(--ai-muted);
   font-size: 12px;
   font-weight: 750;
   letter-spacing: 0.06em;
@@ -2336,7 +2354,7 @@ body {
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 12px;
   padding: 14px;
-  border: 1px solid var(--vscode-border);
+  border: 1px solid var(--ai-border);
   border-radius: 16px;
   background: var(--ai-surface);
 }
@@ -2346,7 +2364,7 @@ body {
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--vscode-text);
+  color: var(--ai-text);
   text-align: left;
   cursor: pointer;
 }
@@ -2358,7 +2376,7 @@ body {
 .ai-note-meta,
 .ai-note-main span:last-child {
   display: block;
-  color: var(--vscode-descriptionForeground);
+  color: var(--ai-muted);
   font-size: 13px;
 }
 
@@ -2379,9 +2397,9 @@ body {
 .ai-mobile-tags button {
   min-height: 32px;
   padding: 6px 10px;
-  border: 1px solid var(--vscode-border);
+  border: 1px solid var(--ai-border);
   background: transparent;
-  color: var(--vscode-descriptionForeground);
+  color: var(--ai-muted);
   cursor: pointer;
 }
 
@@ -2390,7 +2408,7 @@ body {
 .ai-mobile-tags button.active,
 .ai-mobile-tags button:hover {
   border-color: var(--vscode-accent);
-  color: var(--vscode-text);
+  color: var(--ai-text);
 }
 
 .ai-note-open {
@@ -2400,9 +2418,9 @@ body {
   align-items: center;
   gap: 7px;
   padding: 8px 12px;
-  border: 1px solid var(--vscode-border);
-  background: var(--vscode-text);
-  color: var(--vscode-editor-bg);
+  border: 1px solid var(--ai-border);
+  background: var(--ai-text);
+  color: var(--journal-bg, var(--vscode-editor-bg));
   cursor: pointer;
 }
 
@@ -2413,17 +2431,17 @@ body {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  border: 1px solid var(--vscode-border);
+  border: 1px solid var(--ai-border);
   border-radius: 14px;
-  color: var(--vscode-descriptionForeground);
+  color: var(--ai-muted);
 }
 
 .ai-no-results button {
   min-height: 34px;
   padding: 6px 12px;
-  border: 1px solid var(--vscode-border);
+  border: 1px solid var(--ai-border);
   background: transparent;
-  color: var(--vscode-text);
+  color: var(--ai-text);
   cursor: pointer;
 }
 
@@ -2442,7 +2460,7 @@ body {
     justify-content: center;
     padding: 8px;
     border-right: 0;
-    border-bottom: 1px solid var(--vscode-border);
+    border-bottom: 1px solid var(--ai-border);
   }
 
   .ai-home-mark {
