@@ -1,157 +1,70 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre Mí - Karim Anaya-Izquierdo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #fff;
-            padding: 40px 20px;
-        }
-
-        h1 {
-            font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid #eaeaea;
-            padding-bottom: 10px;
-        }
-
-        h2 {
-            font-weight: 600;
-            color: #34495e;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .profile-img {
-            width: 100%;
-            max-width: 300px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        .intro-text {
-            font-size: 1.1rem;
-        }
-
-        .pronunciation {
-            font-style: italic;
-            color: #666;
-        }
-
-        ul {
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        strong {
-            color: #2c3e50;
-        }
-
-        /* VS Code Dark Theme Support */
-        body.dark-theme {
-            background-color: #1e1e1e;
-            color: #d4d4d4;
-        }
-
-        body.dark-theme h1,
-        body.dark-theme h2,
-        body.dark-theme strong {
-            color: #ffffff;
-            /* Changed from #dcdcaa to white */
-        }
-
-        body.dark-theme .pronunciation {
-            color: #cccccc;
-        }
-
-        /* Fallback for system preference if no class is present */
-        @media (prefers-color-scheme: dark) {
-            body:not(.light-theme) {
-                background-color: #1e1e1e;
-                color: #d4d4d4;
-            }
-
-            body:not(.light-theme) h1,
-            body:not(.light-theme) h2,
-            body:not(.light-theme) strong {
-                color: #ffffff;
-                /* Changed from #dcdcaa to white */
-            }
-
-            body:not(.light-theme) .pronunciation {
-                color: #cccccc;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobre mí - Karim Anaya-Izquierdo</title>
+  <link rel="stylesheet" href="/profile-pages.css">
 </head>
-
 <body>
-    <div class="container" style="max-width: 900px;">
-        <div class="row">
-            <!-- Image Column (Top) -->
-            <div class="col-12 text-center mb-4">
-                <img src="/images/mix2.png" alt="Karim Anaya-Izquierdo" class="profile-img" style="max-width: 250px;">
-            </div>
+  <main class="profile-shell">
+    <section class="profile-hero" aria-labelledby="page-title">
+      <img src="/images/mix2.png" alt="Karim Anaya-Izquierdo" class="profile-photo">
+      <div>
+        <p class="eyebrow">Sobre mí</p>
+        <h1 id="page-title">Karim Anaya-Izquierdo</h1>
+        <p class="role">Senior Lecturer in Statistics en el Departamento de Ciencias Matemáticas de la Universidad de Bath.</p>
+        <span class="pronunciation">Anaya-Izquierdo se pronuncia is-key-air-dow.</span>
+        <nav class="action-row" aria-label="Enlaces de perfil">
+          <a class="pill-link" href="https://researchportal.bath.ac.uk/en/persons/karim-anaya-izquierdo/" target="_blank" rel="noreferrer">Perfil en Bath</a>
+          <a class="pill-link" href="https://scholar.google.com/citations?user=SrcprVQAAAAJ&amp;hl=en" target="_blank" rel="noreferrer">Google Scholar</a>
+          <a class="pill-link" href="https://orcid.org/0000-0001-9718-5256" target="_blank" rel="noreferrer">ORCID</a>
+          <a class="pill-link" href="mailto:kai21@bath.ac.uk">Email</a>
+        </nav>
+      </div>
+    </section>
 
-            <!-- Text Column -->
-            <div class="col-12">
-                <h1>Sobre Mí</h1>
+    <div class="content-grid">
+      <div>
+        <section class="section">
+          <h2>Intereses académicos</h2>
+          <p>Trabajo en estadística aplicada, métodos computacionales y ciencia de datos, con interés en investigación reproducible y modelización estadística para evidencia aplicada.</p>
+          <ul class="tag-list" aria-label="Áreas de investigación">
+            <li>Estadística aplicada</li>
+            <li>Estadística computacional</li>
+            <li>Estadística médica</li>
+            <li>Flujos reproducibles</li>
+            <li>Educación en ciencia de datos</li>
+          </ul>
+        </section>
 
-                <p class="intro-text">
-                    Mi nombre es <strong>Karim Anaya‑Izquierdo</strong>.
-                </p>
+        <section class="section">
+          <h2>Trayectoria</h2>
+          <p>Antes de incorporarme a la Universidad de Bath en septiembre de 2013, fui Lecturer in Medical Statistics en el Tropical Epidemiology Group de la London School of Hygiene and Tropical Medicine.</p>
+          <p>Anteriormente fui investigador en el Departamento de Estadística de la Open University en Milton Keynes.</p>
+        </section>
+      </div>
 
-                <p>
-                    Soy Profesor Titular de Estadística en el Departamento de Ciencias Matemáticas de la Universidad de
-                    Bath.
-                    Fui investigador en el Departamento de Estadística de la Open University en Milton Keynes y
-                    luego Profesor de Estadística Médica en el Grupo de Epidemiología Tropical de la London School of
-                    Hygiene and Tropical Medicine
-                    antes de llegar a la Universidad de Bath en septiembre de 2013.
-                </p>
+      <aside>
+        <section class="section">
+          <h2>Educación</h2>
+          <dl class="timeline">
+            <div><dt>Doctorado en Estadística</dt><dd>2006, Universidad Nacional de México</dd></div>
+            <div><dt>Maestría en Estadística</dt><dd>2001, Universidad Nacional de México</dd></div>
+            <div><dt>Licenciatura en Actuaría</dt><dd>2000, ITAM México</dd></div>
+          </dl>
+        </section>
 
-                <h2>Educación</h2>
-                <ul>
-                    <li><strong>Doctorado en Estadística</strong>, 2006 – Universidad Nacional de México</li>
-                    <li><strong>Maestría en Estadística</strong>, 2001 – Universidad Nacional de México</li>
-                    <li><strong>Licenciatura en Actuaría</strong>, 2000 – ITAM México</li>
-                </ul>
-
-                <h2>Experiencia</h2>
-                <ul>
-                    <li><strong>LSHTM</strong> – Profesor de Estadística Médica (2011‑2013)</li>
-                    <li><strong>Open University</strong> – Investigador Postdoctoral (2005‑2011)</li>
-                </ul>
-            </div>
-
-
-        </div>
+        <section class="section">
+          <h2>Experiencia previa</h2>
+          <dl class="timeline">
+            <div><dt>LSHTM</dt><dd>Lecturer in Medical Statistics, 2011-2013</dd></div>
+            <div><dt>Open University</dt><dd>Postdoctoral Research Fellow, 2005-2011</dd></div>
+          </dl>
+        </section>
+      </aside>
     </div>
-    <script>
-        // Apply theme based on query parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const theme = urlParams.get('theme');
-        if (theme === 'dark') {
-            document.body.classList.add('dark-theme');
-            document.body.classList.remove('light-theme');
-        } else if (theme === 'light') {
-            document.body.classList.add('light-theme');
-            document.body.classList.remove('dark-theme');
-        }
-    </script>
+  </main>
+  <script src="/profile-pages.js"></script>
 </body>
-
 </html>
