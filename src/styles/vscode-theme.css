@@ -2121,6 +2121,48 @@ body {
   color: var(--ai-text);
 }
 
+.ai-rail-account {
+  width: 100%;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid var(--ai-border);
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+}
+
+.ai-rail-avatar {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--ai-text);
+  color: var(--journal-bg, var(--vscode-editor-bg));
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.ai-rail-account-copy {
+  display: grid;
+  gap: 1px;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.ai-rail-account-copy strong {
+  color: var(--ai-text);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.ai-rail-account-copy span,
+.ai-rail-account-copy small {
+  color: var(--ai-muted);
+  font-size: 10px;
+}
+
 .ai-home-main {
   min-height: 0;
   display: grid;
@@ -2461,6 +2503,25 @@ body {
     padding: 8px;
     border-right: 0;
     border-bottom: 1px solid var(--ai-border);
+  }
+
+  .ai-rail-account {
+    width: auto;
+    margin: 0 0 0 auto;
+    padding: 0 0 0 10px;
+    border-top: 0;
+    border-left: 1px solid var(--ai-border);
+    grid-template-columns: auto auto;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ai-rail-account-copy {
+    text-align: left;
+  }
+
+  .ai-rail-account-copy small {
+    display: none;
   }
 
   .ai-home-mark {

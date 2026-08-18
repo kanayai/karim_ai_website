@@ -140,10 +140,10 @@ const BlogViewer = ({ setActiveFile }) => {
 
     const visiblePosts = filteredPosts;
     const hasActiveFilters = Boolean(searchTerm.trim() || selectedTags.length > 0);
-    const userPrompt = searchTerm.trim() || activePrompt?.label || "Browse Karim's journal";
+    const userPrompt = searchTerm.trim() || activePrompt?.label || "Browse Karim's blog";
     const assistantReply = hasActiveFilters
         ? `I found ${filteredPosts.length} ${filteredPosts.length === 1 ? 'note' : 'notes'} matching ${searchTerm.trim() ? `"${searchTerm.trim()}"` : 'your selected tags'}${selectedTags.length ? ` (${formatTags(selectedTags)})` : ''}.`
-        : activePrompt?.reply || 'Choose a prompt, search the notes, or open one of the latest entries.';
+        : activePrompt?.reply || 'Choose a prompt, search the blog, or open one of the matching posts.';
 
     const applyPrompt = (prompt) => {
         setActivePrompt(prompt);
@@ -163,7 +163,7 @@ const BlogViewer = ({ setActiveFile }) => {
         );
     };
 
-    const resetJournal = () => {
+    const resetBlog = () => {
         setSearchTerm('');
         setSelectedTags([]);
         setActivePrompt(null);
@@ -178,30 +178,38 @@ const BlogViewer = ({ setActiveFile }) => {
 
     return (
         <div className="ai-home">
-            <aside className="ai-home-rail" aria-label="Journal controls">
+            <aside className="ai-home-rail" aria-label="Blog controls">
                 <div className="ai-home-mark">
                     <VscRobot />
                 </div>
-                <button type="button" className="ai-rail-button active" onClick={resetJournal} aria-label="New journal search">
+                <button type="button" className="ai-rail-button active" onClick={resetBlog} aria-label="New blog search">
                     <VscNewFile />
                 </button>
                 <button type="button" className="ai-rail-button" onClick={() => applyPrompt(promptPresets[0])} aria-label="Suggested reading">
                     <VscSparkle />
                 </button>
+                <div className="ai-rail-account" aria-label="Blog assistant account">
+                    <div className="ai-rail-avatar">K</div>
+                    <div className="ai-rail-account-copy">
+                        <strong>Karim AI</strong>
+                        <span>Blog Plus</span>
+                        <small>42k tokens left</small>
+                    </div>
+                </div>
             </aside>
 
             <main className={`ai-home-main ${hasInteracted ? 'conversation-open' : ''}`}>
-                <section className="ai-home-panel" aria-label="Journal assistant">
+                <section className="ai-home-panel" aria-label="Blog assistant">
                     <div className="ai-home-intro">
-                        <div className="ai-home-kicker">Journal Agent</div>
-                        <h1>Ask Karim's Journal</h1>
-                        <p>Search the notes or tap a suggested prompt.</p>
+                        <div className="ai-home-kicker">Blog Assistant</div>
+                        <h1>Ask Karim's Blog</h1>
+                        <p>Search the blog or tap a suggested prompt.</p>
                     </div>
 
                     <form className="ai-home-prompt" onSubmit={handleSubmit}>
                         <textarea
                             rows="3"
-                            placeholder="Ask about reproducibility, Git, workflow, Python tutorials..."
+                            placeholder="Search the blog for reproducibility, Git, workflow, Python tutorials..."
                             value={searchTerm}
                             onChange={(event) => {
                                 setSearchTerm(event.target.value);
@@ -211,16 +219,16 @@ const BlogViewer = ({ setActiveFile }) => {
                         <div className="ai-home-prompt-footer">
                             <div className="ai-home-model-pill">
                                 <VscSparkle />
-                                <span>Journal search</span>
+                                <span>Blog search</span>
                             </div>
                             {hasActiveFilters && (
-                                <button type="button" className="ai-home-clear" onClick={resetJournal} aria-label="Clear journal search">
+                                <button type="button" className="ai-home-clear" onClick={resetBlog} aria-label="Clear blog search">
                                     <VscChromeClose />
                                 </button>
                             )}
                             <button type="submit" className="ai-home-send">
                                 <VscSend />
-                                <span>Ask</span>
+                                <span>Search</span>
                             </button>
                         </div>
                     </form>
@@ -252,7 +260,7 @@ const BlogViewer = ({ setActiveFile }) => {
                                 <VscSparkle />
                             </div>
                             <div className="ai-turn-content">
-                                <div className="ai-turn-name">Journal Agent</div>
+                                <div className="ai-turn-name">Blog Assistant</div>
                                 <p>{assistantReply}</p>
                             </div>
                         </div>
@@ -294,12 +302,12 @@ const BlogViewer = ({ setActiveFile }) => {
                                 <div className="ai-no-results">
                                     <VscSearch />
                                     <span>No matching notes yet.</span>
-                                    <button type="button" onClick={resetJournal}>Reset</button>
+                                    <button type="button" onClick={resetBlog}>Reset</button>
                                 </div>
                             )}
                         </div>
 
-                        <div className="ai-mobile-tags" aria-label="Journal tags">
+                        <div className="ai-mobile-tags" aria-label="Blog tags">
                             {allTags.map(tag => (
                                 <button
                                     key={tag}
