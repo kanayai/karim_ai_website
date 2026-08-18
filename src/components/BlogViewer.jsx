@@ -1,12 +1,50 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { VscSearch, VscClose } from 'react-icons/vsc';
+import {
+    VscBook,
+    VscClose,
+    VscCommentDiscussion,
+    VscRobot,
+    VscSearch,
+    VscSend,
+    VscSparkle,
+} from 'react-icons/vsc';
 import Fuse from 'fuse.js';
 import { blogPosts } from '../constants/blogData';
+
+const promptPresets = [
+    {
+        label: 'What should I read first?',
+        query: '',
+        tags: [],
+        reply: 'Start with the workflow notes if you want the organising system, then move to reproducibility once the project structure makes sense.',
+    },
+    {
+        label: 'Show reproducibility notes',
+        query: 'reproducibility',
+        tags: ['reproducibility'],
+        reply: 'I found notes about making computational work easier to rerun, inspect, and trust.',
+    },
+    {
+        label: 'Help me organise academic work',
+        query: 'workflow',
+        tags: ['workflow'],
+        reply: 'These notes focus on project organisation, syncing, and keeping research, teaching, and code coherent across machines.',
+    },
+    {
+        label: 'Find statistics tutorials',
+        query: 'tutorial python',
+        tags: ['tutorial'],
+        reply: 'Here are the tutorial-style notes with code or statistical examples.',
+    },
+];
+
+const formatTags = (tags) => tags.map(tag => `#${tag}`).join(' ');
 
 const BlogViewer = ({ setActiveFile }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
     const [generatedPosts, setGeneratedPosts] = useState(null);
+    const [activePrompt, setActivePrompt] = useState(promptPresets[0]);
 
     useEffect(() => {
         let isMounted = true;
@@ -71,35 +109,25 @@ const BlogViewer = ({ setActiveFile }) => {
 
     const posts = generatedPosts || blogPosts;
 
-    // Configure Fuse.js for fuzzy search
     const fuse = useMemo(() => new Fuse(posts, {
         keys: [
             { name: 'title', weight: 2 },
             { name: 'description', weight: 1.5 },
-            { name: 'tags', weight: 1 }
+            { name: 'tags', weight: 1 },
         ],
         threshold: 0.4,
         ignoreLocation: true,
-        includeMatches: true,
     }), [posts]);
 
-    // Get all unique tags
-    const allTags = [...new Set(posts.flatMap(post => post.tags))].sort();
+    const allTags = useMemo(() => [...new Set(posts.flatMap(post => post.tags))].sort(), [posts]);
 
-    // Filter posts by search term and selected tags
-    const getFilteredPosts = () => {
+    const filteredPosts = useMemo(() => {
         let filtered = posts;
 
-        // Apply fuzzy search if there's a search term
         if (searchTerm.trim()) {
-            const results = fuse.search(searchTerm);
-            filtered = results.map(result => ({
-                ...result.item,
-                matches: result.matches
-            }));
+            filtered = fuse.search(searchTerm).map(result => result.item);
         }
 
-        // Apply tag filters
         if (selectedTags.length > 0) {
             filtered = filtered.filter(post =>
                 selectedTags.every(tag => post.tags.includes(tag))
@@ -107,12 +135,41 @@ const BlogViewer = ({ setActiveFile }) => {
         }
 
         return filtered;
+    }, [fuse, posts, searchTerm, selectedTags]);
+
+    const hasActiveFilters = Boolean(searchTerm.trim() || selectedTags.length > 0);
+    const assistantReply = hasActiveFilters
+        ? `I found ${filteredPosts.length} ${filteredPosts.length === 1 ? 'note' : 'notes'} matching ${searchTerm.trim() ? `"${searchTerm.trim()}"` : 'your selected tags'}${selectedTags.length ? ` (${formatTags(selectedTags)})` : ''}.`
+        : activePrompt.reply;
+
+    const topicGroups = useMemo(() => {
+        const groups = [
+            { label: 'Reproducibility', tags: ['reproducibility'], count: 0 },
+            { label: 'Workflow', tags: ['workflow'], count: 0 },
+            { label: 'Code + Tools', tags: ['git', 'python', 'r'], count: 0 },
+            { label: 'Statistics', tags: ['tutorial'], count: 0 },
+        ];
+
+        return groups.map(group => ({
+            ...group,
+            count: posts.filter(post => group.tags.some(tag => post.tags.includes(tag))).length,
+        }));
+    }, [posts]);
+
+    const applyPrompt = (prompt) => {
+        setActivePrompt(prompt);
+        setSearchTerm(prompt.query);
+        setSelectedTags(prompt.tags);
     };
 
-    const filteredPosts = getFilteredPosts();
+    const applyTopic = (tags) => {
+        setActivePrompt(null);
+        setSearchTerm('');
+        setSelectedTags(tags);
+    };
 
-    // Toggle tag selection
     const toggleTag = (tag) => {
+        setActivePrompt(null);
         setSelectedTags(prev =>
             prev.includes(tag)
                 ? prev.filter(t => t !== tag)
@@ -120,238 +177,172 @@ const BlogViewer = ({ setActiveFile }) => {
         );
     };
 
-    // Clear all filters
     const clearFilters = () => {
         setSearchTerm('');
         setSelectedTags([]);
+        setActivePrompt(promptPresets[0]);
     };
 
-    const hasActiveFilters = searchTerm.trim() || selectedTags.length > 0;
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setActivePrompt(null);
+    };
 
     return (
-        <div className="blog-viewer" style={{ color: 'var(--vscode-text)', maxWidth: '920px', height: '100%', overflowY: 'auto' }}>
-            <div className="blog-viewer-header">
-                <div>
-                    <div className="blog-viewer-kicker">Journal</div>
-                    <h1 className="mb-2">Blog Posts</h1>
+        <div className="blog-viewer ai-journal">
+            <aside className="ai-agent-sidebar" aria-label="Journal topics">
+                <div className="ai-agent-brand">
+                    <div className="ai-agent-orb" aria-hidden="true">
+                        <VscRobot />
+                    </div>
+                    <div>
+                        <div className="ai-agent-label">Journal Agent</div>
+                        <div className="ai-agent-status">Curated from Karim's notes</div>
+                    </div>
                 </div>
-                <div className="blog-viewer-count">{posts.length} posts</div>
-            </div>
 
-            {/* Search Input */}
-            <div className="d-flex align-items-center mb-3 blog-search-box" style={{
-                backgroundColor: 'var(--vscode-input-background)',
-                border: '1px solid var(--vscode-input-border)',
-                padding: '8px 12px',
-                borderRadius: '4px',
-                maxWidth: '500px'
-            }}>
-                <VscSearch className="me-2" style={{ color: 'var(--vscode-input-foreground)' }} />
-                <input
-                    type="text"
-                    placeholder="Search posts"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    style={{
-                        backgroundColor: 'transparent',
-                        border: 'none',
-                        color: 'var(--vscode-input-foreground)',
-                        outline: 'none',
-                        width: '100%'
-                    }}
-                />
-                {searchTerm && (
-                    <button type="button" className="blog-icon-button ms-2" onClick={() => setSearchTerm('')} aria-label="Clear search">
-                        <VscClose />
-                    </button>
-                )}
-            </div>
-
-            {/* Tag Filter */}
-            <div className="mb-3">
-                <div style={{ fontSize: '12px', opacity: 0.7, marginBottom: '8px' }}>
-                    Filter by tags:
-                </div>
-                <div className="d-flex gap-2 flex-wrap">
-                    {allTags.map(tag => {
-                        const isSelected = selectedTags.includes(tag);
+                <div className="ai-agent-section-label">Topics</div>
+                <div className="ai-topic-list">
+                    {topicGroups.map(topic => {
+                        const isActive = topic.tags.every(tag => selectedTags.includes(tag));
                         return (
-                            <span
-                                key={tag}
-                                onClick={() => toggleTag(tag)}
-                                className="blog-tag"
-                                style={{
-                                    fontSize: '11px',
-                                    backgroundColor: isSelected
-                                        ? 'var(--vscode-accent)'
-                                        : 'var(--vscode-badge-background)',
-                                    color: isSelected
-                                        ? 'var(--vscode-button-foreground, #fff)'
-                                        : 'var(--vscode-badge-foreground)',
-                                    padding: '4px 10px',
-                                    borderRadius: '12px',
-                                    cursor: 'pointer',
-                                    border: isSelected
-                                        ? '1px solid var(--vscode-accent)'
-                                        : '1px solid transparent',
-                                    transition: 'all 0.2s',
-                                    fontWeight: isSelected ? '600' : '400'
-                                }}
-                                onMouseEnter={(e) => {
-                                    if (!isSelected) {
-                                        e.target.style.borderColor = 'var(--vscode-accent)';
-                                        e.target.style.opacity = '0.8';
-                                    }
-                                }}
-                                onMouseLeave={(e) => {
-                                    if (!isSelected) {
-                                        e.target.style.borderColor = 'transparent';
-                                        e.target.style.opacity = '1';
-                                    }
-                                }}
+                            <button
+                                key={topic.label}
+                                type="button"
+                                className={`ai-topic-button ${isActive ? 'active' : ''}`}
+                                onClick={() => applyTopic(topic.tags)}
                             >
-                                #{tag}
-                            </span>
+                                <span>{topic.label}</span>
+                                <span>{topic.count}</span>
+                            </button>
                         );
                     })}
                 </div>
-            </div>
 
-            {/* Results Summary */}
-            <div className="d-flex align-items-center justify-content-between mb-3">
-                <div style={{ fontSize: '13px', opacity: 0.7 }}>
-                    {filteredPosts.length} {filteredPosts.length === 1 ? 'post' : 'posts'} found
-                    {selectedTags.length > 0 && (
-                        <span> with {selectedTags.length} {selectedTags.length === 1 ? 'tag' : 'tags'}</span>
-                    )}
-                </div>
-                {hasActiveFilters && (
-                    <button
-                        type="button"
-                        className="blog-clear-button"
-                        onClick={clearFilters}
-                        style={{
-                            fontSize: '11px',
-                            padding: '4px 12px',
-                            backgroundColor: 'transparent',
-                            border: '1px solid var(--vscode-border)',
-                            color: 'var(--vscode-text)',
-                            borderRadius: '3px',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s'
-                        }}
-                        onMouseEnter={(e) => {
-                            e.target.style.backgroundColor = 'var(--vscode-hover-bg)';
-                            e.target.style.borderColor = 'var(--vscode-accent)';
-                        }}
-                        onMouseLeave={(e) => {
-                            e.target.style.backgroundColor = 'transparent';
-                            e.target.style.borderColor = 'var(--vscode-border)';
-                        }}
-                    >
-                        Clear filters
-                    </button>
-                )}
-            </div>
-
-            {/* Posts Grid */}
-            <div className="row g-3">
-                {filteredPosts.map(post => (
-                    <div key={post.id} className="col-12 col-md-6">
-                        <div
-                            className="p-3 h-100 d-flex flex-column blog-post-card"
-                            style={{
-                                backgroundColor: 'var(--vscode-editor-bg)',
-                                border: '1px solid var(--vscode-border)',
-                                borderRadius: '6px',
-                                cursor: 'pointer',
-                                transition: 'transform 0.2s, border-color 0.2s'
-                            }}
-                            onClick={() => setActiveFile(post.id)}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.borderColor = 'var(--vscode-focusBorder)';
-                                e.currentTarget.style.transform = 'translateY(-2px)';
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.borderColor = 'var(--vscode-border)';
-                                e.currentTarget.style.transform = 'translateY(0)';
-                            }}
+                <div className="ai-agent-section-label">Available Tags</div>
+                <div className="ai-mini-tags">
+                    {allTags.map(tag => (
+                        <button
+                            key={tag}
+                            type="button"
+                            className={selectedTags.includes(tag) ? 'active' : ''}
+                            onClick={() => toggleTag(tag)}
                         >
-                            <div className="d-flex justify-content-between align-items-start mb-2">
-                                <h3 className="m-0" style={{ color: 'var(--vscode-text-link-foreground, #3794ff)', fontSize: '1.1rem' }}>{post.title}</h3>
-                            </div>
-                            <div className="d-flex align-items-center gap-2 mb-2">
-                                <span style={{ fontSize: '12px', opacity: 0.7 }}>{post.date}</span>
-                                <span style={{
-                                    fontSize: '11px',
-                                    backgroundColor: 'var(--vscode-accent)',
-                                    color: 'var(--vscode-button-foreground, #fff)',
-                                    padding: '2px 8px',
-                                    borderRadius: '10px',
-                                    fontWeight: '500'
-                                }}>
-                                    {post.readingTime} min read
-                                </span>
-                            </div>
-                            <p className="mb-3 flex-grow-1" style={{ opacity: 0.9, fontSize: '0.9rem' }}>{post.description}</p>
-                            <div className="d-flex gap-2 flex-wrap mt-auto">
-                                {post.tags.map(tag => {
-                                    const isSelected = selectedTags.includes(tag);
-                                    return (
-                                        <span
+                            #{tag}
+                        </button>
+                    ))}
+                </div>
+            </aside>
+
+            <main className="ai-agent-main">
+                <header className="ai-agent-header">
+                    <div>
+                        <div className="blog-viewer-kicker">AI-style Journal</div>
+                        <h1>Research Companion</h1>
+                        <p>Ask a question or tap a prompt to browse the current blog notes.</p>
+                    </div>
+                    <div className="blog-viewer-count">{posts.length} notes</div>
+                </header>
+
+                <section className="ai-chat-thread" aria-live="polite">
+                    <div className="ai-message user-message">
+                        <div className="ai-message-avatar">
+                            <VscCommentDiscussion />
+                        </div>
+                        <div className="ai-message-body">
+                            <div className="ai-message-name">Visitor</div>
+                            <p>{searchTerm.trim() || activePrompt?.label || 'What is in this journal?'}</p>
+                        </div>
+                    </div>
+
+                    <div className="ai-message assistant-message">
+                        <div className="ai-message-avatar">
+                            <VscSparkle />
+                        </div>
+                        <div className="ai-message-body">
+                            <div className="ai-message-name">Research Companion</div>
+                            <p>{assistantReply}</p>
+                        </div>
+                    </div>
+
+                    <div className="ai-result-grid">
+                        {filteredPosts.map(post => (
+                            <article key={post.id} className="ai-result-card">
+                                <div className="ai-result-card-topline">
+                                    <span>{post.date}</span>
+                                    <span>{post.readingTime} min read</span>
+                                </div>
+                                <h2>{post.title}</h2>
+                                <p>{post.description}</p>
+                                <div className="ai-result-tags">
+                                    {post.tags.map(tag => (
+                                        <button
                                             key={tag}
-                                            className="blog-tag small"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                toggleTag(tag);
-                                            }}
-                                            style={{
-                                                fontSize: '11px',
-                                                backgroundColor: isSelected
-                                                    ? 'var(--vscode-accent)'
-                                                    : 'var(--vscode-badge-background)',
-                                                color: isSelected
-                                                    ? 'var(--vscode-button-foreground, #fff)'
-                                                    : 'var(--vscode-badge-foreground)',
-                                                padding: '2px 8px',
-                                                borderRadius: '10px',
-                                                cursor: 'pointer',
-                                                transition: 'all 0.2s',
-                                                fontWeight: isSelected ? '600' : '400',
-                                                border: isSelected
-                                                    ? '1px solid var(--vscode-accent)'
-                                                    : '1px solid transparent'
-                                            }}
-                                            onMouseEnter={(e) => {
-                                                e.target.style.opacity = '0.8';
-                                            }}
-                                            onMouseLeave={(e) => {
-                                                e.target.style.opacity = '1';
-                                            }}
+                                            type="button"
+                                            className={selectedTags.includes(tag) ? 'active' : ''}
+                                            onClick={() => toggleTag(tag)}
                                         >
                                             #{tag}
-                                        </span>
-                                    );
-                                })}
-                            </div>
-                        </div>
+                                        </button>
+                                    ))}
+                                </div>
+                                <button
+                                    type="button"
+                                    className="ai-open-note"
+                                    onClick={() => setActiveFile(post.id)}
+                                >
+                                    <VscBook />
+                                    <span>Open note</span>
+                                </button>
+                            </article>
+                        ))}
                     </div>
-                ))}
 
-                {filteredPosts.length === 0 && (
-                    <div className="text-center opacity-50 mt-5">
-                        <div style={{ fontSize: '16px', marginBottom: '8px' }}>
-                            No posts found
+                    {filteredPosts.length === 0 && (
+                        <div className="ai-empty-state">
+                            <VscSearch />
+                            <div>No matching notes yet.</div>
+                            <button type="button" onClick={clearFilters}>Reset conversation</button>
                         </div>
-                        <div style={{ fontSize: '13px' }}>
-                            {hasActiveFilters
-                                ? 'Try adjusting your search or filters'
-                                : 'No blog posts available'
-                            }
-                        </div>
+                    )}
+                </section>
+
+                <section className="ai-composer-panel" aria-label="Journal prompt controls">
+                    <div className="ai-prompt-chips">
+                        {promptPresets.map(prompt => (
+                            <button
+                                key={prompt.label}
+                                type="button"
+                                className={activePrompt?.label === prompt.label ? 'active' : ''}
+                                onClick={() => applyPrompt(prompt)}
+                            >
+                                {prompt.label}
+                            </button>
+                        ))}
                     </div>
-                )}
-            </div>
+
+                    <form className="ai-composer" onSubmit={handleSubmit}>
+                        <VscSearch className="ai-composer-search" />
+                        <input
+                            type="text"
+                            placeholder="Ask about Git, reproducibility, workflow, Python..."
+                            value={searchTerm}
+                            onChange={(event) => {
+                                setSearchTerm(event.target.value);
+                                setActivePrompt(null);
+                            }}
+                        />
+                        {hasActiveFilters && (
+                            <button type="button" className="ai-composer-icon" onClick={clearFilters} aria-label="Clear journal filters">
+                                <VscClose />
+                            </button>
+                        )}
+                        <button type="submit" className="ai-send-button" aria-label="Search journal">
+                            <VscSend />
+                        </button>
+                    </form>
+                </section>
+            </main>
         </div>
     );
 };
