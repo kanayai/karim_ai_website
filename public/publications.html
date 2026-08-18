@@ -17,7 +17,7 @@
 
         body {
             margin: 0;
-            padding: 40px;
+            padding: clamp(18px, 4vw, 40px);
             background: var(--bg-color);
             color: var(--text-secondary);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
@@ -32,7 +32,11 @@
         header {
             border-bottom: 1px solid var(--border-color);
             margin-bottom: 24px;
-            padding-bottom: 18px;
+            padding-bottom: 20px;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 20px;
+            align-items: end;
         }
 
         h1 {
@@ -48,6 +52,63 @@
             color: var(--text-secondary);
         }
 
+        .pub-summary {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .pub-summary span {
+            min-height: 34px;
+            display: inline-flex;
+            align-items: center;
+            padding: 0 11px;
+            border: 1px solid var(--border-color);
+            border-radius: 999px;
+            background: var(--hover-bg);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .pub-controls {
+            position: sticky;
+            top: 0;
+            z-index: 3;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(132px, 180px);
+            gap: 10px;
+            margin-bottom: 16px;
+            padding: 10px 0;
+            background: var(--bg-color);
+        }
+
+        .pub-controls input,
+        .pub-controls select {
+            width: 100%;
+            min-height: 44px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font: inherit;
+        }
+
+        .pub-controls input {
+            padding: 0 13px;
+        }
+
+        .pub-controls select {
+            padding: 0 11px;
+        }
+
+        .result-count {
+            margin: 0 0 10px;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+        }
+
         .publication-list {
             display: flex;
             flex-direction: column;
@@ -56,19 +117,30 @@
 
         .publication-card {
             display: grid;
-            grid-template-columns: 76px minmax(0, 1fr);
-            gap: 18px;
-            padding: 20px;
+            grid-template-columns: 68px minmax(0, 1fr);
+            gap: 16px;
+            padding: 18px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
             background: var(--card-bg);
         }
 
         .pub-year {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .pub-year span {
+            min-width: 54px;
+            min-height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(88, 166, 255, 0.35);
+            border-radius: 999px;
             color: var(--accent-blue);
             font-weight: 700;
-            font-size: 1rem;
-            padding-top: 3px;
+            font-size: 0.9rem;
         }
 
         .pub-body {
@@ -80,6 +152,7 @@
             color: var(--text-primary);
             font-size: 1.05rem;
             line-height: 1.35;
+            overflow-wrap: anywhere;
         }
 
         .pub-authors,
@@ -89,11 +162,13 @@
 
         .pub-authors {
             color: var(--text-secondary);
+            overflow-wrap: anywhere;
         }
 
         .pub-journal {
             color: var(--text-primary);
             font-style: italic;
+            overflow-wrap: anywhere;
         }
 
         .pub-meta {
@@ -115,6 +190,7 @@
             color: var(--accent-blue);
             text-decoration: none;
             white-space: nowrap;
+            font-weight: 600;
         }
 
         .pub-link:hover {
@@ -126,18 +202,41 @@
             border-color: var(--border-color);
         }
 
+        .empty-state {
+            display: none;
+            padding: 28px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--card-bg);
+            text-align: center;
+        }
+
         @media (max-width: 700px) {
             body {
-                padding: 20px 14px;
+                padding: 18px 12px 28px;
+            }
+
+            header {
+                grid-template-columns: 1fr;
+                gap: 14px;
             }
 
             h1 {
                 font-size: 1.7rem;
             }
 
+            .pub-summary {
+                justify-content: flex-start;
+            }
+
+            .pub-controls {
+                grid-template-columns: 1fr;
+                padding-top: 8px;
+            }
+
             .publication-card {
                 grid-template-columns: 1fr;
-                gap: 8px;
+                gap: 10px;
                 padding: 16px;
             }
 
@@ -175,93 +274,118 @@
 <body>
     <main class="container">
         <header>
-            <h1>Publications</h1>
-            <p class="lead">Selected publications from Karim Anaya-Izquierdo, ordered by year and sourced from the local ORCID export.</p>
+            <div>
+                <h1>Publications</h1>
+                <p class="lead">Selected publications from Karim Anaya-Izquierdo, ordered by year and sourced from the local ORCID export.</p>
+            </div>
+            <div class="pub-summary" aria-label="Publication summary">
+                <span>25 publications</span>
+                <span>12 years</span>
+            </div>
         </header>
+        <section class="pub-controls" aria-label="Publication filters">
+            <input id="publication-search" type="search" placeholder="Search title, authors, journal, or year" autocomplete="off">
+            <select id="publication-year" aria-label="Filter by year">
+                <option value="">All years</option>
+<option value="2025">2025</option>
+<option value="2021">2021</option>
+<option value="2020">2020</option>
+<option value="2019">2019</option>
+<option value="2017">2017</option>
+<option value="2014">2014</option>
+<option value="2013">2013</option>
+<option value="2012">2012</option>
+<option value="2011">2011</option>
+<option value="2007">2007</option>
+<option value="2001">2001</option>
+<option value="2000">2000</option>
+            </select>
+        </section>
+        <p id="publication-count" class="result-count">Showing 25 publications</p>
         <section class="publication-list" aria-label="Publications">
-<article class="publication-card">
-            <div class="pub-year">2025</div>
+<article class="publication-card" data-year="2025" data-search="modeling tree survival for investigating climate change effects nicole augustin, axel albrecht, karim anaya-izquierdo, alice davis, stefan meining, heike puhlmann, simon wood journal of the american statistical association 2025">
+            <div class="pub-year"><span>2025</span></div>
             <div class="pub-body">
                 <h2>Modeling Tree Survival for Investigating Climate Change Effects</h2>
                 <p class="pub-authors">Nicole Augustin, Axel Albrecht, Karim Anaya-Izquierdo, Alice Davis, Stefan Meining, Heike Puhlmann, Simon Wood</p>
                 <p class="pub-journal">Journal of the American Statistical Association</p>
-                <div class="pub-meta"><span>August 2025</span><a class="pub-link" href="https://doi.org/10.1080/01621459.2025.2516181" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>August 2025</span><a class="pub-link" href="https://doi.org/10.1080/01621459.2025.2516181" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2021</div>
+<article class="publication-card" data-year="2021" data-search="a family of cumulative hazard functions and their frailty connections karim anaya-izquierdo, m.c. jones, alice davis statistics &amp; probability letters 2021">
+            <div class="pub-year"><span>2021</span></div>
             <div class="pub-body">
                 <h2>A family of cumulative hazard functions and their frailty connections</h2>
                 <p class="pub-authors">Karim Anaya-Izquierdo, M.C. Jones, Alice Davis</p>
                 <p class="pub-journal">Statistics &amp; Probability Letters</p>
-                <div class="pub-meta"><span>May 2021</span><a class="pub-link" href="https://doi.org/10.1016/j.spl.2021.109059" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>May 2021</span><a class="pub-link" href="https://doi.org/10.1016/j.spl.2021.109059" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2020</div>
+<article class="publication-card" data-year="2020" data-search="spatial spillover analysis of a cluster-randomized trial against dengue vectors in trujillo, venezuela neal alexander, audrey lenhart, karim anaya-izquierdo plos neglected tropical diseases 2020">
+            <div class="pub-year"><span>2020</span></div>
             <div class="pub-body">
                 <h2>Spatial spillover analysis of a cluster-randomized trial against dengue vectors in Trujillo, Venezuela</h2>
                 <p class="pub-authors">Neal Alexander, Audrey Lenhart, Karim Anaya-Izquierdo</p>
                 <p class="pub-journal">PLOS Neglected Tropical Diseases</p>
-                <div class="pub-meta"><span>September 2020</span><a class="pub-link" href="https://doi.org/10.1371/journal.pntd.0008576" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>September 2020</span><a class="pub-link" href="https://doi.org/10.1371/journal.pntd.0008576" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2020</div>
+<article class="publication-card" data-year="2020" data-search="spatial regression and spillover effects in cluster randomized trials with count outcomes anaya-izquierdo, k. et al. biometrics 2020">
+            <div class="pub-year"><span>2020</span></div>
             <div class="pub-body">
                 <h2>Spatial regression and spillover effects in cluster randomized trials with count outcomes</h2>
                 <p class="pub-authors">Anaya-Izquierdo, K. et al.</p>
                 <p class="pub-journal">Biometrics</p>
-                <div class="pub-meta"><span>July 2020</span><a class="pub-link" href="https://doi.org/10.1111/biom.13316" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>July 2020</span><a class="pub-link" href="https://doi.org/10.1111/biom.13316" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2019</div>
+<article class="publication-card" data-year="2019" data-search="approximation and sampling of multivariate probability distributions in the tensor train decomposition sergey dolgov, karim anaya-izquierdo, colin fox, robert scheichl statistics and computing 2019">
+            <div class="pub-year"><span>2019</span></div>
             <div class="pub-body">
                 <h2>Approximation and sampling of multivariate probability distributions in the tensor train decomposition</h2>
                 <p class="pub-authors">Sergey Dolgov, Karim Anaya-Izquierdo, Colin Fox, Robert Scheichl</p>
                 <p class="pub-journal">Statistics and Computing</p>
-                <div class="pub-meta"><span>December 2019</span><a class="pub-link" href="https://doi.org/10.1007/s11222-019-09910-z" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>December 2019</span><a class="pub-link" href="https://doi.org/10.1007/s11222-019-09910-z" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2017</div>
+<article class="publication-card" data-year="2017" data-search="on the geometric interplay between goodness-of-fit and estimation: illustrative examples karim anaya-izquierdo, paul marriott, paul vos, frank critchley computational information geometry  2017">
+            <div class="pub-year"><span>2017</span></div>
             <div class="pub-body">
                 <h2>On the geometric interplay between goodness-of-fit and estimation: Illustrative examples</h2>
                 <p class="pub-authors">Karim Anaya-Izquierdo, Paul Marriott, Paul Vos, Frank Critchley</p>
                 <p class="pub-journal">Computational Information Geometry </p>
-                <div class="pub-meta"><span>2017</span><a class="pub-link" href="https://doi.org/10.1007/978-3-319-47058-0_3" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>2017</span><a class="pub-link" href="https://doi.org/10.1007/978-3-319-47058-0_3" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2017</div>
+<article class="publication-card" data-year="2017" data-search="towards the geometry of model sensitivity karim anaya-izquierdo, frank critchley, paul marriott, paul vos computational information geometry  2017">
+            <div class="pub-year"><span>2017</span></div>
             <div class="pub-body">
                 <h2>Towards the geometry of model sensitivity</h2>
                 <p class="pub-authors">Karim Anaya-Izquierdo, Frank Critchley, Paul Marriott, Paul Vos</p>
                 <p class="pub-journal">Computational Information Geometry </p>
-                <div class="pub-meta"><span>2017</span><a class="pub-link" href="https://doi.org/10.1007/978-3-319-47058-0_2" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>2017</span><a class="pub-link" href="https://doi.org/10.1007/978-3-319-47058-0_2" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2014</div>
+<article class="publication-card" data-year="2014" data-search="using geometry to select one dimensional exponential families that are monotone likelihood ratio in the sample space, are weakly unimodal and can be parametrized by a measure of central tendency paul vos, k a anaya izquierdo entropy 2014">
+            <div class="pub-year"><span>2014</span></div>
             <div class="pub-body">
                 <h2>Using Geometry to Select One Dimensional Exponential Families That Are Monotone Likelihood Ratio in the Sample Space, Are Weakly Unimodal and Can Be Parametrized by a Measure of Central Tendency</h2>
                 <p class="pub-authors">Paul Vos, K A Anaya Izquierdo</p>
                 <p class="pub-journal">Entropy</p>
-                <div class="pub-meta"><span>July 2014</span><a class="pub-link" href="https://doi.org/10.3390/e16074088" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>July 2014</span><a class="pub-link" href="https://doi.org/10.3390/e16074088" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2014</div>
+<article class="publication-card" data-year="2014" data-search="antipsychotic drugs and risks of myocardial infarction: a self-controlled case series study anaya-izquierdo, k. et al. eur heart j 2014">
+            <div class="pub-year"><span>2014</span></div>
             <div class="pub-body">
                 <h2>Antipsychotic drugs and risks of myocardial infarction: a self-controlled case series study</h2>
                 <p class="pub-authors">Anaya-Izquierdo, K. et al.</p>
                 <p class="pub-journal">Eur Heart J</p>
-                <div class="pub-meta"><span>2014</span><a class="pub-link" href="https://doi.org/10.1093/eurheartj/ehu263" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>2014</span><a class="pub-link" href="https://doi.org/10.1093/eurheartj/ehu263" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2014</div>
+<article class="publication-card" data-year="2014" data-search="using geometry to select one dimensional exponential families that are monotone likelihood ratio in the sample space, are weakly unimodal and can be parametrized by a measure of central tendency anaya-izquierdo, k. et al. entropy 2014">
+            <div class="pub-year"><span>2014</span></div>
             <div class="pub-body">
                 <h2>Using Geometry to Select One Dimensional Exponential Families That Are Monotone Likelihood Ratio in the Sample Space, Are Weakly Unimodal and Can Be Parametrized by a Measure of Central Tendency</h2>
                 <p class="pub-authors">Anaya-Izquierdo, K. et al.</p>
@@ -269,53 +393,53 @@
                 <div class="pub-meta"><span>2014</span><span class="pub-link disabled">No DOI listed</span></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2014</div>
+<article class="publication-card" data-year="2014" data-search="when are first‒order asymptotics adequate? a diagnostic anaya-izquierdo, k. et al. stat 2014">
+            <div class="pub-year"><span>2014</span></div>
             <div class="pub-body">
                 <h2>When are first‒order asymptotics adequate? A diagnostic</h2>
                 <p class="pub-authors">Anaya-Izquierdo, K. et al.</p>
                 <p class="pub-journal">Stat</p>
-                <div class="pub-meta"><span>2014</span><a class="pub-link" href="https://doi.org/10.1002/sta4.40" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>2014</span><a class="pub-link" href="https://doi.org/10.1002/sta4.40" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2013</div>
+<article class="publication-card" data-year="2013" data-search="comments on 'log transformation: application and interpretation in biomedical research' anaya-izquierdo, k. et al. statistics in medicine 2013">
+            <div class="pub-year"><span>2013</span></div>
             <div class="pub-body">
                 <h2>Comments on 'Log transformation: application and interpretation in biomedical research'</h2>
                 <p class="pub-authors">Anaya-Izquierdo, K. et al.</p>
                 <p class="pub-journal">Statistics in Medicine</p>
-                <div class="pub-meta"><span>2013</span><a class="pub-link" href="https://doi.org/10.1002/sim.5774" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>2013</span><a class="pub-link" href="https://doi.org/10.1002/sim.5774" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2013</div>
+<article class="publication-card" data-year="2013" data-search="computational information geometry in statistics karim anaya-izquierdo, frank critchley, paul marriott, paul vos geometric science of information 2013">
+            <div class="pub-year"><span>2013</span></div>
             <div class="pub-body">
                 <h2>Computational information geometry in statistics</h2>
                 <p class="pub-authors">Karim Anaya-Izquierdo, Frank Critchley, Paul Marriott, Paul Vos</p>
                 <p class="pub-journal">Geometric Science of Information</p>
-                <div class="pub-meta"><span>2013</span><a class="pub-link" href="https://doi.org/10.1007/978-3-642-40020-9_33" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>2013</span><a class="pub-link" href="https://doi.org/10.1007/978-3-642-40020-9_33" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2013</div>
+<article class="publication-card" data-year="2013" data-search="computational information geometry in statistics karim anaya-izquierdo, frank critchley, paul marriott, paul vos geometric science of information 2013">
+            <div class="pub-year"><span>2013</span></div>
             <div class="pub-body">
                 <h2>Computational information geometry in statistics</h2>
                 <p class="pub-authors">Karim Anaya-Izquierdo, Frank Critchley, Paul Marriott, Paul Vos</p>
                 <p class="pub-journal">Geometric Science of Information</p>
-                <div class="pub-meta"><span>2013</span><a class="pub-link" href="https://doi.org/10.1007/978-3-642-40020-9_34" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>2013</span><a class="pub-link" href="https://doi.org/10.1007/978-3-642-40020-9_34" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2013</div>
+<article class="publication-card" data-year="2013" data-search="estimation of basic reproduction numbers: individual heterogeneity and robustness to perturbation of the contact function anaya-izquierdo, k. et al. biostatistics 2013">
+            <div class="pub-year"><span>2013</span></div>
             <div class="pub-body">
                 <h2>Estimation of basic reproduction numbers: individual heterogeneity and robustness to perturbation of the contact function</h2>
                 <p class="pub-authors">Anaya-Izquierdo, K. et al.</p>
                 <p class="pub-journal">Biostatistics</p>
-                <div class="pub-meta"><span>2013</span><a class="pub-link" href="https://doi.org/10.1093/biostatistics/kxs054" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>2013</span><a class="pub-link" href="https://doi.org/10.1093/biostatistics/kxs054" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2012</div>
+<article class="publication-card" data-year="2012" data-search="a comparison between the standard self controlled case series design and a modification to account for events that censor the observation period anaya-izquierdo, k. et al. pharmacoepidemiology and drug safety 2012">
+            <div class="pub-year"><span>2012</span></div>
             <div class="pub-body">
                 <h2>A Comparison between the Standard Self Controlled Case Series Design and a Modification To Account for Events That Censor the Observation Period</h2>
                 <p class="pub-authors">Anaya-Izquierdo, K. et al.</p>
@@ -323,88 +447,118 @@
                 <div class="pub-meta"><span>2012</span><span class="pub-link disabled">No DOI listed</span></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2012</div>
+<article class="publication-card" data-year="2012" data-search="orthogonalization of vectors with minimal adjustment anaya-izquierdo, k. et al. biometrika 2012">
+            <div class="pub-year"><span>2012</span></div>
             <div class="pub-body">
                 <h2>Orthogonalization of vectors with minimal adjustment</h2>
                 <p class="pub-authors">Anaya-Izquierdo, K. et al.</p>
                 <p class="pub-journal">Biometrika</p>
-                <div class="pub-meta"><span>2012</span><a class="pub-link" href="https://doi.org/10.1093/biomet/ass041" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>2012</span><a class="pub-link" href="https://doi.org/10.1093/biomet/ass041" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2012</div>
+<article class="publication-card" data-year="2012" data-search="the relative frailty variance and shared frailty models anaya-izquierdo, k. et al. journal of the royal statistical society series b-statistical methodology 2012">
+            <div class="pub-year"><span>2012</span></div>
             <div class="pub-body">
                 <h2>The relative frailty variance and shared frailty models</h2>
                 <p class="pub-authors">Anaya-Izquierdo, K. et al.</p>
                 <p class="pub-journal">Journal of the Royal Statistical Society Series B-Statistical Methodology</p>
-                <div class="pub-meta"><span>2012</span><a class="pub-link" href="https://doi.org/10.1111/j.1467-9868.2011.01021.x" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>2012</span><a class="pub-link" href="https://doi.org/10.1111/j.1467-9868.2011.01021.x" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2011</div>
+<article class="publication-card" data-year="2011" data-search="orthogonal simple component analysis: a new, exploratory approach anaya-izquierdo, k. et al. annals of applied statistics 2011">
+            <div class="pub-year"><span>2011</span></div>
             <div class="pub-body">
                 <h2>Orthogonal Simple Component Analysis: A New, Exploratory Approach</h2>
                 <p class="pub-authors">Anaya-Izquierdo, K. et al.</p>
                 <p class="pub-journal">Annals of Applied Statistics</p>
-                <div class="pub-meta"><span>2011</span><a class="pub-link" href="https://doi.org/10.1214/10-AOAS374" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>2011</span><a class="pub-link" href="https://doi.org/10.1214/10-AOAS374" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2011</div>
+<article class="publication-card" data-year="2011" data-search="on parameter orthogonality in symmetric and skew models anaya-izquierdo, k. et al. journal of statistical planning and inference 2011">
+            <div class="pub-year"><span>2011</span></div>
             <div class="pub-body">
                 <h2>On parameter orthogonality in symmetric and skew models</h2>
                 <p class="pub-authors">Anaya-Izquierdo, K. et al.</p>
                 <p class="pub-journal">Journal of Statistical Planning and Inference</p>
-                <div class="pub-meta"><span>2011</span><a class="pub-link" href="https://doi.org/10.1016/j.jspi.2010.07.021" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>2011</span><a class="pub-link" href="https://doi.org/10.1016/j.jspi.2010.07.021" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2011</div>
+<article class="publication-card" data-year="2011" data-search="self-controlled case series analysis with event-dependent observation periods anaya-izquierdo, k. et al. journal of the american statistical association 2011">
+            <div class="pub-year"><span>2011</span></div>
             <div class="pub-body">
                 <h2>Self-Controlled Case Series Analysis With Event-Dependent Observation Periods</h2>
                 <p class="pub-authors">Anaya-Izquierdo, K. et al.</p>
                 <p class="pub-journal">Journal of the American Statistical Association</p>
-                <div class="pub-meta"><span>2011</span><a class="pub-link" href="https://doi.org/10.1198/jasa.2011.ap10108" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>2011</span><a class="pub-link" href="https://doi.org/10.1198/jasa.2011.ap10108" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2007</div>
+<article class="publication-card" data-year="2007" data-search="local mixture models of exponential families anaya-izquierdo, k. et al. bernoulli 2007">
+            <div class="pub-year"><span>2007</span></div>
             <div class="pub-body">
                 <h2>Local mixture models of exponential families</h2>
                 <p class="pub-authors">Anaya-Izquierdo, K. et al.</p>
                 <p class="pub-journal">Bernoulli</p>
-                <div class="pub-meta"><span>2007</span><a class="pub-link" href="https://doi.org/10.3150/07-BEJ6170" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>2007</span><a class="pub-link" href="https://doi.org/10.3150/07-BEJ6170" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2007</div>
+<article class="publication-card" data-year="2007" data-search="local mixtures of the exponential distribution anaya-izquierdo, k. et al. annals of the institute of statistical mathematics 2007">
+            <div class="pub-year"><span>2007</span></div>
             <div class="pub-body">
                 <h2>Local mixtures of the exponential distribution</h2>
                 <p class="pub-authors">Anaya-Izquierdo, K. et al.</p>
                 <p class="pub-journal">Annals of the Institute of Statistical Mathematics</p>
-                <div class="pub-meta"><span>2007</span><a class="pub-link" href="https://doi.org/10.1007/s10463-006-0095-z" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>2007</span><a class="pub-link" href="https://doi.org/10.1007/s10463-006-0095-z" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2001</div>
+<article class="publication-card" data-year="2001" data-search="test of fit for the inverse gaussian and gamma distributions under censoring anaya-izquierdo, k. et al. communications in statistics-theory and methods 2001">
+            <div class="pub-year"><span>2001</span></div>
             <div class="pub-body">
                 <h2>Test of fit for the inverse Gaussian and gamma distributions under censoring</h2>
                 <p class="pub-authors">Anaya-Izquierdo, K. et al.</p>
                 <p class="pub-journal">Communications in Statistics-Theory and Methods</p>
-                <div class="pub-meta"><span>2001</span><a class="pub-link" href="https://doi.org/10.1081/STA-100002150" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>2001</span><a class="pub-link" href="https://doi.org/10.1081/STA-100002150" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
-<article class="publication-card">
-            <div class="pub-year">2000</div>
+<article class="publication-card" data-year="2000" data-search="fisher's observed information matrix for location and scale parameters under type i censoring anaya-izquierdo, k. et al. communications in statistics-theory and methods 2000">
+            <div class="pub-year"><span>2000</span></div>
             <div class="pub-body">
                 <h2>Fisher's observed information matrix for location and scale parameters under type I censoring</h2>
                 <p class="pub-authors">Anaya-Izquierdo, K. et al.</p>
                 <p class="pub-journal">Communications in Statistics-Theory and Methods</p>
-                <div class="pub-meta"><span>2000</span><a class="pub-link" href="https://doi.org/10.1080/03610920008832560" target="_blank" rel="noreferrer">Open DOI</a></div>
+                <div class="pub-meta"><span>2000</span><a class="pub-link" href="https://doi.org/10.1080/03610920008832560" target="_blank" rel="noreferrer">DOI</a></div>
             </div>
         </article>
         </section>
+        <div id="publication-empty" class="empty-state">No publications match those filters.</div>
     </main>
+    <script>
+        (function () {
+            const searchInput = document.getElementById("publication-search");
+            const yearSelect = document.getElementById("publication-year");
+            const count = document.getElementById("publication-count");
+            const empty = document.getElementById("publication-empty");
+            const cards = Array.from(document.querySelectorAll(".publication-card"));
+
+            function update() {
+                const query = searchInput.value.trim().toLowerCase();
+                const year = yearSelect.value;
+                let visible = 0;
+
+                cards.forEach(function (card) {
+                    const matchesQuery = !query || card.dataset.search.includes(query);
+                    const matchesYear = !year || card.dataset.year === year;
+                    const show = matchesQuery && matchesYear;
+                    card.hidden = !show;
+                    if (show) visible += 1;
+                });
+
+                count.textContent = "Showing " + visible + " " + (visible === 1 ? "publication" : "publications");
+                empty.style.display = visible === 0 ? "block" : "none";
+            }
+
+            searchInput.addEventListener("input", update);
+            yearSelect.addEventListener("change", update);
+        })();
+    </script>
 </body>
 </html>
