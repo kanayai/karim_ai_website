@@ -51,21 +51,33 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
 
         // Get computed styles from the parent document to match the exact theme
         const computedStyle = window.getComputedStyle(document.documentElement);
+        const blogShell = isBlogPost ? document.querySelector('.journal-standalone-shell') : null;
+        const shellStyle = blogShell ? window.getComputedStyle(blogShell) : computedStyle;
 
         // Determine if it's a dark theme based on the theme ID
         const lightThemes = ['light', 'solarized-light', 'github-light'];
         const isDark = !lightThemes.includes(theme);
 
-        const bg = computedStyle.getPropertyValue('--vscode-editor-bg').trim() || (isDark ? '#1e1e1e' : '#ffffff');
-        const text = computedStyle.getPropertyValue('--vscode-text').trim() || (isDark ? '#cccccc' : '#333333');
+        const bg = isBlogPost
+            ? shellStyle.getPropertyValue('--journal-bg').trim() || (isDark ? '#000000' : '#ffffff')
+            : computedStyle.getPropertyValue('--vscode-editor-bg').trim() || (isDark ? '#1e1e1e' : '#ffffff');
+        const text = isBlogPost
+            ? shellStyle.getPropertyValue('--journal-text').trim() || (isDark ? '#ffffff' : '#111111')
+            : computedStyle.getPropertyValue('--vscode-text').trim() || (isDark ? '#cccccc' : '#333333');
         const link = computedStyle.getPropertyValue('--vscode-accent').trim() || (isDark ? '#3794ff' : '#007acc');
-        const border = computedStyle.getPropertyValue('--vscode-border').trim() || (isDark ? '#454545' : '#e4e4e4');
-        const hoverBg = computedStyle.getPropertyValue('--vscode-hover-bg').trim() || (isDark ? '#2d2d2d' : '#f0f0f0');
+        const border = isBlogPost
+            ? shellStyle.getPropertyValue('--journal-border').trim() || (isDark ? '#27272a' : '#e5e7eb')
+            : computedStyle.getPropertyValue('--vscode-border').trim() || (isDark ? '#454545' : '#e4e4e4');
+        const hoverBg = isBlogPost
+            ? shellStyle.getPropertyValue('--journal-soft').trim() || (isDark ? '#161616' : '#fafafa')
+            : computedStyle.getPropertyValue('--vscode-hover-bg').trim() || (isDark ? '#2d2d2d' : '#f0f0f0');
 
         style.textContent = `
+            html,
             body {
                 background-color: ${bg} !important;
                 color: ${text} !important;
+                overflow-x: hidden !important;
             }
             /* Fix Background Image Visibility in Dark Mode */
             body::before {
@@ -154,6 +166,51 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
                 opacity: 0.6;
                 font-size: 0.9em;
             }
+            img, svg, video, canvas {
+                max-width: 100% !important;
+                height: auto !important;
+            }
+            main.content {
+                width: min(100%, 820px) !important;
+                max-width: min(100%, 820px) !important;
+                margin: 0 auto !important;
+                padding: 28px 22px 72px !important;
+            }
+            #quarto-content {
+                max-width: 100% !important;
+                overflow-x: hidden !important;
+            }
+            table, .table, .cell-output, .cell-output-display {
+                max-width: 100% !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch;
+            }
+            pre, div.sourceCode {
+                max-width: 100% !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch;
+                border-radius: 10px !important;
+            }
+            @media (max-width: 768px) {
+                body {
+                    font-size: 17px !important;
+                    line-height: 1.68 !important;
+                }
+                main.content {
+                    padding: 22px 14px 72px !important;
+                }
+                h1.title {
+                    font-size: 2rem !important;
+                    line-height: 1.1 !important;
+                }
+                h2 {
+                    font-size: 1.35rem !important;
+                }
+                .quarto-title-meta {
+                    grid-template-columns: 1fr !important;
+                    gap: 10px !important;
+                }
+            }
         `;
 
         // Sync Giscus Theme
@@ -176,7 +233,7 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
 
         // Clear interval after 10 seconds to avoid infinite loop if Giscus never loads
         setTimeout(() => clearInterval(checkForGiscus), 10000);
-    }, [theme]);
+    }, [isBlogPost, theme]);
 
     const iframeRef = useRef(null);
 
@@ -188,22 +245,12 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
     }, [injectStyles]);
 
     return (
-        <div className="d-flex flex-column h-100" style={{ backgroundColor: 'var(--vscode-editor-bg)' }}>
+        <div className="blog-reader-frame d-flex flex-column h-100">
             {isBlogPost && (
-                <div className="blog-post-toolbar p-2 border-bottom" style={{ borderColor: 'var(--vscode-border)' }}>
+                <div className="blog-post-toolbar p-2 border-bottom">
                     <button
-                        className="btn btn-sm"
+                        className="blog-back-button"
                         onClick={() => setActiveFile('blog.html')}
-                        style={{
-                            color: 'var(--vscode-text)',
-                            backgroundColor: 'var(--vscode-button-background)',
-                            border: 'none',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '5px'
-                        }}
-                        onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--vscode-button-hover-background)'}
-                        onMouseLeave={(e) => e.target.style.backgroundColor = 'var(--vscode-button-background)'}
                     >
                         <VscChevronRight style={{ transform: 'rotate(180deg)' }} />
                         Back to Blog
@@ -220,7 +267,8 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
                 ref={iframeRef}
                 key={src} // Key is just src now, no theme param
                 src={src}
-                style={{ width: '100%', flexGrow: 1, border: 'none', backgroundColor: 'var(--vscode-editor-bg)' }}
+                className="blog-reader-iframe"
+                style={{ width: '100%', flexGrow: 1, border: 'none' }}
                 title="Blog Post"
                 onLoad={(e) => injectStyles(e.target)}
             />

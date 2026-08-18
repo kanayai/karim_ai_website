@@ -1,4 +1,4 @@
-/* Journal reading theme embedded inside the portfolio shell. */
+/* Blog reading theme embedded inside the portfolio shell. */
 body {
     background-color: #1e1e1e;
     color: #cccccc;
@@ -8,7 +8,10 @@ body {
 }
 
 main.content {
-    max-width: 760px;
+    width: min(100%, 820px);
+    max-width: min(100%, 820px);
+    margin: 0 auto;
+    padding: 28px 22px 72px;
 }
 
 a {
@@ -57,6 +60,29 @@ pre.sourceCode {
 pre,
 div.sourceCode {
     border-radius: 8px;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+img,
+svg,
+video,
+canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+#quarto-content {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+table,
+.table,
+.cell-output,
+.cell-output-display {
+    max-width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
@@ -101,13 +127,13 @@ div.sourceCode {
 
     #quarto-content {
         display: block;
-        padding: 0 14px 24px;
+        padding: 0;
     }
 
     main.content {
         width: 100%;
         max-width: none;
-        padding: 0;
+        padding: 22px 14px 72px;
     }
 
     #quarto-margin-sidebar {
@@ -116,6 +142,7 @@ div.sourceCode {
 
     h1.title {
         font-size: 2rem;
+        line-height: 1.1;
     }
 
     h2 {
