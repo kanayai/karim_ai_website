@@ -43,7 +43,7 @@ const PyPILayout = ({ activeFile, setActiveFile, children }) => {
                     
                     {/* pip install command box */}
                     <div className="d-flex align-items-center justify-content-between pypi-install-box p-3 rounded mt-3">
-                        <div className="d-flex align-items-center gap-2">
+                        <div className="d-flex align-items-center gap-2 pypi-install-command">
                             <span className="pypi-prompt-char">$</span>
                             <code className="pypi-command">pip install ma22019</code>
                         </div>
@@ -56,9 +56,9 @@ const PyPILayout = ({ activeFile, setActiveFile, children }) => {
 
             {/* PyPI Main Section */}
             <div className="pypi-body-section px-3 px-md-5 py-4">
-                <div className="row g-4 max-width-container">
+                <div className="row g-4 max-width-container pypi-main-row">
                     {/* Left Navigation Tabs */}
-                    <div className="col-lg-3 col-md-4">
+                    <div className="col-lg-3 col-md-4 pypi-rail">
                         <div className="d-flex flex-column pypi-tabs">
                             <button 
                                 className={`pypi-tab-item ${activeTab === 'description' ? 'active' : ''}`}
@@ -105,10 +105,10 @@ const PyPILayout = ({ activeFile, setActiveFile, children }) => {
                     </div>
 
                     {/* Right Content Area */}
-                    <div className="col-lg-9 col-md-8">
+                    <div className="col-lg-9 col-md-8 pypi-main-content">
                         {activeTab === 'description' && (
                             <div className="pypi-content-card p-4 rounded">
-                                <div className="d-flex align-items-center gap-2 mb-3">
+                                <div className="d-flex align-items-center gap-2 mb-3 pypi-card-title">
                                     <VscInfo size={20} className="text-primary" />
                                     <h3 className="m-0 text-white">Course Overview</h3>
                                 </div>
@@ -123,21 +123,21 @@ const PyPILayout = ({ activeFile, setActiveFile, children }) => {
                                 <h3 className="mb-4 text-white">Release History</h3>
                                 <div className="pypi-history-timeline">
                                     <div className="history-release-row pb-4 mb-4 border-bottom">
-                                        <div className="d-flex align-items-center justify-content-between mb-2">
+                                        <div className="d-flex align-items-center justify-content-between mb-2 history-release-header">
                                             <span className="release-version">2026.07.09</span>
                                             <span className="release-date">July 9, 2026</span>
                                         </div>
                                         <p className="release-desc">Release of Sheet 3 Statistics solutions and exam walkthrough guide.</p>
                                     </div>
                                     <div className="history-release-row pb-4 mb-4 border-bottom">
-                                        <div className="d-flex align-items-center justify-content-between mb-2">
+                                        <div className="d-flex align-items-center justify-content-between mb-2 history-release-header">
                                             <span className="release-version">2026.06.30</span>
                                             <span className="release-date">June 30, 2026</span>
                                         </div>
                                         <p className="release-desc">Mid-term review checklist and probability distributions reference sheet.</p>
                                     </div>
                                     <div className="history-release-row">
-                                        <div className="d-flex align-items-center justify-content-between mb-2">
+                                        <div className="d-flex align-items-center justify-content-between mb-2 history-release-header">
                                             <span className="release-version">2026.06.01</span>
                                             <span className="release-date">June 1, 2026</span>
                                         </div>

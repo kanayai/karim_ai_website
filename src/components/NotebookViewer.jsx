@@ -120,14 +120,14 @@ const NotebookViewer = ({ fileName }) => {
     const content = notebooks[fileName] || [];
 
     return (
-        <div className="p-4" style={{ backgroundColor: 'var(--vscode-editor-bg)', color: 'var(--vscode-text)', height: '100%', overflowY: 'auto' }}>
+        <div className="notebook-viewer-shell" style={{ backgroundColor: 'var(--vscode-editor-bg)', color: 'var(--vscode-text)' }}>
             <div className="notebook-container">
                 {content.map((cell, index) => (
                     <div key={index} className="cell mb-3">
                         {cell.type === 'code' ? (
-                            <div className="d-flex gap-2">
+                            <div className="d-flex gap-2 notebook-code-cell">
                                 {/* Gutter with Play Button */}
-                                <div className="d-flex flex-column align-items-center pt-1" style={{ width: '25px', flexShrink: 0 }}>
+                                <div className="d-flex flex-column align-items-center pt-1 notebook-gutter" style={{ width: '25px', flexShrink: 0 }}>
                                     <div
                                         className="d-flex align-items-center justify-content-center rounded-circle"
                                         style={{
@@ -143,13 +143,13 @@ const NotebookViewer = ({ fileName }) => {
                                 </div>
 
                                 {/* Content Container (Code + Output) */}
-                                <div className="flex-grow-1 d-flex flex-column" style={{
+                                <div className="flex-grow-1 d-flex flex-column notebook-cell-content" style={{
                                     border: '1px solid rgba(128, 128, 128, 0.35)',
                                     borderRadius: '4px',
                                     padding: '8px'
                                 }}>
                                     {/* Code Editor Box */}
-                                    <div className="rounded mb-2" style={{
+                                    <div className="rounded mb-2 notebook-code-box" style={{
                                         backgroundColor: 'var(--vscode-editor-bg)',
                                         border: '1px solid var(--vscode-widget-border)',
                                         position: 'relative',
@@ -157,7 +157,7 @@ const NotebookViewer = ({ fileName }) => {
                                     }}>
                                         <div className="d-flex">
                                             {/* Line Numbers */}
-                                            <div className="py-2 text-end pe-3" style={{
+                                            <div className="py-2 text-end pe-3 notebook-line-numbers" style={{
                                                 color: '#858585',
                                                 minWidth: '40px',
                                                 userSelect: 'none',
@@ -170,9 +170,9 @@ const NotebookViewer = ({ fileName }) => {
                                             </div>
 
                                             {/* Code Content */}
-                                            <div className="py-2 flex-grow-1" style={{ fontFamily: 'monospace', fontSize: '13px', overflowX: 'auto' }}>
+                                            <div className="py-2 flex-grow-1 notebook-code-content" style={{ fontFamily: 'monospace', fontSize: '13px', overflowX: 'auto' }}>
                                                 {cell.input.map((line, i) => (
-                                                    <div key={i} style={{ lineHeight: '1.5', whiteSpace: 'pre' }}>
+                                                    <div key={i} className="notebook-code-line" style={{ lineHeight: '1.5', whiteSpace: 'pre' }}>
                                                         {line.type === 'comment' ? (
                                                             <span style={{ color: '#6A9955' }}>{line.text}</span>
                                                         ) : (
@@ -184,7 +184,7 @@ const NotebookViewer = ({ fileName }) => {
                                         </div>
 
                                         {/* Language Indicator */}
-                                        <div className="position-absolute bottom-0 end-0 px-2 py-1" style={{
+                                        <div className="position-absolute bottom-0 end-0 px-2 py-1 notebook-language-badge" style={{
                                             fontSize: '10px',
                                             color: 'var(--vscode-descriptionForeground)',
                                             opacity: 0.8,
@@ -196,9 +196,9 @@ const NotebookViewer = ({ fileName }) => {
 
                                     {/* Output Area */}
                                     {cell.output && (
-                                        <div className="position-relative ps-3" style={{ borderLeft: '1px solid var(--vscode-widget-border)' }}>
+                                        <div className="position-relative ps-3 notebook-output" style={{ borderLeft: '1px solid var(--vscode-widget-border)' }}>
                                             {/* Output Actions */}
-                                            <div className="position-absolute top-0 start-0 ms-1 mt-1" style={{ cursor: 'pointer', opacity: 0.6 }}>
+                                            <div className="position-absolute top-0 start-0 ms-1 mt-1 notebook-output-actions" style={{ cursor: 'pointer', opacity: 0.6 }}>
                                                 <VscEllipsis size={14} />
                                             </div>
 
@@ -229,7 +229,7 @@ const NotebookViewer = ({ fileName }) => {
                                 </div>
                             </div>
                         ) : (
-                            <div className="markdown-cell p-3" style={{ fontFamily: 'sans-serif' }} dangerouslySetInnerHTML={{ __html: cell.content }} />
+                            <div className="markdown-cell p-3 notebook-markdown-cell" style={{ fontFamily: 'sans-serif' }} dangerouslySetInnerHTML={{ __html: cell.content }} />
                         )}
                     </div>
                 ))}

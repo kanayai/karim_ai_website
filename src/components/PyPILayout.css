@@ -13,6 +13,7 @@
   background-color: #2c3e50;
   border-bottom: 1px solid #34495e;
   flex-shrink: 0;
+  gap: 16px;
 }
 
 .pypi-logo-text {
@@ -50,6 +51,9 @@
   font-weight: 500;
   cursor: pointer;
   opacity: 0.9;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .pypi-nav-links .pypi-nav-link:hover {
@@ -112,6 +116,7 @@
 .pypi-install-box {
   background-color: #2c3e50;
   border: 1px solid #1a252f;
+  gap: 12px;
 }
 
 .pypi-prompt-char {
@@ -131,10 +136,16 @@
   border: none;
   color: #fff;
   font-size: 12px;
-  padding: 4px 12px;
+  min-height: 34px;
+  padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-shrink: 0;
 }
 
 .pypi-copy-btn:hover {
@@ -230,6 +241,11 @@
 .pypi-content-card {
   background-color: #2c3e50;
   border: 1px solid #34495e;
+  min-width: 0;
+}
+
+.pypi-card-title h3 {
+  font-size: 20px;
 }
 
 .pypi-history-timeline {
@@ -261,11 +277,13 @@
 .download-item {
   background-color: #1e1f22;
   border-color: #34495e !important;
+  gap: 14px;
 }
 
 .download-name {
   color: #fff;
   font-size: 14px;
+  overflow-wrap: anywhere;
 }
 
 .download-size {
@@ -273,8 +291,74 @@
   color: #8b949e;
 }
 
+.notebook-viewer-shell {
+  height: 100%;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.notebook-container {
+  min-width: 0;
+}
+
+.notebook-cell-content {
+  min-width: 0;
+}
+
+.notebook-code-box {
+  min-width: 0;
+}
+
+.notebook-code-content {
+  min-width: 0;
+}
+
+.notebook-output {
+  min-width: 0;
+}
+
+.output-content {
+  max-width: 100%;
+}
+
+.output-content table {
+  min-width: 520px;
+}
+
+.output-content td,
+.output-content th {
+  overflow-wrap: anywhere;
+  vertical-align: top;
+}
+
 /* Mobile */
 @media (max-width: 767.98px) {
+  .pypi-header {
+    align-items: flex-start !important;
+    gap: 10px;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
+
+  .pypi-logo-text {
+    font-size: 22px;
+  }
+
+  .pypi-nav-links {
+    gap: 8px !important;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .pypi-nav-links .pypi-nav-link:not(.exit-to-os) {
+    display: none;
+  }
+
+  .pypi-nav-links .pypi-nav-link.exit-to-os {
+    min-height: 40px;
+    padding: 0 12px;
+  }
+
   /* Compress the sidebar column so content isn't a full screen of scrolling away:
      tab buttons become one horizontal row, navigation goes inline, meta hides. */
   /* Component CSS loads before Bootstrap here (App is imported above bootstrap.min.css
@@ -290,6 +374,7 @@
   .pypi-tab-item {
     white-space: nowrap;
     flex-shrink: 0;
+    min-height: 44px;
     padding: 10px 12px;
     font-size: 13px;
   }
@@ -311,6 +396,10 @@
   .pypi-sidebar-item {
     border: 1px solid #34495e;
     white-space: nowrap;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 12px;
   }
 
   /* Meta (license/author/requires) is decorative — hide on phones */
@@ -321,4 +410,156 @@
   .pypi-title { font-size: 26px; }
 
   .pypi-subtitle { font-size: 15px; }
+
+  .pypi-install-box {
+    align-items: stretch !important;
+    flex-direction: column;
+    padding: 12px !important;
+  }
+
+  .pypi-install-command {
+    min-width: 0;
+  }
+
+  .pypi-command {
+    display: block;
+    min-width: 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+
+  .pypi-copy-btn {
+    min-height: 44px;
+    width: 100%;
+  }
+
+  .pypi-body-section {
+    padding-top: 16px !important;
+    padding-bottom: 24px !important;
+  }
+
+  .pypi-main-row {
+    gap: 14px 0;
+  }
+
+  .pypi-rail,
+  .pypi-main-content {
+    min-width: 0;
+  }
+
+  .pypi-content-card {
+    padding: 14px !important;
+  }
+
+  .pypi-card-title {
+    align-items: flex-start !important;
+  }
+
+  .pypi-card-title h3 {
+    font-size: 18px;
+    line-height: 1.25;
+  }
+
+  .pypi-notebook-frame {
+    min-height: 0 !important;
+  }
+
+  .history-release-header {
+    align-items: flex-start !important;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .release-version {
+    font-size: 16px;
+  }
+
+  .download-item {
+    align-items: stretch !important;
+    flex-direction: column;
+  }
+
+  .notebook-viewer-shell {
+    padding: 12px;
+    overflow: visible;
+  }
+
+  .notebook-code-cell {
+    gap: 6px !important;
+  }
+
+  .notebook-gutter {
+    width: 22px !important;
+  }
+
+  .notebook-cell-content {
+    padding: 6px !important;
+  }
+
+  .notebook-line-numbers {
+    display: none;
+  }
+
+  .notebook-code-content {
+    padding-right: 28px;
+  }
+
+  .notebook-code-line {
+    line-height: 1.55 !important;
+  }
+
+  .notebook-output {
+    padding-left: 0 !important;
+    border-left: 0 !important;
+  }
+
+  .notebook-output-actions {
+    display: none;
+  }
+
+  .output-content {
+    padding-left: 0 !important;
+  }
+
+  .output-content table {
+    min-width: 430px;
+  }
+
+  .notebook-markdown-cell {
+    padding: 12px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .pypi-header {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .pypi-banner,
+  .pypi-body-section {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .pypi-title {
+    font-size: 24px;
+  }
+
+  .pypi-version {
+    font-size: 12px;
+  }
+
+  .pypi-tab-item {
+    font-size: 12px;
+  }
+
+  .notebook-viewer-shell {
+    padding: 10px;
+  }
+
+  .notebook-gutter {
+    display: none !important;
+  }
 }
