@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
     VscBook,
-    VscClose,
-    VscCommentDiscussion,
+    VscChromeClose,
+    VscHistory,
+    VscNewFile,
     VscRobot,
     VscSearch,
     VscSend,
@@ -22,13 +23,13 @@ const promptPresets = [
         label: 'Show reproducibility notes',
         query: 'reproducibility',
         tags: ['reproducibility'],
-        reply: 'I found notes about making computational work easier to rerun, inspect, and trust.',
+        reply: 'These notes focus on making computational work easier to rerun, inspect, and trust.',
     },
     {
         label: 'Help me organise academic work',
         query: 'workflow',
         tags: ['workflow'],
-        reply: 'These notes focus on project organisation, syncing, and keeping research, teaching, and code coherent across machines.',
+        reply: 'These notes are about keeping research, teaching, code, and files coherent across machines.',
     },
     {
         label: 'Find statistics tutorials',
@@ -44,7 +45,8 @@ const BlogViewer = ({ setActiveFile }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
     const [generatedPosts, setGeneratedPosts] = useState(null);
-    const [activePrompt, setActivePrompt] = useState(promptPresets[0]);
+    const [activePrompt, setActivePrompt] = useState(null);
+    const [hasInteracted, setHasInteracted] = useState(false);
 
     useEffect(() => {
         let isMounted = true;
@@ -137,39 +139,24 @@ const BlogViewer = ({ setActiveFile }) => {
         return filtered;
     }, [fuse, posts, searchTerm, selectedTags]);
 
+    const visiblePosts = hasInteracted ? filteredPosts : posts.slice(0, 3);
     const hasActiveFilters = Boolean(searchTerm.trim() || selectedTags.length > 0);
+    const userPrompt = searchTerm.trim() || activePrompt?.label || "Browse Karim's journal";
     const assistantReply = hasActiveFilters
         ? `I found ${filteredPosts.length} ${filteredPosts.length === 1 ? 'note' : 'notes'} matching ${searchTerm.trim() ? `"${searchTerm.trim()}"` : 'your selected tags'}${selectedTags.length ? ` (${formatTags(selectedTags)})` : ''}.`
-        : activePrompt.reply;
-
-    const topicGroups = useMemo(() => {
-        const groups = [
-            { label: 'Reproducibility', tags: ['reproducibility'], count: 0 },
-            { label: 'Workflow', tags: ['workflow'], count: 0 },
-            { label: 'Code + Tools', tags: ['git', 'python', 'r'], count: 0 },
-            { label: 'Statistics', tags: ['tutorial'], count: 0 },
-        ];
-
-        return groups.map(group => ({
-            ...group,
-            count: posts.filter(post => group.tags.some(tag => post.tags.includes(tag))).length,
-        }));
-    }, [posts]);
+        : activePrompt?.reply || 'Choose a prompt, search the notes, or open one of the latest entries.';
 
     const applyPrompt = (prompt) => {
         setActivePrompt(prompt);
         setSearchTerm(prompt.query);
         setSelectedTags(prompt.tags);
-    };
-
-    const applyTopic = (tags) => {
-        setActivePrompt(null);
-        setSearchTerm('');
-        setSelectedTags(tags);
+        setHasInteracted(true);
     };
 
     const toggleTag = (tag) => {
         setActivePrompt(null);
+        setHasInteracted(true);
+        setSearchTerm('');
         setSelectedTags(prev =>
             prev.includes(tag)
                 ? prev.filter(t => t !== tag)
@@ -177,170 +164,160 @@ const BlogViewer = ({ setActiveFile }) => {
         );
     };
 
-    const clearFilters = () => {
+    const resetJournal = () => {
         setSearchTerm('');
         setSelectedTags([]);
-        setActivePrompt(promptPresets[0]);
+        setActivePrompt(null);
+        setHasInteracted(false);
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         setActivePrompt(null);
+        setHasInteracted(true);
     };
 
     return (
-        <div className="blog-viewer ai-journal">
-            <aside className="ai-agent-sidebar" aria-label="Journal topics">
-                <div className="ai-agent-brand">
-                    <div className="ai-agent-orb" aria-hidden="true">
-                        <VscRobot />
-                    </div>
-                    <div>
-                        <div className="ai-agent-label">Journal Agent</div>
-                        <div className="ai-agent-status">Curated from Karim's notes</div>
-                    </div>
+        <div className="ai-home">
+            <aside className="ai-home-rail" aria-label="Journal controls">
+                <div className="ai-home-mark">
+                    <VscRobot />
                 </div>
-
-                <div className="ai-agent-section-label">Topics</div>
-                <div className="ai-topic-list">
-                    {topicGroups.map(topic => {
-                        const isActive = topic.tags.every(tag => selectedTags.includes(tag));
-                        return (
-                            <button
-                                key={topic.label}
-                                type="button"
-                                className={`ai-topic-button ${isActive ? 'active' : ''}`}
-                                onClick={() => applyTopic(topic.tags)}
-                            >
-                                <span>{topic.label}</span>
-                                <span>{topic.count}</span>
-                            </button>
-                        );
-                    })}
-                </div>
-
-                <div className="ai-agent-section-label">Available Tags</div>
-                <div className="ai-mini-tags">
-                    {allTags.map(tag => (
-                        <button
-                            key={tag}
-                            type="button"
-                            className={selectedTags.includes(tag) ? 'active' : ''}
-                            onClick={() => toggleTag(tag)}
-                        >
-                            #{tag}
-                        </button>
-                    ))}
-                </div>
+                <button type="button" className="ai-rail-button active" onClick={resetJournal} aria-label="New journal search">
+                    <VscNewFile />
+                </button>
+                <button type="button" className="ai-rail-button" onClick={() => applyPrompt(promptPresets[0])} aria-label="Suggested reading">
+                    <VscSparkle />
+                </button>
+                <button type="button" className="ai-rail-button" onClick={() => setHasInteracted(true)} aria-label="Recent journal notes">
+                    <VscHistory />
+                </button>
             </aside>
 
-            <main className="ai-agent-main">
-                <header className="ai-agent-header">
-                    <div>
-                        <div className="blog-viewer-kicker">AI-style Journal</div>
-                        <h1>Research Companion</h1>
-                        <p>Ask a question or tap a prompt to browse the current blog notes.</p>
-                    </div>
-                    <div className="blog-viewer-count">{posts.length} notes</div>
-                </header>
-
-                <section className="ai-chat-thread" aria-live="polite">
-                    <div className="ai-message user-message">
-                        <div className="ai-message-avatar">
-                            <VscCommentDiscussion />
-                        </div>
-                        <div className="ai-message-body">
-                            <div className="ai-message-name">Visitor</div>
-                            <p>{searchTerm.trim() || activePrompt?.label || 'What is in this journal?'}</p>
-                        </div>
+            <main className={`ai-home-main ${hasInteracted ? 'conversation-open' : ''}`}>
+                <section className="ai-home-panel" aria-label="Journal assistant">
+                    <div className="ai-home-intro">
+                        <div className="ai-home-kicker">Journal Agent</div>
+                        <h1>Ask Karim's Journal</h1>
+                        <p>Search the notes, tap a suggested prompt, or open a recent entry.</p>
                     </div>
 
-                    <div className="ai-message assistant-message">
-                        <div className="ai-message-avatar">
-                            <VscSparkle />
-                        </div>
-                        <div className="ai-message-body">
-                            <div className="ai-message-name">Research Companion</div>
-                            <p>{assistantReply}</p>
-                        </div>
-                    </div>
-
-                    <div className="ai-result-grid">
-                        {filteredPosts.map(post => (
-                            <article key={post.id} className="ai-result-card">
-                                <div className="ai-result-card-topline">
-                                    <span>{post.date}</span>
-                                    <span>{post.readingTime} min read</span>
-                                </div>
-                                <h2>{post.title}</h2>
-                                <p>{post.description}</p>
-                                <div className="ai-result-tags">
-                                    {post.tags.map(tag => (
-                                        <button
-                                            key={tag}
-                                            type="button"
-                                            className={selectedTags.includes(tag) ? 'active' : ''}
-                                            onClick={() => toggleTag(tag)}
-                                        >
-                                            #{tag}
-                                        </button>
-                                    ))}
-                                </div>
-                                <button
-                                    type="button"
-                                    className="ai-open-note"
-                                    onClick={() => setActiveFile(post.id)}
-                                >
-                                    <VscBook />
-                                    <span>Open note</span>
-                                </button>
-                            </article>
-                        ))}
-                    </div>
-
-                    {filteredPosts.length === 0 && (
-                        <div className="ai-empty-state">
-                            <VscSearch />
-                            <div>No matching notes yet.</div>
-                            <button type="button" onClick={clearFilters}>Reset conversation</button>
-                        </div>
-                    )}
-                </section>
-
-                <section className="ai-composer-panel" aria-label="Journal prompt controls">
-                    <div className="ai-prompt-chips">
-                        {promptPresets.map(prompt => (
-                            <button
-                                key={prompt.label}
-                                type="button"
-                                className={activePrompt?.label === prompt.label ? 'active' : ''}
-                                onClick={() => applyPrompt(prompt)}
-                            >
-                                {prompt.label}
-                            </button>
-                        ))}
-                    </div>
-
-                    <form className="ai-composer" onSubmit={handleSubmit}>
-                        <VscSearch className="ai-composer-search" />
-                        <input
-                            type="text"
-                            placeholder="Ask about Git, reproducibility, workflow, Python..."
+                    <form className="ai-home-prompt" onSubmit={handleSubmit}>
+                        <textarea
+                            rows="3"
+                            placeholder="Ask about reproducibility, Git, workflow, Python tutorials..."
                             value={searchTerm}
                             onChange={(event) => {
                                 setSearchTerm(event.target.value);
                                 setActivePrompt(null);
                             }}
                         />
-                        {hasActiveFilters && (
-                            <button type="button" className="ai-composer-icon" onClick={clearFilters} aria-label="Clear journal filters">
-                                <VscClose />
+                        <div className="ai-home-prompt-footer">
+                            <div className="ai-home-model-pill">
+                                <VscSparkle />
+                                <span>Journal search</span>
+                            </div>
+                            {hasActiveFilters && (
+                                <button type="button" className="ai-home-clear" onClick={resetJournal} aria-label="Clear journal search">
+                                    <VscChromeClose />
+                                </button>
+                            )}
+                            <button type="submit" className="ai-home-send">
+                                <VscSend />
+                                <span>Ask</span>
                             </button>
-                        )}
-                        <button type="submit" className="ai-send-button" aria-label="Search journal">
-                            <VscSend />
-                        </button>
+                        </div>
                     </form>
+
+                    {!hasInteracted && (
+                        <div className="ai-suggestion-grid">
+                            {promptPresets.map(prompt => (
+                                <button key={prompt.label} type="button" onClick={() => applyPrompt(prompt)}>
+                                    <span>{prompt.label}</span>
+                                    <small>{prompt.reply}</small>
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                </section>
+
+                <section className="ai-conversation" aria-live="polite">
+                    {hasInteracted && (
+                        <>
+                            <div className="ai-turn ai-turn-user">
+                                <div className="ai-turn-avatar">K</div>
+                                <div className="ai-turn-content">
+                                    <div className="ai-turn-name">Visitor</div>
+                                    <p>{userPrompt}</p>
+                                </div>
+                            </div>
+
+                            <div className="ai-turn ai-turn-assistant">
+                                <div className="ai-turn-avatar">
+                                    <VscSparkle />
+                                </div>
+                                <div className="ai-turn-content">
+                                    <div className="ai-turn-name">Journal Agent</div>
+                                    <p>{assistantReply}</p>
+                                </div>
+                            </div>
+                        </>
+                    )}
+
+                    <div className="ai-note-strip">
+                        <div className="ai-note-strip-header">
+                            <span>{hasInteracted ? 'Recommended notes' : 'Recent notes'}</span>
+                            <span>{visiblePosts.length} shown</span>
+                        </div>
+                        <div className="ai-note-list">
+                            {visiblePosts.map(post => (
+                                <article key={post.id} className="ai-note-card">
+                                    <button type="button" className="ai-note-main" onClick={() => setActiveFile(post.id)}>
+                                        <span className="ai-note-meta">{post.date} / {post.readingTime} min read</span>
+                                        <strong>{post.title}</strong>
+                                        <span>{post.description}</span>
+                                    </button>
+                                    <div className="ai-note-tags">
+                                        {post.tags.map(tag => (
+                                            <button
+                                                key={tag}
+                                                type="button"
+                                                className={selectedTags.includes(tag) ? 'active' : ''}
+                                                onClick={() => toggleTag(tag)}
+                                            >
+                                                #{tag}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <button type="button" className="ai-note-open" onClick={() => setActiveFile(post.id)}>
+                                        <VscBook />
+                                        <span>Open</span>
+                                    </button>
+                                </article>
+                            ))}
+                        </div>
+
+                        {hasInteracted && filteredPosts.length === 0 && (
+                            <div className="ai-no-results">
+                                <VscSearch />
+                                <span>No matching notes yet.</span>
+                                <button type="button" onClick={resetJournal}>Reset</button>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="ai-mobile-tags" aria-label="Journal tags">
+                        {allTags.map(tag => (
+                            <button
+                                key={tag}
+                                type="button"
+                                className={selectedTags.includes(tag) ? 'active' : ''}
+                                onClick={() => toggleTag(tag)}
+                            >
+                                #{tag}
+                            </button>
+                        ))}
+                    </div>
                 </section>
             </main>
         </div>
