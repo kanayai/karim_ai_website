@@ -11,6 +11,17 @@ import './App.css';
 import WelcomeBanner from './components/WelcomeBanner';
 import MobileNav from './components/MobileNav';
 
+const blogFiles = [
+  'blog.html',
+  'academic_workflow.html',
+  'anscombe_quartet.html',
+  'git-vs-onedrive.html',
+  'reproducibility_guide.html',
+];
+
+const BlogViewer = React.lazy(() => import('./components/BlogViewer'));
+const HtmlViewer = React.lazy(() => import('./components/HtmlViewer'));
+
 function AppContent() {
   const [openFiles, setOpenFiles] = useState(['Welcome']);
   const [activeFile, setActiveFile] = useState('Welcome');
@@ -132,6 +143,7 @@ function AppContent() {
   // Determine layout type based on activeFile
   const getLayoutType = (file) => {
     if (file === 'Welcome') return 'terminal';
+    if (blogFiles.includes(file)) return 'journal';
     if (['projects.html', 'publications.html', 'phd_students.html', 'publications.R', 'git-graph'].includes(file)) {
       return 'github';
     }
@@ -200,6 +212,41 @@ function AppContent() {
             recentFiles={recentFiles}
           />
         </PyPILayout>
+        <MobileNav activeFile={activeFile} onNavigate={handleOpenFile} />
+      </>
+    );
+  }
+
+  if (layoutType === 'journal') {
+    const isJournalHome = activeFile === 'blog.html';
+
+    return (
+      <>
+        <div className="journal-standalone-shell">
+          <header className="journal-standalone-topbar">
+            <button type="button" onClick={() => handleOpenFile('Welcome')}>Back to OS</button>
+            <nav aria-label="Site sections">
+              <button type="button" onClick={() => handleOpenFile('projects.html')}>Research</button>
+              <button type="button" onClick={() => handleOpenFile('current_courses.ipynb')}>Teaching</button>
+              <button type="button" onClick={() => handleOpenFile('about_me.html')}>About</button>
+              <button type="button" onClick={() => handleOpenFile('contact.html')}>Contact</button>
+            </nav>
+          </header>
+          <div className={`journal-standalone-content ${isJournalHome ? '' : 'reader-mode'}`}>
+            <React.Suspense fallback={<div className="p-4" style={{ color: 'var(--vscode-text)' }}>Loading journal...</div>}>
+              {isJournalHome ? (
+                <BlogViewer setActiveFile={handleOpenFile} />
+              ) : (
+                <HtmlViewer
+                  activeFile={activeFile}
+                  theme={theme}
+                  setActiveFile={handleOpenFile}
+                  i18n={{ language: 'en' }}
+                />
+              )}
+            </React.Suspense>
+          </div>
+        </div>
         <MobileNav activeFile={activeFile} onNavigate={handleOpenFile} />
       </>
     );

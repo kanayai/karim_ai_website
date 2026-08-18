@@ -8,7 +8,6 @@ import { VscClose, VscCloseAll, VscChevronRight, VscLaw, VscGame, VscCode, VscGi
 import { FaMarkdown, FaPython, FaJs, FaReact, FaHtml5 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
-import BlogViewer from './BlogViewer';
 import readmeContent from '../../README.md?raw';
 import licenseContent from '../../LICENSE.txt?raw';
 import gitignoreContent from '../../.gitignore?raw';
@@ -105,10 +104,6 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
 
         if (activeFile === 'Welcome') {
             return <WelcomePage onNavigate={setActiveFile} simpleMode={simpleMode} toggleSimpleMode={toggleSimpleMode} recentFiles={recentFiles} theme={theme} setTheme={setTheme} />;
-        }
-
-        if (activeFile === 'blog.html') {
-            return <BlogViewer setActiveFile={setActiveFile} />;
         }
 
         if (activeFile.endsWith('.ipynb')) {

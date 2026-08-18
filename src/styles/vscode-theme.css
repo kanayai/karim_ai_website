@@ -1505,6 +1505,75 @@ body {
   border-radius: 4px;
 }
 
+.journal-standalone-shell {
+  width: 100vw;
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--vscode-accent) 18%, transparent), transparent 34rem),
+    var(--vscode-bg);
+  color: var(--vscode-text);
+}
+
+.journal-standalone-topbar {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--vscode-border);
+  background: color-mix(in srgb, var(--vscode-sidebar-bg) 86%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.journal-standalone-topbar nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.journal-standalone-topbar button {
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid var(--vscode-border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--vscode-editor-bg) 86%, transparent);
+  color: var(--vscode-text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.journal-standalone-topbar button:hover {
+  border-color: var(--vscode-accent);
+  background: var(--vscode-hover-bg);
+}
+
+.journal-standalone-content {
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.journal-standalone-content .blog-viewer.ai-journal {
+  height: 100%;
+}
+
+.journal-standalone-content.reader-mode {
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  padding: 18px;
+}
+
+.journal-standalone-content.reader-mode > div {
+  overflow: hidden;
+  border: 1px solid var(--vscode-border);
+  border-radius: 8px;
+}
+
 .blog-viewer.ai-journal {
   width: min(100%, 1180px);
   max-width: none !important;
@@ -1883,6 +1952,36 @@ body {
 }
 
 @media (max-width: 640px) {
+  .journal-standalone-shell {
+    height: 100dvh;
+    padding-bottom: 68px;
+  }
+
+  .journal-standalone-topbar {
+    min-height: 50px;
+    padding: 8px 10px;
+  }
+
+  .journal-standalone-topbar nav {
+    max-width: 68vw;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .journal-standalone-topbar nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .journal-standalone-topbar button {
+    min-height: 40px;
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .journal-standalone-content.reader-mode {
+    padding: 10px;
+  }
+
   .blog-viewer.ai-journal {
     width: 100%;
     padding: 12px;
