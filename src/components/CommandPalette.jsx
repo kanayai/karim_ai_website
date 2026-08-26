@@ -23,7 +23,8 @@ const CommandPalette = ({ isOpen, onClose, onNavigate }) => {
     const files = [
         // Navigation
         { name: 'Welcome', path: 'Welcome', category: 'Navigation', icon: 'home' },
-        { name: 'about_me.html', path: 'about_me.html', category: 'Navigation', icon: 'file' },
+        { name: 'About / Wiki', path: 'wiki.html', category: 'Navigation', icon: 'file' },
+        { name: 'workspace.md', path: 'workspace.md', category: 'Navigation', icon: 'file' },
         { name: 'contact.html', path: 'contact.html', category: 'Navigation', icon: 'file' },
 
         // Content

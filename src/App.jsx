@@ -240,7 +240,7 @@ function AppContent() {
             <nav aria-label="Site sections">
               <button type="button" onClick={() => handleOpenFile('projects.html')}>Research</button>
               <button type="button" onClick={() => handleOpenFile('current_courses.ipynb')}>Teaching</button>
-              <button type="button" onClick={() => handleOpenFile('about_me.html')}>About</button>
+              <button type="button" onClick={() => handleOpenFile('wiki.html')}>About</button>
               <button type="button" onClick={() => handleOpenFile('contact.html')}>Contact</button>
             </nav>
           </header>

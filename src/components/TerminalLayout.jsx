@@ -11,11 +11,11 @@ const ASCII_LOGO = `
 `;
 
 const PAGES = {
-    about: { file: 'about_me.md', desc: 'biography, education, CV (VS Code layout)' },
+    about: { file: 'wiki.html', desc: 'public profile (encyclopaedia layout)' },
+    workspace: { file: 'workspace.md', desc: 'academic workbench (VS Code layout)' },
     research: { file: 'projects.html', desc: 'publications & active projects (GitHub layout)' },
     teaching: { file: 'current_courses.ipynb', desc: 'current & past courses (PyPI layout)' },
     blog: { file: 'blog.html', desc: 'the Quarto blog' },
-    wiki: { file: 'wiki.html', desc: 'factual public profile (encyclopaedia layout)' },
 };
 
 const CONTACT_LINKS = [
@@ -26,7 +26,7 @@ const CONTACT_LINKS = [
 ];
 
 const COMMAND_NAMES = [
-    'help', 'about', 'research', 'teaching', 'blog', 'wiki', 'contact', 'whoami',
+    'help', 'about', 'workspace', 'research', 'teaching', 'blog', 'wiki', 'contact', 'whoami',
     'ls', 'map', 'open', 'theme', 'fastfetch', 'history', 'date', 'echo', 'clear',
 ];
 
@@ -39,7 +39,7 @@ const bathUptime = () => {
     return `${years} years, ${months} months`;
 };
 
-const QUICK_COMMANDS = ['about', 'research', 'teaching', 'blog', 'wiki', 'contact', 'help'];
+const QUICK_COMMANDS = ['about', 'workspace', 'research', 'teaching', 'blog', 'contact', 'help'];
 
 const TerminalLayout = ({ setActiveFile, theme, toggleTheme }) => {
     const [history, setHistory] = useState([
@@ -96,7 +96,8 @@ const TerminalLayout = ({ setActiveFile, theme, toggleTheme }) => {
             case 'help':
                 print([
                     { text: 'Available commands:', type: 'success' },
-                    { text: '  about       open biography, education and CV', type: 'info' },
+                    { text: '  about       open the encyclopaedia-style profile', type: 'info' },
+                    { text: '  workspace   open the VS Code academic workbench', type: 'info' },
                     { text: '  research    open publications and active projects', type: 'info' },
                     { text: '  teaching    open current and past courses', type: 'info' },
                     { text: '  blog        open the blog', type: 'info' },
@@ -111,8 +112,11 @@ const TerminalLayout = ({ setActiveFile, theme, toggleTheme }) => {
                     { text: 'Tips: Tab autocompletes, ↑/↓ recall previous commands.', type: 'dim' },
                 ]);
                 break;
-            case 'about': case 'cv': case 'bio':
+            case 'about': case 'wiki': case 'wikipedia':
                 openPage('about');
+                break;
+            case 'workspace': case 'workbench': case 'code':
+                openPage('workspace');
                 break;
             case 'research': case 'publications': case 'projects':
                 openPage('research');
@@ -122,9 +126,6 @@ const TerminalLayout = ({ setActiveFile, theme, toggleTheme }) => {
                 break;
             case 'blog':
                 openPage('blog');
-                break;
-            case 'wiki': case 'wikipedia':
-                openPage('wiki');
                 break;
             case 'contact':
                 print([
@@ -147,11 +148,11 @@ const TerminalLayout = ({ setActiveFile, theme, toggleTheme }) => {
                 print([
                     { text: 'K.AI OS map:', type: 'success' },
                     { text: '  Terminal   home base and command centre', type: 'info' },
-                    { text: '  VS Code    biography, CV and contact workspace', type: 'info' },
+                    { text: '  Wiki       factual public profile', type: 'info' },
+                    { text: '  VS Code    academic workspace and working stack', type: 'info' },
                     { text: '  GitHub     research projects, publications and students', type: 'info' },
                     { text: '  PyPI       teaching materials and course packages', type: 'info' },
                     { text: '  Journal    blog posts and longer notes', type: 'info' },
-                    { text: '  Wiki       factual public profile', type: 'info' },
                     { text: 'Use Back to OS from any environment to return here.', type: 'dim' },
                 ]);
                 break;

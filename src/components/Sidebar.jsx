@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 const fileToFolderPath = {
     'Welcome': ['Home'],
+    'workspace.md': ['Home'],
     'publications.html': ['Research'],
     'publications.R': ['Research'],
     'phd_students.html': ['Research'],
@@ -35,6 +36,7 @@ const Sidebar = ({ activeFile, setActiveFile, activeView }) => {
             type: 'folder',
             children: [
                 { name: 'Welcome', icon: <img src="/images/Bath_Crest.png" alt="Welcome" style={{ width: '16px', height: '16px' }} />, type: 'welcome' },
+                { name: 'workspace.md', icon: <FaMarkdown color="#519aba" />, type: 'markdown' },
             ]
         },
         {
@@ -69,7 +71,6 @@ const Sidebar = ({ activeFile, setActiveFile, activeView }) => {
                 { name: 'blog.html', icon: <VscCode color="#e44d26" />, type: 'html', path: '/blog.html' },
             ]
         },
-        { name: 'about_me.html', icon: <VscCode color="#e34c26" />, type: 'html' },
         { name: 'contact.html', icon: <VscCode color="#e34c26" />, type: 'html' },
         { name: '.gitignore', icon: <VscSourceControl color="#858585" />, type: 'git' },
         { name: 'LICENSE.txt', icon: <VscLaw color="#d4d4d4" />, type: 'text' },

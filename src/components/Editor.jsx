@@ -19,6 +19,7 @@ import quartoGuideContent from '../../QUARTO_GUIDE.md?raw';
 import syncInstructionsContent from '../../SYNC_INSTRUCTIONS.md?raw';
 import futureImprovementsContent from '../../FUTURE_IMPROVEMENTS.md?raw';
 import websiteDocumentationContent from '../../WEBSITE_DOCUMENTATION.md?raw';
+import workspaceContent from '../../workspace.md?raw';
 
 const NotebookViewer = lazy(() => import('./NotebookViewer'));
 const RCodeViewer = lazy(() => import('./RCodeViewer'));
@@ -45,10 +46,12 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
         'SYNC_INSTRUCTIONS.md': syncInstructionsContent,
         'FUTURE_IMPROVEMENTS.md': futureImprovementsContent,
         'WEBSITE_DOCUMENTATION.md': websiteDocumentationContent,
+        'workspace.md': workspaceContent,
     };
 
     const workspacePaths = {
         'Welcome': ['home'],
+        'workspace.md': ['workspace'],
         'publications.R': ['data'],
         'current_courses.ipynb': ['notebooks'],
         'previous_courses.ipynb': ['notebooks'],

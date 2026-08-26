@@ -83,7 +83,7 @@ const WikiLayout = ({ setActiveFile }) => {
 
                     <h2 id="career">Career</h2>
                     <p>
-                        Anaya-Izquierdo is based at the University of Bath, where he works in mathematical sciences and statistics. The site presents his academic work through several fictional interfaces: a GitHub-style research repository, a PyPI-style teaching package, a VS Code-style profile workspace, and this encyclopaedia article.
+                        Anaya-Izquierdo is based at the University of Bath, where he works in mathematical sciences and statistics. The site presents his academic work through several fictional interfaces: a GitHub-style research repository, a PyPI-style teaching package, a VS Code-style academic workspace, and this encyclopaedia article.
                     </p>
 
                     <h2 id="research">Research</h2>

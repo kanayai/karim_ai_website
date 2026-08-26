@@ -35,7 +35,7 @@ const WelcomePage = ({ onNavigate, recentFiles = [] }) => {
             icon: <VscAccount size={20} color="#4ec9b0" />,
             title: t('welcome.about_me'),
             description: t('welcome.about_me_desc'),
-            action: () => onNavigate('about_me.html')
+            action: () => onNavigate('wiki.html')
         }
     ];
 
