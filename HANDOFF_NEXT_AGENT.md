@@ -1,21 +1,21 @@
 # Handoff — karim_ai_website
-_Checkpoint 2026-08-18 15:50_
+_Checkpoint 2026-08-25 21:33 CST_
 
 ## Objective
-Improve the website page by page, with special attention to mobile usability while preserving Karim's different theme idea for each section.
+Continue evolving Karim's personal academic website as an immersive multi-environment site while keeping navigation recoverable and mobile usable.
 
 ## Done so far
-- Reworked Research/GitHub project tabs so active GKN Prosperity Partnership and completed CerTest project are separate and no longer overlap.
-- Rebuilt Blog as a standalone AI-agent-style page, renamed user-facing copy from Journal to Blog, and added account/model-selector details.
-- Improved mobile profile pages, blog post reader, publications page, and Teaching/PyPI page.
-- Added publications search/year filtering and regenerated `public/publications.html` from `data/publications.R`.
-- Pushed all completed website work through `main` for Netlify deployment.
+- Added Terminal `map` and standardised `Back to OS` escape hatches across themed layouts.
+- Fixed Research/GitHub scrolling so the fake repository page itself scrolls rather than trapping `projects.html`, `publications.html`, or `phd_students.html` in a small inner frame.
+- Added a standalone Wikipedia-style profile page and made it the About destination.
+- Repurposed the VS Code layout as `workspace.md`, an academic workbench / working-stack page rather than a duplicate About page.
+- Applied the same outer-page scrolling approach to Teaching/PyPI and pushed all changes to `origin/main` for Netlify deployment.
 
-## Resume Point
-Start from the deployed site on Netlify and test the Teaching/PyPI page on a real phone, especially `current_courses.ipynb` and `previous_courses.ipynb`.
+## Resume point
+Start from the live Netlify site after commit `b76afae`. Test the latest deployed behaviour on desktop and phone: `about`/`wiki`, `workspace`, Research file pages, and Teaching/PyPI scrolling.
 
-## Next Action
-Do a final global mobile navigation and visual QA pass across Home, Research, Publications, Teaching, Blog, About, and Contact.
+## Next action
+Do a live UX QA pass and decide whether `workspace.md` content should become a richer AI academic OS / methods workbench, or whether navigation labels need adjustment after seeing it live.
 
 ## Last Safe Commit
-27427f6 — tree clean at checkpoint.
+`b76afae` — tree clean and pushed to `origin/main`.
