@@ -282,6 +282,7 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n, autoHeight = false
                 src={src}
                 className="blog-reader-iframe"
                 style={{ width: '100%', flexGrow: autoHeight ? 0 : 1, border: 'none' }}
+                scrolling={autoHeight ? 'no' : undefined}
                 title="Blog Post"
                 onLoad={(e) => {
                     injectStyles(e.target);
