@@ -323,14 +323,21 @@
 .render-frame-container {
   background-color: #0d1117;
   display: flex;
-  height: clamp(640px, 72dvh, 900px);
-  min-height: 0;
+  min-height: 640px;
 }
 
 .render-frame-container > .editor-shell {
   width: 100%;
-  height: 100%;
-  min-height: 0;
+  min-height: 640px;
+}
+
+.render-frame-container .editor-content-frame {
+  overflow: visible !important;
+}
+
+.render-frame-container .blog-reader-frame {
+  height: auto !important;
+  min-height: 640px;
 }
 
 /* Sidebar Section */
@@ -493,7 +500,6 @@
   }
 
   .render-frame-container {
-    height: calc(100dvh - 210px);
     min-height: 520px;
   }
 }

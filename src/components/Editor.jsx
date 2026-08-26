@@ -30,7 +30,7 @@ const LatexPlayground = lazy(() => import('./LatexPlayground'));
 const CitationGenerator = lazy(() => import('./CitationGenerator'));
 const DataVizGallery = lazy(() => import('./DataVizGallery'));
 
-const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme, setTheme, simpleMode, toggleSimpleMode, recentFiles }) => {
+const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme, setTheme, simpleMode, toggleSimpleMode, recentFiles, htmlAutoHeight = false }) => {
     const { i18n } = useTranslation();
 
     const workspaceFileContent = {
@@ -111,7 +111,7 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
         }
 
         if (activeFile.endsWith('.html')) {
-            return <HtmlViewer activeFile={activeFile} theme={theme} setActiveFile={setActiveFile} i18n={i18n} />;
+            return <HtmlViewer activeFile={activeFile} theme={theme} setActiveFile={setActiveFile} i18n={i18n} autoHeight={htmlAutoHeight} />;
         }
 
         if (activeFile === 'retro_game.exe') {

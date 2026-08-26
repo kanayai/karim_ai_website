@@ -3,7 +3,7 @@ import { VscChevronRight } from 'react-icons/vsc';
 
 import { blogPosts } from '../constants/blogData';
 
-const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
+const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n, autoHeight = false }) => {
     // Construct path logic
     let src = '';
     const lang = i18n.language;
@@ -237,12 +237,25 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
 
     const iframeRef = useRef(null);
 
+    const resizeIframeToContent = useCallback((iframe) => {
+        if (!autoHeight || !iframe?.contentDocument) return;
+
+        const doc = iframe.contentDocument;
+        const height = Math.max(
+            doc.body?.scrollHeight || 0,
+            doc.documentElement?.scrollHeight || 0,
+            640
+        );
+        iframe.style.height = `${height}px`;
+    }, [autoHeight]);
+
     // Re-run injection when theme changes
     useEffect(() => {
         if (iframeRef.current) {
             injectStyles(iframeRef.current);
+            resizeIframeToContent(iframeRef.current);
         }
-    }, [injectStyles]);
+    }, [injectStyles, resizeIframeToContent]);
 
     return (
         <div className="blog-reader-frame d-flex flex-column h-100">
@@ -268,9 +281,12 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n }) => {
                 key={src} // Key is just src now, no theme param
                 src={src}
                 className="blog-reader-iframe"
-                style={{ width: '100%', flexGrow: 1, border: 'none' }}
+                style={{ width: '100%', flexGrow: autoHeight ? 0 : 1, border: 'none' }}
                 title="Blog Post"
-                onLoad={(e) => injectStyles(e.target)}
+                onLoad={(e) => {
+                    injectStyles(e.target);
+                    resizeIframeToContent(e.target);
+                }}
             />
         </div>
     );
