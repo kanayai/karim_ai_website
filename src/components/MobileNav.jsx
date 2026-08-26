@@ -12,6 +12,7 @@ const items = [
 
 const sectionForFile = (file) => {
     if (file === 'Welcome') return 'Welcome';
+    if (file === 'wiki.html') return 'about_me.html';
     if (['projects.html', 'publications.html', 'phd_students.html', 'certest.html', 'gkn_prosperity.html', 'publications.R'].includes(file)) return 'projects.html';
     if (['current_courses.ipynb', 'previous_courses.ipynb'].includes(file)) return 'current_courses.ipynb';
     if (file === 'blog.html' || file?.endsWith?.('_guide.html') || file === 'academic_workflow.html' || file === 'anscombe_quartet.html' || file === 'git-vs-onedrive.html') return 'blog.html';

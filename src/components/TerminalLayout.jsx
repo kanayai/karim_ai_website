@@ -15,6 +15,7 @@ const PAGES = {
     research: { file: 'projects.html', desc: 'publications & active projects (GitHub layout)' },
     teaching: { file: 'current_courses.ipynb', desc: 'current & past courses (PyPI layout)' },
     blog: { file: 'blog.html', desc: 'the Quarto blog' },
+    wiki: { file: 'wiki.html', desc: 'factual public profile (encyclopaedia layout)' },
 };
 
 const CONTACT_LINKS = [
@@ -25,7 +26,7 @@ const CONTACT_LINKS = [
 ];
 
 const COMMAND_NAMES = [
-    'help', 'about', 'research', 'teaching', 'blog', 'contact', 'whoami',
+    'help', 'about', 'research', 'teaching', 'blog', 'wiki', 'contact', 'whoami',
     'ls', 'map', 'open', 'theme', 'fastfetch', 'history', 'date', 'echo', 'clear',
 ];
 
@@ -38,7 +39,7 @@ const bathUptime = () => {
     return `${years} years, ${months} months`;
 };
 
-const QUICK_COMMANDS = ['about', 'research', 'teaching', 'blog', 'contact', 'help'];
+const QUICK_COMMANDS = ['about', 'research', 'teaching', 'blog', 'wiki', 'contact', 'help'];
 
 const TerminalLayout = ({ setActiveFile, theme, toggleTheme }) => {
     const [history, setHistory] = useState([
@@ -99,6 +100,7 @@ const TerminalLayout = ({ setActiveFile, theme, toggleTheme }) => {
                     { text: '  research    open publications and active projects', type: 'info' },
                     { text: '  teaching    open current and past courses', type: 'info' },
                     { text: '  blog        open the blog', type: 'info' },
+                    { text: '  wiki        open the encyclopaedia-style profile', type: 'info' },
                     { text: '  contact     email, ORCID, GitHub, university profile', type: 'info' },
                     { text: '  whoami      one-line introduction', type: 'info' },
                     { text: '  ls          list available pages', type: 'info' },
@@ -120,6 +122,9 @@ const TerminalLayout = ({ setActiveFile, theme, toggleTheme }) => {
                 break;
             case 'blog':
                 openPage('blog');
+                break;
+            case 'wiki': case 'wikipedia':
+                openPage('wiki');
                 break;
             case 'contact':
                 print([
@@ -146,6 +151,7 @@ const TerminalLayout = ({ setActiveFile, theme, toggleTheme }) => {
                     { text: '  GitHub     research projects, publications and students', type: 'info' },
                     { text: '  PyPI       teaching materials and course packages', type: 'info' },
                     { text: '  Journal    blog posts and longer notes', type: 'info' },
+                    { text: '  Wiki       factual public profile', type: 'info' },
                     { text: 'Use Back to OS from any environment to return here.', type: 'dim' },
                 ]);
                 break;

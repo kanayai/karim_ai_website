@@ -4,6 +4,7 @@ import Editor from './components/Editor';
 import TerminalLayout from './components/TerminalLayout';
 import GitHubLayout from './components/GitHubLayout';
 import PyPILayout from './components/PyPILayout';
+import WikiLayout from './components/WikiLayout';
 import { themes } from './constants/themes';
 import { useRecentFiles } from './hooks/useRecentFiles';
 import { ToastProvider, useToast } from './contexts/ToastContext';
@@ -143,6 +144,7 @@ function AppContent() {
   // Determine layout type based on activeFile
   const getLayoutType = (file) => {
     if (file === 'Welcome') return 'terminal';
+    if (file === 'wiki.html') return 'wiki';
     if (blogFiles.includes(file)) return 'journal';
     if (['projects.html', 'publications.html', 'phd_students.html', 'publications.R', 'git-graph'].includes(file)) {
       return 'github';
@@ -188,6 +190,15 @@ function AppContent() {
             htmlAutoHeight
           />
         </GitHubLayout>
+        <MobileNav activeFile={activeFile} onNavigate={handleOpenFile} />
+      </>
+    );
+  }
+
+  if (layoutType === 'wiki') {
+    return (
+      <>
+        <WikiLayout setActiveFile={handleOpenFile} />
         <MobileNav activeFile={activeFile} onNavigate={handleOpenFile} />
       </>
     );
