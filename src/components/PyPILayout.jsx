@@ -25,7 +25,7 @@ const PyPILayout = ({ activeFile, setActiveFile, children }) => {
                     </div>
                 </div>
                 <div className="d-flex align-items-center gap-4 pypi-nav-links">
-                    <span className="pypi-nav-link exit-to-os" onClick={() => setActiveFile('Welcome')}>Exit to OS</span>
+                    <span className="pypi-nav-link exit-to-os" onClick={() => setActiveFile('Welcome')}>Back to OS</span>
                     <span className="pypi-nav-link">Help</span>
                     <span className="pypi-nav-link">Sponsor</span>
                     <span className="pypi-nav-link">Log in</span>

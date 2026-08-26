@@ -26,7 +26,7 @@ const CONTACT_LINKS = [
 
 const COMMAND_NAMES = [
     'help', 'about', 'research', 'teaching', 'blog', 'contact', 'whoami',
-    'ls', 'open', 'theme', 'fastfetch', 'history', 'date', 'echo', 'clear',
+    'ls', 'map', 'open', 'theme', 'fastfetch', 'history', 'date', 'echo', 'clear',
 ];
 
 const bathUptime = () => {
@@ -43,7 +43,7 @@ const QUICK_COMMANDS = ['about', 'research', 'teaching', 'blog', 'contact', 'hel
 const TerminalLayout = ({ setActiveFile, theme, toggleTheme }) => {
     const [history, setHistory] = useState([
         { text: 'Welcome to K.AI OS — the personal site of Karim Anaya-Izquierdo.', type: 'success' },
-        { text: 'Type "help" or tap a command below to explore.', type: 'info' },
+        { text: 'Type "map" to see the site structure, or tap a command below.', type: 'info' },
         { text: 'Logged in as guest@karim-anaya.io', type: 'dim' },
     ]);
     const [input, setInput] = useState('');
@@ -102,6 +102,7 @@ const TerminalLayout = ({ setActiveFile, theme, toggleTheme }) => {
                     { text: '  contact     email, ORCID, GitHub, university profile', type: 'info' },
                     { text: '  whoami      one-line introduction', type: 'info' },
                     { text: '  ls          list available pages', type: 'info' },
+                    { text: '  map         show how the site environments fit together', type: 'info' },
                     { text: '  theme       toggle the visual theme', type: 'info' },
                     { text: '  fastfetch   show profile stats', type: 'info' },
                     { text: '  clear       clear the screen', type: 'info' },
@@ -136,6 +137,17 @@ const TerminalLayout = ({ setActiveFile, theme, toggleTheme }) => {
                 print(Object.entries(PAGES).map(([name, p]) => (
                     { text: `  ${name.padEnd(10)} ${p.desc}`, type: 'info' }
                 )));
+                break;
+            case 'map':
+                print([
+                    { text: 'K.AI OS map:', type: 'success' },
+                    { text: '  Terminal   home base and command centre', type: 'info' },
+                    { text: '  VS Code    biography, CV and contact workspace', type: 'info' },
+                    { text: '  GitHub     research projects, publications and students', type: 'info' },
+                    { text: '  PyPI       teaching materials and course packages', type: 'info' },
+                    { text: '  Journal    blog posts and longer notes', type: 'info' },
+                    { text: 'Use Back to OS from any environment to return here.', type: 'dim' },
+                ]);
                 break;
             case 'open':
                 if (args[0] && PAGES[args[0].toLowerCase()]) {
@@ -323,6 +335,7 @@ const TerminalLayout = ({ setActiveFile, theme, toggleTheme }) => {
                         {QUICK_COMMANDS.map(c => (
                             <button key={c} className="chip" onClick={() => runCommand(c)}>{c}</button>
                         ))}
+                        <button className="chip chip-alt" onClick={() => runCommand('map')}>map</button>
                         <button className="chip chip-alt" onClick={() => runCommand('theme')}>theme</button>
                         <button className="chip chip-alt" onClick={() => runCommand('clear')}>clear</button>
                     </div>
