@@ -1,7 +1,7 @@
 import React from 'react';
 import { VscArrowLeft, VscArrowRight, VscSearch, VscLayoutSidebarLeft, VscLayoutSidebarRight, VscLayoutPanel, VscMenu, VscColorMode, VscChromeMinimize, VscChromeMaximize, VscChromeClose } from 'react-icons/vsc';
 
-const TitleBar = ({ onSearchClick, toggleSidebar, simpleMode, toggleSimpleMode, theme, toggleTheme }) => {
+const TitleBar = ({ onSearchClick, toggleSidebar, simpleMode, toggleSimpleMode, theme, toggleTheme, onBackToOS }) => {
     const menuItems = ['File', 'Edit', 'Selection', 'View', 'Go', 'Run', 'Terminal', 'Help'];
 
     return (
@@ -72,6 +72,13 @@ const TitleBar = ({ onSearchClick, toggleSidebar, simpleMode, toggleSimpleMode, 
             </div>
 
             <div className="d-flex gap-1 align-items-center titlebar-right">
+                <button
+                    type="button"
+                    className="titlebar-back-to-os"
+                    onClick={onBackToOS}
+                >
+                    Back to OS
+                </button>
                 <div
                     onClick={toggleTheme}
                     className="titlebar-icon-button"

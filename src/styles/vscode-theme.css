@@ -729,6 +729,22 @@ body {
   color: var(--vscode-text);
 }
 
+.titlebar-back-to-os {
+  min-height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--vscode-border);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--vscode-accent) 16%, transparent 84%);
+  color: var(--vscode-accent);
+  font-size: 12px;
+  line-height: 1;
+}
+
+.titlebar-back-to-os:hover {
+  background: var(--vscode-accent);
+  color: var(--vscode-button-foreground, #fff);
+}
+
 .titlebar-icon-button:disabled {
   opacity: 0.5;
   cursor: default;
