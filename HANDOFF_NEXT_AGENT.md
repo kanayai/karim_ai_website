@@ -1,21 +1,24 @@
 # Handoff — karim_ai_website
-_Checkpoint 2026-08-25 21:33 CST_
+_Checkpoint 2026-09-26 15:20 BST_
 
 ## Objective
-Continue evolving Karim's personal academic website as an immersive multi-environment site while keeping navigation recoverable and mobile usable.
+Replace the terminal-only home page with a mobile-friendly modern macOS-style desktop that acts as the navigation hub for the existing themed site.
 
 ## Done so far
-- Added Terminal `map` and standardised `Back to OS` escape hatches across themed layouts.
-- Fixed Research/GitHub scrolling so the fake repository page itself scrolls rather than trapping `projects.html`, `publications.html`, or `phd_students.html` in a small inner frame.
-- Added a standalone Wikipedia-style profile page and made it the About destination.
-- Repurposed the VS Code layout as `workspace.md`, an academic workbench / working-stack page rather than a duplicate About page.
-- Applied the same outer-page scrolling approach to Teaching/PyPI and pushed all changes to `origin/main` for Netlify deployment.
+- Added a Liquid Glass-inspired desktop, Finder menu bar, wallpaper and macOS-style Dock.
+- Added irregular, overlapping link windows for About, Research, Teaching, Journal, Workspace and Contact.
+- Converted the large terminal into a static preview linking to the separate full interactive terminal.
+- Added responsive mobile behaviour: windows become a readable vertical stack and the Dock remains available.
+- Incorporated Karim's review: no tilted windows or window hover movement; less symmetrical placement and distinct filled Dock icons.
 
 ## Resume point
-Start from the live Netlify site after commit `b76afae`. Test the latest deployed behaviour on desktop and phone: `about`/`wiki`, `workspace`, Research file pages, and Teaching/PyPI scrolling.
+Start with `src/components/MacDesktopLayout.jsx` and `MacDesktopLayout.css`; `src/App.jsx` maps `Welcome` to the desktop and `terminal.html` to the existing terminal.
 
 ## Next action
-Do a live UX QA pass and decide whether `workspace.md` content should become a richer AI academic OS / methods workbench, or whether navigation labels need adjustment after seeing it live.
+After Netlify deploys commit `bcf434d`, perform live desktop and real-phone QA, then adjust window placement and sizing from Karim's visual feedback.
 
-## Last Safe Commit
-`b76afae` — tree clean and pushed to `origin/main`.
+## Last safe commit
+`bcf434d` — implementation committed; production build and targeted ESLint pass.
+
+## Blockers
+- None. Draggable/resizable windows are deliberately deferred until the fixed layout is approved.
