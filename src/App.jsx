@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Layout from './components/Layout';
 import Editor from './components/Editor';
+import MacDesktopLayout from './components/MacDesktopLayout';
 import TerminalLayout from './components/TerminalLayout';
 import GitHubLayout from './components/GitHubLayout';
 import PyPILayout from './components/PyPILayout';
@@ -143,7 +144,8 @@ function AppContent() {
 
   // Determine layout type based on activeFile
   const getLayoutType = (file) => {
-    if (file === 'Welcome') return 'terminal';
+    if (file === 'Welcome') return 'desktop';
+    if (file === 'terminal.html') return 'terminal';
     if (file === 'wiki.html') return 'wiki';
     if (blogFiles.includes(file)) return 'journal';
     if (['projects.html', 'publications.html', 'phd_students.html', 'publications.R', 'git-graph'].includes(file)) {
@@ -157,14 +159,16 @@ function AppContent() {
 
   const layoutType = getLayoutType(activeFile);
 
+  if (layoutType === 'desktop') {
+    return <MacDesktopLayout setActiveFile={handleOpenFile} />;
+  }
+
   if (layoutType === 'terminal') {
     return (
       <TerminalLayout
-        activeFile={activeFile}
         setActiveFile={handleOpenFile}
         theme={theme}
         toggleTheme={toggleTheme}
-        setTheme={setTheme}
       />
     );
   }
