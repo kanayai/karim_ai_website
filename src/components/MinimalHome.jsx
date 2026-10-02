@@ -34,6 +34,7 @@ export default function MinimalHome({ setActiveFile }) {
     const [armed, setArmed] = useState(null); // touch: first tap previews
     const skipRef = useRef(false);
     const inputRef = useRef(null);
+    const rowRef = useRef(null);
     const [value, setValue] = useState('');
     const [blocks, setBlocks] = useState([]); // typed commands and their output
     const [cleared, setCleared] = useState(false);
@@ -128,6 +129,11 @@ export default function MinimalHome({ setActiveFile }) {
         if (done && window.matchMedia('(hover: hover)').matches) inputRef.current?.focus();
     }, [done]);
 
+    // Keep the prompt in view as output grows or the user types.
+    useEffect(() => {
+        rowRef.current?.scrollIntoView({ block: 'end', behavior: 'auto' });
+    }, [blocks, value, done]);
+
     const submit = () => {
         const text = value;
         setValue('');
@@ -200,7 +206,7 @@ export default function MinimalHome({ setActiveFile }) {
                 ))}
                 {done && (
                     <>
-                        <label className="mh-line mh-line--end mh-input-row">
+                        <label ref={rowRef} className="mh-line mh-line--end mh-input-row">
                             <span className="mh-prompt">karim@bath ~ %</span>
                             <input
                                 ref={inputRef}

@@ -64,7 +64,7 @@
     --mh-bg: #fafaf7; --mh-fg: #222; --mh-strong: #000; --mh-link: #0b57d0;
     --mh-dim: #666; --mh-prompt: #1a7f37; --mh-line: #d8d8d0;
 }
-.mh-input-row { display: flex; align-items: center; }
+.mh-input-row { display: flex; align-items: center; scroll-margin-bottom: 3rem; }
 .mh-input {
     flex: 1; min-width: 0;
     background: transparent; border: 0; outline: 0; padding: 0;
