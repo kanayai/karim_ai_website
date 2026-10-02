@@ -41,7 +41,6 @@ export default function MinimalHome({ setActiveFile }) {
     const [light, setLight] = useState(false);
     const [cmds, setCmds] = useState([]);
     const [cursor, setCursor] = useState(-1); // history position
-    const [used, setUsed] = useState(false);
 
     const lsBlock = (
         <nav className="mh-ls" aria-label="Site sections">
@@ -138,7 +137,6 @@ export default function MinimalHome({ setActiveFile }) {
         const text = value;
         setValue('');
         setCursor(-1);
-        setUsed(true);
         const res = run(text, { entries, history: cmds, light });
         if (text.trim()) setCmds((c) => [...c, text.trim()]);
         if (res.action === 'clear') {
@@ -222,7 +220,7 @@ export default function MinimalHome({ setActiveFile }) {
                                 enterKeyHint="go"
                             />
                         </label>
-                        {!used && <p className="mh-hint">type <b>help</b> or click a folder</p>}
+                        <p className="mh-hint">type <b>help</b> or click a folder</p>
                     </>
                 )}
             </div>
