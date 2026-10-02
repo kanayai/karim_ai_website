@@ -38,7 +38,7 @@ export default function MinimalHome({ setActiveFile }) {
     const [value, setValue] = useState('');
     const [blocks, setBlocks] = useState([]); // typed commands and their output
     const [cleared, setCleared] = useState(false);
-    const [light, setLight] = useState(false);
+    const [light, setLight] = useState(true);
     const [cmds, setCmds] = useState([]);
     const [cursor, setCursor] = useState(-1); // history position
 
