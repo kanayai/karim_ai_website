@@ -42,17 +42,17 @@ export default function MinimalHome({ setActiveFile }) {
     const [cmds, setCmds] = useState([]);
     const [cursor, setCursor] = useState(-1); // history position
 
-    const lsBlock = (
+    const renderList = (listId) => (
         <nav className="mh-ls" aria-label="Site sections">
             {entries.map((e, i) => (
                 <a
                     key={e.file}
                     href={`#${e.file}`}
-                    className={`mh-entry${active?.file === e.file ? ' is-active' : ''}`}
+                    className={`mh-entry${active?.file === e.file && active?.listId === listId ? ' is-active' : ''}`}
                     style={{ animationDelay: `${instant ? 0 : i * 90}ms` }}
-                    onClick={(ev) => onClick(ev, e)}
-                    onMouseEnter={() => setActive(e)}
-                    onFocus={() => setActive(e)}
+                    onClick={(ev) => onClick(ev, { ...e, listId })}
+                    onMouseEnter={() => setActive({ ...e, listId })}
+                    onFocus={() => setActive({ ...e, listId })}
                 >
                     {e.name}
                 </a>
@@ -188,7 +188,7 @@ export default function MinimalHome({ setActiveFile }) {
                                 <p className="mh-line">
                                     <span className="mh-prompt">karim@bath ~ %</span> ls
                                 </p>
-                                {lsBlock}
+                                {renderList('initial')}
                             </>
                         )}
                     </>
@@ -198,7 +198,7 @@ export default function MinimalHome({ setActiveFile }) {
                         {b.cmd !== null && (
                             <p className="mh-line"><span className="mh-prompt">karim@bath ~ %</span> {b.cmd}</p>
                         )}
-                        {b.ls && lsBlock}
+                        {b.ls && renderList(b.id)}
                         {b.out.length > 0 && <pre className={`mh-out${b.art ? ' mh-art' : ''}`}>{b.out.join('\n')}</pre>}
                     </div>
                 ))}
