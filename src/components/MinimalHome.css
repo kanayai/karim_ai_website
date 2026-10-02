@@ -70,6 +70,11 @@
     background: transparent; border: 0; outline: 0; padding: 0;
     color: inherit; font: inherit; caret-color: var(--mh-fg);
 }
+.mh-screen .mh-input,
+.mh-screen .mh-input:focus,
+.mh-screen .mh-input:focus-visible {
+    outline: none !important; box-shadow: none !important; border: 0 !important; background: transparent !important;
+}
 .mh-out { margin: 0 0 .8rem; font: inherit; white-space: pre-wrap; color: var(--mh-fg); }
 .mh-art { color: #febc2e; line-height: 1.25; }
 .mh-screen.is-light .mh-art { color: #9a5b00; }
