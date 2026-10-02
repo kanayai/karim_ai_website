@@ -2,7 +2,7 @@
 export const COMMANDS = [
     'help', 'ls', 'cd', 'open', 'cat', 'man', 'whoami', 'pwd', 'date', 'uptime',
     'contact', 'mail', 'fastfetch', 'coffee', 'tea', 'theme', 'clear',
-    'history', 'exit', 'quit', 'logout', 'vim', 'sudo',
+    'history', 'grep', 'exit', 'quit', 'logout', 'vim', 'sudo',
 ];
 
 const bathUptime = () => {
@@ -46,6 +46,7 @@ const HELP = [
     'cat bio            short bio (also: man karim)',
     'whoami, pwd, date, uptime',
     'contact            email and ORCID (also: mail)',
+    'grep <word>        search the site',
     'fastfetch          spec block',
     'coffee, tea        ASCII refreshments',
     'theme              toggle dark / light',
@@ -108,6 +109,17 @@ export function run(input, { entries, history, light }) {
         case 'rm':
             if (/(^|\s)(-\w*[rf]\w*|\/|\*|~)(\s|$)/.test(args.join(' '))) return { out: ['Nice try.', 'rm: operation not permitted (permission denied).'] };
             return { out: ['rm: permission denied'] };
+        case 'grep': {
+            // Searches section blurbs and the bio; flags are ignored, matching is case-insensitive.
+            const pat = args.filter((a) => !a.startsWith('-')).join(' ').replace(/^["']|["']$/g, '').toLowerCase();
+            if (!pat) return { out: ['usage: grep <pattern>'] };
+            const lines = entries.map((e) => [`${e.name}${e.file}`, e.blurb])
+                .concat(BIO.map((l) => ['bio.txt', l]));
+            const hits = lines.filter(([, l]) => l.toLowerCase().includes(pat)).map(([f, l]) => `${f}: ${l}`);
+            return { out: hits.length ? hits : ['(no matches)'] };
+        }
+        case 'mkdir': case 'touch': case 'mv': case 'cp': case 'chmod': case 'chown':
+            return { out: [`${cmd}: ${args[0] || ''}: Read-only file system`, 'Look, don’t touch.'] };
         default: return { out: [`zsh: command not found: ${cmd}`] };
     }
 }
