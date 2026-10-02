@@ -31,7 +31,6 @@ export default function MinimalHome({ setActiveFile }) {
     const [name, setName] = useState(instant ? 'Karim AI' : '');
     const [phase, setPhase] = useState(instant ? 'done' : 'typing'); // typing | done
     const [active, setActive] = useState(null);
-    const [armed, setArmed] = useState(null); // touch: first tap previews
     const skipRef = useRef(false);
     const inputRef = useRef(null);
     const rowRef = useRef(null);
@@ -111,13 +110,7 @@ export default function MinimalHome({ setActiveFile }) {
     }, [instant]);
 
     const onClick = (e, entry) => {
-        const touch = window.matchMedia('(hover: none)').matches;
         e.preventDefault();
-        if (touch && armed !== entry.file) {
-            setArmed(entry.file);
-            setActive(entry);
-            return;
-        }
         setActiveFile(entry.file);
     };
 
@@ -224,24 +217,6 @@ export default function MinimalHome({ setActiveFile }) {
                     </>
                 )}
             </div>
-
-            <aside className={`mh-preview${active ? ' is-visible' : ''}`} aria-hidden="true">
-                {active && (
-                    <>
-                        <img
-                            key={active.preview}
-                            src={active.preview}
-                            alt=""
-                            onError={(ev) => { ev.currentTarget.style.display = 'none'; }}
-                        />
-                        <div className="mh-preview-cap">
-                            <strong>{active.name}</strong>
-                            <span>{active.blurb}</span>
-                            {armed === active.file && <em>tap again to open</em>}
-                        </div>
-                    </>
-                )}
-            </aside>
         </main>
     );
 }
