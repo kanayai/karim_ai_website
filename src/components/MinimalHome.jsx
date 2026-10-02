@@ -98,14 +98,7 @@ export default function MinimalHome({ setActiveFile }) {
 
     return (
         <main className="mh-screen">
-            <div className="mh-window" role="presentation">
-                <div className="mh-bar" aria-hidden="true">
-                    <span className="mh-dot mh-dot--r" />
-                    <span className="mh-dot mh-dot--y" />
-                    <span className="mh-dot mh-dot--g" />
-                    <span className="mh-title">karim — zsh</span>
-                </div>
-                <div className="mh-body">
+            <div className="mh-body">
                     <p className="mh-line">
                         <span className="mh-prompt">karim@bath ~ %</span> {command}
                         {!done && !name && <span className="mh-cursor" />}
@@ -142,7 +135,6 @@ export default function MinimalHome({ setActiveFile }) {
                             </p>
                         </>
                     )}
-                </div>
             </div>
 
             <aside className={`mh-preview${active ? ' is-visible' : ''}`} aria-hidden="true">
