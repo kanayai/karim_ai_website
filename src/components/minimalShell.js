@@ -1,7 +1,7 @@
 // Command logic for the minimal home terminal. Pure: returns what to print / do.
 export const COMMANDS = [
     'help', 'ls', 'cd', 'open', 'cat', 'man', 'whoami', 'pwd', 'date', 'uptime',
-    'contact', 'mail', 'neofetch', 'fastfetch', 'coffee', 'tea', 'theme', 'clear',
+    'contact', 'mail', 'fastfetch', 'coffee', 'tea', 'theme', 'clear',
     'history', 'exit', 'quit', 'logout', 'vim', 'sudo',
 ];
 
@@ -46,7 +46,7 @@ const HELP = [
     'cat bio            short bio (also: man karim)',
     'whoami, pwd, date, uptime',
     'contact            email and ORCID (also: mail)',
-    'neofetch           spec block (also: fastfetch)',
+    'fastfetch          spec block',
     'coffee, tea        ASCII refreshments',
     'theme              toggle dark / light',
     'clear              wipe the screen',
