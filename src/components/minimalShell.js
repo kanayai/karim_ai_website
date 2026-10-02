@@ -106,7 +106,7 @@ export function run(input, { entries, history, light }) {
         case 'sudo':
             return { out: ['karim is not in the sudoers file. This incident will be reported.'] };
         case 'rm':
-            if (args.join(' ').includes('/')) return { out: ['Nice try.'] };
+            if (/(^|\s)(-\w*[rf]\w*|\/|\*|~)(\s|$)/.test(args.join(' '))) return { out: ['Nice try.'] };
             return { out: ['rm: permission denied'] };
         default: return { out: [`zsh: command not found: ${cmd}`] };
     }
