@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Layout from './components/Layout';
 import Editor from './components/Editor';
-import MacDesktopLayout from './components/MacDesktopLayout';
+import MinimalHome from './components/MinimalHome';
 import TerminalLayout from './components/TerminalLayout';
 import GitHubLayout from './components/GitHubLayout';
 import PyPILayout from './components/PyPILayout';
@@ -160,7 +160,7 @@ function AppContent() {
   const layoutType = getLayoutType(activeFile);
 
   if (layoutType === 'desktop') {
-    return <MacDesktopLayout setActiveFile={handleOpenFile} />;
+    return <MinimalHome setActiveFile={handleOpenFile} />;
   }
 
   if (layoutType === 'terminal') {
