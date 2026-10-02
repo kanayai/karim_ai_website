@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './MinimalHome.css';
+import { run, complete } from './minimalShell';
 
 const entries = [
     { name: 'research/', file: 'projects.html', blurb: 'Projects, publications, PhD students', preview: '/previews/research.webp' },
@@ -32,6 +33,32 @@ export default function MinimalHome({ setActiveFile }) {
     const [active, setActive] = useState(null);
     const [armed, setArmed] = useState(null); // touch: first tap previews
     const skipRef = useRef(false);
+    const inputRef = useRef(null);
+    const [value, setValue] = useState('');
+    const [blocks, setBlocks] = useState([]); // typed commands and their output
+    const [cleared, setCleared] = useState(false);
+    const [light, setLight] = useState(false);
+    const [cmds, setCmds] = useState([]);
+    const [cursor, setCursor] = useState(-1); // history position
+    const [used, setUsed] = useState(false);
+
+    const lsBlock = (
+        <nav className="mh-ls" aria-label="Site sections">
+            {entries.map((e, i) => (
+                <a
+                    key={e.file}
+                    href={`#${e.file}`}
+                    className={`mh-entry${active?.file === e.file ? ' is-active' : ''}`}
+                    style={{ animationDelay: `${instant ? 0 : i * 90}ms` }}
+                    onClick={(ev) => onClick(ev, e)}
+                    onMouseEnter={() => setActive(e)}
+                    onFocus={() => setActive(e)}
+                >
+                    {e.name}
+                </a>
+            ))}
+        </nav>
+    );
 
     useEffect(() => {
         if (instant) return undefined;
@@ -96,45 +123,102 @@ export default function MinimalHome({ setActiveFile }) {
 
     const done = phase === 'done';
 
+    useEffect(() => {
+        // Desktop only: on phones focusing would pop the keyboard.
+        if (done && window.matchMedia('(hover: hover)').matches) inputRef.current?.focus();
+    }, [done]);
+
+    const submit = () => {
+        const text = value;
+        setValue('');
+        setCursor(-1);
+        setUsed(true);
+        const res = run(text, { entries, history: cmds, light });
+        if (text.trim()) setCmds((c) => [...c, text.trim()]);
+        if (res.action === 'clear') {
+            setCleared(true);
+            setBlocks([{ id: Date.now(), cmd: null, ls: true, out: [] }]); // list returns so nobody is lost
+            return;
+        }
+        if (res.action === 'theme') setLight((l) => !l);
+        setBlocks((b) => [...b, { id: Date.now() + b.length, cmd: text, out: res.out, art: res.art, ls: res.action === 'ls' }]);
+        if (res.action?.open) setTimeout(() => setActiveFile(res.action.open.file), 350);
+    };
+
+    const onKeyDown = (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); submit(); }
+        else if (e.key === 'Tab') {
+            e.preventDefault();
+            const c = complete(value, entries);
+            if (c) setValue(c);
+        } else if (e.key === 'ArrowUp' && cmds.length) {
+            e.preventDefault();
+            const n = cursor < 0 ? cmds.length - 1 : Math.max(0, cursor - 1);
+            setCursor(n); setValue(cmds[n]);
+        } else if (e.key === 'ArrowDown' && cursor >= 0) {
+            e.preventDefault();
+            const n = cursor + 1;
+            if (n >= cmds.length) { setCursor(-1); setValue(''); } else { setCursor(n); setValue(cmds[n]); }
+        } else if (e.key === 'l' && e.ctrlKey) {
+            e.preventDefault(); setValue('clear');
+        }
+    };
+
     return (
-        <main className="mh-screen">
+        <main className={`mh-screen${light ? ' is-light' : ''}`} onClick={() => { if (done && !window.getSelection()?.toString()) inputRef.current?.focus(); }}>
             <div className="mh-body">
-                    <p className="mh-line">
-                        <span className="mh-prompt">karim@bath ~ %</span> {command}
-                        {!done && !name && <span className="mh-cursor" />}
-                    </p>
-                    {name && (
-                        <h1 className="mh-name">
-                            {name}
-                            {!done && <span className="mh-cursor" />}
-                        </h1>
-                    )}
-                    {done && (
-                        <>
-                            <p className="mh-line">
-                                <span className="mh-prompt">karim@bath ~ %</span> ls
-                            </p>
-                            <nav className="mh-ls" aria-label="Site sections">
-                                {entries.map((e, i) => (
-                                    <a
-                                        key={e.file}
-                                        href={`#${e.file}`}
-                                        className={`mh-entry${active?.file === e.file ? ' is-active' : ''}`}
-                                        style={{ animationDelay: `${instant ? 0 : i * 90}ms` }}
-                                        onClick={(ev) => onClick(ev, e)}
-                                        onMouseEnter={() => setActive(e)}
-                                        onFocus={() => setActive(e)}
-                                    >
-                                        {e.name}
-                                    </a>
-                                ))}
-                            </nav>
-                            <p className="mh-line mh-line--end">
-                                <span className="mh-prompt">karim@bath ~ %</span>
-                                <span className="mh-cursor mh-cursor--blink" />
-                            </p>
-                        </>
-                    )}
+                {!cleared && (
+                    <>
+                        <p className="mh-line">
+                            <span className="mh-prompt">karim@bath ~ %</span> {command}
+                            {!done && !name && <span className="mh-cursor" />}
+                        </p>
+                        {name && (
+                            <h1 className="mh-name">
+                                {name}
+                                {!done && <span className="mh-cursor" />}
+                            </h1>
+                        )}
+                        {done && (
+                            <>
+                                <p className="mh-line">
+                                    <span className="mh-prompt">karim@bath ~ %</span> ls
+                                </p>
+                                {lsBlock}
+                            </>
+                        )}
+                    </>
+                )}
+                {done && blocks.map((b) => (
+                    <div key={b.id}>
+                        {b.cmd !== null && (
+                            <p className="mh-line"><span className="mh-prompt">karim@bath ~ %</span> {b.cmd}</p>
+                        )}
+                        {b.ls && lsBlock}
+                        {b.out.length > 0 && <pre className={`mh-out${b.art ? ' mh-art' : ''}`}>{b.out.join('\n')}</pre>}
+                    </div>
+                ))}
+                {done && (
+                    <>
+                        <label className="mh-line mh-line--end mh-input-row">
+                            <span className="mh-prompt">karim@bath ~ %</span>
+                            <input
+                                ref={inputRef}
+                                className="mh-input"
+                                value={value}
+                                onChange={(e) => setValue(e.target.value)}
+                                onKeyDown={onKeyDown}
+                                aria-label="Terminal command"
+                                autoCapitalize="off"
+                                autoCorrect="off"
+                                autoComplete="off"
+                                spellCheck={false}
+                                enterKeyHint="go"
+                            />
+                        </label>
+                        {!used && <p className="mh-hint">type <b>help</b> or click a folder</p>}
+                    </>
+                )}
             </div>
 
             <aside className={`mh-preview${active ? ' is-visible' : ''}`} aria-hidden="true">
