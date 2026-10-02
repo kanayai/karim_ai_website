@@ -1,24 +1,20 @@
 # Handoff — karim_ai_website
-_Checkpoint 2026-09-26 15:20 BST_
+_Checkpoint 2026-10-02 18:00 BST_
 
 ## Objective
-Replace the terminal-only home page with a mobile-friendly modern macOS-style desktop that acts as the navigation hub for the existing themed site.
+Minimal black/light terminal home page (replaced the macOS-style desktop as `Welcome`), now interactive.
 
 ## Done so far
-- Added a Liquid Glass-inspired desktop, Finder menu bar, wallpaper and macOS-style Dock.
-- Added irregular, overlapping link windows for About, Research, Teaching, Journal, Workspace and Contact.
-- Converted the large terminal into a static preview linking to the separate full interactive terminal.
-- Added responsive mobile behaviour: windows become a readable vertical stack and the Dock remains available.
-- Incorporated Karim's review: no tilted windows or window hover movement; less symmetrical placement and distinct filled Dock icons.
+- Home = typed `whoami` intro, `ls` section list, hover/tap previews (`public/previews/*.webp`), light theme by default.
+- Live prompt: `ls`, `cd`/`open`, `cat bio`/`man karim`, `whoami`, `pwd`, `date`, `uptime`, `help`, `contact`/`mail`, `neofetch`, `history`, `coffee`, `tea`, `theme` (light/dark), `clear` (list returns), Easter eggs (`sudo`, `rm -rf` → "Nice try.", `exit`, `vim`).
+- UX: Tab completion, ↑/↓ history, permanent "type help" hint, auto-scroll to prompt, no focus box, only the hovered list highlights.
+- Pushed to `origin/main` (Netlify auto-deploys; deploy not yet confirmed).
 
 ## Resume point
-Start with `src/components/MacDesktopLayout.jsx` and `MacDesktopLayout.css`; `src/App.jsx` maps `Welcome` to the desktop and `terminal.html` to the existing terminal.
+`src/components/MinimalHome.jsx` (UI) and `minimalShell.js` (pure command logic: `run`, `complete`). `App.jsx` maps `Welcome` to `MinimalHome`; old desktop is `MacDesktopLayout.jsx` (unused for home).
 
 ## Next action
-After Netlify deploys commit `bcf434d`, perform live desktop and real-phone QA, then adjust window placement and sizing from Karim's visual feedback.
+Check the Netlify deploy on a real phone (keyboard covering prompt? light-theme page edges?), then take Karim's visual feedback. Not done: bio text and "14 years" uptime wording unconfirmed by Karim.
 
 ## Last safe commit
-`bcf434d` — implementation committed; production build and targeted ESLint pass.
-
-## Blockers
-- None. Draggable/resizable windows are deliberately deferred until the fixed layout is approved.
+See `git log -1` (tree clean when written; this handoff committed after).
