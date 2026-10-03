@@ -19,7 +19,7 @@ export default function MinimalHome({ setActiveFile }) {
         && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const instant = reduced;
 
-    const [command, setCommand] = useState(instant ? 'whois karim' : '');
+    const [command, setCommand] = useState('whois karim');
     const [name, setName] = useState(instant ? 'Karim AI' : '');
     const [phase, setPhase] = useState(instant ? 'done' : 'typing'); // typing | done
     const [active, setActive] = useState(null);
@@ -69,9 +69,7 @@ export default function MinimalHome({ setActiveFile }) {
             }
         };
         (async () => {
-            await wait(500);
-            await type('whois karim', setCommand, '', 90);
-            await wait(350);
+            await wait(900);
             const full = 'Karim Anaya-Izquierdo';
             await type(full, setName, '', 55);
             await wait(900);
