@@ -7,6 +7,7 @@ export const COMMANDS = [
 ];
 
 const GITHUB = 'https://github.com/kanayai';
+const REPO = `${GITHUB}/karim_ai_website`;
 const ORCID = 'https://orcid.org/0000-0001-9718-5256';
 
 // Career as a commit history, newest first: [hash, date, message].
@@ -41,15 +42,7 @@ const GIT_STATUS = [
     'no changes added to commit (use "git add" and keep writing)',
 ];
 
-// What `curl google.com` really prints: Google's 301 body.
-const GOOGLE_301 = [
-    '<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">',
-    '<TITLE>301 Moved</TITLE></HEAD><BODY>',
-    '<H1>301 Moved</H1>',
-    'The document has moved',
-    '<A HREF="http://www.google.com/">here</A>.',
-    '</BODY></HTML>',
-];
+const GOOGLE_301 = ['HTTP/1.1 301 Moved → https://www.google.com/'];
 
 const bathUptime = () => {
     const start = new Date(2013, 8, 1); // September 2013, University of Bath
@@ -180,7 +173,7 @@ export function run(input, { entries, history, light }) {
             const sub = args[0];
             if (sub === 'log') return { out: gitLog(args.includes('--oneline')) };
             if (sub === 'status') return { out: GIT_STATUS };
-            if (sub === 'clone') return { out: ["Cloning into 'karim'...", `remote: opening ${GITHUB}`], action: { url: GITHUB } };
+            if (sub === 'clone') return { out: ["Cloning into 'karim_ai_website'...", `remote: opening ${REPO}`], action: { url: REPO } };
             if (!sub) return { out: ['usage: git <command>', '   try: log, status, clone'] };
             return { out: [`git: '${sub}' is not a git command. See 'git --help'.`] };
         }
