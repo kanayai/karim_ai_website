@@ -1,6 +1,6 @@
 // Command logic for the minimal home terminal. Pure: returns what to print / do.
 export const COMMANDS = [
-    'help', 'ls', 'cd', 'open', 'cat', 'man', 'whoami', 'whois', 'pwd', 'date', 'uptime',
+    'help', 'ls', 'cd', 'open', 'cat', 'man', 'whoami', 'whois', 'where', 'find', 'pwd', 'date', 'uptime',
     'contact', 'mail', 'fastfetch', 'coffee', 'tea', 'theme', 'clear',
     'history', 'grep', 'exit', 'quit', 'logout', 'vim', 'sudo',
 ];
@@ -79,6 +79,9 @@ export function run(input, { entries, history, light }) {
             return { out: [`cat: ${args[0] || ''}: ${args.length ? 'No such file' : 'missing operand'}`] };
         case 'man':
             return arg === 'karim' ? { out: BIO } : { out: [`No manual entry for ${args[0] || ''}`.trim()] };
+        case 'where': case 'find':
+            if (arg !== 'karim') return { out: [`zsh: command not found: ${raw}`] };
+            return { out: ['Department of Mathematical Sciences', 'University of Bath, Claverton Down', 'Bath BA2 7AY'] };
         case 'whoami': return { out: ['guest'] };
         case 'whois':
             return arg === 'karim' ? { out: ['Karim AI: Senior Lecturer in Statistics, University of Bath'] }
