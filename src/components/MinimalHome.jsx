@@ -29,7 +29,7 @@ export default function MinimalHome({ setActiveFile }) {
     const rowRef = useRef(null);
     const [value, setValue] = useState('');
     const [blocks, setBlocks] = useState([]); // typed commands and their output
-    const [cleared, setCleared] = useState(false);
+    const [morphKey, setMorphKey] = useState(0); // bumped by `clear` to replay the name morph
     const [siteMode, setSiteModeValue] = useSiteMode();
     const light = siteMode === 'light';
     const setLight = (fn) => setSiteModeValue((typeof fn === 'function' ? fn(light) : fn) ? 'light' : 'dark');
@@ -122,7 +122,7 @@ export default function MinimalHome({ setActiveFile }) {
             }
         };
         (async () => {
-            let first = instant; // intro already skipped/seen: morph straight away
+            let first = instant || morphKey > 0; // intro skipped or screen cleared: morph straight away
             while (!cancelled) {
                 await wait(first ? 600 : 30000);
                 first = false;
@@ -136,7 +136,7 @@ export default function MinimalHome({ setActiveFile }) {
             }
         })();
         return () => { cancelled = true; };
-    }, [phase, reduced, instant]);
+    }, [phase, reduced, instant, morphKey]);
 
     const onClick = (e, entry) => {
         e.preventDefault();
@@ -162,8 +162,11 @@ export default function MinimalHome({ setActiveFile }) {
         const res = run(text, { entries, history: cmds, light });
         if (text.trim()) setCmds((c) => [...c, text.trim()]);
         if (res.action === 'clear') {
-            setCleared(true);
-            setBlocks([{ id: Date.now(), cmd: null, ls: true, out: [] }]); // list returns so nobody is lost
+            // Back to the opening screen (command history is kept).
+            setBlocks([]);
+            setActive(null);
+            setName('Karim AI');
+            setMorphKey((k) => k + 1);
             return;
         }
         if (res.action === 'theme') setLight((l) => !l);
@@ -193,26 +196,22 @@ export default function MinimalHome({ setActiveFile }) {
     return (
         <main className={`mh-screen${light ? ' is-light' : ''}`} onClick={() => { if (done && !window.getSelection()?.toString()) inputRef.current?.focus(); }}>
             <div className="mh-body">
-                {!cleared && (
+                <p className="mh-line">
+                    <span className="mh-prompt">karim@bath ~ %</span> {command}
+                    {!done && !name && <span className="mh-cursor" />}
+                </p>
+                {name && (
+                    <h1 className="mh-name">
+                        {name}
+                        {!done && <span className="mh-cursor" />}
+                    </h1>
+                )}
+                {done && (
                     <>
                         <p className="mh-line">
-                            <span className="mh-prompt">karim@bath ~ %</span> {command}
-                            {!done && !name && <span className="mh-cursor" />}
+                            <span className="mh-prompt">karim@bath ~ %</span> ls
                         </p>
-                        {name && (
-                            <h1 className="mh-name">
-                                {name}
-                                {!done && <span className="mh-cursor" />}
-                            </h1>
-                        )}
-                        {done && (
-                            <>
-                                <p className="mh-line">
-                                    <span className="mh-prompt">karim@bath ~ %</span> ls
-                                </p>
-                                {renderList('initial')}
-                            </>
-                        )}
+                        {renderList('initial')}
                     </>
                 )}
                 {done && blocks.map((b) => (

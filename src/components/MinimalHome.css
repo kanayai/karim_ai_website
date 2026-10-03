@@ -14,7 +14,7 @@
     position: relative;
 }
 
-.mh-body { font-size: clamp(1.575rem, 3.3vw, 2.25rem); line-height: 1.8; }
+.mh-body { font-size: clamp(1.4rem, 2.95vw, 2rem); line-height: 1.8; }
 .mh-line { margin: 0; }
 .mh-prompt { color: var(--mh-prompt); margin-right: .6rem; }
 .mh-name { margin: 0 0 1.2rem; font-size: inherit; font-weight: 600; color: var(--mh-strong); }
@@ -30,8 +30,8 @@
     animation: mh-in .35s ease forwards;
 }
 .mh-entry:hover, .mh-entry:focus-visible, .mh-entry.is-active {
-    background: var(--mh-link);
-    color: var(--mh-bg);
+    background: color-mix(in srgb, var(--mh-link) 22%, transparent);
+    color: var(--mh-link);
     outline: none;
 }
 
