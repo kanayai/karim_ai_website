@@ -221,6 +221,42 @@
   flex-grow: 1;
 }
 
+/* Centred, width-capped content like github.com's container-xl */
+.repo-container { max-width: 1280px; margin: 0 auto; }
+
+/* Toolbar above the file list: branch, Go to file, Add file, Code */
+.gh-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background-color: var(--gh-bg3);
+  border: 1px solid var(--gh-border);
+  color: var(--gh-fg);
+  border-radius: 6px;
+  font-size: 14px; font-weight: 500; line-height: 20px;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+.gh-btn:hover { background-color: var(--gh-border); }
+.gh-btn svg { color: var(--gh-muted); }
+.gh-btn .gh-caret { font-size: 12px; }
+.gh-btn-primary { background-color: #238636; border-color: rgba(240, 246, 252, 0.1); color: #fff; }
+.gh-btn-primary:hover { background-color: #2ea043; }
+.gh-btn-primary svg { color: #fff; }
+.github-layout-wrapper.is-light .gh-btn-primary { background-color: #1f883d; border-color: rgba(31, 35, 40, 0.15); }
+.github-layout-wrapper.is-light .gh-btn-primary:hover { background-color: #1a7f37; }
+.repo-meta-link { color: var(--gh-muted); font-size: 14px; white-space: nowrap; cursor: pointer; }
+.repo-meta-link strong { color: var(--gh-fg); }
+.repo-meta-link:hover, .repo-meta-link:hover strong { color: var(--gh-link); }
+.repo-goto {
+  gap: 6px; padding: 0 8px; height: 32px; width: 240px;
+  border: 1px solid var(--gh-border); border-radius: 6px; background-color: var(--gh-bg);
+}
+.repo-goto input { flex: 1; min-width: 0; background: transparent; border: 0; outline: 0; color: var(--gh-fg); font-size: 14px; }
+.repo-goto-icon { color: var(--gh-muted); font-size: 13px; }
+.repo-goto kbd {
+  background: transparent; color: var(--gh-muted); border: 1px solid var(--gh-border);
+  border-radius: 6px; font-size: 11px; padding: 0 5px; line-height: 18px; box-shadow: none;
+}
+
 .repo-file-card {
   border: 1px solid var(--gh-border);
   background-color: var(--gh-bg2);

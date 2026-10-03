@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { VscFolder, VscFile, VscIssues, VscGitPullRequest, VscPlay, VscBook } from 'react-icons/vsc';
-import { FaGithub, FaStar, FaEye, FaCodeBranch } from 'react-icons/fa';
+import { FaGithub, FaStar, FaEye, FaCodeBranch, FaTag, FaCaretDown, FaSearch, FaCode } from 'react-icons/fa';
 import { VscColorMode } from 'react-icons/vsc';
 import useSiteMode from '../hooks/useSiteMode';
 import './GitHubLayout.css';
@@ -92,10 +92,28 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
 
             {/* Repository Body Content */}
             <div className="github-repo-body p-3 p-md-4">
+                <div className="repo-container">
                 {activeTab === 'code' && (
                     <div className="row g-4">
                         {/* Main Code View Area */}
                         <div className="col-lg-9 col-md-8">
+                            {/* Branch / Go to file / Add file / Code toolbar */}
+                            <div className="repo-toolbar d-flex align-items-center justify-content-between gap-2 mb-3">
+                                <div className="d-flex align-items-center gap-3">
+                                    <button className="gh-btn"><FaCodeBranch /> main <FaCaretDown className="gh-caret" /></button>
+                                    <span className="repo-meta-link d-none d-md-inline"><FaCodeBranch /> <strong>1</strong> Branch</span>
+                                    <span className="repo-meta-link d-none d-md-inline"><FaTag /> <strong>0</strong> Tags</span>
+                                </div>
+                                <div className="d-flex align-items-center gap-2">
+                                    <div className="repo-goto d-none d-md-flex align-items-center">
+                                        <FaSearch className="repo-goto-icon" />
+                                        <input type="text" placeholder="Go to file" readOnly aria-label="Go to file" />
+                                        <kbd>t</kbd>
+                                    </div>
+                                    <button className="gh-btn d-none d-sm-inline-flex">Add file <FaCaretDown className="gh-caret" /></button>
+                                    <button className="gh-btn gh-btn-primary"><FaCode /> Code <FaCaretDown className="gh-caret" /></button>
+                                </div>
+                            </div>
                             <div className="repo-file-card rounded mb-4">
                                 <div className="repo-file-header d-flex align-items-center justify-content-between p-3">
                                     <div className="d-flex align-items-center gap-2">
@@ -271,6 +289,7 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                         <div className="badge bg-success p-2">All checks passing</div>
                     </div>
                 )}
+                </div>
             </div>
         </div>
     );

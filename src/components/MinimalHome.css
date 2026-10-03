@@ -14,7 +14,7 @@
     position: relative;
 }
 
-.mh-body { font-size: clamp(1.4rem, 2.95vw, 2rem); line-height: 1.8; }
+.mh-body { font-size: clamp(1.25rem, 2.65vw, 1.8rem); line-height: 1.8; }
 .mh-line { margin: 0; }
 .mh-prompt { color: var(--mh-prompt); margin-right: .6rem; }
 .mh-name { margin: 0 0 1.2rem; font-size: inherit; font-weight: 600; color: var(--mh-strong); }
