@@ -85,12 +85,12 @@ const HELP = [
     'cat bio            short bio',
     'contact            email and ORCID',
     'grep <word>        search the site',
-    'fastfetch          spec block',
     'coffee, tea        ASCII refreshments',
     'theme              toggle dark / light',
     'clear              wipe the screen',
     'history            commands so far',
     'pwd, date, uptime',
+    'curl, git, google',
     'Tab completes, ↑/↓ recall history.',
 ];
 
