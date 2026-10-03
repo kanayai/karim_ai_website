@@ -2,27 +2,23 @@
 _Checkpoint 2026-10-03_
 
 ## Objective
-Minimal black/light terminal home page (replaced the macOS-style desktop as `Welcome`), now interactive; polishing from Karim's visual feedback.
+Minimal terminal home (`Welcome`) plus themed sub-pages (GitHub, Wiki); polishing from Karim's visual feedback.
 
 ## Done so far
-- Earlier: typed `whoami` intro, `ls` list, live prompt (help, cd/open, cat bio, uptime, contact, fastfetch, coffee/tea, theme, clear, Easter eggs), Tab completion, ↑/↓ history, light theme default.
-- This session (pushed, `0f6d69f`, `08a6470`):
-  - Hover screenshot previews removed; hover keeps only the boxed highlight; phone taps open directly (no tap-twice).
-  - Body text 1.5× original (`.mh-body` clamp(1.575rem, 3.3vw, 2.25rem)); 2× was too large.
-  - Command output `line-height: 1.3` (terminal-like).
-  - `help`/Tab list only `fastfetch`; `neofetch` still accepted silently (Karim's choice).
-  - `.mh-screen` is its own scroll container (`body { overflow: hidden }` site-wide in `vscode-theme.css` blocked scrolling) — can now scroll back to top; `clear` wipes.
-- Pushed `d222530`: `grep <word>` (searches section blurbs + bio, case-insensitive, flags ignored; in `help` and Tab); read-only replies for `mkdir`/`touch`/`mv`/`cp`/`chmod`/`chown` ("Read-only file system" + "Look, don’t touch."), not in help.
-- Karim confirmed uptime wording/date (Sept 2013, "in academia (at Bath)") is fine.
+- Home help: no "(also: …)" hints; `pwd, date, uptime` is the second-to-last line; `theme` toggles, `theme light|dark` sets, anything else → `zsh: command not found`.
+- Intro: `whois ` pre-typed, `Karim` typed live, name morphs `Karim Anaya-Izquierdo` → `Karim AI`, replays every 30 s; plays on every load (seen flag removed; reduced-motion skips). `whoami` → `guest`.
+- `where karim` / `find karim` print the address (my draft wording; unlisted in help, Tab completes). Other args → command not found.
+- Shared light/dark: `src/hooks/useSiteMode.js` (localStorage `site-mode`, default light). Home, GitHub page (CSS vars, toggle in header, iframe content via `githubTheme` in `App.jsx`) and Wiki follow it.
+- Wiki: language dropdown (en/es/fr/pt) in `src/constants/wikiStrings.js`; es/fr/pt translations written by Claude, unreviewed.
 
 ## Resume point
-`src/components/MinimalHome.jsx` (UI), `MinimalHome.css`, `minimalShell.js` (pure command logic: `run`, `complete`).
+`src/components/WikiLayout.jsx`, `GitHubLayout.jsx`, `useSiteMode.js`, `minimalShell.js`, `MinimalHome.jsx`.
 
 ## Next action
-Take Karim's feedback from the Netlify deploy (grep, read-only commands; phone scrolling/font fit). Possible extension offered: grep over full page text. Optional cleanup offered, not done: delete unused `public/previews/*.webp` and `preview:` fields in `entries`.
+Check the Wiki and GitHub pages in the browser (light/dark, language menu, header layout on phone). Then: Karim to confirm the address text and review the translations; decide on German; PyPI and terminal pages do not follow the shared theme yet.
 
 ## Last safe commit
-See `git log -1` (tree clean when written; this handoff committed after `d222530`).
+4571356 (tree clean before this handoff, which is committed after it)
 
 ## Local preview
-`npm run dev` → http://localhost:5173/. Headless check: Chrome `--remote-debugging-port` + CDP script (intro takes ~20 s unless seen before).
+`npm run dev` → http://localhost:5173/.
