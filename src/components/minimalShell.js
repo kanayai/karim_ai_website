@@ -44,7 +44,6 @@ const HELP = [
     'ls                 list sections',
     'cd <section>       open a section',
     'cat bio            short bio',
-    'pwd, date, uptime',
     'contact            email and ORCID',
     'grep <word>        search the site',
     'fastfetch          spec block',
@@ -52,6 +51,7 @@ const HELP = [
     'theme              toggle dark / light',
     'clear              wipe the screen',
     'history            commands so far',
+    'pwd, date, uptime',
     'Tab completes, ↑/↓ recall history.',
 ];
 
