@@ -42,10 +42,10 @@ const BIO = [
 
 const HELP = [
     'ls                 list sections',
-    'cd <section>       open a section (also: open <section>)',
-    'cat bio            short bio (also: man karim)',
+    'cd <section>       open a section',
+    'cat bio            short bio',
     'whoami, pwd, date, uptime',
-    'contact            email and ORCID (also: mail)',
+    'contact            email and ORCID',
     'grep <word>        search the site',
     'fastfetch          spec block',
     'coffee, tea        ASCII refreshments',
@@ -97,7 +97,11 @@ export function run(input, { entries, history, light }) {
             ] };
         case 'coffee': return { out: COFFEE, art: true };
         case 'tea': return { out: TEA, art: true };
-        case 'theme': return { out: [`theme: ${light ? 'dark' : 'light'}`], action: 'theme' };
+        case 'theme': {
+            if (args.length > 1 || (args.length && !['light', 'dark'].includes(arg))) return { out: [`zsh: command not found: ${raw}`] };
+            const next = args.length ? arg : (light ? 'dark' : 'light');
+            return { out: [`theme: ${next}`], action: (next === 'light') !== light ? 'theme' : undefined };
+        }
         case 'clear': return { out: [], action: 'clear' };
         case 'history': return { out: history.map((c, i) => `${String(i + 1).padStart(3)}  ${c}`) };
         case 'exit': case 'quit': case 'logout':
