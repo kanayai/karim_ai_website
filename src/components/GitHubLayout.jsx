@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { VscFolder, VscFile, VscIssues, VscGitPullRequest, VscPlay, VscBook, VscFiles, VscHistory, VscCopy, VscCheck } from 'react-icons/vsc';
+import { VscFolder, VscFile, VscIssues, VscGitPullRequest, VscPlay, VscBook, VscFiles, VscHistory, VscCopy, VscCheck, VscPinned, VscCopilot } from 'react-icons/vsc';
 import publicationsRSource from '../../data/publications.R?raw';
 import { FaGithub, FaStar, FaEye, FaCodeBranch, FaTag, FaCaretDown, FaSearch } from 'react-icons/fa';
 import { VscColorMode } from 'react-icons/vsc';
@@ -70,19 +70,18 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
             <header className="github-header d-flex align-items-center justify-content-between px-3 py-2">
                 <div className="d-flex align-items-center gap-3">
                     <FaGithub size={32} className="github-logo" onClick={() => setActiveFile('Welcome')} />
-                    <div className="github-search-container d-none d-md-flex align-items-center">
-                        <input type="text" placeholder="Search or jump to..." className="github-search-input" readOnly />
-                        <span className="github-search-slash">/</span>
+                    <div className="gh-header-crumb">
+                        <span className="gh-header-owner">kanayai</span>
+                        <span className="gh-header-sep">/</span>
+                        <span className="gh-header-repo" onClick={goHome}>research</span>
                     </div>
-                    <nav className="github-nav-links d-none d-lg-flex gap-3">
-                        <span className="github-nav-item">Pull requests</span>
-                        <span className="github-nav-item">Issues</span>
-                        <span className="github-nav-item">Codespaces</span>
-                        <span className="github-nav-item">Marketplace</span>
-                        <span className="github-nav-item">Explore</span>
-                    </nav>
                 </div>
-                <div className="d-flex align-items-center gap-3">
+                <div className="d-flex align-items-center gap-2 gap-md-3">
+                    <div className="github-search-container d-none d-md-flex align-items-center gap-2">
+                        <FaSearch className="repo-goto-icon" />
+                        <input type="text" placeholder="Type / to search" className="github-search-input" readOnly />
+                    </div>
+                    <button className="github-btn-outline gh-icon-btn d-none d-sm-inline-flex" aria-label="Copilot" title="Copilot"><VscCopilot size={16} /></button>
                     <button
                         className="github-btn-outline github-mode-toggle"
                         onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
@@ -97,21 +96,7 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
             </header>
 
             {/* Repository Sub-header */}
-            <div className="github-repo-subheader px-3 pt-3 pb-0">
-                <div className="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
-                    <div className="d-flex align-items-center gap-2 repo-title-area">
-                        <span className="repo-owner">kanayai</span>
-                        <span className="repo-separator">/</span>
-                        <span className="repo-name" onClick={goHome}>research</span>
-                        <span className="repo-badge">Public</span>
-                    </div>
-                    <div className="d-flex align-items-center gap-2 repo-stats-buttons">
-                        <button className="repo-stat-btn"><FaEye /> Watch <span className="stat-count">3</span></button>
-                        <button className="repo-stat-btn"><FaCodeBranch /> Fork <span className="stat-count">2</span></button>
-                        <button className="repo-stat-btn"><FaStar /> Star <span className="stat-count">14</span></button>
-                    </div>
-                </div>
-
+            <div className="github-repo-subheader px-3 pt-1 pb-0">
                 {/* Repository Navigation Tabs */}
                 <div className="d-flex repo-nav-tabs">
                     <button 
@@ -145,6 +130,20 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
             <div className="github-repo-body p-3 p-md-4">
                 <div className="repo-container">
                 {activeTab === 'code' && view === 'home' && (
+                    <>
+                    <div className="gh-repo-title d-flex align-items-center justify-content-between flex-wrap gap-2">
+                        <div className="d-flex align-items-center gap-2 repo-title-area">
+                            <img src="/images/Bath_Crest.png" alt="" className="gh-repo-avatar" />
+                            <strong className="repo-name" onClick={goHome}>research</strong>
+                            <span className="repo-badge">Public</span>
+                        </div>
+                        <div className="d-flex align-items-center gap-2 repo-stats-buttons">
+                            <button className="gh-btn gh-btn-sm d-none d-md-inline-flex"><VscPinned /> Pin</button>
+                            <button className="gh-btn gh-btn-sm"><FaEye /> <span className="d-none d-sm-inline">Watch</span> <span className="stat-count">3</span> <FaCaretDown className="gh-caret" /></button>
+                            <button className="gh-btn gh-btn-sm"><FaCodeBranch /> <span className="d-none d-sm-inline">Fork</span> <span className="stat-count">2</span> <FaCaretDown className="gh-caret" /></button>
+                            <button className="gh-btn gh-btn-sm"><FaStar /> <span className="d-none d-sm-inline">Star</span> <span className="stat-count">14</span> <FaCaretDown className="gh-caret" /></button>
+                        </div>
+                    </div>
                     <div className="row g-4">
                         {/* Main Code View Area */}
                         <div className="col-lg-9 col-md-8">
@@ -281,6 +280,7 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                             </div>
                         </div>
                     </div>
+                    </>
                 )}
 
                 {activeTab === 'code' && view === 'file' && (

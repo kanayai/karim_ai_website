@@ -687,3 +687,16 @@
   .gh-readme-body { padding: 16px; }
   .gh-file-box { margin-left: -12px; margin-right: -12px; border-radius: 0; border-left: 0; border-right: 0; }
 }
+
+/* Header breadcrumb (owner / repo) and icon buttons, as on current github.com */
+.gh-header-crumb { font-size: 14px; font-weight: 600; color: var(--gh-strong); white-space: nowrap; }
+.gh-header-owner, .gh-header-repo { padding: 2px 6px; border-radius: 6px; cursor: pointer; }
+.gh-header-owner:hover, .gh-header-repo:hover { background: var(--gh-bg3); }
+.gh-header-sep { color: var(--gh-muted); }
+.gh-icon-btn { display: inline-flex; align-items: center; padding: 5px 8px; }
+
+/* Repo title line on the front page: avatar, name, Public; Pin / Watch / Fork / Star */
+.gh-repo-title { margin-bottom: 16px; }
+.gh-repo-title .repo-name { font-size: 20px; font-weight: 600; color: var(--gh-strong); }
+.gh-repo-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+.gh-repo-title .stat-count { margin-left: 2px; }
