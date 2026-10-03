@@ -128,8 +128,10 @@ export default function MinimalHome({ setActiveFile }) {
             }
         };
         (async () => {
+            let first = instant; // intro already skipped/seen: morph straight away
             while (!cancelled) {
-                await wait(30000);
+                await wait(first ? 600 : 30000);
+                first = false;
                 if (cancelled) return;
                 await unstep('Karim AI', 'Karim ', setName, 90);
                 await step('Anaya-Izquierdo', setName, 'Karim ', 55);
@@ -140,7 +142,7 @@ export default function MinimalHome({ setActiveFile }) {
             }
         })();
         return () => { cancelled = true; };
-    }, [phase, reduced]);
+    }, [phase, reduced, instant]);
 
     const onClick = (e, entry) => {
         e.preventDefault();
