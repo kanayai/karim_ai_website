@@ -1,24 +1,27 @@
 # Handoff — karim_ai_website
-_Checkpoint 2026-10-03_
+_Checkpoint 2026-10-03 18:29_
 
 ## Objective
-Minimal terminal home (`Welcome`) plus themed sub-pages (GitHub, Wiki); polishing from Karim's visual feedback.
+Minimal terminal home plus look-alike section pages; polishing from Karim's visual feedback (research/GitHub page now matches real github.com).
 
 ## Done so far
-- Home help: no "(also: …)" hints; `pwd, date, uptime` is the second-to-last line; `theme` toggles, `theme light|dark` sets, anything else → `zsh: command not found`.
-- Intro: `whois ` pre-typed, `Karim` typed live, name morphs `Karim Anaya-Izquierdo` → `Karim AI`, replays every 30 s; plays on every load (seen flag removed; reduced-motion skips). `whoami` → `guest`.
-- `where karim` / `find karim` print the address (my draft wording; unlisted in help, Tab completes). Other args → command not found.
-- Shared light/dark: `src/hooks/useSiteMode.js` (localStorage `site-mode`, default light). Home, GitHub page (CSS vars, toggle in header, iframe content via `githubTheme` in `App.jsx`) and Wiki follow it.
-- Wiki: language dropdown (en/es/fr/pt) in `src/constants/wikiStrings.js`; es/fr/pt translations written by Claude, unreviewed.
+- Home (`MinimalHome.jsx`, `minimalShell.js`): smaller font, translucent hover tint, `clear` restores opening screen + replays name morph. New commands: `git log|status|clone`, `google`, `orcid`, `github`, `curl google.com` (one-line 301 + opens), `curl wttr.in[/city]` (live, CORS ok). `help` shows `curl, git, google`; fastfetch line removed (command kept). Hidden `help --all`.
+- Research page (`GitHubLayout.jsx/.css`, new `GitHubCodeMenu.jsx`): header with `kanayai / research`, search, Copilot; repo title row (Public, Pin/Watch/Fork/Star) above toolbar; 1280px centred container; branch/Go to file/Add file/green Code dropdown (real clone URLs, ZIP); repo home shows README; clicking a file opens GitHub file view (tree, breadcrumb, commit bar, Preview/Code/Raw). `Editor` has `bare` prop (no tabs) used here.
+- Repo `README.md` rewritten for current structure.
+- Karim reviewed the research page: "looks very realistic". No pending changes.
 
 ## Resume point
-`src/components/WikiLayout.jsx`, `GitHubLayout.jsx`, `useSiteMode.js`, `minimalShell.js`, `MinimalHome.jsx`.
+Karim is navigating the site to collect further changes; other section pages (PyPI teaching, Wiki, journal, terminal) may "inherit" the GitHub-page realism treatment.
 
 ## Next action
-Check the Wiki and GitHub pages in the browser (light/dark, language menu, header layout on phone). Then: Karim to confirm the address text and review the translations; decide on German; PyPI and terminal pages do not follow the shared theme yet.
+Ask Karim for his next list of changes from browsing the live site.
 
 ## Last safe commit
-4571356 (tree clean before this handoff, which is committed after it)
+58a6669 (tree clean, pushed; this handoff committed after it)
+
+## Notes
+- Ctrl+L on home only types `clear` (needs Enter); offered to make it immediate — unanswered.
+- PyPI and terminal pages still don't follow the shared light/dark mode.
 
 ## Local preview
-`npm run dev` → http://localhost:5173/.
+`npm run dev` → http://localhost:5173/
