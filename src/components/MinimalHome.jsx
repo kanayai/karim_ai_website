@@ -12,20 +12,12 @@ const entries = [
     { name: 'terminal/', file: 'terminal.html', blurb: 'The interactive shell', preview: '/previews/terminal.webp' },
 ];
 
-const SEEN_KEY = 'minimal-home-seen';
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
-
-const readSeen = () => {
-    try { return sessionStorage.getItem(SEEN_KEY) === '1'; } catch { return false; }
-};
-const writeSeen = () => {
-    try { sessionStorage.setItem(SEEN_KEY, '1'); } catch { /* storage blocked */ }
-};
 
 export default function MinimalHome({ setActiveFile }) {
     const reduced = typeof window !== 'undefined'
         && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const instant = reduced || readSeen();
+    const instant = reduced;
 
     const [command, setCommand] = useState(instant ? 'whois karim' : '');
     const [name, setName] = useState(instant ? 'Karim AI' : '');
@@ -94,7 +86,6 @@ export default function MinimalHome({ setActiveFile }) {
             setCommand('whois karim');
             setName('Karim AI');
             setPhase('done');
-            writeSeen();
         };
         const skip = () => {
             skipRef.current = true;
