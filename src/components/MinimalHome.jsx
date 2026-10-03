@@ -27,7 +27,7 @@ export default function MinimalHome({ setActiveFile }) {
         && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const instant = reduced || readSeen();
 
-    const [command, setCommand] = useState(instant ? 'whoami' : '');
+    const [command, setCommand] = useState(instant ? 'whois karim' : '');
     const [name, setName] = useState(instant ? 'Karim AI' : '');
     const [phase, setPhase] = useState(instant ? 'done' : 'typing'); // typing | done
     const [active, setActive] = useState(null);
@@ -78,7 +78,7 @@ export default function MinimalHome({ setActiveFile }) {
         };
         (async () => {
             await wait(500);
-            await type('whoami', setCommand, '', 90);
+            await type('whois karim', setCommand, '', 90);
             await wait(350);
             const full = 'Karim Anaya-Izquierdo';
             await type(full, setName, '', 55);
@@ -91,7 +91,7 @@ export default function MinimalHome({ setActiveFile }) {
             finish();
         })();
         const finish = () => {
-            setCommand('whoami');
+            setCommand('whois karim');
             setName('Karim AI');
             setPhase('done');
             writeSeen();
@@ -108,6 +108,39 @@ export default function MinimalHome({ setActiveFile }) {
             window.removeEventListener('pointerdown', skip);
         };
     }, [instant]);
+
+    // After the intro, replay the Karim AI <-> full-name morph every 30 s.
+    useEffect(() => {
+        if (phase !== 'done' || reduced) return undefined;
+        let cancelled = false;
+        const step = async (text, set, base, delay) => {
+            for (let i = 1; i <= text.length; i++) {
+                if (cancelled) return;
+                set(base + text.slice(0, i));
+                await wait(delay);
+            }
+        };
+        const unstep = async (from, to, set, delay) => {
+            for (let i = from.length; i >= to.length; i--) {
+                if (cancelled) return;
+                set(from.slice(0, i));
+                await wait(delay);
+            }
+        };
+        (async () => {
+            while (!cancelled) {
+                await wait(30000);
+                if (cancelled) return;
+                await unstep('Karim AI', 'Karim ', setName, 90);
+                await step('Anaya-Izquierdo', setName, 'Karim ', 55);
+                await wait(900);
+                await unstep('Karim Anaya-Izquierdo', 'Karim ', setName, 45);
+                await wait(250);
+                await step('AI', setName, 'Karim ', 160);
+            }
+        })();
+        return () => { cancelled = true; };
+    }, [phase, reduced]);
 
     const onClick = (e, entry) => {
         e.preventDefault();

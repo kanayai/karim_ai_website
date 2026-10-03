@@ -1,6 +1,6 @@
 // Command logic for the minimal home terminal. Pure: returns what to print / do.
 export const COMMANDS = [
-    'help', 'ls', 'cd', 'open', 'cat', 'man', 'whoami', 'pwd', 'date', 'uptime',
+    'help', 'ls', 'cd', 'open', 'cat', 'man', 'whoami', 'whois', 'pwd', 'date', 'uptime',
     'contact', 'mail', 'fastfetch', 'coffee', 'tea', 'theme', 'clear',
     'history', 'grep', 'exit', 'quit', 'logout', 'vim', 'sudo',
 ];
@@ -44,7 +44,7 @@ const HELP = [
     'ls                 list sections',
     'cd <section>       open a section',
     'cat bio            short bio',
-    'whoami, pwd, date, uptime',
+    'whois karim, pwd, date, uptime',
     'contact            email and ORCID',
     'grep <word>        search the site',
     'fastfetch          spec block',
@@ -79,7 +79,10 @@ export function run(input, { entries, history, light }) {
             return { out: [`cat: ${args[0] || ''}: ${args.length ? 'No such file' : 'missing operand'}`] };
         case 'man':
             return arg === 'karim' ? { out: BIO } : { out: [`No manual entry for ${args[0] || ''}`.trim()] };
-        case 'whoami': return { out: ['Karim AI: Senior Lecturer in Statistics, University of Bath'] };
+        case 'whoami': return { out: ['guest'] };
+        case 'whois':
+            return arg === 'karim' ? { out: ['Karim AI: Senior Lecturer in Statistics, University of Bath'] }
+                : { out: [`whois: no match for "${args.join(' ')}"`.replace(' ""', '')] };
         case 'pwd': return { out: ['/home/karim/bath'] };
         case 'date': return { out: [new Date().toString()] };
         case 'uptime': return { out: [`up ${bathUptime()} in academia (at Bath)`] };
