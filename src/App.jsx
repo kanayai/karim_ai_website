@@ -200,6 +200,7 @@ function AppContent() {
             toggleSimpleMode={toggleSimpleMode}
             recentFiles={recentFiles}
             htmlAutoHeight
+            bare
           />
         </GitHubLayout>
         <MobileNav activeFile={activeFile} onNavigate={handleOpenFile} />

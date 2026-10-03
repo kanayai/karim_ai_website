@@ -31,7 +31,7 @@ const LatexPlayground = lazy(() => import('./LatexPlayground'));
 const CitationGenerator = lazy(() => import('./CitationGenerator'));
 const DataVizGallery = lazy(() => import('./DataVizGallery'));
 
-const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme, setTheme, simpleMode, toggleSimpleMode, recentFiles, htmlAutoHeight = false }) => {
+const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllFiles, theme, setTheme, simpleMode, toggleSimpleMode, recentFiles, htmlAutoHeight = false, bare = false }) => {
     const { i18n } = useTranslation();
 
     const workspaceFileContent = {
@@ -216,6 +216,7 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
 
     return (
         <div className="d-flex flex-column flex-grow-1 editor-shell" style={{ backgroundColor: 'var(--vscode-editor-bg)', overflow: 'hidden' }}>
+            {!bare && (<>
             <div className="editor-tabs d-flex align-items-center">
                 <div className="d-flex editor-tabs-scroll" style={{ flexGrow: 1, overflowX: 'auto', height: '100%' }}>
                     {openFiles.map(file => (
@@ -268,6 +269,7 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
                     })()}
                 </div>
             )}
+            </>)}
 
             <div
                 key={activeFile}

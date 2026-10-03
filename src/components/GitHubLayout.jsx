@@ -1,21 +1,71 @@
-import React, { useState } from 'react';
-import { VscFolder, VscFile, VscIssues, VscGitPullRequest, VscPlay, VscBook } from 'react-icons/vsc';
+import React, { useEffect, useRef, useState } from 'react';
+import { VscFolder, VscFile, VscIssues, VscGitPullRequest, VscPlay, VscBook, VscFiles, VscHistory, VscCopy, VscCheck } from 'react-icons/vsc';
+import publicationsRSource from '../../data/publications.R?raw';
 import { FaGithub, FaStar, FaEye, FaCodeBranch, FaTag, FaCaretDown, FaSearch } from 'react-icons/fa';
 import { VscColorMode } from 'react-icons/vsc';
 import useSiteMode from '../hooks/useSiteMode';
 import GitHubCodeMenu from './GitHubCodeMenu';
 import './GitHubLayout.css';
 
+// Repo contents. `path` is where the source lives in the real repo (for Raw).
+const FILES = [
+    { file: 'projects.html', name: 'projects', folder: true, msg: 'Update active research projects', age: 'yesterday', path: 'public/projects.html' },
+    { file: 'publications.html', name: 'publications', folder: true, msg: 'Fetch latest articles from ORCID', age: '2 days ago', path: 'public/publications.html' },
+    { file: 'phd_students.html', name: 'phd_students', folder: true, msg: 'Update SAMBa thesis abstracts', age: 'last week', path: 'public/phd_students.html' },
+    { file: 'publications.R', name: 'publications.R', folder: false, msg: 'Initial publication loading script', age: 'last month', path: 'data/publications.R' },
+];
+const RAW = 'https://raw.githubusercontent.com/kanayai/karim_ai_website/main/';
+
+// Source text for the Code view, line count and copy button.
+const useSource = (entry) => {
+    const [fetched, setFetched] = useState({});
+    const file = entry?.file;
+    const isHtml = file?.endsWith('.html');
+    useEffect(() => {
+        if (!isHtml || fetched[file] !== undefined) return;
+        fetch(`/${file}`).then((r) => (r.ok ? r.text() : '')).catch(() => '')
+            .then((t) => setFetched((f) => ({ ...f, [file]: t })));
+    }, [file, isHtml, fetched]);
+    if (file === 'publications.R') return publicationsRSource;
+    return isHtml ? fetched[file] : undefined;
+};
+
+const SourceView = ({ text }) => (
+    <div className="gh-source">
+        {text.replace(/\n$/, '').split('\n').map((l, i) => (
+            <div className="gh-source-line" key={i}><span className="gh-ln">{i + 1}</span><code>{l || ' '}</code></div>
+        ))}
+    </div>
+);
+
 const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
     const [activeTab, setActiveTab] = useState('code');
     const [mode, setMode] = useSiteMode();
+    // 'home' = repo front page with README; 'file' = GitHub file view with tree.
+    const [view, setView] = useState(activeFile === 'projects.html' ? 'home' : 'file');
+    const [fileMode, setFileMode] = useState('preview'); // preview | code
+    const [copied, setCopied] = useState(false);
+    const wrapRef = useRef(null);
+
+    const entry = FILES.find((f) => f.file === activeFile);
+    const source = useSource(entry);
+    const isHtml = activeFile.endsWith('.html');
+    const lines = source ? source.replace(/\n$/, '').split('\n').length : null;
 
     const handleFileClick = (file) => {
         setActiveFile(file);
+        setView('file');
+        setFileMode(file.endsWith('.html') ? 'preview' : 'code');
+        wrapRef.current?.scrollTo({ top: 0 });
+    };
+    const goHome = () => { setActiveTab('code'); setView('home'); };
+    const copySource = () => {
+        if (!source) return;
+        navigator.clipboard?.writeText(source).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1500); });
     };
 
     return (
-        <div className={`github-layout-wrapper${mode === 'light' ? ' is-light' : ''}`}>
+        <div ref={wrapRef} className={`github-layout-wrapper${mode === 'light' ? ' is-light' : ''}`}>
             {/* GitHub Global Header */}
             <header className="github-header d-flex align-items-center justify-content-between px-3 py-2">
                 <div className="d-flex align-items-center gap-3">
@@ -52,7 +102,7 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                     <div className="d-flex align-items-center gap-2 repo-title-area">
                         <span className="repo-owner">kanayai</span>
                         <span className="repo-separator">/</span>
-                        <span className="repo-name">research</span>
+                        <span className="repo-name" onClick={goHome}>research</span>
                         <span className="repo-badge">Public</span>
                     </div>
                     <div className="d-flex align-items-center gap-2 repo-stats-buttons">
@@ -66,7 +116,7 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                 <div className="d-flex repo-nav-tabs">
                     <button 
                         className={`repo-tab-item ${activeTab === 'code' ? 'active' : ''}`}
-                        onClick={() => { setActiveTab('code'); setActiveFile('projects.html'); }}
+                        onClick={goHome}
                     >
                         <VscBook /> Code
                     </button>
@@ -94,7 +144,7 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
             {/* Repository Body Content */}
             <div className="github-repo-body p-3 p-md-4">
                 <div className="repo-container">
-                {activeTab === 'code' && (
+                {activeTab === 'code' && view === 'home' && (
                     <div className="row g-4">
                         {/* Main Code View Area */}
                         <div className="col-lg-9 col-md-8">
@@ -125,60 +175,44 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                                     <span className="commit-date">yesterday</span>
                                 </div>
                                 <div className="repo-file-list">
-                                    <div 
-                                        className={`file-row d-flex align-items-center justify-content-between ${activeFile === 'projects.html' ? 'active' : ''}`}
-                                        onClick={() => handleFileClick('projects.html')}
-                                    >
-                                        <div className="d-flex align-items-center gap-2">
-                                            <VscFolder className="folder-icon" />
-                                            <span className="file-name">projects</span>
+                                    {FILES.map((f) => (
+                                        <div key={f.file} className="file-row d-flex align-items-center justify-content-between" onClick={() => handleFileClick(f.file)}>
+                                            <div className="d-flex align-items-center gap-2">
+                                                {f.folder ? <VscFolder className="folder-icon" /> : <VscFile className="file-icon" />}
+                                                <span className="file-name">{f.name}</span>
+                                            </div>
+                                            <span className="file-commit-msg">{f.msg}</span>
+                                            <span className="file-age">{f.age}</span>
                                         </div>
-                                        <span className="file-commit-msg">Update active research projects</span>
-                                        <span className="file-age">yesterday</span>
-                                    </div>
-                                    <div 
-                                        className={`file-row d-flex align-items-center justify-content-between ${activeFile === 'publications.html' ? 'active' : ''}`}
-                                        onClick={() => handleFileClick('publications.html')}
-                                    >
-                                        <div className="d-flex align-items-center gap-2">
-                                            <VscFolder className="folder-icon" />
-                                            <span className="file-name">publications</span>
-                                        </div>
-                                        <span className="file-commit-msg">Fetch latest articles from ORCID</span>
-                                        <span className="file-age">2 days ago</span>
-                                    </div>
-                                    <div 
-                                        className={`file-row d-flex align-items-center justify-content-between ${activeFile === 'phd_students.html' ? 'active' : ''}`}
-                                        onClick={() => handleFileClick('phd_students.html')}
-                                    >
-                                        <div className="d-flex align-items-center gap-2">
-                                            <VscFolder className="folder-icon" />
-                                            <span className="file-name">phd_students</span>
-                                        </div>
-                                        <span className="file-commit-msg">Update SAMBa thesis abstracts</span>
-                                        <span className="file-age">last week</span>
-                                    </div>
-                                    <div 
-                                        className={`file-row d-flex align-items-center justify-content-between ${activeFile === 'publications.R' ? 'active' : ''}`}
-                                        onClick={() => handleFileClick('publications.R')}
-                                    >
-                                        <div className="d-flex align-items-center gap-2">
-                                            <VscFile className="file-icon" />
-                                            <span className="file-name">publications.R</span>
-                                        </div>
-                                        <span className="file-commit-msg">Initial publication loading script</span>
-                                        <span className="file-age">last month</span>
-                                    </div>
+                                    ))}
                                 </div>
                             </div>
 
-                            {/* Render Child (e.g. projects.html in iframe) */}
-                            <div className="repo-render-area p-3 rounded mb-4">
-                                <div className="render-title-bar px-3 py-2 rounded-top border-bottom">
-                                    <VscFile size={16} /> <strong>{activeFile}</strong>
-                                </div>
-                                <div className="render-frame-container">
-                                    {children}
+                            {/* README, as on a GitHub repo front page */}
+                            <div className="gh-readme rounded mb-4">
+                                <div className="gh-readme-head"><VscBook /> README</div>
+                                <div className="gh-readme-body">
+                                    <h1>research</h1>
+                                    <p>Research repository of <strong>Karim Anaya-Izquierdo</strong>, Senior Lecturer in Statistics, Department of Mathematical Sciences, University of Bath.</p>
+                                    <h2>Research areas</h2>
+                                    <ul>
+                                        <li>Information geometry</li>
+                                        <li>Uncertainty quantification in mechanical engineering</li>
+                                        <li>Survival analysis</li>
+                                        <li>Spatial methods in epidemiology</li>
+                                        <li>Applied Bayesian methods</li>
+                                    </ul>
+                                    <h2>What&rsquo;s in here</h2>
+                                    <ul>
+                                        {FILES.map((f) => (
+                                            <li key={f.file}>
+                                                <button type="button" className="gh-readme-link" onClick={() => handleFileClick(f.file)}><code>{f.name}{f.folder ? '/' : ''}</code></button>
+                                                {' '}{{ 'projects.html': 'active research projects', 'publications.html': 'journal articles, pulled from ORCID', 'phd_students.html': 'current and former PhD students', 'publications.R': 'the R script that builds the publications list' }[f.file]}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    <h2>Contact</h2>
+                                    <p><a href="mailto:kai21@bath.ac.uk">kai21@bath.ac.uk</a> · <a href="https://orcid.org/0000-0001-9718-5256" target="_blank" rel="noreferrer">ORCID</a></p>
                                 </div>
                             </div>
                         </div>
@@ -246,6 +280,71 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                                 </ul>
                             </div>
                         </div>
+                    </div>
+                )}
+
+                {activeTab === 'code' && view === 'file' && (
+                    <div className="gh-file-view">
+                        {/* File tree, as in GitHub's file view */}
+                        <aside className="gh-tree d-none d-md-block">
+                            <div className="gh-tree-head"><VscFiles /> Files</div>
+                            <button className="gh-btn gh-tree-branch"><FaCodeBranch /> main <FaCaretDown className="gh-caret" /></button>
+                            <div className="repo-goto d-flex align-items-center gh-tree-goto">
+                                <FaSearch className="repo-goto-icon" />
+                                <input type="text" placeholder="Go to file" readOnly aria-label="Go to file" />
+                                <kbd>t</kbd>
+                            </div>
+                            <ul className="gh-tree-list">
+                                {FILES.map((f) => (
+                                    <li key={f.file}>
+                                        <button type="button" className={f.file === activeFile ? 'active' : ''} onClick={() => handleFileClick(f.file)}>
+                                            {f.folder ? <VscFolder className="folder-icon" /> : <VscFile className="file-icon" />} {f.name}
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        </aside>
+
+                        <section className="gh-file-main">
+                            <div className="gh-crumbs">
+                                <button type="button" className="gh-crumb-link" onClick={goHome}>research</button>
+                                <span className="gh-crumb-sep">/</span>
+                                <strong>{entry?.name ?? activeFile}</strong>
+                            </div>
+
+                            <div className="gh-commit-bar">
+                                <img src="/images/Bath_Crest.png" alt="" className="commit-avatar" />
+                                <span className="commit-author">kanayai</span>
+                                <span className="commit-message">{entry?.msg ?? 'Update'}</span>
+                                <span className="gh-commit-right">{entry?.age ?? 'yesterday'} · <span className="gh-history"><VscHistory /> History</span></span>
+                            </div>
+
+                            <div className="gh-file-box">
+                                <div className="gh-file-head">
+                                    {entry && (
+                                        <div className="gh-seg">
+                                            {isHtml && <button type="button" className={fileMode === 'preview' ? 'active' : ''} onClick={() => setFileMode('preview')}>Preview</button>}
+                                            <button type="button" className={fileMode === 'code' || !isHtml ? 'active' : ''} onClick={() => setFileMode('code')}>Code</button>
+                                            <button type="button">Blame</button>
+                                        </div>
+                                    )}
+                                    {lines && <span className="gh-file-meta d-none d-sm-inline">{lines} lines · {(new Blob([source]).size / 1024).toFixed(1)} KB</span>}
+                                    {entry && (
+                                        <div className="gh-file-actions">
+                                            <a className="gh-btn gh-btn-sm" href={RAW + entry.path} target="_blank" rel="noreferrer">Raw</a>
+                                            <button type="button" className="gh-btn gh-btn-sm" onClick={copySource} aria-label="Copy raw file" title="Copy raw file">
+                                                {copied ? <VscCheck className="gh-copied" /> : <VscCopy />}
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="gh-file-body">
+                                    {isHtml && fileMode === 'code'
+                                        ? (source ? <SourceView text={source} /> : <p className="gh-loading">Loading…</p>)
+                                        : <div className="render-frame-container">{children}</div>}
+                                </div>
+                            </div>
+                        </section>
                     </div>
                 )}
 

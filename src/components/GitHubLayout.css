@@ -599,3 +599,91 @@
 .gh-code-none { margin: 16px 0; color: var(--gh-muted); font-size: 13px; }
 .gh-code-none strong { color: var(--gh-fg); font-size: 15px; }
 .gh-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Repo front page README */
+.repo-name { cursor: pointer; }
+.gh-readme { border: 1px solid var(--gh-border); background: var(--gh-bg); overflow: hidden; }
+.gh-readme-head {
+  display: flex; align-items: center; gap: 8px; padding: 8px 16px;
+  border-bottom: 1px solid var(--gh-border); font-size: 14px; font-weight: 600;
+}
+.gh-readme-head svg { color: var(--gh-muted); }
+.gh-readme-body { padding: 24px 32px; font-size: 16px; line-height: 1.5; color: var(--gh-fg); }
+.gh-readme-body h1, .gh-readme-body h2 {
+  color: var(--gh-strong); font-weight: 600; padding-bottom: .3em; border-bottom: 1px solid var(--gh-border);
+  margin: 24px 0 16px;
+}
+.gh-readme-body h1 { font-size: 2em; margin-top: 0; }
+.gh-readme-body h2 { font-size: 1.5em; }
+.gh-readme-body ul { padding-left: 2em; margin-bottom: 16px; }
+.gh-readme-body a, .gh-readme-link { color: var(--gh-link); text-decoration: none; }
+.gh-readme-body a:hover, .gh-readme-link:hover { text-decoration: underline; }
+.gh-readme-link { background: none; border: 0; padding: 0; cursor: pointer; }
+.gh-readme-body code { background: var(--gh-bg3); color: inherit; padding: .2em .4em; border-radius: 6px; font-size: 85%; }
+
+/* File view: tree on the left, file on the right */
+.gh-file-view { display: flex; gap: 24px; align-items: flex-start; }
+.gh-tree {
+  width: 296px; flex-shrink: 0; position: sticky; top: 16px;
+  border-right: 1px solid var(--gh-border); padding-right: 16px;
+}
+.gh-tree-head { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; margin-bottom: 12px; color: var(--gh-strong); }
+.gh-tree-head svg { color: var(--gh-muted); }
+.gh-tree-branch { margin-bottom: 8px; }
+.gh-tree-goto { width: 100%; margin-bottom: 12px; }
+.gh-tree-list { list-style: none; padding: 0; margin: 0; }
+.gh-tree-list button {
+  display: flex; align-items: center; gap: 8px; width: 100%; text-align: left;
+  background: none; border: 0; border-radius: 6px; padding: 6px 8px;
+  color: var(--gh-fg); font-size: 14px; cursor: pointer; position: relative;
+}
+.gh-tree-list button:hover { background: var(--gh-bg3); }
+.gh-tree-list button.active { background: var(--gh-bg3); font-weight: 600; }
+.gh-tree-list button.active::before {
+  content: ''; position: absolute; left: -8px; top: 6px; bottom: 6px; width: 4px;
+  border-radius: 6px; background: var(--gh-link);
+}
+.gh-file-main { flex: 1; min-width: 0; }
+.gh-crumbs { font-size: 16px; margin-bottom: 12px; color: var(--gh-strong); }
+.gh-crumb-link { background: none; border: 0; padding: 0; color: var(--gh-link); font-weight: 600; cursor: pointer; }
+.gh-crumb-link:hover { text-decoration: underline; }
+.gh-crumb-sep { margin: 0 4px; color: var(--gh-muted); }
+.gh-commit-bar {
+  display: flex; align-items: center; gap: 8px; padding: 12px 16px; margin-bottom: 16px;
+  border: 1px solid var(--gh-border); border-radius: 6px; background: var(--gh-bg2);
+  font-size: 13px; color: var(--gh-muted); min-width: 0;
+}
+.gh-commit-bar .commit-message { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gh-commit-right { margin-left: auto; white-space: nowrap; }
+.gh-history { color: var(--gh-fg); font-weight: 600; cursor: pointer; }
+.gh-file-box { border: 1px solid var(--gh-border); border-radius: 6px; overflow: hidden; margin-bottom: 24px; }
+.gh-file-head {
+  display: flex; align-items: center; gap: 12px; padding: 8px 12px;
+  background: var(--gh-bg2); border-bottom: 1px solid var(--gh-border);
+}
+.gh-seg { display: inline-flex; border: 1px solid var(--gh-border); border-radius: 6px; overflow: hidden; }
+.gh-seg button {
+  background: none; border: 0; color: var(--gh-muted); font-size: 12px; font-weight: 500;
+  padding: 3px 12px; cursor: pointer;
+}
+.gh-seg button + button { border-left: 1px solid var(--gh-border); }
+.gh-seg button.active { background: var(--gh-bg); color: var(--gh-fg); font-weight: 600; }
+.gh-file-meta { font-size: 12px; color: var(--gh-muted); }
+.gh-file-actions { margin-left: auto; display: flex; gap: 6px; }
+.gh-btn-sm { font-size: 12px; padding: 3px 10px; line-height: 18px; text-decoration: none; }
+.gh-btn-sm:hover { color: var(--gh-fg); }
+.gh-file-body { background: var(--gh-bg); }
+.gh-file-body .render-frame-container { border: 0; }
+.gh-loading { padding: 16px; color: var(--gh-muted); margin: 0; }
+.gh-source {
+  overflow-x: auto; padding: 8px 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; line-height: 20px;
+}
+.gh-source-line { display: flex; white-space: pre; }
+.gh-ln { flex: 0 0 56px; text-align: right; padding-right: 16px; color: var(--gh-muted); user-select: none; }
+.gh-source-line code { color: var(--gh-fg); background: none; padding: 0; font-size: inherit; }
+.gh-source-line:hover { background: var(--gh-bg2); }
+@media (max-width: 767.98px) {
+  .gh-readme-body { padding: 16px; }
+  .gh-file-box { margin-left: -12px; margin-right: -12px; border-radius: 0; border-left: 0; border-right: 0; }
+}
