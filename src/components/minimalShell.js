@@ -44,7 +44,7 @@ const HELP = [
     'ls                 list sections',
     'cd <section>       open a section',
     'cat bio            short bio',
-    'whois karim, pwd, date, uptime',
+    'pwd, date, uptime',
     'contact            email and ORCID',
     'grep <word>        search the site',
     'fastfetch          spec block',
