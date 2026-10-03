@@ -170,7 +170,18 @@ export default function MinimalHome({ setActiveFile }) {
             return;
         }
         if (res.action === 'theme') setLight((l) => !l);
-        setBlocks((b) => [...b, { id: Date.now() + b.length, cmd: text, out: res.out, art: res.art, ls: res.action === 'ls' }]);
+        // Open synchronously, inside the keypress, so popup blockers allow it.
+        if (res.action?.url) window.open(res.action.url, '_blank', 'noopener');
+        const id = Date.now();
+        setBlocks((b) => [...b, { id, cmd: text, out: res.out, art: res.art, ls: res.action === 'ls' }]);
+        if (res.action?.fetch) {
+            const setOut = (out) => setBlocks((b) => b.map((x) => (x.id === id ? { ...x, out } : x)));
+            setOut(['  % Total    % Received   Time', '  …']);
+            fetch(res.action.fetch, { signal: AbortSignal.timeout(8000) })
+                .then((r) => (r.ok ? r.text() : Promise.reject(r.status)))
+                .then((t) => setOut(t.replace(/\n+$/, '').split('\n')))
+                .catch(() => setOut([`curl: (7) Failed to connect to ${res.action.host}`]));
+        }
         if (res.action?.open) setTimeout(() => setActiveFile(res.action.open.file), 350);
     };
 

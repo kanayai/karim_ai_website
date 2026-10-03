@@ -3,6 +3,52 @@ export const COMMANDS = [
     'help', 'ls', 'cd', 'open', 'cat', 'man', 'whoami', 'whois', 'where', 'find', 'pwd', 'date', 'uptime',
     'contact', 'mail', 'fastfetch', 'coffee', 'tea', 'theme', 'clear',
     'history', 'grep', 'exit', 'quit', 'logout', 'vim', 'sudo',
+    'git', 'google', 'orcid', 'github', 'curl',
+];
+
+const GITHUB = 'https://github.com/kanayai';
+const ORCID = 'https://orcid.org/0000-0001-9718-5256';
+
+// Career as a commit history, newest first: [hash, date, message].
+const CAREER = [
+    ['a3f9c1e', 'Sep 2013', 'Join Mathematical Sciences, University of Bath'],
+    ['7b2d40f', 'Jan 2011', 'Lecturer in Medical Statistics, LSHTM'],
+    ['e91c6a2', 'Jun 2006', 'PhD in Statistics, National University of Mexico'],
+    ['4d07b8e', 'Oct 2005', 'Postdoctoral Research Fellow, Open University'],
+    ['c5a2f13', 'Jul 2001', 'MSc in Statistics, National University of Mexico'],
+    ['0f1e2d3', 'Jul 2000', 'Initial commit: BSc in Actuarial Sciences, ITAM'],
+];
+
+const gitLog = (oneline) => (oneline
+    ? CAREER.map(([h, , m], i) => `${h} ${i === 0 ? '(HEAD -> bath) ' : ''}${m}`)
+    : CAREER.flatMap(([h, d, m], i) => [
+        `commit ${h}${'0'.repeat(33)}${i === 0 ? ' (HEAD -> bath)' : ''}`,
+        'Author: Karim Anaya-Izquierdo <kai21@bath.ac.uk>',
+        `Date:   ${d}`,
+        '',
+        `    ${m}`,
+        '',
+    ]));
+
+const GIT_STATUS = [
+    'On branch research',
+    "Your branch is ahead of 'origin/research' by 2 papers.",
+    '',
+    'Changes not staged for commit:',
+    '        modified:   paper_1.tex',
+    '        modified:   paper_2.tex',
+    '',
+    'no changes added to commit (use "git add" and keep writing)',
+];
+
+// What `curl google.com` really prints: Google's 301 body.
+const GOOGLE_301 = [
+    '<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">',
+    '<TITLE>301 Moved</TITLE></HEAD><BODY>',
+    '<H1>301 Moved</H1>',
+    'The document has moved',
+    '<A HREF="http://www.google.com/">here</A>.',
+    '</BODY></HTML>',
 ];
 
 const bathUptime = () => {
@@ -57,7 +103,7 @@ const HELP = [
 
 const strip = (s) => (s || '').replace(/\/+$/, '').toLowerCase();
 
-// Returns { out: string[], action?: 'clear' | 'theme' | 'ls' | {open: entry} }
+// Returns { out: string[], action?: 'clear' | 'theme' | 'ls' | {open: entry} | {url} | {fetch} }
 export function run(input, { entries, history, light }) {
     const raw = input.trim();
     if (!raw) return { out: [] };
@@ -130,6 +176,34 @@ export function run(input, { entries, history, light }) {
         }
         case 'mkdir': case 'touch': case 'mv': case 'cp': case 'chmod': case 'chown':
             return { out: [`${cmd}: ${args[0] || ''}: Read-only file system`, 'Look, don’t touch.'] };
+        case 'git': {
+            const sub = args[0];
+            if (sub === 'log') return { out: gitLog(args.includes('--oneline')) };
+            if (sub === 'status') return { out: GIT_STATUS };
+            if (sub === 'clone') return { out: ["Cloning into 'karim'...", `remote: opening ${GITHUB}`], action: { url: GITHUB } };
+            if (!sub) return { out: ['usage: git <command>', '   try: log, status, clone'] };
+            return { out: [`git: '${sub}' is not a git command. See 'git --help'.`] };
+        }
+        case 'google': {
+            const q = args.join(' ');
+            return { out: [q ? `searching Google for "${q}" …` : 'opening google.com …'],
+                action: { url: q ? `https://www.google.com/search?q=${encodeURIComponent(q)}` : 'https://www.google.com/' } };
+        }
+        case 'orcid': return { out: [`opening ${ORCID} …`], action: { url: ORCID } };
+        case 'github': return { out: [`opening ${GITHUB} …`], action: { url: GITHUB } };
+        case 'curl': {
+            // Flags are ignored; only a couple of hosts are "reachable".
+            const target = args.filter((a) => !a.startsWith('-'))[0];
+            if (!target) return { out: ['curl: try \'curl --help\' or \'curl --manual\' for more information'] };
+            const url = target.replace(/^https?:\/\//i, '');
+            const host = url.split('/')[0].toLowerCase();
+            if (host === 'google.com' || host === 'www.google.com') return { out: GOOGLE_301, action: { url: 'https://www.google.com/' } };
+            if (host === 'wttr.in') {
+                const place = url.split('/')[1] || 'Bath';
+                return { out: [], action: { fetch: `https://wttr.in/${encodeURIComponent(place)}?0TA`, host } };
+            }
+            return { out: [`curl: (6) Could not resolve host: ${host}`] };
+        }
         default: return { out: [`zsh: command not found: ${cmd}`] };
     }
 }
