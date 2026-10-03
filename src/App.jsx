@@ -7,6 +7,7 @@ import GitHubLayout from './components/GitHubLayout';
 import PyPILayout from './components/PyPILayout';
 import WikiLayout from './components/WikiLayout';
 import { themes } from './constants/themes';
+import useSiteMode from './hooks/useSiteMode';
 import { useRecentFiles } from './hooks/useRecentFiles';
 import { ToastProvider, useToast } from './contexts/ToastContext';
 import './App.css';
@@ -45,6 +46,13 @@ function AppContent() {
       document.documentElement.setAttribute('data-theme', theme);
     }
   }, [theme]);
+  // GitHub-style pages follow the home page's light/dark choice (not saved as the VS Code theme).
+  const [siteMode] = useSiteMode();
+  const githubPage = ['projects.html', 'publications.html', 'phd_students.html', 'publications.R', 'git-graph'].includes(activeFile);
+  const githubTheme = siteMode === 'light' ? 'github-light' : 'github-dark';
+  React.useLayoutEffect(() => {
+    document.documentElement.setAttribute('data-theme', githubPage ? githubTheme : theme);
+  }, [githubPage, githubTheme, theme]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
     // Initialize based on window width
     if (typeof window !== 'undefined') {
@@ -186,7 +194,7 @@ function AppContent() {
             setActiveFile={handleOpenFile}
             onCloseFile={handleCloseFile}
             onCloseAllFiles={handleCloseAllFiles}
-            theme={theme}
+            theme={githubTheme}
             setTheme={setTheme}
             simpleMode={simpleMode}
             toggleSimpleMode={toggleSimpleMode}

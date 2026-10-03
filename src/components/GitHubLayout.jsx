@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import { VscFolder, VscFile, VscIssues, VscGitPullRequest, VscPlay, VscBook } from 'react-icons/vsc';
 import { FaGithub, FaStar, FaEye, FaCodeBranch } from 'react-icons/fa';
+import { VscColorMode } from 'react-icons/vsc';
+import useSiteMode from '../hooks/useSiteMode';
 import './GitHubLayout.css';
 
 const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
     const [activeTab, setActiveTab] = useState('code');
+    const [mode, setMode] = useSiteMode();
 
     const handleFileClick = (file) => {
         setActiveFile(file);
     };
 
     return (
-        <div className="github-layout-wrapper">
+        <div className={`github-layout-wrapper${mode === 'light' ? ' is-light' : ''}`}>
             {/* GitHub Global Header */}
             <header className="github-header d-flex align-items-center justify-content-between px-3 py-2">
                 <div className="d-flex align-items-center gap-3">
@@ -29,6 +32,14 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                     </nav>
                 </div>
                 <div className="d-flex align-items-center gap-3">
+                    <button
+                        className="github-btn-outline github-mode-toggle"
+                        onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
+                        aria-label={`Switch to ${mode === 'light' ? 'dark' : 'light'} theme`}
+                        title={`Switch to ${mode === 'light' ? 'dark' : 'light'} theme`}
+                    >
+                        <VscColorMode size={16} />
+                    </button>
                     <button className="github-btn-outline back-to-os" onClick={() => setActiveFile('Welcome')}>Back to OS</button>
                     <img src="/images/Bath_Crest.png" alt="User Profile" className="github-avatar" />
                 </div>

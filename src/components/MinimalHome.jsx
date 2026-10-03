@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './MinimalHome.css';
 import { run, complete } from './minimalShell';
+import useSiteMode from '../hooks/useSiteMode';
 
 const entries = [
     { name: 'research/', file: 'projects.html', blurb: 'Projects, publications, PhD students', preview: '/previews/research.webp' },
@@ -29,7 +30,9 @@ export default function MinimalHome({ setActiveFile }) {
     const [value, setValue] = useState('');
     const [blocks, setBlocks] = useState([]); // typed commands and their output
     const [cleared, setCleared] = useState(false);
-    const [light, setLight] = useState(true);
+    const [siteMode, setSiteModeValue] = useSiteMode();
+    const light = siteMode === 'light';
+    const setLight = (fn) => setSiteModeValue((typeof fn === 'function' ? fn(light) : fn) ? 'light' : 'dark');
     const [cmds, setCmds] = useState([]);
     const [cursor, setCursor] = useState(-1); // history position
 
