@@ -94,6 +94,46 @@ const HELP = [
     'Tab completes, ↑/↓ recall history.',
 ];
 
+// Hidden full list: `help --all` (or -a). Not advertised in HELP.
+const HELP_ALL = [
+    'Navigation',
+    '  ls                         list sections',
+    '  cd, open <section>         open a section',
+    '  pwd                        /home/karim/bath',
+    '',
+    'About Karim',
+    '  whois karim                one-line bio',
+    '  cat bio, man karim         short bio',
+    '  where karim, find karim    postal address',
+    '  contact, mail              email, ORCID, GitHub',
+    '  fastfetch, neofetch        spec block',
+    '  uptime                     years at Bath',
+    '  grep <word>                search sections and bio',
+    '',
+    'Git',
+    '  git log [--oneline]        career as commits',
+    '  git status                 papers in progress',
+    '  git clone                  open this site\'s repo',
+    '',
+    'Web',
+    '  google [words]             open Google / search',
+    '  orcid, github              open profiles',
+    '  curl google.com            301, then open Google',
+    '  curl wttr.in[/city]        live weather (default Bath)',
+    '',
+    'Shell',
+    '  theme [light|dark]         toggle theme',
+    '  clear  (Ctrl+L)            back to the opening screen',
+    '  history, date, whoami',
+    '  help [--all]',
+    '',
+    'Easter eggs',
+    '  coffee, tea                ASCII refreshments',
+    '  sudo, rm -rf, vim/vi/nano/emacs',
+    '  exit, quit, logout',
+    '  mkdir, touch, mv, cp, chmod, chown',
+];
+
 const strip = (s) => (s || '').replace(/\/+$/, '').toLowerCase();
 
 // Returns { out: string[], action?: 'clear' | 'theme' | 'ls' | {open: entry} | {url} | {fetch} }
@@ -105,7 +145,7 @@ export function run(input, { entries, history, light }) {
     const find = (a) => entries.find((e) => strip(e.name) === a || e.file === a);
 
     switch (cmd) {
-        case 'help': case '?': return { out: HELP };
+        case 'help': case '?': return { out: ['--all', '-a'].includes(args[0]) ? HELP_ALL : HELP };
         case 'ls': return { out: [], action: 'ls' };
         case 'cd': case 'open': {
             if (!args.length || ['..', '~', '/', '.'].includes(args[0])) return { out: [] };
