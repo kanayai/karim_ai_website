@@ -19,7 +19,7 @@ export default function MinimalHome({ setActiveFile }) {
         && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const instant = reduced;
 
-    const [command, setCommand] = useState('whois karim');
+    const [command, setCommand] = useState('whois Karim');
     const [name, setName] = useState(instant ? 'Karim AI' : '');
     const [phase, setPhase] = useState(instant ? 'done' : 'typing'); // typing | done
     const [active, setActive] = useState(null);
@@ -81,7 +81,7 @@ export default function MinimalHome({ setActiveFile }) {
             finish();
         })();
         const finish = () => {
-            setCommand('whois karim');
+            setCommand('whois Karim');
             setName('Karim AI');
             setPhase('done');
         };
