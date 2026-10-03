@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { VscFolder, VscFile, VscIssues, VscGitPullRequest, VscPlay, VscBook } from 'react-icons/vsc';
-import { FaGithub, FaStar, FaEye, FaCodeBranch, FaTag, FaCaretDown, FaSearch, FaCode } from 'react-icons/fa';
+import { FaGithub, FaStar, FaEye, FaCodeBranch, FaTag, FaCaretDown, FaSearch } from 'react-icons/fa';
 import { VscColorMode } from 'react-icons/vsc';
 import useSiteMode from '../hooks/useSiteMode';
+import GitHubCodeMenu from './GitHubCodeMenu';
 import './GitHubLayout.css';
 
 const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
@@ -111,7 +112,7 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                                         <kbd>t</kbd>
                                     </div>
                                     <button className="gh-btn d-none d-sm-inline-flex">Add file <FaCaretDown className="gh-caret" /></button>
-                                    <button className="gh-btn gh-btn-primary"><FaCode /> Code <FaCaretDown className="gh-caret" /></button>
+                                    <GitHubCodeMenu />
                                 </div>
                             </div>
                             <div className="repo-file-card rounded mb-4">
