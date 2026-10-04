@@ -11,21 +11,40 @@ import { useRecentFiles } from './hooks/useRecentFiles';
 import { ToastProvider, useToast } from './contexts/ToastContext';
 import './App.css';
 import MobileNav from './components/MobileNav';
+import { journalPosts, pathForFile, fileForPath, fileForHash } from './routes';
 
-const blogFiles = [
-  'blog.html',
-  'academic_workflow.html',
-  'anscombe_quartet.html',
-  'git-vs-onedrive.html',
-  'reproducibility_guide.html',
-];
+const blogFiles = ['blog.html', ...journalPosts];
 
 const BlogViewer = React.lazy(() => import('./components/BlogViewer'));
 const HtmlViewer = React.lazy(() => import('./components/HtmlViewer'));
 
 function AppContent() {
-  const [openFiles, setOpenFiles] = useState(['Welcome']);
-  const [activeFile, setActiveFile] = useState('Welcome');
+  // The address bar decides the first page; old #file links still work.
+  const [initialFile] = useState(() => fileForHash(window.location.hash) ?? fileForPath(window.location.pathname) ?? 'Welcome');
+  const [openFiles, setOpenFiles] = useState(() => (initialFile === 'Welcome' ? ['Welcome'] : ['Welcome', initialFile]));
+  const [activeFile, setActiveFile] = useState(initialFile);
+
+  // Keep the address bar in step with the open page (History API).
+  const firstSyncRef = React.useRef(true);
+  useEffect(() => {
+    const path = pathForFile(activeFile);
+    if (path !== window.location.pathname || window.location.hash) {
+      const method = firstSyncRef.current ? 'replaceState' : 'pushState';
+      window.history[method](null, '', path);
+    }
+    firstSyncRef.current = false;
+  }, [activeFile]);
+
+  // Back/forward buttons.
+  useEffect(() => {
+    const onPopState = () => {
+      const file = fileForPath(window.location.pathname) ?? 'Welcome';
+      setOpenFiles(prev => (prev.includes(file) ? prev : [...prev, file]));
+      setActiveFile(file);
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
 
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
