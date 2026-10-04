@@ -16,9 +16,8 @@ const RCodeViewer = ({ fileName }) => {
     const highlightRCode = (code) => {
         const lines = code.split('\n');
         return lines.map((line, i) => {
-            // Very basic tokenization
-            // Very basic tokenization
-            let formattedLine = line;
+            // Escape first: the source is shown as text, never parsed as HTML.
+            let formattedLine = line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
             // If line is empty, add a non-breaking space to ensure it renders height
             if (formattedLine.trim() === '') {
@@ -31,7 +30,7 @@ const RCodeViewer = ({ fileName }) => {
                 formattedLine = formattedLine.replace(/\b(library|if|else|for|while|return|function)\b/g, '<span style="color: #569cd6">$1</span>');
 
                 // Operators
-                formattedLine = formattedLine.replace(/(<-|%>%)/g, '<span style="color: #569cd6">$1</span>');
+                formattedLine = formattedLine.replace(/(&lt;-|%&gt;%)/g, '<span style="color: #569cd6">$1</span>');
 
                 // Functions (heuristic: word followed by ()
                 formattedLine = formattedLine.replace(/\b([a-zA-Z0-9_.]+)(?=\()/g, '<span style="color: #dcdcaa">$1</span>');
