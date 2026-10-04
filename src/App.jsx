@@ -12,6 +12,7 @@ import { ToastProvider, useToast } from './contexts/ToastContext';
 import './App.css';
 import MobileNav from './components/MobileNav';
 import NavLink from './components/NavLink';
+import { VscColorMode } from 'react-icons/vsc';
 import { journalPosts, pathForFile, fileForPath, fileForHash, bioLangForPath, titleForFile } from './routes';
 import { WIKI_LANG_KEY, initialWikiLang } from './constants/wikiStrings';
 
@@ -260,12 +261,23 @@ function AppContent() {
         <div className="journal-standalone-shell">
           <header className="journal-standalone-topbar">
             <NavLink file="Welcome" onNavigate={handleOpenFile}>Back to OS</NavLink>
-            <nav aria-label="Site sections">
-              <NavLink file="projects.html" onNavigate={handleOpenFile}>Research</NavLink>
-              <NavLink file="current_courses.ipynb" onNavigate={handleOpenFile}>Teaching</NavLink>
-              <NavLink file="wiki.html" onNavigate={handleOpenFile}>Bio</NavLink>
-              <NavLink file="contact.html" onNavigate={handleOpenFile}>Contact</NavLink>
-            </nav>
+            <div className="journal-topbar-right">
+              <button
+                type="button"
+                className="journal-mode"
+                onClick={toggleTheme}
+                aria-label={`Switch to ${siteMode === 'light' ? 'dark' : 'light'} theme`}
+                title={`Switch to ${siteMode === 'light' ? 'dark' : 'light'} theme`}
+              >
+                <VscColorMode size={16} />
+              </button>
+              <nav aria-label="Site sections">
+                <NavLink file="projects.html" onNavigate={handleOpenFile}>Research</NavLink>
+                <NavLink file="current_courses.ipynb" onNavigate={handleOpenFile}>Teaching</NavLink>
+                <NavLink file="wiki.html" onNavigate={handleOpenFile}>Bio</NavLink>
+                <NavLink file="contact.html" onNavigate={handleOpenFile}>Contact</NavLink>
+              </nav>
+            </div>
           </header>
           <div className={`journal-standalone-content ${isJournalHome ? '' : 'reader-mode'}`}>
             <React.Suspense fallback={<div className="p-4" style={{ color: 'var(--vscode-text)' }}>Loading journal...</div>}>

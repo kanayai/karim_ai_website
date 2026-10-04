@@ -2708,3 +2708,7 @@ body {
   text-underline-offset: 3px;
   cursor: pointer;
 }
+
+/* Journal top bar: theme button stays visible on phones (section links hide <640px). */
+.journal-topbar-right { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.journal-standalone-topbar .journal-mode { padding: 8px 10px; }
