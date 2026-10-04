@@ -260,7 +260,7 @@ function AppContent() {
             <nav aria-label="Site sections">
               <NavLink file="projects.html" onNavigate={handleOpenFile}>Research</NavLink>
               <NavLink file="current_courses.ipynb" onNavigate={handleOpenFile}>Teaching</NavLink>
-              <NavLink file="wiki.html" onNavigate={handleOpenFile}>About</NavLink>
+              <NavLink file="wiki.html" onNavigate={handleOpenFile}>Bio</NavLink>
               <NavLink file="contact.html" onNavigate={handleOpenFile}>Contact</NavLink>
             </nav>
           </header>

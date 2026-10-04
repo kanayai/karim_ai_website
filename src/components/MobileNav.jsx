@@ -7,7 +7,7 @@ const items = [
     { label: 'Research', file: 'projects.html', icon: VscBook },
     { label: 'Teaching', file: 'current_courses.ipynb', icon: VscMortarBoard },
     { label: 'Journal', file: 'blog.html', icon: VscPreview },
-    { label: 'About', file: 'wiki.html', icon: VscAccount },
+    { label: 'Bio', file: 'wiki.html', icon: VscAccount },
     { label: 'Workspace', file: 'workspace.md', icon: VscCode },
     { label: 'Contact', file: 'contact.html', icon: VscMail },
 ];
