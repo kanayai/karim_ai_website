@@ -14,7 +14,7 @@
     position: relative;
 }
 
-.mh-body { font-size: clamp(1.05rem, 2.25vw, 1.55rem); line-height: 1.8; }
+.mh-body { font-size: clamp(0.95rem, 2.05vw, 1.4rem); line-height: 1.8; }
 .mh-line { margin: 0; }
 .mh-prompt { color: var(--mh-prompt); margin-right: .6rem; }
 .mh-name { margin: 0; font-size: inherit; font-weight: 600; color: var(--mh-strong); }
@@ -29,7 +29,6 @@
     /* Phone: too narrow for aligned columns, so each value sits under its field. */
     .mh-whois { grid-template-columns: 1fr; }
     .mh-whois > :not(.mh-key) { padding-left: 2ch; }
-    .mh-line .mh-comment { display: block; white-space: normal; }
 }
 
 .mh-ls { display: flex; flex-wrap: wrap; gap: .2rem 2rem; margin: .2rem 0 1.2rem; }
@@ -77,7 +76,6 @@
 .mh-art { color: #febc2e; line-height: 1.25; }
 .mh-screen.is-light .mh-art { color: #9a5b00; }
 .mh-hint { margin: .2rem 0 0; font-size: .8em; color: var(--mh-dim); }
-.mh-comment { color: var(--mh-dim); white-space: pre; }
 /* Visible focus for the command line (the input itself stays borderless). */
 .mh-input-row:focus-within {
     outline: 2px solid color-mix(in srgb, var(--mh-link) 70%, transparent);

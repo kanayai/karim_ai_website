@@ -185,7 +185,6 @@ export default function MinimalHome({ setActiveFile }) {
                     <>
                         <p className="mh-line">
                             <span className="mh-prompt">karim@bath ~ %</span> ls
-                            <span className="mh-comment">  # choose a section</span>
                         </p>
                         {renderList('initial')}
                     </>
