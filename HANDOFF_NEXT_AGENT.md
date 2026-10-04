@@ -18,7 +18,7 @@ address, following `_admin/planning/2026-10_revamp-plan.md` (milestones M1–M8)
   still work); 17c5e22 `public/_redirects` (section paths forced so `/contact` beats `contact.html`);
   1eac7df titles, `<html lang>`, `/es/bio` (Bio language lifted into App); aa22d42 index.html meta;
   19c6c01 `NavLink` real links + Workspace in mobile nav. **Open:** canonical/og:url/og:image need the
-  live domain (TODO in `index.html`); verify `_redirects` on the live site.
+  live domain — done (karim-ai.netlify.app); `_redirects` verified live.
 - Agents now have a browser: canonical `browser-check` skill (`playwright-cli`) — use it to verify
   every milestone at desktop + iPhone 15. In Codex, approve running it outside the sandbox.
 
@@ -30,7 +30,7 @@ Plan milestone **M3 — Home identity**, item 1: show name + role straight away 
 M3 in small commits, browser-check each. Also: once Karim gives the domain, add canonical/og tags.
 
 ## Last safe commit
-19c6c01 (pushed)
+61f5776 (pushed)
 
 ## Blockers
 - None for M1–M3. M4 needs Karim's course list, Moodle URLs, public materials; M7 needs Workspace content.
