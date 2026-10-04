@@ -56,7 +56,6 @@
 }
 .mh-cursor--blink { animation: mh-blink 1.1s steps(1) infinite; }
 
-
 .mh-screen.is-light {
     --mh-bg: #fafaf7; --mh-fg: #222; --mh-strong: #000; --mh-link: #0b57d0;
     --mh-dim: #666; --mh-prompt: #1a7f37; --mh-line: #d8d8d0;
@@ -76,12 +75,6 @@
 .mh-art { color: #febc2e; line-height: 1.25; }
 .mh-screen.is-light .mh-art { color: #9a5b00; }
 .mh-hint { margin: .2rem 0 0; font-size: .8em; color: var(--mh-dim); }
-/* Visible focus for the command line (the input itself stays borderless). */
-.mh-input-row:focus-within {
-    outline: 2px solid color-mix(in srgb, var(--mh-link) 70%, transparent);
-    outline-offset: 4px;
-    border-radius: 4px;
-}
 
 @keyframes mh-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes mh-blink { 50% { opacity: 0; } }
