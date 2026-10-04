@@ -5,7 +5,8 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  // Generated output (Vite, Quarto) and retired layouts are not linted.
+  globalIgnores(['dist', 'public/blog', 'blog/.quarto', 'blog/_site', 'src/archive']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [
@@ -25,5 +26,10 @@ export default defineConfig([
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
+  },
+  {
+    // Node scripts (publication fetchers etc.)
+    files: ['scripts/**/*.js'],
+    languageOptions: { globals: globals.node },
   },
 ])

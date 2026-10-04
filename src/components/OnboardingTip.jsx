@@ -20,15 +20,19 @@ const OnboardingTip = () => {
             const showTimer = setTimeout(() => setIsVisible(true), 1000);
 
             // Auto-dismiss after 7 seconds
+            // Auto-dismiss (not permanently): same animation as handleDismiss(false).
+            let hideTimer;
             const autoDismissTimer = setTimeout(() => {
                 if (!localStorage.getItem(STORAGE_KEY)) {
-                    handleDismiss(false);
+                    setIsAnimatingOut(true);
+                    hideTimer = setTimeout(() => setIsVisible(false), 300);
                 }
             }, 1000 + AUTO_DISMISS_DELAY);
 
             return () => {
                 clearTimeout(showTimer);
                 clearTimeout(autoDismissTimer);
+                clearTimeout(hideTimer);
             };
         }
     }, []);

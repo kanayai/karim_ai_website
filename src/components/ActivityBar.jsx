@@ -3,7 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { VscFiles, VscSearch, VscGitMerge, VscDebugAlt, VscExtensions, VscGithub, VscAccount, VscSettingsGear, VscColorMode } from 'react-icons/vsc';
 import { themes } from '../constants/themes';
 
-const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, theme, toggleTheme, setTheme, onSearchClick }) => {
+const IconWrapper = ({ children, onClick, active, title }) => (
+    <div
+        className={`activity-bar-icon d-flex justify-content-center align-items-center ${active ? 'active' : ''}`}
+        onClick={onClick}
+        title={title}
+    >
+        {children}
+    </div>
+);
+
+const ActivityBar = ({ activeView, setActiveView, theme, toggleTheme, setTheme, onSearchClick }) => {
     const [showAccountsMenu, setShowAccountsMenu] = useState(false);
     const [showSettingsMenu, setShowSettingsMenu] = useState(false);
     const [showThemeSubmenu, setShowThemeSubmenu] = useState(false);
@@ -28,15 +38,6 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
         { name: 'Bath University', url: 'https://researchportal.bath.ac.uk/en/persons/karim-anaya-izquierdo/' }
     ];
 
-    const IconWrapper = ({ children, onClick, active, title }) => (
-        <div
-            className={`activity-bar-icon d-flex justify-content-center align-items-center ${active ? 'active' : ''}`}
-            onClick={onClick}
-            title={title}
-        >
-            {children}
-        </div>
-    );
 
     const currentThemeLabel = themes.find(t => t.id === theme)?.label || 'Dark';
 

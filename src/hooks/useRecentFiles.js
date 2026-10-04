@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 const STORAGE_KEY = 'karim-ai-recent-files';
 const MAX_RECENT_FILES = 5;
@@ -8,20 +8,16 @@ const MAX_RECENT_FILES = 5;
  * Persists to localStorage with timestamps
  */
 export const useRecentFiles = () => {
-    const [recentFiles, setRecentFiles] = useState([]);
-
-    // Load from localStorage on mount
-    useEffect(() => {
+    // Load from localStorage once, as the initial state
+    const [recentFiles, setRecentFiles] = useState(() => {
         try {
             const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                const parsed = JSON.parse(stored);
-                setRecentFiles(parsed);
-            }
+            return stored ? JSON.parse(stored) : [];
         } catch (e) {
             console.warn('Failed to load recent files:', e);
+            return [];
         }
-    }, []);
+    });
 
     // Add a file to recent list
     const addRecentFile = useCallback((fileName) => {

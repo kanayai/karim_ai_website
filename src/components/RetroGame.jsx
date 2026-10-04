@@ -1,30 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { VscDebugRestart } from 'react-icons/vsc';
 
+const emojis = ['🚀', '💻', '📊', '🎨', '🔍', '📈', '⚛️', '🐍'];
+
+const newDeck = () => [...emojis, ...emojis]
+    .sort(() => Math.random() - 0.5)
+    .map((emoji, index) => ({
+        id: index,
+        content: emoji,
+        isFlipped: false,
+        isMatched: false
+    }));
+
 const RetroGame = () => {
-    const [cards, setCards] = useState([]);
+    const [cards, setCards] = useState(newDeck);
     const [flippedCards, setFlippedCards] = useState([]);
     const [matchedCards, setMatchedCards] = useState([]);
     const [moves, setMoves] = useState(0);
     const [gameWon, setGameWon] = useState(false);
 
-    const emojis = ['🚀', '💻', '📊', '🎨', '🔍', '📈', '⚛️', '🐍'];
-
-    useEffect(() => {
-        initializeGame();
-    }, []);
-
     const initializeGame = () => {
-        const shuffledCards = [...emojis, ...emojis]
-            .sort(() => Math.random() - 0.5)
-            .map((emoji, index) => ({
-                id: index,
-                content: emoji,
-                isFlipped: false,
-                isMatched: false
-            }));
-
-        setCards(shuffledCards);
+        setCards(newDeck());
         setFlippedCards([]);
         setMatchedCards([]);
         setMoves(0);

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CodeViewer = ({ content, language }) => {
+const CodeViewer = ({ content }) => {
     const lines = content.split('\n');
     const minimapBlocks = lines.slice(0, 80).map((line, index) => {
         const width = Math.max(18, Math.min(72, line.trim().length * 3));

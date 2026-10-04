@@ -4,7 +4,7 @@ import publicationsRSource from '../../data/publications.R?raw';
 import { VscCopy, VscCheck, VscCloudDownload } from 'react-icons/vsc';
 import { useToast } from '../contexts/ToastContext';
 
-const RCodeViewer = ({ fileName }) => {
+const RCodeViewer = () => {
     const [consoleHeight, setConsoleHeight] = useState(60); // percentage
     const [isDragging, setIsDragging] = useState(false);
     const [copiedIndex, setCopiedIndex] = useState(null);
@@ -79,7 +79,7 @@ const RCodeViewer = ({ fileName }) => {
     };
 
     // Generate BibTeX entry for a publication
-    const generateBibTeX = (pub, index) => {
+    const generateBibTeX = (pub) => {
         const year = pub.year || 'n.d.';
         const title = pub.title || 'Untitled';
         const authors = pub.authors || '';
@@ -98,7 +98,7 @@ const RCodeViewer = ({ fileName }) => {
     // Export all publications as BibTeX
     const exportAllBibTeX = () => {
         const allBibTeX = publicationsData
-            .map((pub, index) => generateBibTeX(pub, index))
+            .map((pub) => generateBibTeX(pub))
             .join('\n\n');
 
         const blob = new Blob([allBibTeX], { type: 'text/plain' });
@@ -114,13 +114,13 @@ const RCodeViewer = ({ fileName }) => {
 
     // Copy individual citation to clipboard
     const copyCitation = async (pub, index) => {
-        const citation = generateBibTeX(pub, index);
+        const citation = generateBibTeX(pub);
         try {
             await navigator.clipboard.writeText(citation);
             setCopiedIndex(index);
             toast.showSuccess('Citation copied to clipboard');
             setTimeout(() => setCopiedIndex(null), 2000);
-        } catch (err) {
+        } catch {
             toast.showError('Failed to copy citation');
         }
     };

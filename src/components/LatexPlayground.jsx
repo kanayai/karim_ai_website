@@ -1,22 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import 'katex/dist/katex.min.css';
 import katex from 'katex';
 
 const LatexPlayground = () => {
     const [input, setInput] = useState('\\frac{1}{\\sqrt{2\\pi\\sigma^2}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}');
-    const [html, setHtml] = useState('');
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
+    // Rendered straight from the input (no effect needed).
+    const { html, error } = useMemo(() => {
         try {
-            const rendered = katex.renderToString(input, {
-                throwOnError: false,
-                displayMode: true
-            });
-            setHtml(rendered);
-            setError(null);
+            return { html: katex.renderToString(input, { throwOnError: false, displayMode: true }), error: null };
         } catch (e) {
-            setError(e.message);
+            return { html: '', error: e.message };
         }
     }, [input]);
 

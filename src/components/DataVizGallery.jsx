@@ -1,6 +1,17 @@
 import React from 'react';
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
+const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+        return (
+            <div style={{ backgroundColor: 'var(--vscode-editor-bg)', border: '1px solid var(--vscode-border)', padding: '10px' }}>
+                <p style={{ margin: 0 }}>{`${label ? label + ' : ' : ''}${payload[0].value}`}</p>
+            </div>
+        );
+    }
+    return null;
+};
+
 const DataVizGallery = () => {
     const publicationData = [
         { year: '2018', papers: 2 },
@@ -19,17 +30,6 @@ const DataVizGallery = () => {
     ];
 
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-
-    const CustomTooltip = ({ active, payload, label }) => {
-        if (active && payload && payload.length) {
-            return (
-                <div style={{ backgroundColor: 'var(--vscode-editor-bg)', border: '1px solid var(--vscode-border)', padding: '10px' }}>
-                    <p style={{ margin: 0 }}>{`${label ? label + ' : ' : ''}${payload[0].value}`}</p>
-                </div>
-            );
-        }
-        return null;
-    };
 
     return (
         <div className="p-4 h-100" style={{ color: 'var(--vscode-text)', overflowY: 'auto' }}>

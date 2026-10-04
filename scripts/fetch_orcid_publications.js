@@ -114,7 +114,6 @@ async function main() {
 
             // Date string
             let month = workSummary['publication-date']?.month?.value || '';
-            let day = workSummary['publication-date']?.day?.value || '';
             let dateStr = year;
             if (month) {
                 const monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June',
