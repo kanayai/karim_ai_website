@@ -50,16 +50,16 @@ address, following `_admin/planning/2026-10_revamp-plan.md` (milestones M1–M8)
   every milestone at desktop + iPhone 15. In Codex, approve running it outside the sandbox.
 
 ## Resume point
-Awaiting Karim on two proposals: (1) Home colours — unbold the whois name; colour `git log` (yellow
-hashes, cyan HEAD), `git status` (red modified), `grep` (purple file, bold red match), `fastfetch`
-labels; (2) M7 Workspace content. Root markdown files (`about_me.md`, `projects.md`, `welcome.md`,
-`phd_students.md`) are still imported by `Editor.jsx` but no address opens them — candidates for removal.
+Home colours done (46fdd7f: zsh-style colours for git/grep/fastfetch, plain whois name). Only **M7
+Workspace** remains, waiting on Karim's content (he does not know yet). Keep the root markdown files
+(`about_me.md`, `projects.md`, `welcome.md`, `phd_students.md`) — Karim may use them later.
 
 ## Next action
-Implement whichever Karim approves; browser-check desktop + iPhone 15; push.
+Ask Karim about Workspace content when he is ready. Optional: per-section browser smoke test in CI
+(needs @playwright/test — ask first); lazy-load layouts to cut the 496 KB main bundle.
 
 ## Last safe commit
-638b0f0 (pushed)
+46fdd7f (pushed)
 
 ## Blockers
 - None for M1–M3. M4 needs Karim's course list, Moodle URLs, public materials; M7 needs Workspace content.
