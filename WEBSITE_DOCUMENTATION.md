@@ -1,3 +1,6 @@
+> **Historical document.** Describes the earlier VS Code-only site and is no longer maintained.
+> For the current site see `README.md` and `_admin/planning/2026-10_revamp-plan.md`.
+
 # Karim AI Website Documentation
 
 ## Overview
