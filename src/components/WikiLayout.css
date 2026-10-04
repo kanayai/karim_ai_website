@@ -345,3 +345,5 @@
 .wiki-layout-wrapper .wiki-back-button:hover {
   text-decoration: none;
 }
+
+.wiki-layout-wrapper .wiki-wordmark { color: var(--wk-fg); text-decoration: none; }

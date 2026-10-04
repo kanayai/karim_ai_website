@@ -29,13 +29,13 @@ const WikiLayout = ({ setActiveFile, lang, onLangChange }) => {
     return (
         <div className={`wiki-layout-wrapper${dark ? ' is-dark' : ''}`} lang={lang}>
             <header className="wiki-site-header">
-                <div className="wiki-wordmark" onClick={() => setActiveFile('Welcome')}>
+                <NavLink file="Welcome" onNavigate={setActiveFile} className="wiki-wordmark" aria-label={`${t.siteTitle} — ${t.back}`}>
                     <span className="wiki-mark">W</span>
                     <div>
                         <div className="wiki-title-small">{t.siteTitle}</div>
                         <div className="wiki-subtitle-small">{t.siteSubtitle}</div>
                     </div>
-                </div>
+                </NavLink>
                 <div className="wiki-header-actions">
                     <div className="wiki-lang" ref={menuRef}>
                         <button

@@ -715,3 +715,19 @@
     mask-image: linear-gradient(to right, #000 85%, transparent);
   }
 }
+
+/* Real links (plan M6.1) styled as before; the file name's link covers its whole row. */
+.github-logo { display: inline-flex; }
+.github-logo,
+.gh-header-repo,
+.repo-name,
+.file-name {
+  text-decoration: none;
+}
+.gh-header-repo { color: inherit; }
+.github-logo:hover, .gh-header-repo:hover, .repo-name:hover { color: inherit; }
+.repo-name:hover, .file-name:hover { color: var(--gh-link); text-decoration: underline; }
+.file-row { position: relative; }
+.file-row .file-name::after { content: ''; position: absolute; inset: 0; }
+.file-row:focus-within { outline: 2px solid var(--gh-link); outline-offset: -2px; }
+.file-row .file-name:focus-visible { outline: none; }

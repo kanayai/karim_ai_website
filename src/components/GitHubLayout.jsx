@@ -60,6 +60,7 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
         wrapRef.current?.scrollTo({ top: 0 });
     };
     const goHome = () => { setActiveTab('code'); setView('home'); };
+    const openRepoHome = (file) => { setActiveFile(file); goHome(); };
     const copySource = () => {
         if (!source) return;
         navigator.clipboard?.writeText(source).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1500); });
@@ -70,11 +71,13 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
             {/* GitHub Global Header */}
             <header className="github-header d-flex align-items-center justify-content-between px-3 py-2">
                 <div className="d-flex align-items-center gap-3">
-                    <FaGithub size={32} className="github-logo" onClick={() => setActiveFile('Welcome')} />
+                    <NavLink file="Welcome" onNavigate={setActiveFile} className="github-logo" aria-label="Back to OS home">
+                        <FaGithub size={32} aria-hidden="true" />
+                    </NavLink>
                     <div className="gh-header-crumb">
                         <span className="gh-header-owner">kanayai</span>
                         <span className="gh-header-sep">/</span>
-                        <span className="gh-header-repo" onClick={goHome}>research</span>
+                        <NavLink file="projects.html" onNavigate={openRepoHome} className="gh-header-repo">research</NavLink>
                     </div>
                 </div>
                 <div className="d-flex align-items-center gap-2 gap-md-3">
@@ -135,7 +138,7 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                     <div className="gh-repo-title d-flex align-items-center justify-content-between flex-wrap gap-2">
                         <div className="d-flex align-items-center gap-2 repo-title-area">
                             <img src="/images/Bath_Crest.png" alt="" className="gh-repo-avatar" />
-                            <strong className="repo-name" onClick={goHome}>research</strong>
+                            <strong><NavLink file="projects.html" onNavigate={openRepoHome} className="repo-name">research</NavLink></strong>
                             <span className="repo-badge">Public</span>
                         </div>
                         <div className="d-flex align-items-center gap-2 repo-stats-buttons">
@@ -176,10 +179,10 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                                 </div>
                                 <div className="repo-file-list">
                                     {FILES.map((f) => (
-                                        <div key={f.file} className="file-row d-flex align-items-center justify-content-between" onClick={() => handleFileClick(f.file)}>
+                                        <div key={f.file} className="file-row d-flex align-items-center justify-content-between">
                                             <div className="d-flex align-items-center gap-2">
-                                                {f.folder ? <VscFolder className="folder-icon" /> : <VscFile className="file-icon" />}
-                                                <span className="file-name">{f.name}</span>
+                                                {f.folder ? <VscFolder className="folder-icon" aria-hidden="true" /> : <VscFile className="file-icon" aria-hidden="true" />}
+                                                <NavLink file={f.file} onNavigate={handleFileClick} className="file-name">{f.name}</NavLink>
                                             </div>
                                             <span className="file-commit-msg">{f.msg}</span>
                                             <span className="file-age">{f.age}</span>
