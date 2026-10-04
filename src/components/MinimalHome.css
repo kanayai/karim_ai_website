@@ -22,6 +22,7 @@
 @media (max-width: 600px) {
     .mh-role span { display: block; }
     .mh-role .mh-sep { display: none; }
+    .mh-line .mh-comment { display: block; white-space: normal; }
 }
 
 .mh-ls { display: flex; flex-wrap: wrap; gap: .2rem 2rem; margin: .2rem 0 1.2rem; }
@@ -69,6 +70,13 @@
 .mh-art { color: #febc2e; line-height: 1.25; }
 .mh-screen.is-light .mh-art { color: #9a5b00; }
 .mh-hint { margin: .2rem 0 0; font-size: .8em; color: var(--mh-dim); }
+.mh-comment { color: var(--mh-dim); white-space: pre; }
+/* Visible focus for the command line (the input itself stays borderless). */
+.mh-input-row:focus-within {
+    outline: 2px solid color-mix(in srgb, var(--mh-link) 70%, transparent);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
 
 @keyframes mh-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes mh-blink { 50% { opacity: 0; } }

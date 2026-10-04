@@ -111,11 +111,6 @@ export default function MinimalHome({ setActiveFile }) {
 
     const done = phase === 'done';
 
-    useEffect(() => {
-        // Desktop only: on phones focusing would pop the keyboard.
-        if (done && window.matchMedia('(hover: hover)').matches) inputRef.current?.focus();
-    }, [done]);
-
     // Keep the prompt in view as output grows or the user types.
     useEffect(() => {
         rowRef.current?.scrollIntoView({ block: 'end', behavior: 'auto' });
@@ -182,6 +177,7 @@ export default function MinimalHome({ setActiveFile }) {
                     <>
                         <p className="mh-line">
                             <span className="mh-prompt">karim@bath ~ %</span> ls
+                            <span className="mh-comment">  # choose a section</span>
                         </p>
                         {renderList('initial')}
                     </>
