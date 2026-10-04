@@ -32,20 +32,19 @@ address, following `_admin/planning/2026-10_revamp-plan.md` (milestones M1–M8)
 - cc5a5d5 morph repeats every 10 s (start to start). **M6.1–6.5 done**: d082b05 real links (GitHub rows,
   logo, repo name, Wiki wordmark); 984c67e home output aria-live; 1af6c65 alt text; 1e40999 decorative
   GitHub controls unfocusable; 8c4c105 Journal labelled keyword search + browse all. fd17ce8 fixed
-  RCodeViewer rendering R source as HTML. **Uncommitted on purpose:** whois-style home record (option B,
-  `MinimalHome.jsx/.css`) awaiting Karim's approval.
+  RCodeViewer rendering R source as HTML. Whois-style home record (option B) approved and pushed: 9e80a9f.
 - Agents now have a browser: canonical `browser-check` skill (`playwright-cli`) — use it to verify
   every milestone at desktop + iPhone 15. In Codex, approve running it outside the sandbox.
 
 ## Resume point
-Karim to judge the whois-style home record (uncommitted). Then **M6.6** — decide whether Journal and
+**M6.6** — decide whether Journal and
 Teaching follow light/dark (open question for Karim), then **M8** housekeeping (M7 blocked on content).
 
 ## Next action
-If Karim approves option B: commit `src/components/MinimalHome.*` and push. Then ask M6.6.
+Ask Karim M6.6 (recommendation: Journal follows light/dark, Teaching stays light like Moodle).
 
 ## Last safe commit
-8c4c105 (pushed)
+9e80a9f (pushed)
 
 ## Blockers
 - None for M1–M3. M4 needs Karim's course list, Moodle URLs, public materials; M7 needs Workspace content.
