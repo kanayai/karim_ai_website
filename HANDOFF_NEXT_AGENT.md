@@ -1,5 +1,5 @@
 # Handoff — karim_ai_website
-_Checkpoint 2026-10-04 (after M5)_
+_Checkpoint 2026-10-04 (M6 items 1–5 done)_
 
 ## Objective
 Revamp the site from the October 2026 UX critique: six look-alike sections, each with its own
@@ -29,18 +29,23 @@ address, following `_admin/planning/2026-10_revamp-plan.md` (milestones M1–M8)
   6ebdd63 Bio header compact; 6a5d42b Contact portrait beside name (profile-pages.css, `!important`
   beats HtmlViewer's injected img rule); a881b97 Research README higher; b3f511e Journal top links
   hidden <640px. e8ec069 Home morph now ~2 s after load (Karim asked). M3.3 still undecided (recommend drop).
+- cc5a5d5 morph repeats every 10 s (start to start). **M6.1–6.5 done**: d082b05 real links (GitHub rows,
+  logo, repo name, Wiki wordmark); 984c67e home output aria-live; 1af6c65 alt text; 1e40999 decorative
+  GitHub controls unfocusable; 8c4c105 Journal labelled keyword search + browse all. fd17ce8 fixed
+  RCodeViewer rendering R source as HTML. **Uncommitted on purpose:** whois-style home record (option B,
+  `MinimalHome.jsx/.css`) awaiting Karim's approval.
 - Agents now have a browser: canonical `browser-check` skill (`playwright-cli`) — use it to verify
   every milestone at desktop + iPhone 15. In Codex, approve running it outside the sandbox.
 
 ## Resume point
-**M6 — Accessibility and polish**, item 1: clickable div/li rows → real links/buttons (GitHub file
-rows, Wiki wordmark `div` in `WikiLayout.jsx`).
+Karim to judge the whois-style home record (uncommitted). Then **M6.6** — decide whether Journal and
+Teaching follow light/dark (open question for Karim), then **M8** housekeeping (M7 blocked on content).
 
 ## Next action
-M6 in small commits; M7 (Workspace) still needs Karim's content. Browser-check each.
+If Karim approves option B: commit `src/components/MinimalHome.*` and push. Then ask M6.6.
 
 ## Last safe commit
-e8ec069 (pushed)
+8c4c105 (pushed)
 
 ## Blockers
 - None for M1–M3. M4 needs Karim's course list, Moodle URLs, public materials; M7 needs Workspace content.
