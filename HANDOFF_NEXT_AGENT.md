@@ -1,5 +1,5 @@
 # Handoff — karim_ai_website
-_Checkpoint 2026-10-04 (after M3)_
+_Checkpoint 2026-10-04 (after M4)_
 
 ## Objective
 Revamp the site from the October 2026 UX critique: six look-alike sections, each with its own
@@ -22,18 +22,21 @@ address, following `_admin/planning/2026-10_revamp-plan.md` (milestones M1–M8)
 - **M3 done** (browser-checked): 1366e8f name + role shown at once, list after 0.45 s, Karim AI morph
   now returns to the full name; 046328d '# choose a section' cue, no auto-focus, focus outline.
   M3.3 (hidden `terminal` command) left optional/not done. About renamed to Bio in navs.
+- **M4 done**: e70c022 Moodle look-alike (`TeachingLayout.jsx`, data in `src/constants/teachingData.js`);
+  487a22e holding page removed. No public materials (Karim gave none). Levels inferred from unit codes.
+- cc0f96d Bio infobox shows Karim's portrait (`public/images/karim-portrait.jpg`) instead of the crest.
 - Agents now have a browser: canonical `browser-check` skill (`playwright-cli`) — use it to verify
   every milestone at desktop + iPhone 15. In Codex, approve running it outside the sandbox.
 
 ## Resume point
-M4 (Teaching/Moodle) and M7 (Workspace) are blocked on Karim's input. Next unblocked: **M5 — Phone
+M7 (Workspace) is blocked on Karim's input. Next unblocked: **M5 — Phone
 fixes**, item 1: Bio header "Back to OS" clipped at 393 px (`src/components/WikiLayout.*`).
 
 ## Next action
 M5 in small commits; also Journal top bar clips "Contact" on phone. Browser-check each.
 
 ## Last safe commit
-046328d (pushed)
+cc0f96d (pushed)
 
 ## Blockers
 - None for M1–M3. M4 needs Karim's course list, Moodle URLs, public materials; M7 needs Workspace content.
