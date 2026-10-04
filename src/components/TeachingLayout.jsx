@@ -1,6 +1,7 @@
 import React from 'react';
-import { VscLinkExternal } from 'react-icons/vsc';
+import { VscLinkExternal, VscColorMode } from 'react-icons/vsc';
 import NavLink from './NavLink';
+import useSiteMode from '../hooks/useSiteMode';
 import { teachingTerms } from '../constants/teachingData';
 import './TeachingLayout.css';
 
@@ -36,8 +37,13 @@ const CourseCard = ({ course }) => (
     </li>
 );
 
-const TeachingLayout = ({ setActiveFile }) => (
-    <div className="tm-shell">
+const TeachingLayout = ({ setActiveFile }) => {
+    const [mode, setMode] = useSiteMode();
+    const dark = mode === 'dark';
+    const modeLabel = `Switch to ${dark ? 'light' : 'dark'} theme`;
+
+    return (
+    <div className={`tm-shell${dark ? ' is-dark' : ''}`}>
         <header className="tm-navbar">
             <NavLink file="Welcome" onNavigate={setActiveFile} className="tm-brand">
                 <span className="tm-brand-mark" aria-hidden="true">K</span>
@@ -46,6 +52,9 @@ const TeachingLayout = ({ setActiveFile }) => (
             <nav className="tm-primary-nav" aria-label="Teaching">
                 <span className="tm-primary-nav-item is-active" aria-current="page">My courses</span>
             </nav>
+            <button type="button" className="tm-mode" onClick={() => setMode(dark ? 'light' : 'dark')} aria-label={modeLabel} title={modeLabel}>
+                <VscColorMode size={16} />
+            </button>
             <NavLink file="Welcome" onNavigate={setActiveFile} className="tm-back">Back to OS</NavLink>
         </header>
 
@@ -69,6 +78,7 @@ const TeachingLayout = ({ setActiveFile }) => (
             ))}
         </main>
     </div>
-);
+    );
+};
 
 export default TeachingLayout;

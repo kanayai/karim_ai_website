@@ -1,4 +1,4 @@
-/* Moodle (Boost theme) look-alike for Teaching. Light only for now (plan M6 open question). */
+/* Moodle (Boost theme) look-alike for Teaching; .is-dark follows the shared site mode. */
 .tm-shell {
     /* Own scroll container: body has overflow: hidden site-wide. */
     height: 100vh;
@@ -11,11 +11,29 @@
     --tm-border: #dee2e6;
     --tm-bg: #ffffff;
     --tm-soft: #f8f9fa;
+    --tm-notice-bg: #e7f1fb;
+    --tm-notice-border: #b6d4fe;
+    --tm-notice-text: #0a3a66;
+    --tm-shadow: rgba(0, 0, 0, 0.08);
     background: var(--tm-bg);
     color: var(--tm-text);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     font-size: 15px;
     line-height: 1.5;
+}
+
+.tm-shell.is-dark {
+    --tm-primary: #5aa3e8;
+    --tm-primary-dark: #8cc0f0;
+    --tm-text: #e6e8ea;
+    --tm-muted: #9aa3ab;
+    --tm-border: #343a40;
+    --tm-bg: #16191c;
+    --tm-soft: #23272b;
+    --tm-notice-bg: #0f2a44;
+    --tm-notice-border: #1e4f7a;
+    --tm-notice-text: #cfe4fb;
+    --tm-shadow: rgba(0, 0, 0, 0.5);
 }
 
 .tm-navbar {
@@ -28,7 +46,7 @@
     gap: 24px;
     padding: 0 20px;
     background: var(--tm-bg);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 4px var(--tm-shadow);
 }
 
 .tm-brand {
@@ -65,8 +83,19 @@
 
 .tm-primary-nav-item.is-active { border-bottom-color: var(--tm-primary); }
 
-.tm-back {
+.tm-mode {
     margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 9px;
+    border: 1px solid var(--tm-border);
+    border-radius: 6px;
+    background: var(--tm-soft);
+    color: var(--tm-text);
+    cursor: pointer;
+}
+
+.tm-back {
     padding: 6px 12px;
     border: 1px solid var(--tm-primary);
     border-radius: 6px;
@@ -76,7 +105,7 @@
     white-space: nowrap;
 }
 
-.tm-back:hover { background: var(--tm-primary); color: #fff; }
+.tm-back:hover { background: var(--tm-primary); color: var(--tm-bg); }
 
 .tm-page {
     max-width: 1100px;
@@ -89,10 +118,10 @@
 .tm-notice {
     margin: 0 0 28px;
     padding: 12px 16px;
-    border: 1px solid #b6d4fe;
+    border: 1px solid var(--tm-notice-border);
     border-radius: 6px;
-    background: #e7f1fb;
-    color: #0a3a66;
+    background: var(--tm-notice-bg);
+    color: var(--tm-notice-text);
 }
 
 .tm-block {
@@ -203,3 +232,7 @@
     .tm-page { padding: 20px 14px 32px; }
     .tm-block { padding: 14px; }
 }
+
+.tm-shell.is-dark .tm-button,
+.tm-shell.is-dark .tm-button:hover { color: #0b1a29; }
+.tm-mode + .tm-back { margin-left: -12px; } /* sit beside the theme button */
