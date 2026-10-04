@@ -69,7 +69,7 @@ export default function MinimalHome({ setActiveFile }) {
         };
     }, [instant]);
 
-    // Every 30 s the name briefly morphs to "Karim AI" and back to the full name.
+    // ~2 s after load, then every 30 s, the name briefly morphs to "Karim AI" and back.
     useEffect(() => {
         if (phase !== 'done' || reduced) return undefined;
         let cancelled = false;
@@ -88,10 +88,10 @@ export default function MinimalHome({ setActiveFile }) {
             }
         };
         (async () => {
-            let first = morphKey > 0; // screen cleared: morph straight away
+            let delay = morphKey > 0 ? 600 : 2000; // after `clear`, straight away
             while (!cancelled) {
-                await wait(first ? 600 : 30000);
-                first = false;
+                await wait(delay);
+                delay = 30000;
                 if (cancelled) return;
                 await unstep(FULL_NAME, 'Karim ', setName, 45);
                 await step('AI', setName, 'Karim ', 160);
