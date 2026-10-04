@@ -260,12 +260,16 @@ p + p {
     grid-template-columns: 1fr;
   }
 
+  /* Phone: small portrait beside the name so the contact links show without scrolling.
+     !important beats the viewer's injected img { max-width: 100% !important }. */
   .profile-hero {
-    gap: 18px;
+    grid-template-columns: 88px 1fr;
+    align-items: start;
+    gap: 14px;
   }
 
-  .profile-photo {
-    max-width: 172px;
+  .profile-hero .profile-photo {
+    max-width: 88px !important;
   }
 
   .action-row {
@@ -283,7 +287,4 @@ p + p {
     grid-template-columns: 1fr;
   }
 
-  .profile-photo {
-    max-width: 150px;
-  }
 }
