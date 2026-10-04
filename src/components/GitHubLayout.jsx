@@ -5,6 +5,7 @@ import { FaGithub, FaStar, FaEye, FaCodeBranch, FaTag, FaCaretDown, FaSearch } f
 import { VscColorMode } from 'react-icons/vsc';
 import useSiteMode from '../hooks/useSiteMode';
 import GitHubCodeMenu from './GitHubCodeMenu';
+import NavLink from './NavLink';
 import './GitHubLayout.css';
 
 // Repo contents. `path` is where the source lives in the real repo (for Raw).
@@ -90,7 +91,7 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                     >
                         <VscColorMode size={16} />
                     </button>
-                    <button className="github-btn-outline back-to-os" onClick={() => setActiveFile('Welcome')}>Back to OS</button>
+                    <NavLink file="Welcome" onNavigate={setActiveFile} className="github-btn-outline back-to-os">Back to OS</NavLink>
                     <img src="/images/Bath_Crest.png" alt="User Profile" className="github-avatar" />
                 </div>
             </header>

@@ -1,5 +1,6 @@
 import React from 'react';
-import { VscHome, VscBook, VscMortarBoard, VscPreview, VscAccount, VscMail } from 'react-icons/vsc';
+import { VscHome, VscBook, VscMortarBoard, VscPreview, VscAccount, VscCode, VscMail } from 'react-icons/vsc';
+import NavLink from './NavLink';
 
 const items = [
     { label: 'Home', file: 'Welcome', icon: VscHome },
@@ -7,6 +8,7 @@ const items = [
     { label: 'Teaching', file: 'current_courses.ipynb', icon: VscMortarBoard },
     { label: 'Journal', file: 'blog.html', icon: VscPreview },
     { label: 'About', file: 'wiki.html', icon: VscAccount },
+    { label: 'Workspace', file: 'workspace.md', icon: VscCode },
     { label: 'Contact', file: 'contact.html', icon: VscMail },
 ];
 
@@ -16,7 +18,8 @@ const sectionForFile = (file) => {
     if (['projects.html', 'publications.html', 'phd_students.html', 'certest.html', 'gkn_prosperity.html', 'publications.R'].includes(file)) return 'projects.html';
     if (['current_courses.ipynb', 'previous_courses.ipynb'].includes(file)) return 'current_courses.ipynb';
     if (file === 'blog.html' || file?.endsWith?.('_guide.html') || file === 'academic_workflow.html' || file === 'anscombe_quartet.html' || file === 'git-vs-onedrive.html') return 'blog.html';
-    if (file === 'about_me.html' || file === 'workspace.md') return 'wiki.html';
+    if (file === 'about_me.html') return 'wiki.html';
+    if (file === 'workspace.md') return 'workspace.md';
     if (file === 'contact.html') return 'contact.html';
     return file;
 };
@@ -27,15 +30,16 @@ const MobileNav = ({ activeFile, onNavigate }) => {
     return (
         <nav className="mobile-primary-nav" aria-label="Primary mobile navigation">
             {items.map((item) => (
-                <button
+                <NavLink
                     key={item.file}
-                    type="button"
+                    file={item.file}
+                    onNavigate={onNavigate}
                     className={`mobile-primary-nav-item ${activeSection === item.file ? 'active' : ''}`}
-                    onClick={() => onNavigate(item.file)}
+                    aria-current={activeSection === item.file ? 'page' : undefined}
                 >
                     {React.createElement(item.icon, { size: 18 })}
                     <span>{item.label}</span>
-                </button>
+                </NavLink>
             ))}
         </nav>
     );

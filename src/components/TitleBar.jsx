@@ -1,4 +1,5 @@
 import React from 'react';
+import NavLink from './NavLink';
 import { VscArrowLeft, VscArrowRight, VscSearch, VscLayoutSidebarLeft, VscLayoutSidebarRight, VscLayoutPanel, VscMenu, VscColorMode, VscChromeMinimize, VscChromeMaximize, VscChromeClose } from 'react-icons/vsc';
 
 const TitleBar = ({ onSearchClick, toggleSidebar, simpleMode, toggleSimpleMode, theme, toggleTheme, onBackToOS }) => {
@@ -72,13 +73,9 @@ const TitleBar = ({ onSearchClick, toggleSidebar, simpleMode, toggleSimpleMode, 
             </div>
 
             <div className="d-flex gap-1 align-items-center titlebar-right">
-                <button
-                    type="button"
-                    className="titlebar-back-to-os"
-                    onClick={onBackToOS}
-                >
+                <NavLink file="Welcome" onNavigate={onBackToOS} className="titlebar-back-to-os">
                     Back to OS
-                </button>
+                </NavLink>
                 <div
                     onClick={toggleTheme}
                     className="titlebar-icon-button"

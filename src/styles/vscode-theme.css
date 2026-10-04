@@ -730,6 +730,9 @@ body {
 }
 
 .titlebar-back-to-os {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
   min-height: 28px;
   padding: 0 10px;
   border: 1px solid var(--vscode-border);
@@ -1317,7 +1320,7 @@ body {
     bottom: 0;
     z-index: 1200;
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 0;
     padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
     background: color-mix(in srgb, var(--vscode-sidebar-bg, #161b22) 94%, black 6%);
@@ -1326,9 +1329,10 @@ body {
   }
 
   .mobile-primary-nav-item {
+    text-decoration: none;
     min-width: 0;
     min-height: 52px;
-    padding: 6px 2px;
+    padding: 6px 0; /* seven items: "Workspace" must fit at 393px */
     border: 0;
     border-radius: 6px;
     background: transparent;
@@ -1348,6 +1352,7 @@ body {
   }
 
   .mobile-primary-nav-item span {
+    letter-spacing: -0.2px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1608,7 +1613,11 @@ body {
   gap: 8px;
 }
 
-.journal-standalone-topbar button {
+.journal-standalone-topbar button,
+.journal-standalone-topbar a {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
   min-height: 38px;
   padding: 8px 12px;
   border: 1px solid var(--journal-border);
@@ -1620,7 +1629,8 @@ body {
   cursor: pointer;
 }
 
-.journal-standalone-topbar button:hover {
+.journal-standalone-topbar button:hover,
+.journal-standalone-topbar a:hover {
   border-color: var(--vscode-accent);
   background: var(--journal-soft);
 }
@@ -2045,7 +2055,8 @@ body {
     display: none;
   }
 
-  .journal-standalone-topbar button {
+  .journal-standalone-topbar button,
+  .journal-standalone-topbar a {
     min-height: 40px;
     flex: 0 0 auto;
     white-space: nowrap;

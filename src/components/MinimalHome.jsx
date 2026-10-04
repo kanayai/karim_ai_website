@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './MinimalHome.css';
 import { run, complete } from './minimalShell';
 import useSiteMode from '../hooks/useSiteMode';
+import { pathForFile } from '../routes';
 
 const entries = [
     { name: 'research/', file: 'projects.html', blurb: 'Projects, publications, PhD students', preview: '/previews/research.webp' },
@@ -40,7 +41,7 @@ export default function MinimalHome({ setActiveFile }) {
             {entries.map((e, i) => (
                 <a
                     key={e.file}
-                    href={`#${e.file}`}
+                    href={pathForFile(e.file)}
                     className={`mh-entry${active?.file === e.file && active?.listId === listId ? ' is-active' : ''}`}
                     style={{ animationDelay: `${instant ? 0 : i * 90}ms` }}
                     onClick={(ev) => onClick(ev, { ...e, listId })}
@@ -138,6 +139,7 @@ export default function MinimalHome({ setActiveFile }) {
     }, [phase, reduced, instant, morphKey]);
 
     const onClick = (e, entry) => {
+        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; // new tab etc.
         e.preventDefault();
         setActiveFile(entry.file);
     };

@@ -11,6 +11,7 @@ import { useRecentFiles } from './hooks/useRecentFiles';
 import { ToastProvider, useToast } from './contexts/ToastContext';
 import './App.css';
 import MobileNav from './components/MobileNav';
+import NavLink from './components/NavLink';
 import { journalPosts, pathForFile, fileForPath, fileForHash, bioLangForPath, titleForFile } from './routes';
 import { WIKI_LANG_KEY, initialWikiLang } from './constants/wikiStrings';
 
@@ -255,12 +256,12 @@ function AppContent() {
       <>
         <div className="journal-standalone-shell">
           <header className="journal-standalone-topbar">
-            <button type="button" onClick={() => handleOpenFile('Welcome')}>Back to OS</button>
+            <NavLink file="Welcome" onNavigate={handleOpenFile}>Back to OS</NavLink>
             <nav aria-label="Site sections">
-              <button type="button" onClick={() => handleOpenFile('projects.html')}>Research</button>
-              <button type="button" onClick={() => handleOpenFile('current_courses.ipynb')}>Teaching</button>
-              <button type="button" onClick={() => handleOpenFile('wiki.html')}>About</button>
-              <button type="button" onClick={() => handleOpenFile('contact.html')}>Contact</button>
+              <NavLink file="projects.html" onNavigate={handleOpenFile}>Research</NavLink>
+              <NavLink file="current_courses.ipynb" onNavigate={handleOpenFile}>Teaching</NavLink>
+              <NavLink file="wiki.html" onNavigate={handleOpenFile}>About</NavLink>
+              <NavLink file="contact.html" onNavigate={handleOpenFile}>Contact</NavLink>
             </nav>
           </header>
           <div className={`journal-standalone-content ${isJournalHome ? '' : 'reader-mode'}`}>

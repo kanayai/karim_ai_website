@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { VscArrowLeft, VscColorMode } from 'react-icons/vsc';
 import { MdTranslate } from 'react-icons/md';
 import useSiteMode from '../hooks/useSiteMode';
+import NavLink from './NavLink';
 import { wikiLanguages, wikiStrings } from '../constants/wikiStrings';
 import './WikiLayout.css';
 
@@ -70,10 +71,10 @@ const WikiLayout = ({ setActiveFile, lang, onLangChange }) => {
                     >
                         <VscColorMode size={16} />
                     </button>
-                    <button type="button" className="wiki-back-button" onClick={() => setActiveFile('Welcome')}>
+                    <NavLink file="Welcome" onNavigate={setActiveFile} className="wiki-back-button">
                         <VscArrowLeft size={16} />
                         {t.back}
-                    </button>
+                    </NavLink>
                 </div>
             </header>
 
@@ -128,12 +129,12 @@ const WikiLayout = ({ setActiveFile, lang, onLangChange }) => {
 
                     <h2 id="research">{t.research}</h2>
                     <p>
-                        {t.researchText[0]}<button type="button" className="wiki-inline-link" onClick={() => setActiveFile('projects.html')}>{t.research}</button>{t.researchText[1]}
+                        {t.researchText[0]}<NavLink file="projects.html" onNavigate={setActiveFile} className="wiki-inline-link">{t.research}</NavLink>{t.researchText[1]}
                     </p>
 
                     <h2 id="teaching">{t.teaching}</h2>
                     <p>
-                        {t.teachingText[0]}<button type="button" className="wiki-inline-link" onClick={() => setActiveFile('current_courses.ipynb')}>{t.teaching}</button>{t.teachingText[1]}
+                        {t.teachingText[0]}<NavLink file="current_courses.ipynb" onNavigate={setActiveFile} className="wiki-inline-link">{t.teaching}</NavLink>{t.teachingText[1]}
                     </p>
 
                     <h2 id="selected-topics">{t.topics}</h2>

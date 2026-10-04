@@ -64,6 +64,7 @@
 }
 
 .wiki-back-button {
+  text-decoration: none;
   min-height: 36px;
   display: inline-flex;
   align-items: center;
@@ -310,3 +311,7 @@
 }
 .wiki-lang-menu button:hover { background: var(--wk-soft); }
 .wiki-lang-menu button.active { color: var(--wk-fg); font-weight: 700; }
+
+.wiki-layout-wrapper .wiki-back-button:hover {
+  text-decoration: none;
+}

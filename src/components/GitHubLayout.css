@@ -94,6 +94,9 @@
 }
 
 .github-btn-outline.back-to-os {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
   background-color: rgba(56, 139, 253, 0.15);
   border-color: rgba(56, 139, 253, 0.4);
   color: var(--gh-link);
