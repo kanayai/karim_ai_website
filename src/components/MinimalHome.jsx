@@ -15,16 +15,17 @@ const entries = [
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
+const FULL_NAME = 'Karim Anaya-Izquierdo';
+
 export default function MinimalHome({ setActiveFile }) {
     const reduced = typeof window !== 'undefined'
         && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const instant = reduced;
 
-    const [command, setCommand] = useState(instant ? 'whois Karim' : 'whois ');
-    const [name, setName] = useState(instant ? 'Karim AI' : '');
-    const [phase, setPhase] = useState(instant ? 'done' : 'typing'); // typing | done
+    const command = 'whois Karim';
+    const [name, setName] = useState(FULL_NAME);
+    const [phase, setPhase] = useState(instant ? 'done' : 'intro'); // intro | done
     const [active, setActive] = useState(null);
-    const skipRef = useRef(false);
     const inputRef = useRef(null);
     const rowRef = useRef(null);
     const [value, setValue] = useState('');
@@ -54,56 +55,21 @@ export default function MinimalHome({ setActiveFile }) {
         </nav>
     );
 
+    // Identity shows at once; the folder list follows after a short beat (any key/tap skips it).
     useEffect(() => {
         if (instant) return undefined;
-        let cancelled = false;
-        const type = async (text, set, base = '', delay = 70) => {
-            for (let i = 1; i <= text.length; i++) {
-                if (cancelled || skipRef.current) return;
-                set(base + text.slice(0, i));
-                await wait(delay + Math.random() * 40);
-            }
-        };
-        const erase = async (from, to, set, delay = 45) => {
-            for (let i = from.length; i >= to.length; i--) {
-                if (cancelled || skipRef.current) return;
-                set(from.slice(0, i));
-                await wait(delay);
-            }
-        };
-        (async () => {
-            await wait(600);
-            await type('Karim', setCommand, 'whois ', 110);
-            await wait(450);
-            const full = 'Karim Anaya-Izquierdo';
-            await type(full, setName, '', 55);
-            await wait(900);
-            await erase(full, 'Karim ', setName);
-            await wait(250);
-            await type('AI', setName, 'Karim ', 160);
-            await wait(500);
-            if (cancelled) return;
-            finish();
-        })();
-        const finish = () => {
-            setCommand('whois Karim');
-            setName('Karim AI');
-            setPhase('done');
-        };
-        const skip = () => {
-            skipRef.current = true;
-            finish();
-        };
-        window.addEventListener('keydown', skip);
-        window.addEventListener('pointerdown', skip);
+        const finish = () => setPhase('done');
+        const timer = setTimeout(finish, 450);
+        window.addEventListener('keydown', finish);
+        window.addEventListener('pointerdown', finish);
         return () => {
-            cancelled = true;
-            window.removeEventListener('keydown', skip);
-            window.removeEventListener('pointerdown', skip);
+            clearTimeout(timer);
+            window.removeEventListener('keydown', finish);
+            window.removeEventListener('pointerdown', finish);
         };
     }, [instant]);
 
-    // After the intro, replay the Karim AI <-> full-name morph every 30 s.
+    // Every 30 s the name briefly morphs to "Karim AI" and back to the full name.
     useEffect(() => {
         if (phase !== 'done' || reduced) return undefined;
         let cancelled = false;
@@ -122,21 +88,20 @@ export default function MinimalHome({ setActiveFile }) {
             }
         };
         (async () => {
-            let first = instant || morphKey > 0; // intro skipped or screen cleared: morph straight away
+            let first = morphKey > 0; // screen cleared: morph straight away
             while (!cancelled) {
                 await wait(first ? 600 : 30000);
                 first = false;
                 if (cancelled) return;
+                await unstep(FULL_NAME, 'Karim ', setName, 45);
+                await step('AI', setName, 'Karim ', 160);
+                await wait(1500);
                 await unstep('Karim AI', 'Karim ', setName, 90);
                 await step('Anaya-Izquierdo', setName, 'Karim ', 55);
-                await wait(900);
-                await unstep('Karim Anaya-Izquierdo', 'Karim ', setName, 45);
-                await wait(250);
-                await step('AI', setName, 'Karim ', 160);
             }
         })();
         return () => { cancelled = true; };
-    }, [phase, reduced, instant, morphKey]);
+    }, [phase, reduced, morphKey]);
 
     const onClick = (e, entry) => {
         if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; // new tab etc.
@@ -166,7 +131,7 @@ export default function MinimalHome({ setActiveFile }) {
             // Back to the opening screen (command history is kept).
             setBlocks([]);
             setActive(null);
-            setName('Karim AI');
+            setName(FULL_NAME);
             setMorphKey((k) => k + 1);
             return;
         }
@@ -210,14 +175,9 @@ export default function MinimalHome({ setActiveFile }) {
             <div className="mh-body">
                 <p className="mh-line">
                     <span className="mh-prompt">karim@bath ~ %</span> {command}
-                    {!done && !name && <span className="mh-cursor" />}
                 </p>
-                {name && (
-                    <h1 className="mh-name">
-                        {name}
-                        {!done && <span className="mh-cursor" />}
-                    </h1>
-                )}
+                <h1 className="mh-name" aria-label={FULL_NAME}>{name}</h1>
+                <p className="mh-role"><span>Senior Lecturer in Statistics</span><span className="mh-sep"> · </span><span>University of Bath</span></p>
                 {done && (
                     <>
                         <p className="mh-line">

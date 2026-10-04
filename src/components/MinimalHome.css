@@ -17,7 +17,12 @@
 .mh-body { font-size: clamp(1.25rem, 2.65vw, 1.8rem); line-height: 1.8; }
 .mh-line { margin: 0; }
 .mh-prompt { color: var(--mh-prompt); margin-right: .6rem; }
-.mh-name { margin: 0 0 1.2rem; font-size: inherit; font-weight: 600; color: var(--mh-strong); }
+.mh-name { margin: 0; font-size: inherit; font-weight: 600; color: var(--mh-strong); }
+.mh-role { margin: 0 0 1.2rem; font-size: .8em; color: var(--mh-dim); }
+@media (max-width: 600px) {
+    .mh-role span { display: block; }
+    .mh-role .mh-sep { display: none; }
+}
 
 .mh-ls { display: flex; flex-wrap: wrap; gap: .2rem 2rem; margin: .2rem 0 1.2rem; }
 .mh-entry {
