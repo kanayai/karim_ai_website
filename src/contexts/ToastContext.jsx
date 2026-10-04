@@ -8,41 +8,32 @@ let toastId = 0;
 export const ToastProvider = ({ children }) => {
     const [toasts, setToasts] = useState([]);
 
-    console.log('🍞 ToastProvider render, toasts:', toasts);
 
     const addToast = useCallback((message, type = 'info', duration = 3000) => {
         const id = toastId++;
-        console.log('🍞 Adding toast:', { id, message, type, duration });
         setToasts(prev => {
-            const newToasts = [...prev, { id, message, type, duration }];
-            console.log('🍞 New toasts array:', newToasts);
-            return newToasts;
+            return [...prev, { id, message, type, duration }];
         });
         return id;
     }, []);
 
     const removeToast = useCallback((id) => {
-        console.log('🍞 Removing toast:', id);
         setToasts(prev => prev.filter(toast => toast.id !== id));
     }, []);
 
     const showSuccess = useCallback((message, duration) => {
-        console.log('🍞 showSuccess called:', message);
         return addToast(message, 'success', duration);
     }, [addToast]);
 
     const showInfo = useCallback((message, duration) => {
-        console.log('🍞 showInfo called:', message);
         return addToast(message, 'info', duration);
     }, [addToast]);
 
     const showWarning = useCallback((message, duration) => {
-        console.log('🍞 showWarning called:', message);
         return addToast(message, 'warning', duration);
     }, [addToast]);
 
     const showError = useCallback((message, duration) => {
-        console.log('🍞 showError called:', message);
         return addToast(message, 'error', duration);
     }, [addToast]);
 
@@ -50,9 +41,7 @@ export const ToastProvider = ({ children }) => {
         <ToastContext.Provider value={{ addToast, showSuccess, showInfo, showWarning, showError }}>
             {children}
             <div className="vscode-toast-container" style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 10000 }}>
-                {console.log('🍞 Rendering toast container with', toasts.length, 'toasts')}
                 {toasts.map(toast => {
-                    console.log('🍞 Rendering toast:', toast);
                     return (
                         <Toast
                             key={toast.id}
