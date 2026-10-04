@@ -10,6 +10,11 @@ const GITHUB = 'https://github.com/kanayai';
 const REPO = `${GITHUB}/karim_ai_website`;
 const ORCID = 'https://orcid.org/0000-0001-9718-5256';
 
+// Coloured output: a line is a string or an array of pieces, each a string or [colours, text]
+// (colours: yellow, cyan, green, red, magenta, plus 'b' for bold), as a coloured zsh would print.
+const c = (colours, text) => [colours, text];
+const HEAD_REF = [c('yellow', '('), c('cyan b', 'HEAD -> '), c('green b', 'bath'), c('yellow', ')')];
+
 // Career as a commit history, newest first: [hash, date, message].
 const CAREER = [
     ['a3f9c1e', 'Sep 2013', 'Join Mathematical Sciences, University of Bath'],
@@ -21,9 +26,9 @@ const CAREER = [
 ];
 
 const gitLog = (oneline) => (oneline
-    ? CAREER.map(([h, , m], i) => `${h} ${i === 0 ? '(HEAD -> bath) ' : ''}${m}`)
+    ? CAREER.map(([h, , m], i) => [c('yellow', h), ' ', ...(i === 0 ? [...HEAD_REF, ' '] : []), m])
     : CAREER.flatMap(([h, d, m], i) => [
-        `commit ${h}${'0'.repeat(33)}${i === 0 ? ' (HEAD -> bath)' : ''}`,
+        [c('yellow', `commit ${h}${'0'.repeat(33)}`), ...(i === 0 ? [c('yellow', ' '), ...HEAD_REF] : [])],
         'Author: Karim Anaya-Izquierdo <kai21@bath.ac.uk>',
         `Date:   ${d}`,
         '',
@@ -36,8 +41,8 @@ const GIT_STATUS = [
     "Your branch is ahead of 'origin/research' by 2 papers.",
     '',
     'Changes not staged for commit:',
-    '        modified:   paper_1.tex',
-    '        modified:   paper_2.tex',
+    ['        ', c('red', 'modified:   paper_1.tex')],
+    ['        ', c('red', 'modified:   paper_2.tex')],
     '',
     'no changes added to commit (use "git add" and keep writing)',
 ];
@@ -48,7 +53,8 @@ const bathUptime = () => {
     const start = new Date(2013, 8, 1); // September 2013, University of Bath
     const now = new Date();
     const months = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
-    return `${Math.floor(months / 12)} years, ${months % 12} months`;
+    const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
+    return `${plural(Math.floor(months / 12), 'year')}, ${plural(months % 12, 'month')}`;
 };
 
 const COFFEE = [
@@ -207,13 +213,13 @@ export function run(input, { entries, history, light }) {
             return { out: ['email  kai21@bath.ac.uk', 'orcid  orcid.org/0000-0001-9718-5256', 'github github.com/kanayai'] };
         case 'neofetch': case 'fastfetch':
             return { out: [
-                'karim@kai-os', '------------',
-                'Role:      Senior Lecturer in Statistics',
-                'Host:      University of Bath, Mathematical Sciences',
-                `Uptime:    ${bathUptime()} at Bath`,
-                'Research:  info geometry · UQ · survival · spatial epi',
-                'Stack:     R (tidyverse) · Python · Quarto · LaTeX',
-                `Theme:     ${light ? 'light' : 'dark'}`,
+                [c('cyan b', 'karim'), '@', c('cyan b', 'kai-os')], '------------',
+                [c('cyan b', 'Role:'), '      Senior Lecturer in Statistics'],
+                [c('cyan b', 'Host:'), '      University of Bath, Mathematical Sciences'],
+                [c('cyan b', 'Uptime:'), `    ${bathUptime()} at Bath`],
+                [c('cyan b', 'Research:'), '  info geometry · UQ · survival · spatial epi'],
+                [c('cyan b', 'Stack:'), '     R (tidyverse) · Python · Quarto · LaTeX'],
+                [c('cyan b', 'Theme:'), `     ${light ? 'light' : 'dark'}`],
             ] };
         case 'coffee': return { out: COFFEE, art: true };
         case 'tea': return { out: TEA, art: true };
@@ -239,7 +245,13 @@ export function run(input, { entries, history, light }) {
             if (!pat) return { out: ['usage: grep <pattern>'] };
             const lines = entries.map((e) => [`${e.name}${e.file}`, e.blurb])
                 .concat(BIO.map((l) => ['bio.txt', l]));
-            const hits = lines.filter(([, l]) => l.toLowerCase().includes(pat)).map(([f, l]) => `${f}: ${l}`);
+            // grep --color: file name magenta, separator cyan, each match bold red.
+            const esc = pat.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const hits = lines.filter(([, l]) => l.toLowerCase().includes(pat)).map(([f, l]) => [
+                c('magenta', f), c('cyan', ':'), ' ',
+                ...l.split(new RegExp(`(${esc})`, 'i')).filter(Boolean)
+                    .map((part) => (part.toLowerCase() === pat ? c('red b', part) : part)),
+            ]);
             return { out: hits.length ? hits : ['(no matches)'] };
         }
         case 'mkdir': case 'touch': case 'mv': case 'cp': case 'chmod': case 'chown':

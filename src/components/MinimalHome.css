@@ -17,7 +17,17 @@
 .mh-body { font-size: clamp(0.95rem, 2.05vw, 1.4rem); line-height: 1.8; }
 .mh-line { margin: 0; }
 .mh-prompt { color: var(--mh-prompt); margin-right: .6rem; }
-.mh-name { margin: 0; font-size: inherit; font-weight: 600; color: var(--mh-strong); }
+.mh-name { margin: 0; font-size: inherit; font-weight: inherit; color: inherit; } /* plain, as whois prints it */
+
+/* ANSI-style output colours (dark palette; light palette below). */
+.mh-screen { --mh-yellow: #e5c07b; --mh-cyan: #56b6c2; --mh-green: #28c840; --mh-red: #ff6b6b; --mh-magenta: #c678dd; }
+.mh-screen.is-light { --mh-yellow: #9a6700; --mh-cyan: #0e7490; --mh-green: #1a7f37; --mh-red: #cf222e; --mh-magenta: #8250df; }
+.mh-c-yellow { color: var(--mh-yellow); }
+.mh-c-cyan { color: var(--mh-cyan); }
+.mh-c-green { color: var(--mh-green); }
+.mh-c-red { color: var(--mh-red); }
+.mh-c-magenta { color: var(--mh-magenta); }
+.mh-c-b { font-weight: 700; }
 .mh-whois {
     display: grid;
     grid-template-columns: 15ch 1fr; /* "Organisation:" + two spaces */
@@ -71,7 +81,7 @@
 .mh-screen .mh-input:focus-visible {
     outline: none !important; box-shadow: none !important; border: 0 !important; background: transparent !important;
 }
-.mh-out { margin: 0 0 .8rem; font: inherit; line-height: 1.3; white-space: pre-wrap; color: var(--mh-fg); }
+.mh-out { margin: 0 0 .8rem; font: inherit; line-height: 1.3; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--mh-fg); }
 .mh-art { color: #febc2e; line-height: 1.25; }
 .mh-screen.is-light .mh-art { color: #9a5b00; }
 .mh-hint { margin: .2rem 0 0; font-size: .8em; color: var(--mh-dim); }

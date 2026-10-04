@@ -17,6 +17,13 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const FULL_NAME = 'Karim Anaya-Izquierdo';
 
+// A shell output line: plain string, or pieces where [colours, text] is coloured (see minimalShell).
+const renderLine = (line) => (typeof line === 'string' ? line : line.map((piece, i) => (
+    typeof piece === 'string'
+        ? piece
+        : <span key={i} className={piece[0].split(' ').map((x) => `mh-c-${x}`).join(' ')}>{piece[1]}</span>
+)));
+
 // whois-style record: aligned "Field: value" lines, as real whois prints them.
 // The opening screen's name is the page heading (and morphs); `whois karim` repeats it plainly.
 const WhoisRecord = ({ name, heading = false }) => (
@@ -221,7 +228,9 @@ export default function MinimalHome({ setActiveFile }) {
                                 {b.ls && renderList(b.id)}
                                 {b.whois && <WhoisRecord name={FULL_NAME} />}
                                 {b.out.length > 0 && (
-                                    <pre className={`mh-out${b.art ? ' mh-art' : ''}`} aria-hidden={b.art || undefined}>{b.out.join('\n')}</pre>
+                                    <pre className={`mh-out${b.art ? ' mh-art' : ''}`} aria-hidden={b.art || undefined}>
+                                        {b.out.map((line, i) => <React.Fragment key={i}>{i > 0 && '\n'}{renderLine(line)}</React.Fragment>)}
+                                    </pre>
                                 )}
                             </div>
                         ))}
