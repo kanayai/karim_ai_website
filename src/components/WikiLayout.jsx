@@ -5,19 +5,9 @@ import useSiteMode from '../hooks/useSiteMode';
 import { wikiLanguages, wikiStrings } from '../constants/wikiStrings';
 import './WikiLayout.css';
 
-const LANG_KEY = 'wiki-lang';
-const initialLang = () => {
-    try {
-        const saved = localStorage.getItem(LANG_KEY);
-        if (wikiStrings[saved]) return saved;
-    } catch { /* storage blocked */ }
-    const nav = (typeof navigator !== 'undefined' ? navigator.language : 'en').slice(0, 2);
-    return wikiStrings[nav] ? nav : 'en';
-};
-
-const WikiLayout = ({ setActiveFile }) => {
+// lang lives in App so the address (/bio, /es/bio) can carry it.
+const WikiLayout = ({ setActiveFile, lang, onLangChange }) => {
     const [mode, setMode] = useSiteMode();
-    const [lang, setLang] = useState(initialLang);
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef(null);
     const t = wikiStrings[lang];
@@ -31,9 +21,8 @@ const WikiLayout = ({ setActiveFile }) => {
     }, [menuOpen]);
 
     const chooseLang = (code) => {
-        setLang(code);
+        onLangChange(code);
         setMenuOpen(false);
-        try { localStorage.setItem(LANG_KEY, code); } catch { /* storage blocked */ }
     };
 
     return (

@@ -11,7 +11,8 @@ import { useRecentFiles } from './hooks/useRecentFiles';
 import { ToastProvider, useToast } from './contexts/ToastContext';
 import './App.css';
 import MobileNav from './components/MobileNav';
-import { journalPosts, pathForFile, fileForPath, fileForHash } from './routes';
+import { journalPosts, pathForFile, fileForPath, fileForHash, bioLangForPath, titleForFile } from './routes';
+import { WIKI_LANG_KEY, initialWikiLang } from './constants/wikiStrings';
 
 const blogFiles = ['blog.html', ...journalPosts];
 
@@ -24,21 +25,36 @@ function AppContent() {
   const [openFiles, setOpenFiles] = useState(() => (initialFile === 'Welcome' ? ['Welcome'] : ['Welcome', initialFile]));
   const [activeFile, setActiveFile] = useState(initialFile);
 
+  // Bio language: the address wins (/bio English, /es/bio Spanish), else the saved choice.
+  const [bioLang, setBioLangState] = useState(() => bioLangForPath(window.location.pathname) ?? initialWikiLang());
+  const setBioLang = (code) => {
+    setBioLangState(code);
+    try { localStorage.setItem(WIKI_LANG_KEY, code); } catch { /* storage blocked */ }
+  };
+
   // Keep the address bar in step with the open page (History API).
   const firstSyncRef = React.useRef(true);
   useEffect(() => {
-    const path = pathForFile(activeFile);
+    const path = pathForFile(activeFile, bioLang);
     if (path !== window.location.pathname || window.location.hash) {
       const method = firstSyncRef.current ? 'replaceState' : 'pushState';
       window.history[method](null, '', path);
     }
     firstSyncRef.current = false;
-  }, [activeFile]);
+  }, [activeFile, bioLang]);
+
+  // Tab title and page language follow the open page.
+  useEffect(() => {
+    document.title = titleForFile(activeFile, bioLang);
+    document.documentElement.lang = activeFile === 'wiki.html' ? bioLang : 'en';
+  }, [activeFile, bioLang]);
 
   // Back/forward buttons.
   useEffect(() => {
     const onPopState = () => {
       const file = fileForPath(window.location.pathname) ?? 'Welcome';
+      const lang = bioLangForPath(window.location.pathname);
+      if (lang) setBioLangState(lang);
       setOpenFiles(prev => (prev.includes(file) ? prev : [...prev, file]));
       setActiveFile(file);
     };
@@ -217,7 +233,7 @@ function AppContent() {
   if (layoutType === 'wiki') {
     return (
       <>
-        <WikiLayout setActiveFile={handleOpenFile} />
+        <WikiLayout setActiveFile={handleOpenFile} lang={bioLang} onLangChange={setBioLang} />
         <MobileNav activeFile={activeFile} onNavigate={handleOpenFile} />
       </>
     );

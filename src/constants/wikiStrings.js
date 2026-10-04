@@ -45,3 +45,14 @@ const es = {
 };
 
 export const wikiStrings = { en, es };
+
+// Bio language: saved choice, else the browser's language, else English.
+export const WIKI_LANG_KEY = 'wiki-lang';
+export const initialWikiLang = () => {
+    try {
+        const saved = localStorage.getItem(WIKI_LANG_KEY);
+        if (wikiStrings[saved]) return saved;
+    } catch { /* storage blocked */ }
+    const nav = (typeof navigator !== 'undefined' ? navigator.language : 'en').slice(0, 2);
+    return wikiStrings[nav] ? nav : 'en';
+};
