@@ -703,3 +703,15 @@
 .gh-repo-title .repo-name { font-size: 20px; font-weight: 600; color: var(--gh-strong); }
 .gh-repo-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
 .gh-repo-title .stat-count { margin-left: 2px; }
+
+/* Phone tidy-up (revamp plan M5.3): Back to OS on one line, README higher,
+   tab strip fades at the edge to show it scrolls. */
+@media (max-width: 767.98px) {
+  .github-avatar { display: none; }
+  .github-btn-outline.back-to-os { white-space: nowrap; }
+  .gh-repo-title .repo-stats-buttons.d-flex { display: none !important; }
+  .repo-nav-tabs {
+    -webkit-mask-image: linear-gradient(to right, #000 85%, transparent);
+    mask-image: linear-gradient(to right, #000 85%, transparent);
+  }
+}
