@@ -172,8 +172,15 @@ export default function MinimalHome({ setActiveFile }) {
                 <p className="mh-line">
                     <span className="mh-prompt">karim@bath ~ %</span> {command}
                 </p>
-                <h1 className="mh-name" aria-label={FULL_NAME}>{name}</h1>
-                <p className="mh-role"><span>Senior Lecturer in Statistics</span><span className="mh-sep"> · </span><span>University of Bath</span></p>
+                {/* whois-style record: aligned "Field: value" lines, as real whois prints them. */}
+                <div className="mh-whois">
+                    <span className="mh-key">Name:</span>
+                    <h1 className="mh-name" aria-label={FULL_NAME}>{name}</h1>
+                    <span className="mh-key">Role:</span>
+                    <span>Senior Lecturer in Statistics</span>
+                    <span className="mh-key">Organisation:</span>
+                    <span>University of Bath</span>
+                </div>
                 {done && (
                     <>
                         <p className="mh-line">

@@ -18,10 +18,17 @@
 .mh-line { margin: 0; }
 .mh-prompt { color: var(--mh-prompt); margin-right: .6rem; }
 .mh-name { margin: 0; font-size: inherit; font-weight: 600; color: var(--mh-strong); }
-.mh-role { margin: 0 0 1.2rem; font-size: .8em; color: var(--mh-dim); }
+.mh-whois {
+    display: grid;
+    grid-template-columns: 15ch 1fr; /* "Organisation:" + two spaces */
+    margin: 0 0 1.2rem;
+}
+.mh-key { color: var(--mh-fg); }
+.mh-whois .mh-name { line-height: inherit; }
 @media (max-width: 600px) {
-    .mh-role span { display: block; }
-    .mh-role .mh-sep { display: none; }
+    /* Phone: too narrow for aligned columns, so each value sits under its field. */
+    .mh-whois { grid-template-columns: 1fr; font-size: .85em; }
+    .mh-whois > :not(.mh-key) { padding-left: 2ch; }
     .mh-line .mh-comment { display: block; white-space: normal; }
 }
 
