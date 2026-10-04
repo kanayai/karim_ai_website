@@ -134,6 +134,38 @@ const HELP_ALL = [
     '  mkdir, touch, mv, cp, chmod, chown',
 ];
 
+// `man <command>`: a short macOS-style page built from HELP_ALL, so the two never disagree.
+const manPage = (cmd) => {
+    if (cmd === 'man') return manFormat('man', ['man <command>'], ['show the manual page for a command']);
+    const synopses = [];
+    const descs = [];
+    for (const line of HELP_ALL) {
+        if (!line.startsWith('  ')) continue;
+        const [usage, desc] = line.trim().split(/\s{2,}/);
+        const forms = usage.split(/,\s*/);
+        const form = forms.find((f) => f.split(/[\s/(]/)[0] === cmd);
+        if (!form) continue;
+        // "cd, open <section>": a bare alias borrows the arguments of the last form.
+        const lastArgs = forms.at(-1).split(' ').slice(1).join(' ');
+        synopses.push(form.includes(' ') || !lastArgs ? form.trim() : `${form} ${lastArgs}`);
+        if (desc) descs.push(desc);
+    }
+    return synopses.length ? manFormat(cmd, synopses, descs) : null;
+};
+
+const manFormat = (cmd, synopses, descs) => {
+    const head = `${cmd.toUpperCase()}(1)`;
+    return [
+        `${head}  Manual  ${head}`, // short enough for a phone
+        '',
+        'NAME',
+        `     ${cmd} – ${descs.length ? descs.join('; ') : 'shell built-in'}`,
+        '',
+        'SYNOPSIS',
+        ...synopses.map((x) => `     ${x}`),
+    ];
+};
+
 const strip = (s) => (s || '').replace(/\/+$/, '').toLowerCase();
 
 // Returns { out: string[], action?: 'clear' | 'theme' | 'ls' | {open: entry} | {url} | {fetch} }
@@ -157,7 +189,9 @@ export function run(input, { entries, history, light }) {
             if (arg === 'bio' || arg === 'bio.txt') return { out: BIO };
             return { out: [`cat: ${args[0] || ''}: ${args.length ? 'No such file' : 'missing operand'}`] };
         case 'man':
-            return arg === 'karim' ? { out: BIO } : { out: [`No manual entry for ${args[0] || ''}`.trim()] };
+            if (arg === 'karim') return { out: BIO };
+            if (!arg) return { out: ['What manual page do you want?', 'For example, try \'man man\'.'] };
+            return { out: manPage(arg) ?? [`No manual entry for ${arg}`] };
         case 'where': case 'find':
             if (arg !== 'karim') return { out: [`zsh: command not found: ${raw}`] };
             return { out: ['Department of Mathematical Sciences', 'University of Bath, Claverton Down', 'Bath BA2 7AY'] };
