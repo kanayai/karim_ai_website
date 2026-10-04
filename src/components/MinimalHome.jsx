@@ -44,6 +44,7 @@ export default function MinimalHome({ setActiveFile }) {
     const inputRef = useRef(null);
     const rowRef = useRef(null);
     const [value, setValue] = useState('');
+    const [focused, setFocused] = useState(false);
     const [blocks, setBlocks] = useState([]); // typed commands and their output
     const [morphKey, setMorphKey] = useState(0); // bumped by `clear` to replay the name morph
     const [siteMode, setSiteModeValue] = useSiteMode();
@@ -126,6 +127,19 @@ export default function MinimalHome({ setActiveFile }) {
     };
 
     const done = phase === 'done';
+
+    // Typing anywhere goes to the prompt, as in a real terminal (no click needed first).
+    useEffect(() => {
+        if (!done) return undefined;
+        const onKey = (e) => {
+            if (e.key.length !== 1 || e.metaKey || e.ctrlKey || e.altKey) return;
+            const el = document.activeElement;
+            if (el && el !== document.body && el.tagName !== 'MAIN') return;
+            inputRef.current?.focus();
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [done]);
 
     // Keep the prompt in view as output grows or the user types.
     useEffect(() => {
@@ -217,12 +231,16 @@ export default function MinimalHome({ setActiveFile }) {
                     <>
                         <label ref={rowRef} className="mh-line mh-line--end mh-input-row">
                             <span className="mh-prompt">karim@bath ~ %</span>
+                            {/* Blinking block until the prompt has focus, so it is obvious you can type. */}
+                            {!focused && !value && <span className="mh-cursor mh-cursor--blink" aria-hidden="true" />}
                             <input
                                 ref={inputRef}
                                 className="mh-input"
                                 value={value}
                                 onChange={(e) => setValue(e.target.value)}
                                 onKeyDown={onKeyDown}
+                                onFocus={() => setFocused(true)}
+                                onBlur={() => setFocused(false)}
                                 aria-label="Terminal command"
                                 autoCapitalize="off"
                                 autoCorrect="off"
