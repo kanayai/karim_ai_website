@@ -1,5 +1,5 @@
 # Handoff — karim_ai_website
-_Checkpoint 2026-10-04 (after M4)_
+_Checkpoint 2026-10-04 (after M5)_
 
 ## Objective
 Revamp the site from the October 2026 UX critique: six look-alike sections, each with its own
@@ -25,18 +25,22 @@ address, following `_admin/planning/2026-10_revamp-plan.md` (milestones M1–M8)
 - **M4 done**: e70c022 Moodle look-alike (`TeachingLayout.jsx`, data in `src/constants/teachingData.js`);
   487a22e holding page removed. No public materials (Karim gave none). Levels inferred from unit codes.
 - cc0f96d Bio infobox shows Karim's portrait (`public/images/karim-portrait.jpg`) instead of the crest.
+- 67e9bff Bio text: PyPI references removed. **M5 done** (browser-checked iPhone 15 + desktop):
+  6ebdd63 Bio header compact; 6a5d42b Contact portrait beside name (profile-pages.css, `!important`
+  beats HtmlViewer's injected img rule); a881b97 Research README higher; b3f511e Journal top links
+  hidden <640px. e8ec069 Home morph now ~2 s after load (Karim asked). M3.3 still undecided (recommend drop).
 - Agents now have a browser: canonical `browser-check` skill (`playwright-cli`) — use it to verify
   every milestone at desktop + iPhone 15. In Codex, approve running it outside the sandbox.
 
 ## Resume point
-M7 (Workspace) is blocked on Karim's input. Next unblocked: **M5 — Phone
-fixes**, item 1: Bio header "Back to OS" clipped at 393 px (`src/components/WikiLayout.*`).
+**M6 — Accessibility and polish**, item 1: clickable div/li rows → real links/buttons (GitHub file
+rows, Wiki wordmark `div` in `WikiLayout.jsx`).
 
 ## Next action
-M5 in small commits; also Journal top bar clips "Contact" on phone. Browser-check each.
+M6 in small commits; M7 (Workspace) still needs Karim's content. Browser-check each.
 
 ## Last safe commit
-cc0f96d (pushed)
+e8ec069 (pushed)
 
 ## Blockers
 - None for M1–M3. M4 needs Karim's course list, Moodle URLs, public materials; M7 needs Workspace content.
