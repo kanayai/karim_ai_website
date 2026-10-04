@@ -257,12 +257,28 @@
 
 @media (max-width: 800px) {
   .wiki-site-header {
-    padding: 10px 12px;
+    gap: 8px;
+    padding: 8px 12px;
   }
 
+  .wiki-wordmark { gap: 8px; min-width: 0; }
+
+  .wiki-mark { width: 34px; height: 34px; font-size: 22px; flex: none; }
+
   .wiki-title-small {
-    font-size: 17px;
+    font-size: 15px;
   }
+
+  /* Phone: compact controls so "Back to OS" is never clipped at 393px. */
+  .wiki-header-actions { gap: 6px; flex: none; }
+
+  .wiki-header-actions .wiki-back-button {
+    min-height: 34px;
+    padding: 0 8px;
+    white-space: nowrap;
+  }
+
+  .wiki-lang-count { display: none; }
 
   .wiki-subtitle-small {
     display: none;
