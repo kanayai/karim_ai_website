@@ -101,7 +101,10 @@ const WikiLayout = ({ setActiveFile, lang, onLangChange }) => {
 
                     <aside className="wiki-infobox">
                         <div className="wiki-infobox-title">Karim Anaya-Izquierdo</div>
-                        <img src="/images/Bath_Crest.png" alt={t.crestAlt} />
+                        <figure className="wiki-infobox-photo">
+                            <img src="/images/karim-portrait.jpg" alt={t.photoAlt} width="478" height="600" />
+                            <figcaption>{t.photoCaption}</figcaption>
+                        </figure>
                         <table>
                             <tbody>
                                 {t.info.map(([k, v]) => <tr key={k}><th>{k}</th><td>{v}</td></tr>)}

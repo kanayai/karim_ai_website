@@ -197,11 +197,25 @@
   font-weight: 700;
 }
 
-.wiki-infobox img {
+.wiki-infobox-photo {
+  margin: 0;
+  padding: 8px 8px 6px;
+  text-align: center;
+}
+
+.wiki-infobox-photo img {
   display: block;
-  width: 88px;
+  width: 100%;
+  max-width: 220px;
   height: auto;
-  margin: 14px auto;
+  margin: 0 auto;
+}
+
+.wiki-infobox-photo figcaption {
+  margin-top: 4px;
+  color: var(--wk-muted);
+  font-size: 11px;
+  line-height: 1.4;
 }
 
 .wiki-infobox table {
