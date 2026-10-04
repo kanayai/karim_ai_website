@@ -14,7 +14,7 @@
     position: relative;
 }
 
-.mh-body { font-size: clamp(1.25rem, 2.65vw, 1.8rem); line-height: 1.8; }
+.mh-body { font-size: clamp(1.05rem, 2.25vw, 1.55rem); line-height: 1.8; }
 .mh-line { margin: 0; }
 .mh-prompt { color: var(--mh-prompt); margin-right: .6rem; }
 .mh-name { margin: 0; font-size: inherit; font-weight: 600; color: var(--mh-strong); }
@@ -27,7 +27,7 @@
 .mh-whois .mh-name { line-height: inherit; }
 @media (max-width: 600px) {
     /* Phone: too narrow for aligned columns, so each value sits under its field. */
-    .mh-whois { grid-template-columns: 1fr; font-size: .85em; }
+    .mh-whois { grid-template-columns: 1fr; }
     .mh-whois > :not(.mh-key) { padding-left: 2ch; }
     .mh-line .mh-comment { display: block; white-space: normal; }
 }
