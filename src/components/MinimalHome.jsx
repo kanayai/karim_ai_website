@@ -5,12 +5,12 @@ import useSiteMode from '../hooks/useSiteMode';
 import { pathForFile } from '../routes';
 
 const entries = [
-    { name: 'research/', file: 'projects.html', blurb: 'Projects, publications, PhD students', preview: '/previews/research.webp' },
-    { name: 'teaching/', file: 'current_courses.ipynb', blurb: 'Courses and Moodle links', preview: '/previews/teaching.webp' },
-    { name: 'bio/', file: 'wiki.html', blurb: 'Senior Lecturer in Statistics, Bath', preview: '/previews/bio.webp' },
-    { name: 'journal/', file: 'blog.html', blurb: 'Notes and articles', preview: '/previews/journal.webp' },
-    { name: 'workspace/', file: 'workspace.md', blurb: 'Tools and working setup', preview: '/previews/workspace.webp' },
-    { name: 'contact/', file: 'contact.html', blurb: 'Get in touch', preview: '/previews/contact.webp' },
+    { name: 'research/', file: 'projects.html', blurb: 'Projects, publications, PhD students' },
+    { name: 'teaching/', file: 'current_courses.ipynb', blurb: 'Courses and Moodle links' },
+    { name: 'bio/', file: 'wiki.html', blurb: 'Senior Lecturer in Statistics, Bath' },
+    { name: 'journal/', file: 'blog.html', blurb: 'Notes and articles' },
+    { name: 'workspace/', file: 'workspace.md', blurb: 'Tools and working setup' },
+    { name: 'contact/', file: 'contact.html', blurb: 'Get in touch' },
 ];
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
