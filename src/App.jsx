@@ -11,7 +11,6 @@ import useSiteMode from './hooks/useSiteMode';
 import { useRecentFiles } from './hooks/useRecentFiles';
 import { ToastProvider, useToast } from './contexts/ToastContext';
 import './App.css';
-import WelcomeBanner from './components/WelcomeBanner';
 import MobileNav from './components/MobileNav';
 
 const blogFiles = [
@@ -280,7 +279,6 @@ function AppContent() {
   // Default VS Code layout
   return (
     <>
-      <WelcomeBanner onSimpleModeClick={toggleSimpleMode} />
       <Layout
         activeFile={activeFile}
         setActiveFile={handleOpenFile}
