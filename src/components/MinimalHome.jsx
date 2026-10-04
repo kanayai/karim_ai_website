@@ -6,7 +6,7 @@ import { pathForFile } from '../routes';
 
 const entries = [
     { name: 'research/', file: 'projects.html', blurb: 'Projects, publications, PhD students', preview: '/previews/research.webp' },
-    { name: 'teaching/', file: 'current_courses.ipynb', blurb: 'Courses, lecture materials, datasets', preview: '/previews/teaching.webp' },
+    { name: 'teaching/', file: 'current_courses.ipynb', blurb: 'Courses and Moodle links', preview: '/previews/teaching.webp' },
     { name: 'bio/', file: 'wiki.html', blurb: 'Senior Lecturer in Statistics, Bath', preview: '/previews/bio.webp' },
     { name: 'journal/', file: 'blog.html', blurb: 'Notes and articles', preview: '/previews/journal.webp' },
     { name: 'workspace/', file: 'workspace.md', blurb: 'Tools and working setup', preview: '/previews/workspace.webp' },
