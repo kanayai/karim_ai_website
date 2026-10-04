@@ -2,8 +2,6 @@
 export const wikiLanguages = [
     { code: 'en', name: 'English' },
     { code: 'es', name: 'Español' },
-    { code: 'fr', name: 'Français' },
-    { code: 'pt', name: 'Português' },
 ];
 
 const en = {
@@ -46,44 +44,4 @@ const es = {
     mode: ['Cambiar a tema oscuro', 'Cambiar a tema claro'],
 };
 
-const fr = {
-    siteTitle: 'Encyclopédie K.AI OS', siteSubtitle: 'La page de profil à peu près libre', back: 'Retour à l’OS',
-    toolsLabel: 'Outils de l’article', contentsLabel: 'Sommaire', tabsLabel: 'Actions de l’article', languages: 'Langues',
-    navArticle: 'Article', career: 'Parcours', research: 'Recherche', teaching: 'Enseignement', topics: 'Sujets choisis', links: 'Liens externes',
-    tabs: ['Article', 'Discussion', 'Lire', 'Voir le code source', 'Voir l’historique'],
-    from: 'De l’Encyclopédie K.AI OS, l’espace de noms du site web académique personnel.',
-    notice: 'Cet article fait partie d’une interface expérimentale de site web personnel. Pour les informations institutionnelles officielles, consultez le profil de l’Université de Bath et la fiche ORCID.',
-    crestAlt: 'Blason de l’Université de Bath',
-    info: [['Profession', 'Maître de conférences en statistique (Senior Lecturer)'], ['Établissement', 'Université de Bath'], ['Département', 'Sciences mathématiques'], ['Domaines', 'Statistique, méthodes bayésiennes, analyse de survie'], ['Outils', 'R, Python, Quarto, LaTeX']],
-    orcid: 'ORCID',
-    lead1: ' est maître de conférences (Senior Lecturer) en statistique au département de sciences mathématiques de l’Université de Bath. Ses travaux portent sur la géométrie de l’information, la quantification des incertitudes en génie mécanique, l’analyse de survie, les méthodes spatiales en épidémiologie et les applications des méthodes bayésiennes.',
-    lead2: 'Son enseignement couvre les probabilités pour la science des données, l’introduction à la science des données et la planification d’expériences. Cette page propose une version volontairement encyclopédique du site : factuelle, compacte et moins ludique que les vues terminal, GitHub et PyPI.',
-    careerText: 'Anaya-Izquierdo travaille à l’Université de Bath, en sciences mathématiques et en statistique. Le site présente son travail académique à travers plusieurs interfaces fictives : un dépôt de recherche façon GitHub, un paquet pédagogique façon PyPI, un espace de travail académique façon VS Code et cet article encyclopédique.',
-    researchText: ['Ses intérêts de recherche comprennent la géométrie statistique, la modélisation bayésienne, la quantification des incertitudes, l’analyse de survie et l’épidémiologie spatiale. Sur le site K.AI OS, les travaux de recherche sont organisés dans l’interface de dépôt fictif sous ', '.'],
-    teachingText: ['Son profil d’enseignement comprend les probabilités et la statistique d’introduction, la science des données et la planification d’expériences. Le contenu pédagogique est présenté sous forme de page façon paquet sous ', '.'],
-    topicList: ['Géométrie de l’information et variétés statistiques.', 'Méthodes bayésiennes pour des problèmes scientifiques appliqués.', 'Modélisation spatiale et épidémiologique.', 'Quantification des incertitudes pour des applications d’ingénierie.', 'Flux de travail académiques assistés par IA et recherche reproductible.'],
-    linkList: ['Fiche ORCID', 'Profil GitHub', 'Profil de recherche de l’Université de Bath'],
-    mode: ['Passer au thème sombre', 'Passer au thème clair'],
-};
-
-const pt = {
-    siteTitle: 'Enciclopédia K.AI OS', siteSubtitle: 'A página de perfil quase livre', back: 'Voltar ao OS',
-    toolsLabel: 'Ferramentas do artigo', contentsLabel: 'Conteúdo', tabsLabel: 'Ações do artigo', languages: 'Idiomas',
-    navArticle: 'Artigo', career: 'Carreira', research: 'Investigação', teaching: 'Ensino', topics: 'Temas selecionados', links: 'Ligações externas',
-    tabs: ['Artigo', 'Discussão', 'Ler', 'Ver código-fonte', 'Ver histórico'],
-    from: 'Da Enciclopédia K.AI OS, o espaço de nomes do website académico pessoal.',
-    notice: 'Este artigo faz parte de uma interface experimental de website pessoal. Para informação institucional formal, consulte o perfil da Universidade de Bath e o registo ORCID.',
-    crestAlt: 'Brasão da Universidade de Bath',
-    info: [['Ocupação', 'Professor Associado de Estatística (Senior Lecturer)'], ['Instituição', 'Universidade de Bath'], ['Departamento', 'Ciências Matemáticas'], ['Áreas', 'Estatística, métodos bayesianos, análise de sobrevivência'], ['Ferramentas', 'R, Python, Quarto, LaTeX']],
-    orcid: 'ORCID',
-    lead1: ' é Professor Associado (Senior Lecturer) de Estatística no Departamento de Ciências Matemáticas da Universidade de Bath. O seu trabalho abrange a geometria da informação, a quantificação da incerteza em engenharia mecânica, a análise de sobrevivência, os métodos espaciais em epidemiologia e as aplicações dos métodos bayesianos.',
-    lead2: 'O seu ensino inclui probabilidade para ciência de dados, introdução à ciência de dados e planeamento de experiências. Esta página apresenta uma versão deliberadamente enciclopédica do site: factual, compacta e menos lúdica do que as vistas de terminal, GitHub e PyPI.',
-    careerText: 'Anaya-Izquierdo trabalha na Universidade de Bath, em ciências matemáticas e estatística. O site apresenta o seu trabalho académico através de várias interfaces fictícias: um repositório de investigação ao estilo do GitHub, um pacote de ensino ao estilo do PyPI, um espaço de trabalho académico ao estilo do VS Code e este artigo enciclopédico.',
-    researchText: ['Os seus interesses de investigação incluem a geometria estatística, a modelação bayesiana, a quantificação da incerteza, a análise de sobrevivência e a epidemiologia espacial. No site K.AI OS, o material de investigação está organizado através da interface de repositório fictício em ', '.'],
-    teachingText: ['O seu perfil de ensino inclui probabilidade e estatística introdutórias, ciência de dados e planeamento de experiências. O conteúdo de ensino é apresentado como uma página ao estilo de pacote em ', '.'],
-    topicList: ['Geometria da informação e variedades estatísticas.', 'Métodos bayesianos para problemas científicos aplicados.', 'Modelação espacial e epidemiológica.', 'Quantificação da incerteza para aplicações de engenharia.', 'Fluxos de trabalho académicos assistidos por IA e investigação reproduzível.'],
-    linkList: ['Registo ORCID', 'Perfil do GitHub', 'Perfil de investigação da Universidade de Bath'],
-    mode: ['Mudar para tema escuro', 'Mudar para tema claro'],
-};
-
-export const wikiStrings = { en, es, fr, pt };
+export const wikiStrings = { en, es };

@@ -10,7 +10,7 @@ const HtmlViewer = ({ activeFile, theme, setActiveFile, i18n, autoHeight = false
 
     // Helper to get localized path
     const getLocalizedPath = (baseName) => {
-        const supportedLangs = ['es', 'fr', 'pt'];
+        const supportedLangs = ['es'];
         if (supportedLangs.includes(lang) && (baseName === 'contact.html' || baseName === 'about_me.html')) {
             return `/${baseName.replace('.html', `.${lang}.html`)}?theme=${theme}`;
         }

@@ -194,7 +194,7 @@ const ActivityBar = ({ activeView, setActiveView, activeFile, setActiveFile, the
                             <div className="px-3 py-2" style={{ fontWeight: 'bold', fontSize: '12px', opacity: 0.8 }}>
                                 Language
                             </div>
-                            {['en', 'es', 'fr', 'pt'].map(lang => (
+                            {['en', 'es'].map(lang => (
                                 <div
                                     key={lang}
                                     className="px-3 py-2 d-flex align-items-center justify-content-between"

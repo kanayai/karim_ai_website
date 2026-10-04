@@ -31,7 +31,7 @@ const Statusbar = ({ activeFile, isTerminalOpen, toggleTerminal, simpleMode, tog
     };
 
     const changeLanguage = () => {
-        const languages = ['en', 'es', 'fr', 'pt'];
+        const languages = ['en', 'es'];
         const currentLangIndex = languages.indexOf(i18n.language);
         const nextLangIndex = (currentLangIndex + 1) % languages.length;
         i18n.changeLanguage(languages[nextLangIndex]);
