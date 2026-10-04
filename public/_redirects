@@ -1,0 +1,16 @@
+# Netlify: section addresses load the app (see src/routes.js).
+# Forced (!) so /contact is not served as the bare public/contact.html.
+/research      /index.html  200!
+/research/*    /index.html  200!
+/teaching      /index.html  200!
+/teaching/*    /index.html  200!
+/bio           /index.html  200!
+/es/bio        /index.html  200!
+/journal       /index.html  200!
+/journal/*     /index.html  200!
+/workspace     /index.html  200!
+/workspace/*   /index.html  200!
+/contact       /index.html  200!
+
+# Anything else: real static files win; unknown paths load the app, which goes home.
+/*             /index.html  200
