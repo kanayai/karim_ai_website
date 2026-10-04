@@ -28,7 +28,7 @@ address, following `_admin/planning/2026-10_revamp-plan.md` (milestones M1–M8)
 - 67e9bff Bio text: PyPI references removed. **M5 done** (browser-checked iPhone 15 + desktop):
   6ebdd63 Bio header compact; 6a5d42b Contact portrait beside name (profile-pages.css, `!important`
   beats HtmlViewer's injected img rule); a881b97 Research README higher; b3f511e Journal top links
-  hidden <640px. e8ec069 Home morph now ~2 s after load (Karim asked). M3.3 still undecided (recommend drop).
+  hidden <640px. e8ec069 Home morph now ~2 s after load (Karim asked). M3.3 dropped.
 - cc5a5d5 morph repeats every 10 s (start to start). **M6.1–6.5 done**: d082b05 real links (GitHub rows,
   logo, repo name, Wiki wordmark); 984c67e home output aria-live; 1af6c65 alt text; 1e40999 decorative
   GitHub controls unfocusable; 8c4c105 Journal labelled keyword search + browse all. fd17ce8 fixed
@@ -47,7 +47,7 @@ unused CSS/previews incl. `public/previews/terminal.webp`).
 
 ## Next action
 M8 in small commits. M7 (Workspace) still needs Karim's content; M3.3 (hidden `terminal` command)
-undecided — recommend drop.
+dropped by Karim.
 
 ## Last safe commit
 b0e3f47 (pushed)

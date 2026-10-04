@@ -39,7 +39,7 @@ at desktop + iPhone before moving on.
 1. Show "Karim Anaya-Izquierdo — Senior Lecturer in Statistics, University of Bath" straight away,
    keeping the terminal look; shorten the intro so the section links appear quickly.
 2. Add a "choose a section" cue; stop auto-focusing the input; restore its focus outline.
-3. Archived Terminal's identity panel informs this; optional hidden `terminal` command later.
+3. Archived Terminal's identity panel informs this. ~~Optional hidden `terminal` command~~ — dropped (Karim, 2026-10-04).
 
 ## M4 — Teaching as Moodle look-alike
 1. Design from Bath Moodle's look: course cards (code, title, year, audience, short description).
