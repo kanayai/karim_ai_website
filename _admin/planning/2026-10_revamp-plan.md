@@ -78,3 +78,15 @@ Replace placeholder with real content. **Needs from Karim:** what it should show
 - Should Journal and Teaching follow light/dark mode?
 - Not adopted from the critique: replacing the look-alikes with plain pages (Alternative C) —
   Karim keeps the themed looks; addresses (M2) deliver C's practical benefits.
+
+## Status (2026-10-04, end of session)
+M1–M6 and M8 done and live; M3.3 dropped. Only M7 (Workspace content) remains — waiting on Karim.
+
+## Next session
+1. **M7 Workspace** — ask Karim what it should show (tools, reproducible workflow, software, how to
+   work with me…). Keep the Memory Match game (`retro_game.exe`) there for now.
+2. **Terminal command for the game** (once the game's place is settled): hidden command such as
+   `./retro_game` or `play` that opens `/workspace/retro-game`, like `cd` opens sections; list it in
+   `help --all` next to `coffee`/`tea`. Not a text-mode rebuild.
+3. Optional, ask first: per-section browser smoke test in CI (`@playwright/test`); lazy-load layouts
+   to shrink the 496 KB main bundle.
