@@ -1,5 +1,5 @@
 # Handoff — karim_ai_website
-_Checkpoint 2026-10-04 13:30_
+_Checkpoint 2026-10-04 (after M1)_
 
 ## Objective
 Revamp the site from the October 2026 UX critique: six look-alike sections, each with its own
@@ -11,20 +11,22 @@ address, following `_admin/planning/2026-10_revamp-plan.md` (milestones M1–M8)
   gets its own address; Teaching → Moodle look-alike; archive PyPI and Terminal layouts; Workspace
   stays (VS Code); Bio English + Spanish only; email-only contact, no CV; trust pop-up goes.
 - Revamp plan written and committed: `_admin/planning/2026-10_revamp-plan.md`.
+- **M1 done** (browser-checked desktop + iPhone 15): 593100d pop-up removed; 05f6b21 PyPI/Terminal
+  archived to `src/archive/`, Teaching → `TeachingHolding.jsx`; 340180f French/Portuguese dropped.
+  Not pushed. Dead `MacDesktopLayout` still references `terminal.html` (M8).
 - Agents now have a browser: canonical `browser-check` skill (`playwright-cli`) — use it to verify
   every milestone at desktop + iPhone 15. In Codex, approve running it outside the sandbox.
 
 ## Resume point
-Plan milestone **M1 — Quick removals**, item 1: remove the first-visit trust pop-up
-(`src/components/WelcomeBanner.jsx`, rendered from `src/App.jsx` ~L280–284).
+Plan milestone **M2 — Real addresses**, item 1: map sections/files to URL paths, sync `activeFile`
+with the History API in `src/App.jsx` (home links currently use `#file` hashes).
 
 ## Next action
-Do M1 in three separate commits: (1) remove the trust pop-up; (2) archive PyPI + Terminal layouts
-to `src/archive/` (unroute; drop `terminal/` from home list; Teaching → temporary holding page);
-(3) drop French + Portuguese. Browser-check after each, then continue with M2 (real addresses).
+M2 in small commits (1 addresses + back/forward; 2 `public/_redirects`; 3 titles/lang; 4 index.html
+meta; 5 real links + Workspace in mobile nav). Browser-check each.
 
 ## Last safe commit
-0d0172f (tree clean, pushed)
+340180f (tree clean, not pushed)
 
 ## Blockers
 - None for M1–M3. M4 needs Karim's course list, Moodle URLs, public materials; M7 needs Workspace content.
