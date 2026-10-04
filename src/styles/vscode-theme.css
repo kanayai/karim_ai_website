@@ -2696,3 +2696,15 @@ body {
     border-radius: 999px;
   }
 }
+
+/* Journal: "browse all posts" inline link (plan M6.5) */
+.ai-home-browse {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}

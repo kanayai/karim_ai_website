@@ -199,6 +199,13 @@ const BlogViewer = ({ setActiveFile }) => {
         setHasInteracted(false);
     };
 
+    const browseAll = () => {
+        setSearchTerm('');
+        setSelectedTags([]);
+        setActivePrompt(null);
+        setHasInteracted(true);
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         setActivePrompt(null);
@@ -232,7 +239,11 @@ const BlogViewer = ({ setActiveFile }) => {
                     <div className="ai-home-intro">
                         <div className="ai-home-kicker">Blog Assistant</div>
                         <h1>Ask Karim's Blog</h1>
-                        <p>Search the blog or tap a suggested prompt.</p>
+                        {/* Honest label (plan M6.5): the chat look is a skin over keyword search. */}
+                        <p>
+                            A keyword search over my posts, no AI involved. Type a topic, tap a suggestion,
+                            or <button type="button" className="ai-home-browse" onClick={browseAll}>browse all posts</button>.
+                        </p>
                     </div>
 
                     <form className="ai-home-prompt" onSubmit={handleSubmit}>
