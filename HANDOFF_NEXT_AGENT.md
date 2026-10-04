@@ -1,5 +1,5 @@
 # Handoff — karim_ai_website
-_Checkpoint 2026-10-04 (M6 done)_
+_Checkpoint 2026-10-04 (M1–M6 and M8 done; M7 waiting on Karim)_
 
 ## Objective
 Revamp the site from the October 2026 UX critique: six look-alike sections, each with its own
@@ -38,19 +38,28 @@ address, following `_admin/planning/2026-10_revamp-plan.md` (milestones M1–M8)
 - **M6.6 done — every page follows one light/dark setting** (`useSiteMode`): e432488 VS Code pages +
   Journal (VS Code theme derived from site mode in `App.jsx`); c2d04b2 Teaching dark palette + toggle;
   0a7785e Journal toggle.
+- Home extras (Karim): 88443b5 `whois karim` = opening record; 63e0c65 `man <cmd>` pages; cbcbaef
+  blinking block cursor until focus + type-anywhere.
+- **M8 done**: e50a994/e30cb89 dead components + unused images deleted; 251a0e0 test post removed, old
+  docs labelled historical; 614b67d lint clean (generated dirs ignored, 26 fixes); cd8118f CI
+  (`.github/workflows/ci.yml`: lint + build, passing); 47485d7 debug leftovers removed (pink body, logs);
+  df3cc10 react-bootstrap removed; 95b2319 images 6.4 MB → 0.4 MB (mix2/blackboard now .jpg); 638b0f0 README.
+  Not done: per-section browser smoke test in CI (needs @playwright/test — ask Karim first); main JS
+  bundle still 496 KB (155 KB gzip) — lazy-load layouts would cut first load.
 - Agents now have a browser: canonical `browser-check` skill (`playwright-cli`) — use it to verify
   every milestone at desktop + iPhone 15. In Codex, approve running it outside the sandbox.
 
 ## Resume point
-**M8 — Housekeeping**, item 1: delete dead code after an import check (`MacDesktopLayout`, `TrustModal`,
-unused CSS/previews incl. `public/previews/terminal.webp`).
+Awaiting Karim on two proposals: (1) Home colours — unbold the whois name; colour `git log` (yellow
+hashes, cyan HEAD), `git status` (red modified), `grep` (purple file, bold red match), `fastfetch`
+labels; (2) M7 Workspace content. Root markdown files (`about_me.md`, `projects.md`, `welcome.md`,
+`phd_students.md`) are still imported by `Editor.jsx` but no address opens them — candidates for removal.
 
 ## Next action
-M8 in small commits. M7 (Workspace) still needs Karim's content; M3.3 (hidden `terminal` command)
-dropped by Karim.
+Implement whichever Karim approves; browser-check desktop + iPhone 15; push.
 
 ## Last safe commit
-b0e3f47 (pushed)
+638b0f0 (pushed)
 
 ## Blockers
 - None for M1–M3. M4 needs Karim's course list, Moodle URLs, public materials; M7 needs Workspace content.
