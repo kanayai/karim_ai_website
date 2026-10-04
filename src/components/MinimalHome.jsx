@@ -182,15 +182,22 @@ export default function MinimalHome({ setActiveFile }) {
                         {renderList('initial')}
                     </>
                 )}
-                {done && blocks.map((b) => (
-                    <div key={b.id}>
-                        {b.cmd !== null && (
-                            <p className="mh-line"><span className="mh-prompt">karim@bath ~ %</span> {b.cmd}</p>
-                        )}
-                        {b.ls && renderList(b.id)}
-                        {b.out.length > 0 && <pre className={`mh-out${b.art ? ' mh-art' : ''}`}>{b.out.join('\n')}</pre>}
+                {/* Screen readers hear each command's output as it appears; ASCII art is skipped. */}
+                {done && (
+                    <div aria-live="polite">
+                        {blocks.map((b) => (
+                            <div key={b.id}>
+                                {b.cmd !== null && (
+                                    <p className="mh-line"><span className="mh-prompt">karim@bath ~ %</span> {b.cmd}</p>
+                                )}
+                                {b.ls && renderList(b.id)}
+                                {b.out.length > 0 && (
+                                    <pre className={`mh-out${b.art ? ' mh-art' : ''}`} aria-hidden={b.art || undefined}>{b.out.join('\n')}</pre>
+                                )}
+                            </div>
+                        ))}
                     </div>
-                ))}
+                )}
                 {done && (
                     <>
                         <label ref={rowRef} className="mh-line mh-line--end mh-input-row">
