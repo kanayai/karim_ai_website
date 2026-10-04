@@ -1,5 +1,5 @@
 # Handoff — karim_ai_website
-_Checkpoint 2026-10-04 (M6 items 1–5 done)_
+_Checkpoint 2026-10-04 (M6 done)_
 
 ## Objective
 Revamp the site from the October 2026 UX critique: six look-alike sections, each with its own
@@ -33,18 +33,24 @@ address, following `_admin/planning/2026-10_revamp-plan.md` (milestones M1–M8)
   logo, repo name, Wiki wordmark); 984c67e home output aria-live; 1af6c65 alt text; 1e40999 decorative
   GitHub controls unfocusable; 8c4c105 Journal labelled keyword search + browse all. fd17ce8 fixed
   RCodeViewer rendering R source as HTML. Whois-style home record (option B) approved and pushed: 9e80a9f.
+- Home tweaks (Karim): d15b779 + 60eed98 smaller font, `# choose a section` removed; b0e3f47 no focus box
+  on the command line (Karim dislikes it — do not re-add).
+- **M6.6 done — every page follows one light/dark setting** (`useSiteMode`): e432488 VS Code pages +
+  Journal (VS Code theme derived from site mode in `App.jsx`); c2d04b2 Teaching dark palette + toggle;
+  0a7785e Journal toggle.
 - Agents now have a browser: canonical `browser-check` skill (`playwright-cli`) — use it to verify
   every milestone at desktop + iPhone 15. In Codex, approve running it outside the sandbox.
 
 ## Resume point
-**M6.6** — decide whether Journal and
-Teaching follow light/dark (open question for Karim), then **M8** housekeeping (M7 blocked on content).
+**M8 — Housekeeping**, item 1: delete dead code after an import check (`MacDesktopLayout`, `TrustModal`,
+unused CSS/previews incl. `public/previews/terminal.webp`).
 
 ## Next action
-Ask Karim M6.6 (recommendation: Journal follows light/dark, Teaching stays light like Moodle).
+M8 in small commits. M7 (Workspace) still needs Karim's content; M3.3 (hidden `terminal` command)
+undecided — recommend drop.
 
 ## Last safe commit
-9e80a9f (pushed)
+b0e3f47 (pushed)
 
 ## Blockers
 - None for M1–M3. M4 needs Karim's course list, Moodle URLs, public materials; M7 needs Workspace content.
