@@ -35,7 +35,7 @@ const Sidebar = ({ activeFile, setActiveFile, activeView }) => {
             name: t('sidebar.home'),
             type: 'folder',
             children: [
-                { name: 'Welcome', icon: <img src="/images/Bath_Crest.png" alt="Welcome" style={{ width: '16px', height: '16px' }} />, type: 'welcome' },
+                { name: 'Welcome', icon: <img src="/images/Bath_Crest.png" alt="" style={{ width: '16px', height: '16px' }} />, type: 'welcome' },
                 { name: 'workspace.md', icon: <FaMarkdown color="#519aba" />, type: 'markdown' },
             ]
         },
@@ -185,7 +185,7 @@ const Sidebar = ({ activeFile, setActiveFile, activeView }) => {
                                 }}
                                 onClick={() => setActiveFile(file)}
                             >
-                                {file === 'Welcome' ? <img src="/images/Bath_Crest.png" alt="Welcome" style={{ width: '14px', height: '14px' }} /> : null}
+                                {file === 'Welcome' ? <img src="/images/Bath_Crest.png" alt="" style={{ width: '14px', height: '14px' }} /> : null}
                                 {file !== 'Welcome' && (file.endsWith('.html') ? <VscCode color="#e34c26" /> : file.endsWith('.R') ? <span style={{ color: '#276dc3', fontWeight: 'bold', fontSize: '10px' }}>R</span> : null)}
                                 <span style={{ fontSize: '12px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{file}</span>
                             </div>

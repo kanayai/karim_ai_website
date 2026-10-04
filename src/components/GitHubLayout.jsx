@@ -95,7 +95,7 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                         <VscColorMode size={16} />
                     </button>
                     <NavLink file="Welcome" onNavigate={setActiveFile} className="github-btn-outline back-to-os">Back to OS</NavLink>
-                    <img src="/images/Bath_Crest.png" alt="User Profile" className="github-avatar" />
+                    <img src="/images/Bath_Crest.png" alt="University of Bath crest" className="github-avatar" />
                 </div>
             </header>
 
@@ -171,7 +171,7 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                             <div className="repo-file-card rounded mb-4">
                                 <div className="repo-file-header d-flex align-items-center justify-content-between p-3">
                                     <div className="d-flex align-items-center gap-2">
-                                        <img src="/images/Bath_Crest.png" alt="Owner" className="commit-avatar" />
+                                        <img src="/images/Bath_Crest.png" alt="" className="commit-avatar" />
                                         <span className="commit-author">kanayai</span>
                                         <span className="commit-message">Add Neal Alexander kickoff communications and model setup</span>
                                     </div>
@@ -237,7 +237,7 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                                 <h3 className="sidebar-section-title">Contributors</h3>
                                 <div className="d-flex flex-column gap-2 mt-2">
                                     <div className="d-flex align-items-center gap-2">
-                                        <img src="/images/Bath_Crest.png" alt="Karim" className="contributor-avatar" />
+                                        <img src="/images/Bath_Crest.png" alt="" className="contributor-avatar" />
                                         <div>
                                             <div className="contributor-name">Karim Anaya-Izquierdo</div>
                                             <div className="contributor-role">Maintainer</div>

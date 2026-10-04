@@ -75,7 +75,7 @@ const Editor = ({ activeFile, openFiles, setActiveFile, onCloseFile, onCloseAllF
     };
 
     const getIcon = (filename) => {
-        if (filename === 'Welcome') return <img src="/images/Bath_Crest.png" alt="Welcome" style={{ width: '16px', height: '16px' }} />;
+        if (filename === 'Welcome') return <img src="/images/Bath_Crest.png" alt="" style={{ width: '16px', height: '16px' }} />;
         if (filename.endsWith('.md')) return <FaMarkdown color="#519aba" />;
         if (filename.endsWith('.ipynb')) return <FaPython color="#3776ab" />;
         if (filename.endsWith('.js')) return <FaJs color="#f7df1e" />;

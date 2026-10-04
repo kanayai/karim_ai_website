@@ -65,7 +65,7 @@ const WelcomePage = ({ onNavigate, recentFiles = [] }) => {
                 <div className="row g-4 align-items-start">
                     <div className="col-lg-5 col-xl-4">
                         <div className="d-flex flex-column align-items-start welcome-hero">
-                            <img src="/images/blackboard.png" alt="Logo" className="welcome-hero-image" />
+                            <img src="/images/blackboard.png" alt="Karim Anaya-Izquierdo in front of a blackboard" className="welcome-hero-image" />
                             <div className="welcome-title">Get Started</div>
                             <div className="welcome-subtitle">
                                 {t('welcome.subtitle')}
