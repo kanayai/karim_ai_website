@@ -83,9 +83,9 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                 <div className="d-flex align-items-center gap-2 gap-md-3">
                     <div className="github-search-container d-none d-md-flex align-items-center gap-2">
                         <FaSearch className="repo-goto-icon" />
-                        <input type="text" placeholder="Type / to search" className="github-search-input" readOnly />
+                        <input type="text" placeholder="Type / to search" className="github-search-input" readOnly tabIndex={-1} aria-hidden="true" />
                     </div>
-                    <button className="github-btn-outline gh-icon-btn d-none d-sm-inline-flex" aria-label="Copilot" title="Copilot"><VscCopilot size={16} /></button>
+                    <button tabIndex={-1} aria-hidden="true" className="github-btn-outline gh-icon-btn d-none d-sm-inline-flex" aria-label="Copilot" title="Copilot"><VscCopilot size={16} /></button>
                     <button
                         className="github-btn-outline github-mode-toggle"
                         onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
@@ -142,10 +142,10 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                             <span className="repo-badge">Public</span>
                         </div>
                         <div className="d-flex align-items-center gap-2 repo-stats-buttons">
-                            <button className="gh-btn gh-btn-sm d-none d-md-inline-flex"><VscPinned /> Pin</button>
-                            <button className="gh-btn gh-btn-sm"><FaEye /> <span className="d-none d-sm-inline">Watch</span> <span className="stat-count">3</span> <FaCaretDown className="gh-caret" /></button>
-                            <button className="gh-btn gh-btn-sm"><FaCodeBranch /> <span className="d-none d-sm-inline">Fork</span> <span className="stat-count">2</span> <FaCaretDown className="gh-caret" /></button>
-                            <button className="gh-btn gh-btn-sm"><FaStar /> <span className="d-none d-sm-inline">Star</span> <span className="stat-count">14</span> <FaCaretDown className="gh-caret" /></button>
+                            <button tabIndex={-1} aria-hidden="true" className="gh-btn gh-btn-sm d-none d-md-inline-flex"><VscPinned /> Pin</button>
+                            <button className="gh-btn gh-btn-sm" tabIndex={-1} aria-hidden="true"><FaEye /> <span className="d-none d-sm-inline">Watch</span> <span className="stat-count">3</span> <FaCaretDown className="gh-caret" /></button>
+                            <button className="gh-btn gh-btn-sm" tabIndex={-1} aria-hidden="true"><FaCodeBranch /> <span className="d-none d-sm-inline">Fork</span> <span className="stat-count">2</span> <FaCaretDown className="gh-caret" /></button>
+                            <button className="gh-btn gh-btn-sm" tabIndex={-1} aria-hidden="true"><FaStar /> <span className="d-none d-sm-inline">Star</span> <span className="stat-count">14</span> <FaCaretDown className="gh-caret" /></button>
                         </div>
                     </div>
                     <div className="row g-4">
@@ -154,17 +154,17 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                             {/* Branch / Go to file / Add file / Code toolbar */}
                             <div className="repo-toolbar d-flex align-items-center justify-content-between gap-2 mb-3">
                                 <div className="d-flex align-items-center gap-3">
-                                    <button className="gh-btn"><FaCodeBranch /> main <FaCaretDown className="gh-caret" /></button>
+                                    <button tabIndex={-1} aria-hidden="true" className="gh-btn"><FaCodeBranch /> main <FaCaretDown className="gh-caret" /></button>
                                     <span className="repo-meta-link d-none d-md-inline"><FaCodeBranch /> <strong>1</strong> Branch</span>
                                     <span className="repo-meta-link d-none d-md-inline"><FaTag /> <strong>0</strong> Tags</span>
                                 </div>
                                 <div className="d-flex align-items-center gap-2">
                                     <div className="repo-goto d-none d-md-flex align-items-center">
                                         <FaSearch className="repo-goto-icon" />
-                                        <input type="text" placeholder="Go to file" readOnly aria-label="Go to file" />
+                                        <input type="text" placeholder="Go to file" readOnly tabIndex={-1} aria-hidden="true" />
                                         <kbd>t</kbd>
                                     </div>
-                                    <button className="gh-btn d-none d-sm-inline-flex">Add file <FaCaretDown className="gh-caret" /></button>
+                                    <button tabIndex={-1} aria-hidden="true" className="gh-btn d-none d-sm-inline-flex">Add file <FaCaretDown className="gh-caret" /></button>
                                     <GitHubCodeMenu />
                                 </div>
                             </div>
@@ -292,10 +292,10 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                         {/* File tree, as in GitHub's file view */}
                         <aside className="gh-tree d-none d-md-block">
                             <div className="gh-tree-head"><VscFiles /> Files</div>
-                            <button className="gh-btn gh-tree-branch"><FaCodeBranch /> main <FaCaretDown className="gh-caret" /></button>
+                            <button tabIndex={-1} aria-hidden="true" className="gh-btn gh-tree-branch"><FaCodeBranch /> main <FaCaretDown className="gh-caret" /></button>
                             <div className="repo-goto d-flex align-items-center gh-tree-goto">
                                 <FaSearch className="repo-goto-icon" />
-                                <input type="text" placeholder="Go to file" readOnly aria-label="Go to file" />
+                                <input type="text" placeholder="Go to file" readOnly tabIndex={-1} aria-hidden="true" />
                                 <kbd>t</kbd>
                             </div>
                             <ul className="gh-tree-list">
@@ -329,7 +329,7 @@ const GitHubLayout = ({ activeFile, setActiveFile, children }) => {
                                         <div className="gh-seg">
                                             {isHtml && <button type="button" className={fileMode === 'preview' ? 'active' : ''} onClick={() => setFileMode('preview')}>Preview</button>}
                                             <button type="button" className={fileMode === 'code' || !isHtml ? 'active' : ''} onClick={() => setFileMode('code')}>Code</button>
-                                            <button type="button">Blame</button>
+                                            <button type="button" tabIndex={-1} aria-hidden="true">Blame</button>
                                         </div>
                                     )}
                                     {lines && <span className="gh-file-meta d-none d-sm-inline">{lines} lines · {(new Blob([source]).size / 1024).toFixed(1)} KB</span>}
