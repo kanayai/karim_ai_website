@@ -2686,3 +2686,20 @@ body {
     border-radius: 999px;
   }
 }
+
+/* Temporary Teaching holding page (revamp plan M1; replaced by Moodle look-alike in M4) */
+.teaching-holding {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 48px 20px;
+}
+
+.teaching-holding h1 {
+  margin: 0 0 12px;
+  font-size: 28px;
+}
+
+.teaching-holding p {
+  color: var(--journal-muted);
+  line-height: 1.6;
+}

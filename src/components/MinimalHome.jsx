@@ -10,7 +10,6 @@ const entries = [
     { name: 'journal/', file: 'blog.html', blurb: 'Notes and articles', preview: '/previews/journal.webp' },
     { name: 'workspace/', file: 'workspace.md', blurb: 'Tools and working setup', preview: '/previews/workspace.webp' },
     { name: 'contact/', file: 'contact.html', blurb: 'Get in touch', preview: '/previews/contact.webp' },
-    { name: 'terminal/', file: 'terminal.html', blurb: 'The interactive shell', preview: '/previews/terminal.webp' },
 ];
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));

@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Layout from './components/Layout';
 import Editor from './components/Editor';
 import MinimalHome from './components/MinimalHome';
-import TerminalLayout from './components/TerminalLayout';
 import GitHubLayout from './components/GitHubLayout';
-import PyPILayout from './components/PyPILayout';
+import TeachingHolding from './components/TeachingHolding';
 import WikiLayout from './components/WikiLayout';
 import { themes } from './constants/themes';
 import useSiteMode from './hooks/useSiteMode';
@@ -152,14 +151,13 @@ function AppContent() {
   // Determine layout type based on activeFile
   const getLayoutType = (file) => {
     if (file === 'Welcome') return 'desktop';
-    if (file === 'terminal.html') return 'terminal';
     if (file === 'wiki.html') return 'wiki';
     if (blogFiles.includes(file)) return 'journal';
     if (['projects.html', 'publications.html', 'phd_students.html', 'publications.R', 'git-graph'].includes(file)) {
       return 'github';
     }
     if (['current_courses.ipynb', 'previous_courses.ipynb'].includes(file)) {
-      return 'pypi';
+      return 'teaching';
     }
     return 'vscode'; // Default VS Code theme
   };
@@ -168,16 +166,6 @@ function AppContent() {
 
   if (layoutType === 'desktop') {
     return <MinimalHome setActiveFile={handleOpenFile} />;
-  }
-
-  if (layoutType === 'terminal') {
-    return (
-      <TerminalLayout
-        setActiveFile={handleOpenFile}
-        theme={theme}
-        toggleTheme={toggleTheme}
-      />
-    );
   }
 
   if (layoutType === 'github') {
@@ -216,26 +204,10 @@ function AppContent() {
     );
   }
 
-  if (layoutType === 'pypi') {
+  if (layoutType === 'teaching') {
     return (
       <>
-        <PyPILayout
-          activeFile={activeFile}
-          setActiveFile={handleOpenFile}
-        >
-          <Editor
-            activeFile={activeFile}
-            openFiles={openFiles}
-            setActiveFile={handleOpenFile}
-            onCloseFile={handleCloseFile}
-            onCloseAllFiles={handleCloseAllFiles}
-            theme={theme}
-            setTheme={setTheme}
-            simpleMode={simpleMode}
-            toggleSimpleMode={toggleSimpleMode}
-            recentFiles={recentFiles}
-          />
-        </PyPILayout>
+        <TeachingHolding setActiveFile={handleOpenFile} />
         <MobileNav activeFile={activeFile} onNavigate={handleOpenFile} />
       </>
     );
