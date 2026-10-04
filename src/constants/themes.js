@@ -12,3 +12,6 @@ export const themes = [
     { id: 'synthwave-84', name: "Synthwave '84" },
     { id: 'gruvbox-dark', name: 'Gruvbox Dark' }
 ];
+
+const LIGHT_THEMES = ['light', 'solarized-light', 'github-light'];
+export const isLightTheme = (id) => LIGHT_THEMES.includes(id);

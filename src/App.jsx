@@ -5,7 +5,7 @@ import MinimalHome from './components/MinimalHome';
 import GitHubLayout from './components/GitHubLayout';
 import TeachingLayout from './components/TeachingLayout';
 import WikiLayout from './components/WikiLayout';
-import { themes } from './constants/themes';
+import { themes, isLightTheme } from './constants/themes';
 import useSiteMode from './hooks/useSiteMode';
 import { useRecentFiles } from './hooks/useRecentFiles';
 import { ToastProvider, useToast } from './contexts/ToastContext';
@@ -63,7 +63,7 @@ function AppContent() {
     return () => window.removeEventListener('popstate', onPopState);
   }, []);
 
-  const [theme, setTheme] = useState(() => {
+  const [chosenTheme, setChosenTheme] = useState(() => {
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'dark' || !savedTheme) {
@@ -73,15 +73,24 @@ function AppContent() {
     }
     return 'vscode-dark';
   });
+  // One light/dark setting for the whole site (useSiteMode). A named VS Code theme is kept
+  // only while it matches it; otherwise the default light or dark VS Code theme is used.
+  const [siteMode, setSiteMode] = useSiteMode();
+  const theme = isLightTheme(chosenTheme) === (siteMode === 'light')
+    ? chosenTheme
+    : (siteMode === 'light' ? 'light' : 'vscode-dark');
+  const setTheme = (id) => {
+    setChosenTheme(id);
+    setSiteMode(isLightTheme(id) ? 'light' : 'dark');
+  };
   // Use useLayoutEffect to update the DOM synchronously before browser paint/iframe load
   React.useLayoutEffect(() => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('theme', theme);
+      localStorage.setItem('theme', chosenTheme);
       document.documentElement.setAttribute('data-theme', theme);
     }
-  }, [theme]);
-  // GitHub-style pages follow the home page's light/dark choice (not saved as the VS Code theme).
-  const [siteMode] = useSiteMode();
+  }, [chosenTheme, theme]);
+  // GitHub-style pages use GitHub's own light/dark themes.
   const githubPage = ['projects.html', 'publications.html', 'phd_students.html', 'publications.R', 'git-graph'].includes(activeFile);
   const githubTheme = siteMode === 'light' ? 'github-light' : 'github-dark';
   React.useLayoutEffect(() => {
@@ -115,14 +124,8 @@ function AppContent() {
     }
   }, [theme, toast]);
 
-  const toggleTheme = () => {
-    setTheme(prev => {
-      // Circle through themes if toggled
-      const currentIndex = themes.findIndex(t => t.id === prev);
-      const nextIndex = (currentIndex + 1) % themes.length;
-      return themes[nextIndex].id;
-    });
-  };
+  // Theme buttons flip light/dark for the whole site.
+  const toggleTheme = () => setSiteMode(siteMode === 'light' ? 'dark' : 'light');
 
   const toggleSidebar = () => {
     setIsSidebarOpen(prev => !prev);
