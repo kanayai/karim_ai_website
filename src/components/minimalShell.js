@@ -102,7 +102,7 @@ const HELP_ALL = [
     '  pwd                        /home/karim/bath',
     '',
     'About Karim',
-    '  whois karim                one-line bio',
+    '  whois karim                name, role, organisation',
     '  cat bio, man karim         short bio',
     '  where karim, find karim    postal address',
     '  contact, mail              email, ORCID, GitHub',
@@ -163,7 +163,8 @@ export function run(input, { entries, history, light }) {
             return { out: ['Department of Mathematical Sciences', 'University of Bath, Claverton Down', 'Bath BA2 7AY'] };
         case 'whoami': return { out: ['guest'] };
         case 'whois':
-            return arg === 'karim' ? { out: ['Karim AI: Senior Lecturer in Statistics, University of Bath'] }
+            // MinimalHome draws the same record as the opening screen.
+            return arg === 'karim' ? { out: [], action: 'whois' }
                 : { out: [`whois: no match for "${args.join(' ')}"`.replace(' ""', '')] };
         case 'pwd': return { out: ['/home/karim/bath'] };
         case 'date': return { out: [new Date().toString()] };

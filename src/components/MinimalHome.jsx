@@ -17,6 +17,21 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const FULL_NAME = 'Karim Anaya-Izquierdo';
 
+// whois-style record: aligned "Field: value" lines, as real whois prints them.
+// The opening screen's name is the page heading (and morphs); `whois karim` repeats it plainly.
+const WhoisRecord = ({ name, heading = false }) => (
+    <div className="mh-whois">
+        <span className="mh-key">Name:</span>
+        {heading
+            ? <h1 className="mh-name" aria-label={FULL_NAME}>{name}</h1>
+            : <strong className="mh-name">{name}</strong>}
+        <span className="mh-key">Role:</span>
+        <span>Senior Lecturer in Statistics</span>
+        <span className="mh-key">Organisation:</span>
+        <span>University of Bath</span>
+    </div>
+);
+
 export default function MinimalHome({ setActiveFile }) {
     const reduced = typeof window !== 'undefined'
         && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -135,7 +150,7 @@ export default function MinimalHome({ setActiveFile }) {
         // Open synchronously, inside the keypress, so popup blockers allow it.
         if (res.action?.url) window.open(res.action.url, '_blank', 'noopener');
         const id = Date.now();
-        setBlocks((b) => [...b, { id, cmd: text, out: res.out, art: res.art, ls: res.action === 'ls' }]);
+        setBlocks((b) => [...b, { id, cmd: text, out: res.out, art: res.art, ls: res.action === 'ls', whois: res.action === 'whois' }]);
         if (res.action?.fetch) {
             const setOut = (out) => setBlocks((b) => b.map((x) => (x.id === id ? { ...x, out } : x)));
             setOut(['  % Total    % Received   Time', '  …']);
@@ -172,15 +187,7 @@ export default function MinimalHome({ setActiveFile }) {
                 <p className="mh-line">
                     <span className="mh-prompt">karim@bath ~ %</span> {command}
                 </p>
-                {/* whois-style record: aligned "Field: value" lines, as real whois prints them. */}
-                <div className="mh-whois">
-                    <span className="mh-key">Name:</span>
-                    <h1 className="mh-name" aria-label={FULL_NAME}>{name}</h1>
-                    <span className="mh-key">Role:</span>
-                    <span>Senior Lecturer in Statistics</span>
-                    <span className="mh-key">Organisation:</span>
-                    <span>University of Bath</span>
-                </div>
+                <WhoisRecord name={name} heading />
                 {done && (
                     <>
                         <p className="mh-line">
@@ -198,6 +205,7 @@ export default function MinimalHome({ setActiveFile }) {
                                     <p className="mh-line"><span className="mh-prompt">karim@bath ~ %</span> {b.cmd}</p>
                                 )}
                                 {b.ls && renderList(b.id)}
+                                {b.whois && <WhoisRecord name={FULL_NAME} />}
                                 {b.out.length > 0 && (
                                     <pre className={`mh-out${b.art ? ' mh-art' : ''}`} aria-hidden={b.art || undefined}>{b.out.join('\n')}</pre>
                                 )}
