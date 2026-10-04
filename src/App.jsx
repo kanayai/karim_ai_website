@@ -3,7 +3,7 @@ import Layout from './components/Layout';
 import Editor from './components/Editor';
 import MinimalHome from './components/MinimalHome';
 import GitHubLayout from './components/GitHubLayout';
-import TeachingHolding from './components/TeachingHolding';
+import TeachingLayout from './components/TeachingLayout';
 import WikiLayout from './components/WikiLayout';
 import { themes } from './constants/themes';
 import useSiteMode from './hooks/useSiteMode';
@@ -243,7 +243,7 @@ function AppContent() {
   if (layoutType === 'teaching') {
     return (
       <>
-        <TeachingHolding setActiveFile={handleOpenFile} />
+        <TeachingLayout setActiveFile={handleOpenFile} />
         <MobileNav activeFile={activeFile} onNavigate={handleOpenFile} />
       </>
     );

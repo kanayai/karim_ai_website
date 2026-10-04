@@ -1,0 +1,205 @@
+/* Moodle (Boost theme) look-alike for Teaching. Light only for now (plan M6 open question). */
+.tm-shell {
+    /* Own scroll container: body has overflow: hidden site-wide. */
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    --tm-primary: #0f6cbf;
+    --tm-primary-dark: #0c589c;
+    --tm-text: #1d2125;
+    --tm-muted: #6a737b;
+    --tm-border: #dee2e6;
+    --tm-bg: #ffffff;
+    --tm-soft: #f8f9fa;
+    background: var(--tm-bg);
+    color: var(--tm-text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.tm-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 0 20px;
+    background: var(--tm-bg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.tm-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--tm-text);
+    font-weight: 700;
+    font-size: 17px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.tm-brand-mark {
+    width: 30px;
+    height: 30px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 6px;
+    background: #f98012; /* Moodle orange */
+    color: #fff;
+    font-size: 16px;
+}
+
+.tm-primary-nav { display: flex; align-self: stretch; }
+
+.tm-primary-nav-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 4px;
+    border-bottom: 3px solid transparent;
+    color: var(--tm-text);
+}
+
+.tm-primary-nav-item.is-active { border-bottom-color: var(--tm-primary); }
+
+.tm-back {
+    margin-left: auto;
+    padding: 6px 12px;
+    border: 1px solid var(--tm-primary);
+    border-radius: 6px;
+    color: var(--tm-primary);
+    font-size: 14px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.tm-back:hover { background: var(--tm-primary); color: #fff; }
+
+.tm-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px 20px 48px;
+}
+
+.tm-page-title { margin: 0 0 16px; font-size: 28px; font-weight: 700; }
+
+.tm-notice {
+    margin: 0 0 28px;
+    padding: 12px 16px;
+    border: 1px solid #b6d4fe;
+    border-radius: 6px;
+    background: #e7f1fb;
+    color: #0a3a66;
+}
+
+.tm-block {
+    margin-bottom: 28px;
+    padding: 20px;
+    border: 1px solid var(--tm-border);
+    border-radius: 8px;
+}
+
+.tm-block-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+    margin-bottom: 16px;
+}
+
+.tm-block-header h2 { margin: 0; font-size: 20px; font-weight: 600; }
+
+.tm-muted { color: var(--tm-muted); font-size: 14px; }
+
+.tm-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.tm-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--tm-border);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--tm-bg);
+}
+
+/* Moodle's generated course pattern, approximated per course hue. */
+.tm-card-image {
+    height: 112px;
+    display: flex;
+    align-items: flex-end;
+    padding: 10px 14px;
+    background:
+        repeating-linear-gradient(45deg, hsl(var(--tm-hue) 55% 62% / 0.35) 0 14px, transparent 14px 28px),
+        repeating-linear-gradient(-45deg, hsl(var(--tm-hue) 60% 40% / 0.25) 0 10px, transparent 10px 30px),
+        hsl(var(--tm-hue) 52% 48%);
+}
+
+.tm-card-image span {
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.tm-card-body { flex: 1; padding: 14px 16px 6px; }
+
+.tm-card-category { margin: 0 0 4px; color: var(--tm-muted); font-size: 13px; }
+
+.tm-card-title { margin: 0 0 8px; font-size: 17px; font-weight: 600; line-height: 1.35; }
+
+.tm-card-title a { color: var(--tm-primary); text-decoration: none; }
+.tm-card-title a:hover { color: var(--tm-primary-dark); text-decoration: underline; }
+
+.tm-card-role { margin: 0 0 8px; }
+
+.tm-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--tm-soft);
+    border: 1px solid var(--tm-border);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.tm-card-summary { margin: 0; font-size: 14px; }
+
+.tm-card-footer { padding: 10px 16px 16px; }
+
+.tm-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 6px;
+    background: var(--tm-primary);
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.tm-button:hover { background: var(--tm-primary-dark); color: #fff; }
+
+.tm-shell a:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--tm-primary) 55%, transparent);
+    outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+    .tm-shell { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+    .tm-navbar { gap: 12px; padding: 0 12px; }
+    .tm-primary-nav { display: none; }
+    .tm-brand { font-size: 15px; }
+    .tm-page { padding: 20px 14px 32px; }
+    .tm-block { padding: 14px; }
+}
